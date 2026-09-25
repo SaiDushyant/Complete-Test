@@ -13,6 +13,7 @@ import pytest
 from playwright.sync_api import Browser, BrowserContext, Page, Playwright
 
 from config.settings import settings
+from workflows.shared.utils.diagnostics import PageDiagnostics
 from workflows.shared.utils.logger import get_logger
 from workflows.shared.utils.screenshot import capture_screenshot, sanitize_filename
 
@@ -117,22 +118,39 @@ def workflow_page(
     request: pytest.FixtureRequest,
 ) -> Generator[Page, None, None]:
     """
-    Function-scoped fresh Playwright page with automatic screenshot on failure.
+    Function-scoped fresh Playwright page with automatic runtime diagnostics,
+    console monitoring, network tracking, and screenshot/log capture on failure.
     """
     page = workflow_context.new_page()
     page.set_default_timeout(settings.browser.timeout)
+    diagnostics = PageDiagnostics(page)
+    page._diagnostics = diagnostics
 
     yield page
 
-    # Screenshot on test failure
+    # Screenshot and diagnostics capture on test failure
     test_failed = hasattr(request.node, "rep_call") and request.node.rep_call.failed
-    if test_failed and settings.browser.screenshot_on_failure:
-        capture_screenshot(
-            page=page,
-            test_name=request.node.name,
-            suffix="failure",
-            destination_dir=settings.screenshots_dir,
-        )
+    if test_failed:
+        if settings.browser.screenshot_on_failure:
+            capture_screenshot(
+                page=page,
+                test_name=request.node.name,
+                suffix="failure",
+                destination_dir=settings.screenshots_dir,
+            )
+        try:
+            diag_path = diagnostics.save_report(
+                test_name=request.node.name,
+                destination_dir=settings.diagnostics_dir,
+            )
+            logger.info(f"Saved failure diagnostic telemetry to: {diag_path}")
+            if diagnostics.has_errors():
+                logger.error(
+                    f"Diagnostic errors detected during failed test '{request.node.name}':\n"
+                    f"{diagnostics.format_report()}"
+                )
+        except Exception as e:
+            logger.error(f"Failed to save diagnostic telemetry: {e}")
 
     try:
         page.close()

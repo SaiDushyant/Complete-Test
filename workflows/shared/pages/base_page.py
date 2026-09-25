@@ -19,6 +19,7 @@ from workflows.shared.constants.timeouts import (
     TIMEOUT_PAGE_LOAD,
     TIMEOUT_SHORT,
 )
+from workflows.shared.utils.diagnostics import PageDiagnostics
 from workflows.shared.utils.logger import get_logger
 from workflows.shared.utils.screenshot import capture_screenshot
 
@@ -33,6 +34,35 @@ class BasePage:
 
     def __init__(self, page: Page):
         self.page = page
+        if not hasattr(page, "_diagnostics"):
+            page._diagnostics = PageDiagnostics(page)
+
+    @property
+    def diagnostics(self) -> PageDiagnostics:
+        """Access the runtime error diagnostics monitor for this page."""
+        if not hasattr(self.page, "_diagnostics"):
+            self.page._diagnostics = PageDiagnostics(self.page)
+        return self.page._diagnostics
+
+    def assert_no_javascript_errors(self) -> None:
+        """Assert that zero unhandled JavaScript runtime exceptions occurred."""
+        self.diagnostics.assert_no_javascript_errors()
+
+    def assert_no_console_errors(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert that zero console.error calls were issued on page."""
+        self.diagnostics.assert_no_console_errors(ignored_patterns=ignored_patterns)
+
+    def assert_no_failed_network_requests(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert that zero network requests failed or aborted."""
+        self.diagnostics.assert_no_failed_requests(ignored_patterns=ignored_patterns)
+
+    def assert_no_http_errors(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert that zero HTTP 4xx/5xx responses were received."""
+        self.diagnostics.assert_no_http_errors(ignored_patterns=ignored_patterns)
+
+    def assert_clean_runtime(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert that JavaScript, console, and network requests are all error-free."""
+        self.diagnostics.assert_clean_diagnostics(ignored_patterns=ignored_patterns)
 
     # =========================================================================
     # Navigation & URL Properties
@@ -238,3 +268,56 @@ class BasePage:
     def take_screenshot(self, name: str, full_page: bool = True) -> Path:
         """Capture a named screenshot."""
         return capture_screenshot(self.page, test_name=name, suffix="manual", full_page=full_page)
+
+    # =========================================================================
+    # Runtime Diagnostics & Invisible Error Assertions
+    # =========================================================================
+
+    @property
+    def diagnostics(self) -> PageDiagnostics:
+        """
+        Return the PageDiagnostics monitor tracking JS errors, console logs,
+        and network failures on this page.
+        """
+        diag = getattr(self.page, "_diagnostics", None)
+        if diag is None:
+            diag = PageDiagnostics(self.page)
+            self.page._diagnostics = diag
+        return diag
+
+    def assert_no_javascript_errors(self) -> None:
+        """Assert zero unhandled JavaScript runtime exceptions occurred on this page."""
+        self.diagnostics.assert_no_javascript_errors()
+
+    def assert_no_console_errors(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert zero console.error logs were emitted, excluding optional allowed patterns."""
+        self.diagnostics.assert_no_console_errors(ignored_patterns=ignored_patterns)
+
+    def assert_no_failed_network_requests(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert zero network requests failed or dropped (DNS, aborted, refused)."""
+        self.diagnostics.assert_no_failed_requests(ignored_patterns=ignored_patterns)
+
+    def assert_no_http_errors(self, ignored_patterns: Optional[List[str]] = None) -> None:
+        """Assert zero network responses returned HTTP 4xx or 5xx status codes."""
+        self.diagnostics.assert_no_http_errors(ignored_patterns=ignored_patterns)
+
+    def assert_clean_diagnostics(
+        self,
+        check_js_errors: bool = True,
+        check_console_errors: bool = True,
+        check_failed_requests: bool = True,
+        check_http_errors: bool = True,
+        ignored_patterns: Optional[List[str]] = None,
+    ) -> None:
+        """
+        Assert all unseen runtime layers (JS errors, console errors, failed requests, HTTP 4xx/5xx)
+        are completely clean and free of errors.
+        """
+        if check_js_errors:
+            self.assert_no_javascript_errors()
+        if check_console_errors:
+            self.assert_no_console_errors(ignored_patterns=ignored_patterns)
+        if check_failed_requests:
+            self.assert_no_failed_network_requests(ignored_patterns=ignored_patterns)
+        if check_http_errors:
+            self.assert_no_http_errors(ignored_patterns=ignored_patterns)
