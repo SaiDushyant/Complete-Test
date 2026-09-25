@@ -162,7 +162,7 @@ class Settings:
             base_url=trade_url,
             username=trade_username,
             password=trade_password,
-            login_url=os.getenv("TRADE_LOGIN_URL", trade_url),
+            login_url=os.getenv("TRADE_LOGIN_URL") or f"{trade_url.rstrip('/')}/login/",
             post_login_url_pattern=os.getenv("TRADE_POST_LOGIN_URL_PATTERN", "**/dashboard**"),
             auth_state_path=trade_auth_state,
         )

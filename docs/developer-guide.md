@@ -72,7 +72,7 @@ pytest workflows/ --collect-only
 Review the dual-layer architecture:
 - `ui_regression/`: DOM-level structural regression framework (crawler, comparer, baselines).
 - `workflows/`: Behavioral E2E tests, Page Objects, fixtures, and test data.
-- Read **[Architecture Overview](file:///Users/xtremenext_viji/Code/Playwrite/new/docs/architecture.md)** and **[Ownership Matrix](file:///Users/xtremenext_viji/Code/Playwrite/new/docs/ownership.md)** to identify your primary working directory.
+- Read **[Architecture Overview](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/architecture.md)** and **[Ownership Matrix](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/ownership.md)** to identify your primary working directory.
 
 ### Step 8: Create Feature Branch
 Always create a feature branch off an up-to-date `main`:

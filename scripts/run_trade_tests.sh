@@ -22,4 +22,19 @@ else
     PYTEST_CMD="python -m pytest"
 fi
 
-${PYTEST_CMD} workflows/trade_terminal/tests "$@"
+if [ $# -eq 0 ]; then
+    ${PYTEST_CMD} workflows/trade_terminal/tests
+else
+    HAS_PATH=false
+    for arg in "$@"; do
+        if [[ ! "$arg" =~ ^- ]]; then
+            HAS_PATH=true
+            break
+        fi
+    done
+    if [ "$HAS_PATH" = true ]; then
+        ${PYTEST_CMD} "$@"
+    else
+        ${PYTEST_CMD} workflows/trade_terminal/tests "$@"
+    fi
+fi
