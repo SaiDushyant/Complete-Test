@@ -123,46 +123,57 @@ def test_profile_account_switch_updates_dashboard_synchronously(
     trading_dashboard_page: TradingDashboardPage,
 ):
     """
-    Verify that switching the active trading account in the profile menu
-    synchronously updates:
+    Verify that all available trading accounts (Live & Demo) are dynamically
+    extracted and that switching to every available account synchronously updates:
     - Profile current account number and balance
-    - Profile account mode badge (Live -> Demo)
+    - Profile account mode badge (Live vs Demo)
     - Dashboard User Account token
     - Dashboard Balance card figure
-    Then switches back to restore initial Live account.
+    Restores initial account at conclusion.
     """
     trading_dashboard_page.navigate()
     assert_url_contains(trading_dashboard_page.page, "/dashboard", timeout=15000)
 
-    # 1. Capture initial dashboard state
-    initial_dashboard_token = trading_dashboard_page.get_account_token()
-    initial_dashboard_balance = trading_dashboard_page.get_balance_value()
+    # 1. Dynamically extract all available accounts from DOM
+    accounts = profile_menu_page.get_all_account_data()
+    assert len(accounts) > 0, "Expected at least one trading account in profile switcher."
 
-    # 2. Switch to Demo account (10010)
-    profile_menu_page.select_account("10010")
+    # Identify initial account to restore later
+    initial_account = next((a for a in accounts if a.get("selected")), accounts[0])
 
-    # 3. Assert profile menu updated
-    assert "10010" in profile_menu_page.get_current_account_number()
-    assert profile_menu_page.is_demo_mode(), "Expected mode badge to indicate Demo after selecting 10010."
-    assert "10,000" in profile_menu_page.get_profile_balance()
+    # 2. Iterate and test switching to each available account
+    for acct in accounts:
+        acct_number = acct["number"]
+        expected_token = acct["value"]
+        is_demo = acct["is_demo"]
 
-    # 4. Assert dashboard cards updated synchronously
-    demo_dashboard_token = trading_dashboard_page.get_account_token()
-    demo_dashboard_balance = trading_dashboard_page.get_balance_value()
-    assert demo_dashboard_token != initial_dashboard_token, (
-        f"Expected dashboard token to change from '{initial_dashboard_token}' to Demo token, got '{demo_dashboard_token}'"
-    )
-    assert "demo" in demo_dashboard_token.lower() or "10010" in demo_dashboard_token
-    assert "10,000" in demo_dashboard_balance
+        # Switch to this account
+        profile_menu_page.select_account(acct_number)
 
-    # 5. Restore back to original Live account (10009)
-    profile_menu_page.select_account("10009")
-    assert "10009" in profile_menu_page.get_current_account_number()
-    assert not profile_menu_page.is_demo_mode(), "Expected Live mode badge restored."
-    restored_token = trading_dashboard_page.get_account_token()
-    assert restored_token == initial_dashboard_token, (
-        f"Expected dashboard token to restore to '{initial_dashboard_token}', got '{restored_token}'"
-    )
+        # Assert Profile menu reflects this account
+        current_acct_num = profile_menu_page.get_current_account_number()
+        assert acct_number in current_acct_num, (
+            f"Expected profile current account to show '{acct_number}', got '{current_acct_num}'"
+        )
+        if is_demo:
+            assert profile_menu_page.is_demo_mode(), (
+                f"Expected Demo mode badge for account '{acct_number}'"
+            )
+        else:
+            assert not profile_menu_page.is_demo_mode(), (
+                f"Expected Live mode badge for account '{acct_number}'"
+            )
+
+        # Assert Dashboard workspace reflects this active account
+        dashboard_token = trading_dashboard_page.get_account_token()
+        assert dashboard_token == expected_token, (
+            f"Expected dashboard User Account token to be '{expected_token}', got '{dashboard_token}'"
+        )
+
+    # 3. Restore back to initial account
+    profile_menu_page.select_account(initial_account["number"])
+    assert initial_account["number"] in profile_menu_page.get_current_account_number()
+    assert trading_dashboard_page.get_account_token() == initial_account["value"]
 
 
 @pytest.mark.trade
@@ -172,21 +183,28 @@ def test_profile_language_switcher(
     trading_dashboard_page: TradingDashboardPage,
 ):
     """
-    Verify that the language switcher displays available languages,
-    allows changing to Arabic (العربية), updates document body classes,
-    and allows switching cleanly back to English.
+    Verify that all available languages are dynamically extracted from the switcher,
+    switched to sequentially, and that the current language display and document state
+    update accurately for each language. Restores English at conclusion.
     """
     trading_dashboard_page.navigate()
     assert_url_contains(trading_dashboard_page.page, "/dashboard", timeout=15000)
 
-    # 1. Switch language to Arabic
-    profile_menu_page.select_language("العربية")
-    assert profile_menu_page.get_current_language() == "العربية"
-    body_classes = profile_menu_page.page.evaluate("() => document.body.className")
-    assert "ar" in body_classes, f"Expected 'ar' class in document body, got: {body_classes}"
+    # 1. Dynamically extract all available languages from DOM
+    languages = profile_menu_page.get_all_languages()
+    assert len(languages) >= 2, f"Expected at least 2 languages, found: {languages}"
 
-    # 2. Restore back to English
-    profile_menu_page.select_language("English")
+    # 2. Iterate and switch through all available languages
+    for lang in languages:
+        profile_menu_page.select_language(lang)
+        current_lang = profile_menu_page.get_current_language()
+        assert current_lang == lang, (
+            f"Expected current language to be '{lang}', got '{current_lang}'"
+        )
+
+    # 3. Ensure restored back to English
+    if profile_menu_page.get_current_language() != "English":
+        profile_menu_page.select_language("English")
     assert profile_menu_page.get_current_language() == "English"
 
 

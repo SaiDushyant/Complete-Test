@@ -115,8 +115,10 @@ class ProfileMenuPage(BasePage):
 
     def open_menu(self, timeout: int = TIMEOUT_DEFAULT) -> None:
         """Open the profile menu by clicking the sidebar toggle if not already open."""
+        self.dismiss_disclaimer_if_present()
         if not self.is_menu_open():
             logger.info("Opening Profile slide-out menu via sidebar toggle...")
+            self.dismiss_disclaimer_if_present()
             self.trigger_button.click()
             expect(self.menu_container).to_be_visible(timeout=timeout)
             # Give UI moment to finish slide animation
@@ -168,19 +170,58 @@ class ProfileMenuPage(BasePage):
         self.open_menu()
         return self.account_current_text.inner_text().strip()
 
+    def dismiss_disclaimer_if_present(self) -> None:
+        """Dismiss the One Click Trading disclaimer modal and backdrop if present."""
+        try:
+            self.page.evaluate("""() => {
+                const modal = document.querySelector("#disclaimer");
+                if (modal && (modal.classList.contains("show") || window.getComputedStyle(modal).display !== "none")) {
+                    const btn = modal.querySelector("#acceptButton") || modal.querySelector("#close-disclaimer") || modal.querySelector(".close");
+                    if (btn) btn.click();
+                    modal.style.display = "none";
+                    modal.classList.remove("show");
+                    document.querySelectorAll(".modal-backdrop").forEach(b => b.remove());
+                    document.body.classList.remove("modal-open");
+                }
+            }""")
+            self.page.wait_for_timeout(300)
+        except Exception:
+            pass
+
+    def get_all_account_data(self) -> List[Dict[str, Any]]:
+        """
+        Dynamically extracts all available trading accounts from the DOM.
+        Returns list of dicts: [{'value': token, 'number': account_number, 'balance': balance_str, 'is_demo': bool, 'selected': bool}]
+        """
+        self.dismiss_disclaimer_if_present()
+        self.open_menu()
+        return self.page.evaluate("""() => {
+            const select = document.querySelector("#my_account_list");
+            if (!select) return [];
+            return Array.from(select.options).map(opt => {
+                const parts = opt.text.split("|");
+                return {
+                    value: opt.value,
+                    number: (parts[0] || opt.text).trim(),
+                    balance: (parts[1] || "").trim(),
+                    is_demo: opt.value.toLowerCase().startsWith("demo_") || opt.text.toLowerCase().includes("demo"),
+                    selected: opt.selected
+                };
+            });
+        }""")
+
     def get_available_accounts(self) -> List[str]:
         """Return list of available account numbers in the switcher dropdown."""
-        self.open_menu()
-        if not self.account_option_list.is_visible():
-            self.account_current_button.click()
-            self.page.wait_for_timeout(300)
-        return [opt.locator(".xn-account-option-num").inner_text().strip() for opt in self.account_options.all()]
+        data = self.get_all_account_data()
+        return [acct["number"] for acct in data]
 
     def select_account(self, account_identifier: str, timeout: int = TIMEOUT_DEFAULT) -> None:
         """
         Switch to an account by number or keyword (e.g. '10010' or 'demo').
-        Automatically re-opens profile menu if needed and clicks the dropdown option.
+        Automatically re-opens profile menu if needed, dismisses any blocking modals,
+        and clicks the target dropdown option.
         """
+        self.dismiss_disclaimer_if_present()
         self.open_menu()
         logger.info(f"Switching account to: {account_identifier}")
 
@@ -196,6 +237,7 @@ class ProfileMenuPage(BasePage):
 
         # Brief wait for proxy select event and DOM synchronization
         self.page.wait_for_timeout(1000)
+        self.dismiss_disclaimer_if_present()
 
     # =========================================================================
     # Portal Redirects (Settings & Client Portal)
@@ -206,6 +248,7 @@ class ProfileMenuPage(BasePage):
         Click the Settings tile and wait for the redirected Client Portal page.
         Returns the new Page instance.
         """
+        self.dismiss_disclaimer_if_present()
         self.open_menu()
         logger.info("Clicking Settings tile in profile menu...")
         with self.page.context.expect_page(timeout=timeout) as new_page_info:
@@ -220,6 +263,7 @@ class ProfileMenuPage(BasePage):
         Click the Client Portal tile and wait for the redirected Client Portal page.
         Returns the new Page instance.
         """
+        self.dismiss_disclaimer_if_present()
         self.open_menu()
         logger.info("Clicking Client Portal tile in profile menu...")
         with self.page.context.expect_page(timeout=timeout) as new_page_info:
@@ -235,24 +279,40 @@ class ProfileMenuPage(BasePage):
 
     def get_current_language(self) -> str:
         """Get the currently selected language display text."""
+        self.dismiss_disclaimer_if_present()
         self.open_menu()
         return self.lang_current_text.inner_text().strip()
 
+    def get_all_languages(self) -> List[str]:
+        """Return list of language labels available in the switcher dropdown."""
+        self.dismiss_disclaimer_if_present()
+        self.open_menu()
+        if not self.lang_option_list.is_visible():
+            self.lang_current_button.click()
+            self.page.wait_for_timeout(300)
+        return self.page.evaluate("""() => {
+            const opts = document.querySelectorAll("#xnLangOptionList .xn-lang-option");
+            return Array.from(opts).map(el => {
+                const labelEl = el.querySelector(".xn-lang-option-label");
+                return (labelEl ? labelEl.innerText : el.innerText).trim();
+            }).filter(l => l.length > 0);
+        }""")
+
     def get_available_languages(self) -> List[str]:
         """Return list of language labels available in the switcher dropdown."""
-        self.open_menu()
-        self.lang_current_button.click()
-        self.page.wait_for_timeout(300)
-        return [opt.inner_text().strip() for opt in self.lang_options.all()]
+        return self.get_all_languages()
 
     def select_language(self, language_name: str, timeout: int = TIMEOUT_DEFAULT) -> None:
         """
         Select a language (e.g. 'English', 'العربية', 'ไทย', 'فارسی') from the switcher.
         """
+        self.dismiss_disclaimer_if_present()
         self.open_menu()
         logger.info(f"Selecting language: {language_name}")
-        self.lang_current_button.click()
-        self.page.wait_for_timeout(300)
+
+        if not self.lang_option_list.is_visible():
+            self.lang_current_button.click()
+            self.page.wait_for_timeout(300)
 
         target_opt = self.lang_option_list.locator(
             f".xn-lang-option:has-text('{language_name}')"
@@ -262,6 +322,7 @@ class ProfileMenuPage(BasePage):
 
         # Wait for language update to settle
         self.page.wait_for_timeout(1000)
+        self.dismiss_disclaimer_if_present()
 
     # =========================================================================
     # Chart Engine Switcher
