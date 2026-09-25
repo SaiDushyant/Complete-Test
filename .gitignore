@@ -46,6 +46,10 @@ reports/workflows/screenshots/*
 !reports/workflows/screenshots/.gitkeep
 reports/workflows/traces/*
 !reports/workflows/traces/.gitkeep
+reports/workflows/diagnostics/*
+!reports/workflows/diagnostics/.gitkeep
+reports/workflows/logs/*
+!reports/workflows/logs/.gitkeep
 
 reports/ui_regression/*
 !reports/ui_regression/.gitkeep
