@@ -1,0 +1,78 @@
+Admin Portal Passed Test Results
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_login_page_renders_form_elements
+Meaning: The Admin login page displays the username and password fields.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_can_view_management_dashboard
+Meaning: The administrator can log in and open the Admin Dashboard.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_user_management_page_loads
+Meaning: The Admin User Management page opens and displays the users table.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_user_management_has_create_user_action
+Meaning: The User Management page shows the Add User/Create Account button.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_user_management_search_is_available
+Meaning: The User Management page shows the search field.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_profile_menu_shows_admin_details
+Meaning: The Admin profile menu opens and shows the admin name and role.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_profile_menu_has_logout_link
+Meaning: The Admin profile menu contains a working Logout link.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_theme_toggle_is_visible
+Meaning: The Admin Dashboard displays the theme switch button.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_notifications_are_available
+Meaning: The Admin Dashboard displays notifications and the Mark all read option.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_example.py::test_admin_sidebar_menu_button_is_visible
+Meaning: The Admin Dashboard displays the button used to open the sidebar menu.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_dashboard_content.py::test_admin_dashboard_kpi_values_are_numeric
+Meaning: The Dashboard KPI cards display valid numeric values.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_dashboard_content.py::test_admin_dashboard_charts_are_rendered
+Meaning: The Dashboard displays both the Deposits vs Withdrawals and A-Book vs B-Book charts.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_dashboard_content.py::test_admin_dashboard_heading_is_displayed
+Meaning: The Admin Dashboard displays the Dashboard heading.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_dashboard_content.py::test_admin_dashboard_main_kpi_cards_are_displayed
+Meaning: The Dashboard displays the Deposit, Withdrawal, and User KPI cards.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_dashboard_content.py::test_admin_dashboard_book_sections_are_displayed
+Meaning: The Dashboard displays both the A-Book and B-Book sections.
+Status: PASSED
+Reason: Test completed successfully
+
+Total Passed: 15

@@ -1,0 +1,57 @@
+Admin Portal Test Results
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Dashboard]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Orders]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Manage User]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Deposit/WDL]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Fund Managers]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Leads]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Manager/Group]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Liquidity]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Reports/Logs]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Payment Gateway]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Settings]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[LP Execution Config]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Test: workflows/admin_portal/tests/test_admin_sidebar_titles.py::test_admin_sidebar_title_is_visible[Cron Jobs]
+Meaning: The Admin Portal test completed successfully.
+Status: FAILED
+
+Total: 13
+Passed: 0
+Failed: 13
