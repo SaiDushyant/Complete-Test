@@ -233,3 +233,25 @@ def test_trader_cannot_login_with_invalid_credentials(trade_login_page: TradeLog
     assert "/login" in trade_login_page.page.url, (
         f"Expected URL to still be /login/, but got '{trade_login_page.page.url}'."
     )
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_trade_login_runtime_network_and_console_clean(trade_login_page: TradeLoginPage):
+    """
+    Verify that the Trade Terminal login page operates cleanly without hidden defects:
+    - Zero JavaScript runtime exceptions or unhandled page errors.
+    - Zero console error logs.
+    - Zero failed network requests.
+    - Zero HTTP 4xx or 5xx responses.
+    """
+    trade_login_page.navigate()
+    assert_url_contains(trade_login_page.page, "/login", timeout=15000)
+
+    # Assert completely clean diagnostics telemetry on login page
+    trade_login_page.assert_clean_diagnostics(
+        check_js_errors=True,
+        check_console_errors=True,
+        check_failed_requests=True,
+        check_http_errors=True,
+    )
