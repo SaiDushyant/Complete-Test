@@ -84,6 +84,7 @@ class Settings:
     ui_regression_reports_dir: Path = ROOT_DIR / "reports" / "ui_regression"
     screenshots_dir: Path = ROOT_DIR / "reports" / "workflows" / "screenshots"
     traces_dir: Path = ROOT_DIR / "reports" / "workflows" / "traces"
+    diagnostics_dir: Path = ROOT_DIR / "reports" / "workflows" / "diagnostics"
 
     # Browser Execution Settings
     browser: BrowserSettings = field(init=False)
@@ -107,6 +108,7 @@ class Settings:
             self.ui_regression_reports_dir,
             self.screenshots_dir,
             self.traces_dir,
+            self.diagnostics_dir,
         ]:
             directory.mkdir(parents=True, exist_ok=True)
 

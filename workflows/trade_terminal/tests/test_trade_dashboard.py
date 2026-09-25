@@ -286,3 +286,30 @@ def test_dashboard_performance_stats_metrics(trading_dashboard_page: TradingDash
 
     # Check Closed Trades count
     assert stats["closed_trades"].isdigit(), f"Expected numeric Closed Trades, got: {stats['closed_trades']}"
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_dashboard_runtime_network_and_console_clean(trading_dashboard_page: TradingDashboardPage):
+    """
+    Verify that the dashboard page operates cleanly with zero unseen runtime defects:
+    - Zero JavaScript unhandled page errors (runtime exceptions / syntax errors).
+    - Zero console error logs emitted during page load and user interactions.
+    - Zero failed network requests (aborted, failed DNS, connection drops).
+    - Zero HTTP 4xx or 5xx response error codes.
+    """
+    trading_dashboard_page.navigate()
+    assert_url_contains(trading_dashboard_page.page, "/dashboard", timeout=15000)
+
+    # Perform typical user interactions (period switching) to exercise runtime event listeners
+    trading_dashboard_page.select_period("daily")
+    trading_dashboard_page.select_period("weekly")
+    trading_dashboard_page.select_period("monthly")
+
+    # Assert completely clean diagnostics telemetry
+    trading_dashboard_page.assert_clean_diagnostics(
+        check_js_errors=True,
+        check_console_errors=True,
+        check_failed_requests=True,
+        check_http_errors=True,
+    )

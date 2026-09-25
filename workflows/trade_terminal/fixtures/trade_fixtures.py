@@ -13,10 +13,15 @@ from playwright.sync_api import Browser, BrowserContext, Page
 
 from config.settings import settings
 from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
+from workflows.shared.utils.diagnostics import PageDiagnostics
+from workflows.shared.utils.logger import get_logger
+from workflows.shared.utils.screenshot import capture_screenshot
 from workflows.trade_terminal.pages.login_page import TradeLoginPage
 from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
 from workflows.trade_terminal.pages.trading_dashboard_page import TradingDashboardPage
+
+logger = get_logger("trade_fixtures")
 
 
 def _perform_trade_login(page: Page, creds) -> None:
@@ -61,16 +66,49 @@ def authenticated_trade_context(workflow_browser: Browser) -> Generator[BrowserC
     yield context
     context.close()
 
-
 @pytest.fixture(scope="function")
-def authenticated_trade_page(authenticated_trade_context: BrowserContext) -> Generator[Page, None, None]:
+def authenticated_trade_page(
+    authenticated_trade_context: BrowserContext,
+    request: pytest.FixtureRequest,
+) -> Generator[Page, None, None]:
     """
-    Pre-authenticated page instance for Trade Terminal tests.
+    Pre-authenticated page instance for Trade Terminal tests with diagnostics telemetry.
     """
     page = authenticated_trade_context.new_page()
     page.set_default_timeout(settings.browser.timeout)
+    diagnostics = PageDiagnostics(page)
+    page._diagnostics = diagnostics
+
     yield page
-    page.close()
+
+    # Screenshot and diagnostics capture on test failure
+    test_failed = hasattr(request.node, "rep_call") and request.node.rep_call.failed
+    if test_failed:
+        if settings.browser.screenshot_on_failure:
+            capture_screenshot(
+                page=page,
+                test_name=request.node.name,
+                suffix="failure",
+                destination_dir=settings.screenshots_dir,
+            )
+        try:
+            diag_path = diagnostics.save_report(
+                test_name=request.node.name,
+                destination_dir=settings.diagnostics_dir,
+            )
+            logger.info(f"Saved failure diagnostic telemetry to: {diag_path}")
+            if diagnostics.has_errors():
+                logger.error(
+                    f"Diagnostic errors detected during failed test '{request.node.name}':\n"
+                    f"{diagnostics.format_report()}"
+                )
+        except Exception as e:
+            logger.error(f"Failed to save diagnostic telemetry: {e}")
+
+    try:
+        page.close()
+    except Exception:
+        pass
 
 
 @pytest.fixture(scope="function")
