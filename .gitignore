@@ -1,0 +1,76 @@
+# ==============================================================================
+# ENVIRONMENT VARIABLES & SECRETS (NEVER COMMIT SENSITIVE DATA)
+# ==============================================================================
+.env
+.env.*
+!.env.example
+
+# ==============================================================================
+# AUTHENTICATION STORAGE STATES & COOKIE DUMPS
+# ==============================================================================
+auth_state*.json
+auth/*.json
+!auth/.gitkeep
+
+# ==============================================================================
+# PYTHON BYTECODE, CACHES & VIRTUAL ENVIRONMENTS
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# ==============================================================================
+# TESTING & COVERAGE ARTIFACTS
+# ==============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# ==============================================================================
+# GENERATED TEST REPORTS & RUN ARTIFACTS
+# ==============================================================================
+reports/workflows/*
+!reports/workflows/.gitkeep
+reports/workflows/screenshots/*
+!reports/workflows/screenshots/.gitkeep
+reports/workflows/traces/*
+!reports/workflows/traces/.gitkeep
+
+reports/ui_regression/*
+!reports/ui_regression/.gitkeep
+reports/*.html
+reports/*.xml
+
+playwright-report/
+test-results/
+comparison_report*.json
+
+# ==============================================================================
+# ARCHIVES & BACKUPS
+# ==============================================================================
+*.zip
+*.tar.gz
+*.bak
+*.swp
+*~
+
+# ==============================================================================
+# IDE & OPERATING SYSTEM METADATA
+# ==============================================================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace

@@ -1,0 +1,3214 @@
+{
+  "page": {
+    "url": "https://stage.xtremenext.com/login",
+    "final_url": "https://stage.xtremenext.com/login/",
+    "title": "XtremeNext - Login",
+    "viewport": "xl",
+    "viewport_size": {
+      "width": 1280,
+      "height": 800
+    },
+    "depth": 0,
+    "http_status": 200,
+    "content_type": "text/html",
+    "type": "auth_page"
+  },
+  "statistics": {
+    "element_count": 130,
+    "link_count": 0
+  },
+  "elements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": null,
+      "classes": "no-js css-menubar",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login Don't have an account? Signup now! Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "no-js css-menubar",
+        "lang": "en"
+      },
+      "visible": true,
+      "locator": "html.no-js.css-menubar",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": null,
+      "classes": null,
+      "text": "XtremeNext - Login Breakpoints(); Breakpoints(); .qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-we",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": false,
+      "locator": "head",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "charset": "utf-8"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "http-equiv": "X-UA-Compatible",
+        "content": "IE=edge"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 5,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "description",
+        "content": "Wavex One - Trade Online Forex, Crypto, Stocks CFDs Trading and Investing | Forex Trading | Crypto Currency Trading | Wavex One Global"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 6,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "robots",
+        "content": "noindex"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 7,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "author",
+        "content": ""
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 8,
+      "tag": "title",
+      "id": null,
+      "classes": null,
+      "text": "XtremeNext - Login",
+      "direct_text": "XtremeNext - Login",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "title",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 9,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "apple-touch-icon",
+        "href": "../theme/classic/topbar/assets/images/apple-touch-icon.png"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 10,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "shortcut icon",
+        "href": "/img/favi555.png",
+        "type": "image/x-icon"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 11,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/jquery/jquery.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 12,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/css/bootstrap.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 13,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/css/bootstrap-extend.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 14,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/topbar/assets/css/site.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 15,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/animsition/animsition.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 16,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/asscrollable/asScrollable.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 17,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/switchery/switchery.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 18,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/intro-js/introjs.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 19,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/slidepanel/slidePanel.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 20,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/flag-icon-css/flag-icon.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 21,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/fonts/web-icons/web-icons.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 22,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/fonts/brand-icons/brand-icons.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 23,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/fonts/font-awesome/font-awesome.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 24,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "https://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 25,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/toastr/toastr.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 26,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 27,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 28,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-fixedcolumns-bs4/dataTables.fixedcolumns.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 29,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-rowgroup-bs4/dataTables.rowgroup.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 30,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-scroller-bs4/dataTables.scroller.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 31,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-select-bs4/dataTables.select.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 32,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 33,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 34,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/topbar/assets/examples/css/tables/datatable.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 35,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/breakpoints/breakpoints.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 36,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "Breakpoints();",
+      "direct_text": "Breakpoints();",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 37,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/breakpoints/breakpoints.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 38,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "Breakpoints();",
+      "direct_text": "Breakpoints();",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 39,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "https://accounts.google.com/gsi/client",
+        "async": ""
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 40,
+      "tag": "style",
+      "id": "googleidentityservice_button_styles",
+      "classes": null,
+      "text": ".qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-weight:500;text-decoration:none}.Bz112c-W3lGp{heigh",
+      "direct_text": ".qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-weight:500;text-decoration:none}.Bz112c-W3lGp{heigh",
+      "is_leaf": true,
+      "attributes": {
+        "id": "googleidentityservice_button_styles"
+      },
+      "visible": false,
+      "locator": "#googleidentityservice_button_styles",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 41,
+      "tag": "body",
+      "id": null,
+      "classes": "animsition page-register-v3 fade-in",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login Don't have an account? Signup now! Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "animsition page-register-v3 fade-in",
+        "style": "animation-duration: 800ms;"
+      },
+      "visible": true,
+      "locator": "body.animsition.page-register-v3.fade-in",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      }
+    },
+    {
+      "index": 42,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".body { display: none; } .loader { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 9999; background-size: 300px 100px; background: url('/img/loading.gif') 50% 50% no-repeat rgb(249, 249, 249); }",
+      "direct_text": ".body { display: none; } .loader { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 9999; background-size: 300px 100px; background: url('/img/loading.gif') 50% 50% no-repeat rgb(249, 249, 249); }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 43,
+      "tag": "div",
+      "id": null,
+      "classes": "loader",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "loader",
+        "style": "display: none;"
+      },
+      "visible": false,
+      "locator": "div.loader",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 44,
+      "tag": "div",
+      "id": null,
+      "classes": "body",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login Don't have an account? Signup now! Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "body",
+        "style": "display: block;"
+      },
+      "visible": true,
+      "locator": "div.body",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 798.56
+      }
+    },
+    {
+      "index": 45,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": "html, body.page-register-v3 { min-height: 100%; } body.page-register-v3 { padding-top: 0; } /* Scoped to body.page-register-v3 so this always wins over the theme's own generic .page/.vertical-align table-cell centering. min-height (not a fixed height) plus no overflow:hidden lets the page grow and scroll normally when the card + footer are taller than a short viewport, instead of clipping content with no way to scroll to it. */ body.page-register-v3 .page { display: flex; flex-direction: column;",
+      "direct_text": "html, body.page-register-v3 { min-height: 100%; } body.page-register-v3 { padding-top: 0; } /* Scoped to body.page-register-v3 so this always wins over the theme's own generic .page/.vertical-align table-cell centering. min-height (not a fixed height) plus no overflow:hidden lets the page grow and scroll normally when the card + footer are taller than a short viewport, instead of clipping content with no way to scroll to it. */ body.page-register-v3 .page { display: flex; flex-direction: column;",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 46,
+      "tag": "div",
+      "id": null,
+      "classes": "page vertical-align text-center",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login Don't have an account? Signup now!",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "page vertical-align text-center",
+        "data-animsition-in": "fade-in",
+        "data-animsition-out": "fade-out"
+      },
+      "visible": true,
+      "locator": "div.page.vertical-align.text-center",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 736
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": null,
+      "classes": "page-content vertical-align-middle animation-slide-top animation-duration-1",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login Don't have an account? Signup now!",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "page-content vertical-align-middle animation-slide-top animation-duration-1"
+      },
+      "visible": true,
+      "locator": "div.page-content.vertical-align-middle.animation-slide-top.animation-duration-1",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 16,
+        "y": 128.66,
+        "width": 1248,
+        "height": 478.69
+      }
+    },
+    {
+      "index": 48,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-login-card",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-login-card"
+      },
+      "visible": true,
+      "locator": "div.xn-login-card",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 440,
+        "y": 144.66,
+        "width": 400,
+        "height": 394.69
+      }
+    },
+    {
+      "index": 49,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-login-brand",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-login-brand"
+      },
+      "visible": true,
+      "locator": "div.xn-login-brand",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 177.66,
+        "width": 326,
+        "height": 38.83
+      }
+    },
+    {
+      "index": 50,
+      "tag": "img",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "/img/logo555.png",
+        "alt": "XtremeNext"
+      },
+      "visible": true,
+      "locator": "img",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 550,
+        "y": 177.66,
+        "width": 180,
+        "height": 38.83
+      },
+      "src": "https://stage.xtremenext.com/img/logo555.png",
+      "alt": "XtremeNext"
+    },
+    {
+      "index": 51,
+      "tag": "form",
+      "id": "register",
+      "classes": "xn-login-form",
+      "text": "EMAIL OR ACCOUNT ID PASSWORD Remember me Forgot password? Login",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "id": "register",
+        "class": "xn-login-form"
+      },
+      "visible": true,
+      "locator": "#register",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 236.48,
+        "width": 326,
+        "height": 269.86
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-field",
+      "text": "EMAIL OR ACCOUNT ID",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-field"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 236.48,
+        "width": 326,
+        "height": 71.28
+      }
+    },
+    {
+      "index": 53,
+      "tag": "label",
+      "id": null,
+      "classes": null,
+      "text": "EMAIL OR ACCOUNT ID",
+      "direct_text": "Email or Account ID",
+      "is_leaf": true,
+      "attributes": {
+        "for": "email"
+      },
+      "visible": true,
+      "locator": "label",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 236.48,
+        "width": 326,
+        "height": 17.28
+      }
+    },
+    {
+      "index": 54,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-input-wrap",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-input-wrap"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 259.77,
+        "width": 326,
+        "height": 48
+      }
+    },
+    {
+      "index": 55,
+      "tag": "input",
+      "id": "email",
+      "classes": "form-control empty",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "text",
+        "class": "form-control empty",
+        "name": "email",
+        "id": "email",
+        "autocomplete": "off",
+        "placeholder": "you@example.com"
+      },
+      "visible": true,
+      "locator": "#email",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 259.77,
+        "width": 326,
+        "height": 48
+      },
+      "enabled": true,
+      "input_type": "text",
+      "name": "email",
+      "placeholder": "you@example.com",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "index": 56,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-field xn-field-password",
+      "text": "PASSWORD",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-field xn-field-password"
+      },
+      "visible": true,
+      "locator": "div.xn-field.xn-field-password",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 325.77,
+        "width": 326,
+        "height": 71.28
+      }
+    },
+    {
+      "index": 57,
+      "tag": "label",
+      "id": null,
+      "classes": null,
+      "text": "PASSWORD",
+      "direct_text": "Password",
+      "is_leaf": true,
+      "attributes": {
+        "for": "password"
+      },
+      "visible": true,
+      "locator": "label",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 325.77,
+        "width": 326,
+        "height": 17.28
+      }
+    },
+    {
+      "index": 58,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-input-wrap",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-input-wrap"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 349.05,
+        "width": 326,
+        "height": 48
+      }
+    },
+    {
+      "index": 59,
+      "tag": "input",
+      "id": "password",
+      "classes": "form-control empty",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "password",
+        "class": "form-control empty",
+        "name": "password",
+        "id": "password",
+        "autocomplete": "off",
+        "placeholder": "••••••••"
+      },
+      "visible": true,
+      "locator": "#password",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 349.05,
+        "width": 326,
+        "height": 48
+      },
+      "enabled": true,
+      "input_type": "password",
+      "name": "password",
+      "placeholder": "••••••••",
+      "checked": false,
+      "value": "[REDACTED]"
+    },
+    {
+      "index": 60,
+      "tag": "span",
+      "id": null,
+      "classes": "fa fa-fw fa-eye field-icon toggle-password",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "toggle": "#password-field",
+        "class": "fa fa-fw fa-eye field-icon toggle-password"
+      },
+      "visible": true,
+      "locator": "span.fa.fa-fw.fa-eye.field-icon.toggle-password",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 775,
+        "y": 349.05,
+        "width": 14,
+        "height": 48
+      }
+    },
+    {
+      "index": 61,
+      "tag": "div",
+      "id": null,
+      "classes": "xn-row",
+      "text": "Remember me Forgot password?",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "xn-row"
+      },
+      "visible": true,
+      "locator": "div.xn-row",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 415.05,
+        "width": 326,
+        "height": 23.3
+      }
+    },
+    {
+      "index": 62,
+      "tag": "div",
+      "id": null,
+      "classes": "checkbox-custom checkbox-inline checkbox-primary checkbox-lg",
+      "text": "Remember me",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "checkbox-custom checkbox-inline checkbox-primary checkbox-lg"
+      },
+      "visible": true,
+      "locator": "div.checkbox-custom.checkbox-inline.checkbox-primary.checkbox-lg",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 415.05,
+        "width": 120.48,
+        "height": 23.3
+      }
+    },
+    {
+      "index": 63,
+      "tag": "input",
+      "id": "inputCheckbox",
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "checkbox",
+        "id": "inputCheckbox",
+        "name": "remember"
+      },
+      "visible": false,
+      "locator": "#inputCheckbox",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 481,
+        "y": 415.05,
+        "width": 24,
+        "height": 24
+      },
+      "enabled": true,
+      "input_type": "checkbox",
+      "name": "remember",
+      "placeholder": null,
+      "checked": false,
+      "value": "on"
+    },
+    {
+      "index": 64,
+      "tag": "label",
+      "id": null,
+      "classes": null,
+      "text": "Remember me",
+      "direct_text": "Remember me",
+      "is_leaf": true,
+      "attributes": {
+        "for": "inputCheckbox"
+      },
+      "visible": true,
+      "locator": "label",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 501,
+        "y": 416.34,
+        "width": 96.48,
+        "height": 22
+      }
+    },
+    {
+      "index": 65,
+      "tag": "a",
+      "id": null,
+      "classes": "xn-forgot",
+      "text": "Forgot password?",
+      "direct_text": "Forgot password?",
+      "is_leaf": true,
+      "attributes": {
+        "class": "xn-forgot",
+        "href": "../reset/"
+      },
+      "visible": true,
+      "locator": "a.xn-forgot",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 699.31,
+        "y": 416.48,
+        "width": 103.69,
+        "height": 20.42
+      },
+      "href": "https://stage.xtremenext.com/reset/",
+      "link_text": "Forgot password?"
+    },
+    {
+      "index": 66,
+      "tag": "button",
+      "id": null,
+      "classes": "savebut btn btn-primary xn-btn-login",
+      "text": "Login",
+      "direct_text": "Login",
+      "is_leaf": true,
+      "attributes": {
+        "type": "submit",
+        "class": "savebut btn btn-primary xn-btn-login"
+      },
+      "visible": true,
+      "locator": "button.savebut.btn.btn-primary.xn-btn-login",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 477,
+        "y": 460.34,
+        "width": 326,
+        "height": 46
+      },
+      "enabled": true,
+      "button_type": "submit",
+      "name": null
+    },
+    {
+      "index": 67,
+      "tag": "input",
+      "id": "profile_data",
+      "classes": "d-none",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "hidden",
+        "id": "profile_data",
+        "class": "d-none"
+      },
+      "visible": false,
+      "locator": "#profile_data",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "enabled": true,
+      "input_type": "hidden",
+      "name": null,
+      "placeholder": null,
+      "checked": false,
+      "value": ""
+    },
+    {
+      "index": 68,
+      "tag": "p",
+      "id": null,
+      "classes": "fs-300",
+      "text": "Don't have an account? Signup now!",
+      "direct_text": "Don't have an account?",
+      "is_leaf": false,
+      "attributes": {
+        "class": "fs-300"
+      },
+      "visible": true,
+      "locator": "p.fs-300",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 36,
+        "y": 555.34,
+        "width": 1208,
+        "height": 22
+      }
+    },
+    {
+      "index": 69,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "Signup now!",
+      "direct_text": "Signup now!",
+      "is_leaf": true,
+      "attributes": {
+        "href": "../register/"
+      },
+      "visible": true,
+      "locator": "a[href=\"../register/\"]",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 675.23,
+        "y": 558.34,
+        "width": 76.22,
+        "height": 16
+      },
+      "href": "https://stage.xtremenext.com/register/",
+      "link_text": "Signup now!"
+    },
+    {
+      "index": 70,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "function normalizeCopiedCredential(value) { return String(value || '') .replace(/[\\u200B-\\u200D\\uFEFF]/g, '') .replace(/\\u00A0/g, ' ') .replace(/^\\s+|\\s+$/g, ''); } function bindCredentialCleaner(selector) { $(document).on('paste blur', selector, function() { const input = this; setTimeout(function() { input.value = normalizeCopiedCredential(input.value); }, 0); }); } bindCredentialCleaner('#email, #password'); $(document).ready(function() { $('form').on('submit', function(e) { valid = 0; if (!v",
+      "direct_text": "function normalizeCopiedCredential(value) { return String(value || '') .replace(/[\\u200B-\\u200D\\uFEFF]/g, '') .replace(/\\u00A0/g, ' ') .replace(/^\\s+|\\s+$/g, ''); } function bindCredentialCleaner(selector) { $(document).on('paste blur', selector, function() { const input = this; setTimeout(function() { input.value = normalizeCopiedCredential(input.value); }, 0); }); } bindCredentialCleaner('#email, #password'); $(document).ready(function() { $('form').on('submit', function(e) { valid = 0; if (!v",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 71,
+      "tag": "footer",
+      "id": null,
+      "classes": "footer",
+      "text": "Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "footer"
+      },
+      "visible": true,
+      "locator": "footer.footer",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 736,
+        "width": 1280,
+        "height": 62.56
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": null,
+      "classes": "container-fluid",
+      "text": "Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "container-fluid"
+      },
+      "visible": true,
+      "locator": "div.container-fluid",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 748,
+        "width": 1280,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 73,
+      "tag": "div",
+      "id": null,
+      "classes": "row",
+      "text": "Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "row"
+      },
+      "visible": true,
+      "locator": "div.row",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 748,
+        "width": 1280,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 74,
+      "tag": "div",
+      "id": null,
+      "classes": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12",
+      "text": "Privacy Policy | Terms & Conditions",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 748,
+        "width": 640,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 75,
+      "tag": "p",
+      "id": null,
+      "classes": "text-center",
+      "text": "Privacy Policy | Terms & Conditions",
+      "direct_text": "|",
+      "is_leaf": false,
+      "attributes": {
+        "class": "text-center"
+      },
+      "visible": true,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 15,
+        "y": 748,
+        "width": 610,
+        "height": 23.56
+      }
+    },
+    {
+      "index": 76,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "Privacy Policy",
+      "direct_text": "Privacy Policy",
+      "is_leaf": true,
+      "attributes": {
+        "href": "#"
+      },
+      "visible": true,
+      "locator": "a[href=\"#\"]",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 202.3,
+        "y": 751,
+        "width": 93.36,
+        "height": 17
+      },
+      "href": "https://stage.xtremenext.com/login/#",
+      "link_text": "Privacy Policy"
+    },
+    {
+      "index": 77,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "Terms & Conditions",
+      "direct_text": "Terms & Conditions",
+      "is_leaf": true,
+      "attributes": {
+        "href": "#"
+      },
+      "visible": true,
+      "locator": "a[href=\"#\"]",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 307.77,
+        "y": 751,
+        "width": 129.92,
+        "height": 17
+      },
+      "href": "https://stage.xtremenext.com/login/#",
+      "link_text": "Terms & Conditions"
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": null,
+      "classes": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12",
+      "text": "© 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 640,
+        "y": 748,
+        "width": 640,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 79,
+      "tag": "p",
+      "id": null,
+      "classes": "text-center",
+      "text": "© 2026 XtremeNext",
+      "direct_text": "© 2026",
+      "is_leaf": false,
+      "attributes": {
+        "class": "text-center"
+      },
+      "visible": true,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 655,
+        "y": 748,
+        "width": 610,
+        "height": 23.56
+      }
+    },
+    {
+      "index": 80,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "XtremeNext",
+      "direct_text": "XtremeNext",
+      "is_leaf": true,
+      "attributes": {
+        "href": "/"
+      },
+      "visible": true,
+      "locator": "a[href=\"/\"]",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 946.78,
+        "y": 751,
+        "width": 79.2,
+        "height": 17
+      },
+      "href": "https://stage.xtremenext.com/",
+      "link_text": "XtremeNext"
+    },
+    {
+      "index": 81,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".footer { background-color: #1f1f1f !important; color: #666; padding: 15px 0; font-family: 'Public Sans', Helvetica, Arial, Lucida, sans-serif; font-size: 15px; font-weight: 500; } .footer a, .footer a:hover { text-decoration: none; color: #666; } .footer p { margin-bottom: 0.5rem !important; }",
+      "direct_text": ".footer { background-color: #1f1f1f !important; color: #666; padding: 15px 0; font-family: 'Public Sans', Helvetica, Arial, Lucida, sans-serif; font-size: 15px; font-weight: 500; } .footer a, .footer a:hover { text-decoration: none; color: #666; } .footer p { margin-bottom: 0.5rem !important; }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 82,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/babel-external-helpers/babel-external-helpers.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 83,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/popper-js/umd/popper.min.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 84,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/bootstrap/bootstrap.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 85,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/animsition/animsition.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 86,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/mousewheel/jquery.mousewheel.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 87,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/asscrollbar/jquery-asScrollbar.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 88,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/asscrollable/jquery-asScrollable.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 89,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/intro-js/intro.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 90,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/screenfull/screenfull.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 91,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/slidepanel/jquery-slidePanel.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 92,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Component.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 93,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 94,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Base.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 95,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Config.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 96,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/Menubar.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 97,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/Sidebar.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 98,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/PageAside.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 99,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/GridMenu.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 100,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/config/colors.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 101,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/config/tour.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 102,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "Config.set('assets', '../theme/classic/topbar/assets');",
+      "direct_text": "Config.set('assets', '../theme/classic/topbar/assets');",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 103,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Site.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 104,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/asscrollable.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 105,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/slidepanel.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 106,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/switchery.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 107,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/toastr/toastr.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 108,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/toastr.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 109,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net/jquery.dataTables.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 110,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-bs4/dataTables.bootstrap4.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 111,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-fixedheader/dataTables.fixedHeader.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 112,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-fixedcolumns/dataTables.fixedColumns.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 113,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-rowgroup/dataTables.rowGroup.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 114,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-scroller/dataTables.scroller.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 115,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-responsive/dataTables.responsive.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 116,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 117,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/dataTables.buttons.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 118,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.html5.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 119,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.flash.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 120,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.print.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 121,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.colVis.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 122,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 123,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/raty/jquery.raty.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 124,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/raty.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 125,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".rating-hint { display: inline; margin-left: 10px; vertical-align: sub; }",
+      "direct_text": ".rating-hint { display: inline; margin-left: 10px; vertical-align: sub; }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 126,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "(function(document, window, $) { 'use strict'; var Site = window.Site; $(document).ready(function() { Site.run(); }); })(document, window, jQuery); toastr.options = { \"closeButton\": true, \"debug\": false, \"newestOnTop\": true, \"progressBar\": false, \"positionClass\": \"toast-top-right\", \"preventDuplicates\": true, \"onclick\": null, \"showDuration\": \"300\", \"hideDuration\": \"1000\", \"timeOut\": \"1000\", \"extendedTimeOut\": \"300\", \"showEasing\": \"swing\", \"hideEasing\": \"linear\", \"showMethod\": \"fadeIn\", \"hideMetho",
+      "direct_text": "(function(document, window, $) { 'use strict'; var Site = window.Site; $(document).ready(function() { Site.run(); }); })(document, window, jQuery); toastr.options = { \"closeButton\": true, \"debug\": false, \"newestOnTop\": true, \"progressBar\": false, \"positionClass\": \"toast-top-right\", \"preventDuplicates\": true, \"onclick\": null, \"showDuration\": \"300\", \"hideDuration\": \"1000\", \"timeOut\": \"1000\", \"extendedTimeOut\": \"300\", \"showEasing\": \"swing\", \"hideEasing\": \"linear\", \"showMethod\": \"fadeIn\", \"hideMetho",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 127,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/jquery-placeholder.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 128,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/material.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 129,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "var token = window.localStorage.getItem(\"token\"); var encryptdata = window.localStorage.getItem(\"encryptdata\"); if(encryptdata == null || encryptdata == \"\"){ toggle(); } else if (token != null && token != \"\") { var url = \"../api/auth.php?token=\" + token+\"&type=reauthenticate\"; $.get(url, function(json) { var data = JSON.parse(json); // console.log(data); if (data.status == \"success\") { if (data.data.verified == 1) { var inputString = data.data.session; const modifiedString = inputString.substrin",
+      "direct_text": "var token = window.localStorage.getItem(\"token\"); var encryptdata = window.localStorage.getItem(\"encryptdata\"); if(encryptdata == null || encryptdata == \"\"){ toggle(); } else if (token != null && token != \"\") { var url = \"../api/auth.php?token=\" + token+\"&type=reauthenticate\"; $.get(url, function(json) { var data = JSON.parse(json); // console.log(data); if (data.status == \"success\") { if (data.data.verified == 1) { var inputString = data.data.session; const modifiedString = inputString.substrin",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    }
+  ]
+}

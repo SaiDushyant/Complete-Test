@@ -1,0 +1,3657 @@
+{
+  "page": {
+    "url": "https://stage.xtremenext.com/reset",
+    "final_url": "https://stage.xtremenext.com/reset/",
+    "title": "XtremeNext - Login",
+    "viewport": "lg",
+    "viewport_size": {
+      "width": 1024,
+      "height": 800
+    },
+    "depth": 0,
+    "http_status": 200,
+    "content_type": "text/html",
+    "type": "auth_page"
+  },
+  "statistics": {
+    "element_count": 149,
+    "link_count": 0
+  },
+  "elements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": null,
+      "classes": "no-js css-menubar",
+      "text": "Login Register > Forgot Password ? Please enter your Email Address Send Reset Password Link Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "no-js css-menubar",
+        "lang": "en"
+      },
+      "visible": true,
+      "locator": "html.no-js.css-menubar",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 800
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": null,
+      "classes": null,
+      "text": "XtremeNext - Login Breakpoints(); Breakpoints(); .qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-we",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": false,
+      "locator": "head",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "charset": "utf-8"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "http-equiv": "X-UA-Compatible",
+        "content": "IE=edge"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 5,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "description",
+        "content": "Wavex One - Trade Online Forex, Crypto, Stocks CFDs Trading and Investing | Forex Trading | Crypto Currency Trading | Wavex One Global"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 6,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "robots",
+        "content": "noindex"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 7,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "author",
+        "content": ""
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 8,
+      "tag": "title",
+      "id": null,
+      "classes": null,
+      "text": "XtremeNext - Login",
+      "direct_text": "XtremeNext - Login",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "title",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 9,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "apple-touch-icon",
+        "href": "../theme/classic/topbar/assets/images/apple-touch-icon.png"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 10,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "shortcut icon",
+        "href": "/img/favi555.png",
+        "type": "image/x-icon"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 11,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/jquery/jquery.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 12,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/css/bootstrap.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 13,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/css/bootstrap-extend.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 14,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/topbar/assets/css/site.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 15,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/animsition/animsition.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 16,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/asscrollable/asScrollable.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 17,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/switchery/switchery.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 18,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/intro-js/introjs.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 19,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/slidepanel/slidePanel.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 20,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/flag-icon-css/flag-icon.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 21,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/fonts/web-icons/web-icons.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 22,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/fonts/brand-icons/brand-icons.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 23,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/fonts/font-awesome/font-awesome.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 24,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "https://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 25,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/toastr/toastr.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 26,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 27,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 28,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-fixedcolumns-bs4/dataTables.fixedcolumns.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 29,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-rowgroup-bs4/dataTables.rowgroup.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 30,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-scroller-bs4/dataTables.scroller.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 31,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-select-bs4/dataTables.select.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 32,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 33,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 34,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "../theme/classic/topbar/assets/examples/css/tables/datatable.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 35,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/breakpoints/breakpoints.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 36,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "Breakpoints();",
+      "direct_text": "Breakpoints();",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 37,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/breakpoints/breakpoints.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 38,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "Breakpoints();",
+      "direct_text": "Breakpoints();",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 39,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "https://accounts.google.com/gsi/client",
+        "async": ""
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 40,
+      "tag": "style",
+      "id": "googleidentityservice_button_styles",
+      "classes": null,
+      "text": ".qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-weight:500;text-decoration:none}.Bz112c-W3lGp{heigh",
+      "direct_text": ".qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-weight:500;text-decoration:none}.Bz112c-W3lGp{heigh",
+      "is_leaf": true,
+      "attributes": {
+        "id": "googleidentityservice_button_styles"
+      },
+      "visible": false,
+      "locator": "#googleidentityservice_button_styles",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 41,
+      "tag": "body",
+      "id": null,
+      "classes": "animsition page-register-v3",
+      "text": "Login Register > Forgot Password ? Please enter your Email Address Send Reset Password Link Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "animsition page-register-v3",
+        "style": "animation-duration: 800ms; opacity: 1;"
+      },
+      "visible": true,
+      "locator": "body.animsition.page-register-v3",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 800
+      }
+    },
+    {
+      "index": 42,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".body { display: none; } .loader { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 9999; background-size: 300px 100px; background: url('/img/loading.gif') 50% 50% no-repeat rgb(249, 249, 249); }",
+      "direct_text": ".body { display: none; } .loader { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 9999; background-size: 300px 100px; background: url('/img/loading.gif') 50% 50% no-repeat rgb(249, 249, 249); }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 43,
+      "tag": "div",
+      "id": null,
+      "classes": "loader",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "loader",
+        "style": "display: none;"
+      },
+      "visible": false,
+      "locator": "div.loader",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 44,
+      "tag": "div",
+      "id": null,
+      "classes": "body",
+      "text": "Login Register > Forgot Password ? Please enter your Email Address Send Reset Password Link Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "body",
+        "style": "display: block;"
+      },
+      "visible": true,
+      "locator": "div.body",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 64,
+        "width": 1024,
+        "height": 860.56
+      }
+    },
+    {
+      "index": 45,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".site-navbar .navbar-header .navbar-brand-logo { height: 37px; } a.regbtn { margin-right: 9px; color: white; display: inline-block; height: 40px; font-size: 16px; background: #257fa6; top: -1px; padding: 2px 13px; padding-top: 8px !important; margin-top: 11px; margin-left: 14px; margin-bottom: 10px; background: #005dbd; color: #fff !important; line-height: 9px; font-weight: 400; font-family: 'Public Sans', Helvetica, Arial, Lucida, sans-serif !important; padding: 15px 23px !important; font-size:",
+      "direct_text": ".site-navbar .navbar-header .navbar-brand-logo { height: 37px; } a.regbtn { margin-right: 9px; color: white; display: inline-block; height: 40px; font-size: 16px; background: #257fa6; top: -1px; padding: 2px 13px; padding-top: 8px !important; margin-top: 11px; margin-left: 14px; margin-bottom: 10px; background: #005dbd; color: #fff !important; line-height: 9px; font-weight: 400; font-family: 'Public Sans', Helvetica, Arial, Lucida, sans-serif !important; padding: 15px 23px !important; font-size:",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 46,
+      "tag": "nav",
+      "id": null,
+      "classes": "site-navbar navbar navbar-default navbar-fixed-top navbar-mega",
+      "text": "Login Register",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "site-navbar navbar navbar-default navbar-fixed-top navbar-mega ",
+        "role": "navigation"
+      },
+      "visible": true,
+      "locator": "nav.site-navbar.navbar.navbar-default.navbar-fixed-top.navbar-mega",
+      "is_unique": true,
+      "role": "navigation",
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 1024,
+        "height": 66
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": null,
+      "classes": "navbar-header",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "navbar-header"
+      },
+      "visible": true,
+      "locator": "div.navbar-header",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 160,
+        "height": 66
+      }
+    },
+    {
+      "index": 48,
+      "tag": "button",
+      "id": null,
+      "classes": "navbar-toggler collapsed",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "type": "button",
+        "class": "navbar-toggler collapsed",
+        "data-target": "#site-navbar-collapse",
+        "data-toggle": "collapse"
+      },
+      "visible": false,
+      "locator": "button.navbar-toggler.collapsed",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "enabled": true,
+      "button_type": "button",
+      "name": null
+    },
+    {
+      "index": 49,
+      "tag": "i",
+      "id": null,
+      "classes": "icon wb-menu",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "icon wb-menu",
+        "aria-hidden": "true"
+      },
+      "visible": false,
+      "locator": "i.icon.wb-menu",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 50,
+      "tag": "a",
+      "id": null,
+      "classes": "navbar-brand navbar-brand-center",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "navbar-brand navbar-brand-center",
+        "href": "/"
+      },
+      "visible": true,
+      "locator": "a.navbar-brand.navbar-brand-center",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 194.33,
+        "height": 66
+      },
+      "href": "https://stage.xtremenext.com/",
+      "link_text": ""
+    },
+    {
+      "index": 51,
+      "tag": "img",
+      "id": null,
+      "classes": "navbar-brand-logo navbar-brand-logo-normal",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "navbar-brand-logo navbar-brand-logo-normal",
+        "src": "/img/logo555.png",
+        "title": "Remark"
+      },
+      "visible": false,
+      "locator": "img.navbar-brand-logo.navbar-brand-logo-normal",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "src": "https://stage.xtremenext.com/img/logo555.png",
+      "alt": null
+    },
+    {
+      "index": 52,
+      "tag": "img",
+      "id": null,
+      "classes": "navbar-brand-logo navbar-brand-logo-special",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "navbar-brand-logo navbar-brand-logo-special",
+        "src": "/img/logo555.png",
+        "title": "Remark"
+      },
+      "visible": true,
+      "locator": "img.navbar-brand-logo.navbar-brand-logo-special",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 20,
+        "y": 17.02,
+        "width": 148.33,
+        "height": 32
+      },
+      "src": "https://stage.xtremenext.com/img/logo555.png",
+      "alt": null
+    },
+    {
+      "index": 53,
+      "tag": "span",
+      "id": null,
+      "classes": "navbar-brand-text hidden-xs-down",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "navbar-brand-text hidden-xs-down"
+      },
+      "visible": false,
+      "locator": "span.navbar-brand-text.hidden-xs-down",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 174.33,
+        "y": 23.41,
+        "width": 0,
+        "height": 21
+      }
+    },
+    {
+      "index": 54,
+      "tag": "div",
+      "id": null,
+      "classes": "navbar-container container-fluid",
+      "text": "Login Register",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "navbar-container container-fluid"
+      },
+      "visible": true,
+      "locator": "div.navbar-container.container-fluid",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 160,
+        "y": 2.5,
+        "width": 864,
+        "height": 61
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "site-navbar-collapse",
+      "classes": "collapse navbar-collapse navbar-collapse-toolbar",
+      "text": "Login Register",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "collapse navbar-collapse navbar-collapse-toolbar",
+        "id": "site-navbar-collapse"
+      },
+      "visible": true,
+      "locator": "#site-navbar-collapse",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 175,
+        "y": 2.5,
+        "width": 834,
+        "height": 61
+      }
+    },
+    {
+      "index": 56,
+      "tag": "ul",
+      "id": null,
+      "classes": "nav navbar-toolbar",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "nav navbar-toolbar"
+      },
+      "visible": false,
+      "locator": "ul",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 175,
+        "y": 2.5,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 57,
+      "tag": "li",
+      "id": "toggleMenubar",
+      "classes": "nav-item hidden-float",
+      "text": "Toggle menubar",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "nav-item hidden-float",
+        "id": "toggleMenubar"
+      },
+      "visible": false,
+      "locator": "#toggleMenubar",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 58,
+      "tag": "a",
+      "id": null,
+      "classes": "nav-link",
+      "text": "Toggle menubar",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "nav-link",
+        "data-toggle": "menubar",
+        "href": "#",
+        "role": "button"
+      },
+      "visible": false,
+      "locator": "a.nav-link",
+      "is_unique": true,
+      "role": "button",
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "href": "https://stage.xtremenext.com/reset/#",
+      "link_text": "Toggle menubar"
+    },
+    {
+      "index": 59,
+      "tag": "i",
+      "id": null,
+      "classes": "icon hamburger hamburger-arrow-left",
+      "text": "Toggle menubar",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "icon hamburger hamburger-arrow-left"
+      },
+      "visible": false,
+      "locator": "i.icon.hamburger.hamburger-arrow-left",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 60,
+      "tag": "span",
+      "id": null,
+      "classes": "sr-only",
+      "text": "Toggle menubar",
+      "direct_text": "Toggle menubar",
+      "is_leaf": true,
+      "attributes": {
+        "class": "sr-only"
+      },
+      "visible": false,
+      "locator": "span.sr-only",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 61,
+      "tag": "span",
+      "id": null,
+      "classes": "hamburger-bar",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "hamburger-bar"
+      },
+      "visible": false,
+      "locator": "span.hamburger-bar",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 62,
+      "tag": "ul",
+      "id": null,
+      "classes": "nav navbar-toolbar navbar-right navbar-toolbar-right",
+      "text": "Login Register",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "nav navbar-toolbar navbar-right navbar-toolbar-right"
+      },
+      "visible": true,
+      "locator": "ul.nav.navbar-toolbar.navbar-right.navbar-toolbar-right",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 788.27,
+        "y": 2.5,
+        "width": 235.73,
+        "height": 61
+      }
+    },
+    {
+      "index": 63,
+      "tag": "li",
+      "id": null,
+      "classes": "nav-item",
+      "text": "Login",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "nav-item"
+      },
+      "visible": true,
+      "locator": "li",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 788.27,
+        "y": 2.5,
+        "width": 103.16,
+        "height": 61
+      }
+    },
+    {
+      "index": 64,
+      "tag": "a",
+      "id": null,
+      "classes": "logbtn",
+      "text": "Login",
+      "direct_text": "Login",
+      "is_leaf": true,
+      "attributes": {
+        "class": "logbtn",
+        "href": "../login/"
+      },
+      "visible": true,
+      "locator": "a.logbtn",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 802.27,
+        "y": 13.5,
+        "width": 89.16,
+        "height": 40
+      },
+      "href": "https://stage.xtremenext.com/login/",
+      "link_text": "Login"
+    },
+    {
+      "index": 65,
+      "tag": "li",
+      "id": null,
+      "classes": "nav-item",
+      "text": "Register",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "nav-item"
+      },
+      "visible": true,
+      "locator": "li",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 891.42,
+        "y": 2.5,
+        "width": 132.58,
+        "height": 61
+      }
+    },
+    {
+      "index": 66,
+      "tag": "a",
+      "id": null,
+      "classes": "regbtn",
+      "text": "Register",
+      "direct_text": "Register",
+      "is_leaf": true,
+      "attributes": {
+        "class": "regbtn",
+        "href": "../register/"
+      },
+      "visible": true,
+      "locator": "a.regbtn",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 905.42,
+        "y": 13.5,
+        "width": 109.58,
+        "height": 40
+      },
+      "href": "https://stage.xtremenext.com/register/",
+      "link_text": "Register"
+    },
+    {
+      "index": 67,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": "body { padding-top: 64px; } .loadimg { width: 32px; display: none; } .page.vertical-align.text-center { min-height: 100vh; } @media (max-width: 767.98px) { body.site-navbar-collapse-show { padding-top: 126.02px !important; } } .page-register-v3 .panel { width: 400px; margin-bottom: 45px; background: #fff; border-radius: 0.286rem; } .page-register-v3 .panel .panel-body { padding: 50px 40px 40px; } .page-register-v3 .panel .brand-text { margin-top: 8px; } .page-register-v3 form { margin: 45px 0 30",
+      "direct_text": "body { padding-top: 64px; } .loadimg { width: 32px; display: none; } .page.vertical-align.text-center { min-height: 100vh; } @media (max-width: 767.98px) { body.site-navbar-collapse-show { padding-top: 126.02px !important; } } .page-register-v3 .panel { width: 400px; margin-bottom: 45px; background: #fff; border-radius: 0.286rem; } .page-register-v3 .panel .panel-body { padding: 50px 40px 40px; } .page-register-v3 .panel .brand-text { margin-top: 8px; } .page-register-v3 form { margin: 45px 0 30",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": null,
+      "classes": "page vertical-align text-center",
+      "text": "> Forgot Password ? Please enter your Email Address Send Reset Password Link",
+      "direct_text": ">",
+      "is_leaf": false,
+      "attributes": {
+        "class": "page vertical-align text-center",
+        "data-animsition-in": "fade-in",
+        "data-animsition-out": "fade-out"
+      },
+      "visible": true,
+      "locator": "div.page.vertical-align.text-center",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 64,
+        "width": 1024,
+        "height": 800
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": null,
+      "classes": "page-content vertical-align-middle animation-slide-top animation-duration-1",
+      "text": "Forgot Password ? Please enter your Email Address Send Reset Password Link",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "page-content vertical-align-middle animation-slide-top animation-duration-1"
+      },
+      "visible": true,
+      "locator": "div.page-content.vertical-align-middle.animation-slide-top.animation-duration-1",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 282,
+        "y": 64,
+        "width": 460,
+        "height": 421.02
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": null,
+      "classes": "panel",
+      "text": "Forgot Password ? Please enter your Email Address Send Reset Password Link",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "panel"
+      },
+      "visible": true,
+      "locator": "div.panel",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 312,
+        "y": 94,
+        "width": 400,
+        "height": 316.02
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": null,
+      "classes": "panel-body",
+      "text": "Forgot Password ? Please enter your Email Address Send Reset Password Link",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "panel-body"
+      },
+      "visible": true,
+      "locator": "div.panel-body",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 312,
+        "y": 94,
+        "width": 400,
+        "height": 316.02
+      }
+    },
+    {
+      "index": 72,
+      "tag": "h2",
+      "id": null,
+      "classes": null,
+      "text": "Forgot Password ?",
+      "direct_text": "Forgot Password ?",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": true,
+      "locator": "h2",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 144,
+        "width": 320,
+        "height": 36
+      }
+    },
+    {
+      "index": 73,
+      "tag": "p",
+      "id": null,
+      "classes": null,
+      "text": "Please enter your Email Address",
+      "direct_text": "Please enter your Email Address",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": true,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 191,
+        "width": 320,
+        "height": 22
+      }
+    },
+    {
+      "index": 74,
+      "tag": "p",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 227,
+        "width": 320,
+        "height": 0
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": null,
+      "classes": "info",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "info"
+      },
+      "visible": false,
+      "locator": "div.info",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 227,
+        "width": 320,
+        "height": 0
+      }
+    },
+    {
+      "index": 76,
+      "tag": "p",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 227,
+        "width": 320,
+        "height": 0
+      }
+    },
+    {
+      "index": 77,
+      "tag": "form",
+      "id": null,
+      "classes": null,
+      "text": "Send Reset Password Link",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": true,
+      "locator": "form",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 258,
+        "width": 320,
+        "height": 92.02
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": null,
+      "classes": "form-group",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "form-group"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 258,
+        "width": 320,
+        "height": 36.02
+      }
+    },
+    {
+      "index": 79,
+      "tag": "input",
+      "id": "code",
+      "classes": "form-control",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "text",
+        "class": "form-control",
+        "id": "code",
+        "name": "code",
+        "placeholder": "Enter Email"
+      },
+      "visible": true,
+      "locator": "#code",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 258,
+        "width": 320,
+        "height": 36.02
+      },
+      "enabled": true,
+      "input_type": "text",
+      "name": "code",
+      "placeholder": "Enter Email",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "index": 80,
+      "tag": "div",
+      "id": null,
+      "classes": "form-group",
+      "text": "Send Reset Password Link",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "form-group"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 314.02,
+        "width": 320,
+        "height": 36
+      }
+    },
+    {
+      "index": 81,
+      "tag": "button",
+      "id": null,
+      "classes": "btn btn-primary btn-block verifys",
+      "text": "Send Reset Password Link",
+      "direct_text": "Send Reset Password Link",
+      "is_leaf": true,
+      "attributes": {
+        "class": "btn btn-primary btn-block verifys"
+      },
+      "visible": true,
+      "locator": "button.btn.btn-primary.btn-block.verifys",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 314.02,
+        "width": 320,
+        "height": 36
+      },
+      "enabled": true,
+      "button_type": "submit",
+      "name": null
+    },
+    {
+      "index": 82,
+      "tag": "div",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": false,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 352,
+        "y": 370.02,
+        "width": 320,
+        "height": 0
+      }
+    },
+    {
+      "index": 83,
+      "tag": "img",
+      "id": null,
+      "classes": "loadimg",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "loadimg",
+        "src": "/img/loading.gif"
+      },
+      "visible": false,
+      "locator": "img.loadimg",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "src": "https://stage.xtremenext.com/img/loading.gif",
+      "alt": null
+    },
+    {
+      "index": 84,
+      "tag": "div",
+      "id": null,
+      "classes": "timeerror container alert alert-warning alert-dismissible",
+      "text": "× Please wait 30 seconds before sending another email.",
+      "direct_text": "Please wait seconds before sending another email.",
+      "is_leaf": false,
+      "attributes": {
+        "class": "timeerror container alert alert-warning alert-dismissible",
+        "role": "alert"
+      },
+      "visible": false,
+      "locator": "div.timeerror.container.alert.alert-warning.alert-dismissible",
+      "is_unique": true,
+      "role": "alert",
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 85,
+      "tag": "button",
+      "id": null,
+      "classes": "close",
+      "text": "×",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "type": "button",
+        "class": "close",
+        "data-dismiss": "alert",
+        "aria-label": "Close"
+      },
+      "visible": false,
+      "locator": "[aria-label=\"Close\"]",
+      "is_unique": true,
+      "role": null,
+      "aria_label": "Close",
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "enabled": true,
+      "button_type": "button",
+      "name": null
+    },
+    {
+      "index": 86,
+      "tag": "span",
+      "id": null,
+      "classes": null,
+      "text": "×",
+      "direct_text": "×",
+      "is_leaf": true,
+      "attributes": {
+        "aria-hidden": "true"
+      },
+      "visible": false,
+      "locator": "span",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 87,
+      "tag": "span",
+      "id": null,
+      "classes": "waiter",
+      "text": "30",
+      "direct_text": "30",
+      "is_leaf": true,
+      "attributes": {
+        "class": "waiter"
+      },
+      "visible": false,
+      "locator": "span.waiter",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 88,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "$(document).on(\"click\", \".verifys\", function () { var val = $(\"#code\").val(); if (val == \"\") { toastr.error(\"\", \"Please enter Email \", { timeOut: 2000 }); return false; } else if (!isEmail(val)) { toastr.error(\"\", \"Please enter Valid Email \", { timeOut: 2000 }); return false; } else { sendMail(val); return false; } }); function isEmail(email) { return /^([^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+|\\x22([^\\x0d\\x22\\x5c\\x80-\\xff]|\\x5c[\\x00-\\x7f])*\\x22)(\\x2e([^\\x00-\\x20\\x22\\",
+      "direct_text": "$(document).on(\"click\", \".verifys\", function () { var val = $(\"#code\").val(); if (val == \"\") { toastr.error(\"\", \"Please enter Email \", { timeOut: 2000 }); return false; } else if (!isEmail(val)) { toastr.error(\"\", \"Please enter Valid Email \", { timeOut: 2000 }); return false; } else { sendMail(val); return false; } }); function isEmail(email) { return /^([^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+|\\x22([^\\x0d\\x22\\x5c\\x80-\\xff]|\\x5c[\\x00-\\x7f])*\\x22)(\\x2e([^\\x00-\\x20\\x22\\",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 89,
+      "tag": "footer",
+      "id": null,
+      "classes": "footer",
+      "text": "Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "footer"
+      },
+      "visible": true,
+      "locator": "footer.footer",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 864,
+        "width": 1024,
+        "height": 60.56
+      }
+    },
+    {
+      "index": 90,
+      "tag": "div",
+      "id": null,
+      "classes": "container-fluid",
+      "text": "Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "container-fluid"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 879,
+        "width": 1024,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 91,
+      "tag": "div",
+      "id": null,
+      "classes": "row",
+      "text": "Privacy Policy | Terms & Conditions © 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "row"
+      },
+      "visible": true,
+      "locator": "div.row",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 879,
+        "width": 1024,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 92,
+      "tag": "div",
+      "id": null,
+      "classes": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12",
+      "text": "Privacy Policy | Terms & Conditions",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 879,
+        "width": 512,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 93,
+      "tag": "p",
+      "id": null,
+      "classes": "text-center",
+      "text": "Privacy Policy | Terms & Conditions",
+      "direct_text": "|",
+      "is_leaf": false,
+      "attributes": {
+        "class": "text-center"
+      },
+      "visible": true,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 15,
+        "y": 879,
+        "width": 482,
+        "height": 23.56
+      }
+    },
+    {
+      "index": 94,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "Privacy Policy",
+      "direct_text": "Privacy Policy",
+      "is_leaf": true,
+      "attributes": {
+        "href": "#"
+      },
+      "visible": true,
+      "locator": "a[href=\"#\"]",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 138.3,
+        "y": 882,
+        "width": 93.36,
+        "height": 17
+      },
+      "href": "https://stage.xtremenext.com/reset/#",
+      "link_text": "Privacy Policy"
+    },
+    {
+      "index": 95,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "Terms & Conditions",
+      "direct_text": "Terms & Conditions",
+      "is_leaf": true,
+      "attributes": {
+        "href": "#"
+      },
+      "visible": true,
+      "locator": "a[href=\"#\"]",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 243.77,
+        "y": 882,
+        "width": 129.92,
+        "height": 17
+      },
+      "href": "https://stage.xtremenext.com/reset/#",
+      "link_text": "Terms & Conditions"
+    },
+    {
+      "index": 96,
+      "tag": "div",
+      "id": null,
+      "classes": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12",
+      "text": "© 2026 XtremeNext",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
+      },
+      "visible": true,
+      "locator": "div",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 512,
+        "y": 879,
+        "width": 512,
+        "height": 30.56
+      }
+    },
+    {
+      "index": 97,
+      "tag": "p",
+      "id": null,
+      "classes": "text-center",
+      "text": "© 2026 XtremeNext",
+      "direct_text": "© 2026",
+      "is_leaf": false,
+      "attributes": {
+        "class": "text-center"
+      },
+      "visible": true,
+      "locator": "p",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 527,
+        "y": 879,
+        "width": 482,
+        "height": 23.56
+      }
+    },
+    {
+      "index": 98,
+      "tag": "a",
+      "id": null,
+      "classes": null,
+      "text": "XtremeNext",
+      "direct_text": "XtremeNext",
+      "is_leaf": true,
+      "attributes": {
+        "href": "/"
+      },
+      "visible": true,
+      "locator": "a[href=\"/\"]",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 754.78,
+        "y": 882,
+        "width": 79.2,
+        "height": 17
+      },
+      "href": "https://stage.xtremenext.com/",
+      "link_text": "XtremeNext"
+    },
+    {
+      "index": 99,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".footer { background-color: #1f1f1f !important; color: #666; padding: 15px 0; font-family: 'Public Sans', Helvetica, Arial, Lucida, sans-serif; font-size: 15px; font-weight: 500; } .footer a, .footer a:hover { text-decoration: none; color: #666; } .footer p { margin-bottom: 0.5rem !important; }",
+      "direct_text": ".footer { background-color: #1f1f1f !important; color: #666; padding: 15px 0; font-family: 'Public Sans', Helvetica, Arial, Lucida, sans-serif; font-size: 15px; font-weight: 500; } .footer a, .footer a:hover { text-decoration: none; color: #666; } .footer p { margin-bottom: 0.5rem !important; }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 100,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/babel-external-helpers/babel-external-helpers.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 101,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/popper-js/umd/popper.min.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 102,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/bootstrap/bootstrap.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 103,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/animsition/animsition.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 104,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/mousewheel/jquery.mousewheel.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 105,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/asscrollbar/jquery-asScrollbar.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 106,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/asscrollable/jquery-asScrollable.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 107,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/intro-js/intro.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 108,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/screenfull/screenfull.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 109,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/slidepanel/jquery-slidePanel.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 110,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Component.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 111,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 112,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Base.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 113,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Config.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 114,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/Menubar.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 115,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/Sidebar.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 116,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/PageAside.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 117,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Section/GridMenu.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 118,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/config/colors.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 119,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/config/tour.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 120,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "Config.set('assets', '../theme/classic/topbar/assets');",
+      "direct_text": "Config.set('assets', '../theme/classic/topbar/assets');",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 121,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/topbar/assets/js/Site.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 122,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/asscrollable.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 123,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/slidepanel.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 124,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/switchery.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 125,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/toastr/toastr.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 126,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/toastr.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 127,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net/jquery.dataTables.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 128,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-bs4/dataTables.bootstrap4.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 129,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-fixedheader/dataTables.fixedHeader.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 130,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-fixedcolumns/dataTables.fixedColumns.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 131,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-rowgroup/dataTables.rowGroup.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 132,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-scroller/dataTables.scroller.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 133,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-responsive/dataTables.responsive.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 134,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 135,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/dataTables.buttons.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 136,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.html5.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 137,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.flash.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 138,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.print.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 139,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons/buttons.colVis.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 140,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 141,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/vendor/raty/jquery.raty.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 142,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/raty.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 143,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".rating-hint { display: inline; margin-left: 10px; vertical-align: sub; }",
+      "direct_text": ".rating-hint { display: inline; margin-left: 10px; vertical-align: sub; }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 144,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "(function(document, window, $) { 'use strict'; var Site = window.Site; $(document).ready(function() { Site.run(); }); })(document, window, jQuery); toastr.options = { \"closeButton\": true, \"debug\": false, \"newestOnTop\": true, \"progressBar\": false, \"positionClass\": \"toast-top-right\", \"preventDuplicates\": true, \"onclick\": null, \"showDuration\": \"300\", \"hideDuration\": \"1000\", \"timeOut\": \"1000\", \"extendedTimeOut\": \"300\", \"showEasing\": \"swing\", \"hideEasing\": \"linear\", \"showMethod\": \"fadeIn\", \"hideMetho",
+      "direct_text": "(function(document, window, $) { 'use strict'; var Site = window.Site; $(document).ready(function() { Site.run(); }); })(document, window, jQuery); toastr.options = { \"closeButton\": true, \"debug\": false, \"newestOnTop\": true, \"progressBar\": false, \"positionClass\": \"toast-top-right\", \"preventDuplicates\": true, \"onclick\": null, \"showDuration\": \"300\", \"hideDuration\": \"1000\", \"timeOut\": \"1000\", \"extendedTimeOut\": \"300\", \"showEasing\": \"swing\", \"hideEasing\": \"linear\", \"showMethod\": \"fadeIn\", \"hideMetho",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 145,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/jquery-placeholder.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 146,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "../theme/classic/global/js/Plugin/material.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 147,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ".form-control { display: block; width: 100%; height: 2.573rem; padding: .429rem 1rem; font-size: 16px; line-height: 1.57142857; color: #000000; background-color: #fff; background-clip: padding-box; border: 1px solid #e4eaec; border-radius: .215rem; box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; font-weight: bold; } .form-material .form-control~.floating-label { top: .57142857rem; font-size: 16px; } .page-register-v3 form .form",
+      "direct_text": ".form-control { display: block; width: 100%; height: 2.573rem; padding: .429rem 1rem; font-size: 16px; line-height: 1.57142857; color: #000000; background-color: #fff; background-clip: padding-box; border: 1px solid #e4eaec; border-radius: .215rem; box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; font-weight: bold; } .form-material .form-control~.floating-label { top: .57142857rem; font-size: 16px; } .page-register-v3 form .form",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 148,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "var token = window.localStorage.getItem(\"token\"); if (token != null && token != \"\") { var url = \"../api/auth.php?token=\" + token; $.get(url, function(json) { var data = JSON.parse(json); if (data.status == \"success\") { console.log(data); if (data.data.verified == 1) { window.location.href = \"../dashboard\"; } else { window.location.href = \"../verify/\"; } } else { toggle(); } }) .fail(function() { //alert(\"Some error occurred\"); }); } else { toggle() } function toggle() { $(\".loader\").hide(); $(\".",
+      "direct_text": "var token = window.localStorage.getItem(\"token\"); if (token != null && token != \"\") { var url = \"../api/auth.php?token=\" + token; $.get(url, function(json) { var data = JSON.parse(json); if (data.status == \"success\") { console.log(data); if (data.data.verified == 1) { window.location.href = \"../dashboard\"; } else { window.location.href = \"../verify/\"; } } else { toggle(); } }) .fail(function() { //alert(\"Some error occurred\"); }); } else { toggle() } function toggle() { $(\".loader\").hide(); $(\".",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    }
+  ]
+}

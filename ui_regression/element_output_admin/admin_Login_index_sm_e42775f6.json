@@ -1,0 +1,1290 @@
+{
+  "page": {
+    "url": "https://stage.xtremenext.com/admin/Login/index",
+    "final_url": "https://stage.xtremenext.com/admin/Login/index",
+    "title": "Admin Login",
+    "viewport": "sm",
+    "viewport_size": {
+      "width": 640,
+      "height": 800
+    },
+    "depth": 0,
+    "http_status": 200,
+    "content_type": "text/html",
+    "type": "auth_page"
+  },
+  "statistics": {
+    "element_count": 50,
+    "link_count": 0
+  },
+  "elements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": null,
+      "classes": null,
+      "text": "ADMIN CONSOLE Sign in Use your administrator credentials to continue. Username Password Log In",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": true,
+      "locator": "html",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 800
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": null,
+      "classes": null,
+      "text": "Admin Login body .userE{ display: none!important; } window.APP_CONFIG = {\"env\":\"staging\",\"appUrl\":\"https://stage.xtremenext.com\",\"apiBaseUrl\":\"https://stage.xtremenext.com/\",\"adminBaseUrl\":\"https://stage.xtremenext.com/admin/\",\"clientPortalBaseUrl\":\"https://stage.xtremenext.com/client-portal/\",\"dashboardBaseUrl\":\"https://stage.xtremenext.com/dashboard/\",\"brand\":{\"name\":\"XtremeNext\",\"shortName\":\"XTEN\",\"logoUrl\":\"/img/logo555.png\",\"darkLogoUrl\":\"/img/d-logo555.png\",\"faviconUrl\":\"/img/favi555.png\",",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": false,
+      "locator": "head",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 2,
+      "tag": "title",
+      "id": null,
+      "classes": null,
+      "text": "Admin Login",
+      "direct_text": "Admin Login",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "title",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "charset": "utf-8"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 5,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "content": "",
+        "name": "description"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 6,
+      "tag": "meta",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "content": "",
+        "name": "author"
+      },
+      "visible": false,
+      "locator": "meta",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 7,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "shortcut icon",
+        "href": "/img/favi555.png",
+        "type": "image/x-icon"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 8,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/alertifyjs/build/css/alertify.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 9,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/alertifyjs/build/css/themes/default.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 10,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 11,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "https://stage.xtremenext.com/admin/assets/css/preloader.min.css",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 12,
+      "tag": "link",
+      "id": "bootstrap-style",
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/css/bootstrap.min.css",
+        "id": "bootstrap-style",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "#bootstrap-style",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 13,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/css/icons.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 14,
+      "tag": "link",
+      "id": "app-style",
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/css/app.min.css",
+        "id": "app-style",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "#app-style",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 15,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 16,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 17,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 18,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/libs/sweetalert2/sweetalert2.min.css",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 19,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/css/custom.css?v=20260825-mobile-2",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 20,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "href": "https://stage.xtremenext.com/admin/assets/css/admin-dark-theme.css?v=20260820-2",
+        "rel": "stylesheet",
+        "type": "text/css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 21,
+      "tag": "link",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "rel": "stylesheet",
+        "href": "https://stage.xtremenext.com/admin/assets/libs/jquery-confirm/jquery-confirm.min.css"
+      },
+      "visible": false,
+      "locator": "link",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 22,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": "body .userE{ display: none!important; }",
+      "direct_text": "body .userE{ display: none!important; }",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 23,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "window.APP_CONFIG = {\"env\":\"staging\",\"appUrl\":\"https://stage.xtremenext.com\",\"apiBaseUrl\":\"https://stage.xtremenext.com/\",\"adminBaseUrl\":\"https://stage.xtremenext.com/admin/\",\"clientPortalBaseUrl\":\"https://stage.xtremenext.com/client-portal/\",\"dashboardBaseUrl\":\"https://stage.xtremenext.com/dashboard/\",\"brand\":{\"name\":\"XtremeNext\",\"shortName\":\"XTEN\",\"logoUrl\":\"/img/logo555.png\",\"darkLogoUrl\":\"/img/d-logo555.png\",\"faviconUrl\":\"/img/favi555.png\",\"supportEmail\":\"support@xtremenext.com\",\"supportPhon",
+      "direct_text": "window.APP_CONFIG = {\"env\":\"staging\",\"appUrl\":\"https://stage.xtremenext.com\",\"apiBaseUrl\":\"https://stage.xtremenext.com/\",\"adminBaseUrl\":\"https://stage.xtremenext.com/admin/\",\"clientPortalBaseUrl\":\"https://stage.xtremenext.com/client-portal/\",\"dashboardBaseUrl\":\"https://stage.xtremenext.com/dashboard/\",\"brand\":{\"name\":\"XtremeNext\",\"shortName\":\"XTEN\",\"logoUrl\":\"/img/logo555.png\",\"darkLogoUrl\":\"/img/d-logo555.png\",\"faviconUrl\":\"/img/favi555.png\",\"supportEmail\":\"support@xtremenext.com\",\"supportPhon",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 24,
+      "tag": "style",
+      "id": null,
+      "classes": null,
+      "text": ":root { --login-ink: #101828; --login-muted: #667085; --login-line: #d0d5dd; --login-panel: #ffffff; --login-accent: #1267ff; --login-accent-dark: #0b4fd0; --login-green: #12b76a; --login-red: #f04438; --login-amber: #f79009; --login-navy: #07111f; } body { background: var(--login-navy); } .admin-login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--login-ink); padding: 24px; overflow: hidden; background: radial-gradient(circle at 50% 8%, rgba",
+      "direct_text": ":root { --login-ink: #101828; --login-muted: #667085; --login-line: #d0d5dd; --login-panel: #ffffff; --login-accent: #1267ff; --login-accent-dark: #0b4fd0; --login-green: #12b76a; --login-red: #f04438; --login-amber: #f79009; --login-navy: #07111f; } body { background: var(--login-navy); } .admin-login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--login-ink); padding: 24px; overflow: hidden; background: radial-gradient(circle at 50% 8%, rgba",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "style",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 25,
+      "tag": "body",
+      "id": null,
+      "classes": null,
+      "text": "ADMIN CONSOLE Sign in Use your administrator credentials to continue. Username Password Log In",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {},
+      "visible": true,
+      "locator": "body",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 800
+      }
+    },
+    {
+      "index": 26,
+      "tag": "div",
+      "id": null,
+      "classes": "admin-login-shell",
+      "text": "ADMIN CONSOLE Sign in Use your administrator credentials to continue. Username Password Log In",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "admin-login-shell"
+      },
+      "visible": true,
+      "locator": "div.admin-login-shell",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 640,
+        "height": 800
+      }
+    },
+    {
+      "index": 27,
+      "tag": "main",
+      "id": null,
+      "classes": "admin-login-form-side",
+      "text": "ADMIN CONSOLE Sign in Use your administrator credentials to continue. Username Password Log In",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "admin-login-form-side"
+      },
+      "visible": true,
+      "locator": "main.admin-login-form-side",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 24,
+        "y": 141.58,
+        "width": 592,
+        "height": 516.84
+      }
+    },
+    {
+      "index": 28,
+      "tag": "div",
+      "id": null,
+      "classes": "admin-login-card",
+      "text": "ADMIN CONSOLE Sign in Use your administrator credentials to continue. Username Password Log In",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "admin-login-card"
+      },
+      "visible": true,
+      "locator": "div.admin-login-card",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 96,
+        "y": 141.58,
+        "width": 448,
+        "height": 516.84
+      }
+    },
+    {
+      "index": 29,
+      "tag": "a",
+      "id": null,
+      "classes": "mobile-logo",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "href": "#",
+        "class": "mobile-logo"
+      },
+      "visible": true,
+      "locator": "a.mobile-logo",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 180.58,
+        "width": 370,
+        "height": 46.16
+      },
+      "href": "https://stage.xtremenext.com/admin/Login/index#",
+      "link_text": ""
+    },
+    {
+      "index": 30,
+      "tag": "img",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "/img/logo555.png",
+        "alt": "XtremeNext"
+      },
+      "visible": true,
+      "locator": "img",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 213,
+        "y": 180.58,
+        "width": 214,
+        "height": 46.16
+      },
+      "src": "https://stage.xtremenext.com/img/logo555.png",
+      "alt": "XtremeNext"
+    },
+    {
+      "index": 31,
+      "tag": "p",
+      "id": null,
+      "classes": "admin-login-eyebrow",
+      "text": "ADMIN CONSOLE",
+      "direct_text": "Admin Console",
+      "is_leaf": true,
+      "attributes": {
+        "class": "admin-login-eyebrow"
+      },
+      "visible": true,
+      "locator": "p.admin-login-eyebrow",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 252.73,
+        "width": 370,
+        "height": 18
+      }
+    },
+    {
+      "index": 32,
+      "tag": "h2",
+      "id": null,
+      "classes": null,
+      "text": "Sign in",
+      "direct_text": "Sign in",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": true,
+      "locator": "h2",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 278.73,
+        "width": 370,
+        "height": 36
+      }
+    },
+    {
+      "index": 33,
+      "tag": "p",
+      "id": null,
+      "classes": "login-subtitle",
+      "text": "Use your administrator credentials to continue.",
+      "direct_text": "Use your administrator credentials to continue.",
+      "is_leaf": true,
+      "attributes": {
+        "class": "login-subtitle"
+      },
+      "visible": true,
+      "locator": "p.login-subtitle",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 322.73,
+        "width": 370,
+        "height": 21.69
+      }
+    },
+    {
+      "index": 34,
+      "tag": "form",
+      "id": null,
+      "classes": null,
+      "text": "Username Password Log In",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "method": "post",
+        "action": "https://stage.xtremenext.com/admin/Login/LoginCheck"
+      },
+      "visible": true,
+      "locator": "form",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 372.42,
+        "width": 370,
+        "height": 247
+      }
+    },
+    {
+      "index": 35,
+      "tag": "input",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "hidden",
+        "name": "admin_login_csrf",
+        "value": "192f19c3cd10591d30fc959061458b6c3ef1817964aba0e88197097271e4a588"
+      },
+      "visible": false,
+      "locator": "input[name=\"admin_login_csrf\"]",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "enabled": true,
+      "input_type": "hidden",
+      "name": "admin_login_csrf",
+      "placeholder": null,
+      "checked": false,
+      "value": "192f19c3cd10591d30fc959061458b6c3ef1817964aba0e88197097271e4a588"
+    },
+    {
+      "index": 36,
+      "tag": "h6",
+      "id": null,
+      "classes": "admin-login-alert",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "admin-login-alert"
+      },
+      "visible": false,
+      "locator": "h6.admin-login-alert",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 37,
+      "tag": "div",
+      "id": null,
+      "classes": "mb-3",
+      "text": "Username",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "mb-3"
+      },
+      "visible": true,
+      "locator": "div.mb-3",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 372.42,
+        "width": 370,
+        "height": 78.5
+      }
+    },
+    {
+      "index": 38,
+      "tag": "label",
+      "id": null,
+      "classes": "form-label",
+      "text": "Username",
+      "direct_text": "Username",
+      "is_leaf": true,
+      "attributes": {
+        "class": "form-label",
+        "for": "username"
+      },
+      "visible": true,
+      "locator": "label",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 373.42,
+        "width": 61.81,
+        "height": 19.5
+      }
+    },
+    {
+      "index": 39,
+      "tag": "input",
+      "id": "username",
+      "classes": "form-control",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "text",
+        "class": "form-control",
+        "name": "username",
+        "id": "username",
+        "placeholder": "Enter username",
+        "autocomplete": "username",
+        "autofocus": ""
+      },
+      "visible": true,
+      "locator": "#username",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 400.92,
+        "width": 370,
+        "height": 50
+      },
+      "enabled": true,
+      "input_type": "text",
+      "name": "username",
+      "placeholder": "Enter username",
+      "checked": false,
+      "value": ""
+    },
+    {
+      "index": 40,
+      "tag": "div",
+      "id": null,
+      "classes": "mb-4",
+      "text": "Password",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "mb-4"
+      },
+      "visible": true,
+      "locator": "div.mb-4",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 466.92,
+        "width": 370,
+        "height": 78.5
+      }
+    },
+    {
+      "index": 41,
+      "tag": "label",
+      "id": null,
+      "classes": "form-label",
+      "text": "Password",
+      "direct_text": "Password",
+      "is_leaf": true,
+      "attributes": {
+        "class": "form-label",
+        "for": "password"
+      },
+      "visible": true,
+      "locator": "label",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 467.92,
+        "width": 58.72,
+        "height": 19.5
+      }
+    },
+    {
+      "index": 42,
+      "tag": "div",
+      "id": null,
+      "classes": "input-group auth-pass-inputgroup",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "input-group auth-pass-inputgroup"
+      },
+      "visible": true,
+      "locator": "div.input-group.auth-pass-inputgroup",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 495.42,
+        "width": 370,
+        "height": 50
+      }
+    },
+    {
+      "index": 43,
+      "tag": "input",
+      "id": "password",
+      "classes": "form-control",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "type": "password",
+        "class": "form-control",
+        "name": "password",
+        "id": "password",
+        "placeholder": "Enter password",
+        "aria-label": "Password",
+        "aria-describedby": "password-addon",
+        "autocomplete": "current-password"
+      },
+      "visible": true,
+      "locator": "#password",
+      "is_unique": true,
+      "role": null,
+      "aria_label": "Password",
+      "aria_describedby": "password-addon",
+      "bounding_box": {
+        "x": 135,
+        "y": 495.42,
+        "width": 331,
+        "height": 50
+      },
+      "enabled": true,
+      "input_type": "password",
+      "name": "password",
+      "placeholder": "Enter password",
+      "checked": false,
+      "value": "[REDACTED]"
+    },
+    {
+      "index": 44,
+      "tag": "button",
+      "id": "password-addon",
+      "classes": "btn shadow-none ms-0",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": false,
+      "attributes": {
+        "class": "btn shadow-none ms-0",
+        "type": "button",
+        "id": "password-addon",
+        "aria-label": "Show password"
+      },
+      "visible": true,
+      "locator": "#password-addon",
+      "is_unique": true,
+      "role": null,
+      "aria_label": "Show password",
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 466,
+        "y": 495.42,
+        "width": 39,
+        "height": 50
+      },
+      "enabled": true,
+      "button_type": "button",
+      "name": null
+    },
+    {
+      "index": 45,
+      "tag": "i",
+      "id": null,
+      "classes": "mdi mdi-eye-outline",
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "class": "mdi mdi-eye-outline"
+      },
+      "visible": true,
+      "locator": "i.mdi.mdi-eye-outline",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 478,
+        "y": 511.92,
+        "width": 14,
+        "height": 17
+      }
+    },
+    {
+      "index": 46,
+      "tag": "button",
+      "id": null,
+      "classes": "btn btn-login-primary w-100 waves-effect waves-light",
+      "text": "Log In",
+      "direct_text": "Log In",
+      "is_leaf": true,
+      "attributes": {
+        "class": "btn btn-login-primary w-100 waves-effect waves-light",
+        "type": "submit"
+      },
+      "visible": true,
+      "locator": "button.btn.btn-login-primary.w-100.waves-effect.waves-light",
+      "is_unique": true,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 135,
+        "y": 569.42,
+        "width": 370,
+        "height": 50
+      },
+      "enabled": true,
+      "button_type": "submit",
+      "name": null
+    },
+    {
+      "index": 47,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "https://stage.xtremenext.com/admin/assets/libs/jquery/jquery.min.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 48,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "",
+      "direct_text": "",
+      "is_leaf": true,
+      "attributes": {
+        "src": "https://stage.xtremenext.com/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js"
+      },
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "index": 49,
+      "tag": "script",
+      "id": null,
+      "classes": null,
+      "text": "function normalizeCopiedCredential(value) { return String(value || '') .replace(/[\\u200B-\\u200D\\uFEFF]/g, '') .replace(/\\u00A0/g, ' ') .replace(/^\\s+|\\s+$/g, ''); } $(document).on('paste blur', '#username, #password', function () { const input = this; setTimeout(function () { input.value = normalizeCopiedCredential(input.value); }, 0); }); $('form[action$=\"Login/LoginCheck\"]').on('submit', function () { $('#username').val(normalizeCopiedCredential($('#username').val())); $('#password').val(norma",
+      "direct_text": "function normalizeCopiedCredential(value) { return String(value || '') .replace(/[\\u200B-\\u200D\\uFEFF]/g, '') .replace(/\\u00A0/g, ' ') .replace(/^\\s+|\\s+$/g, ''); } $(document).on('paste blur', '#username, #password', function () { const input = this; setTimeout(function () { input.value = normalizeCopiedCredential(input.value); }, 0); }); $('form[action$=\"Login/LoginCheck\"]').on('submit', function () { $('#username').val(normalizeCopiedCredential($('#username').val())); $('#password').val(norma",
+      "is_leaf": true,
+      "attributes": {},
+      "visible": false,
+      "locator": "script",
+      "is_unique": false,
+      "role": null,
+      "aria_label": null,
+      "aria_describedby": null,
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    }
+  ]
+}
