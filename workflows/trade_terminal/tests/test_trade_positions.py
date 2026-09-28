@@ -466,7 +466,9 @@ def test_position_page_runtime_diagnostics_clean(
     positions_page.execute_bulk_operation("pending-all")
     positions_page.execute_bulk_operation("pending-limit")
     positions_page.execute_bulk_operation("pending-stop")
+    positions_page.execute_bulk_operation("all")
     positions_page.execute_bulk_operation("profit")
+    positions_page.execute_bulk_operation("loss")
     positions_page.page.wait_for_timeout(1000)
 
     # Telemetry and diagnostics are automatically asserted by the trade_diagnostics fixture in teardown
