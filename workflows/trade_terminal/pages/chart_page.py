@@ -43,14 +43,34 @@ class TradingChartPage(BasePage):
         self.chart_iframe: Locator = page.locator("#tv_chart_container iframe, iframe[id*='tradingview']")
         self.chart_nav_icon: Locator = page.locator(".lefticons[data-tooltip='Chart']")
 
-        # 2. Resizer Separator
+        # 2. Resizer Separator & Controls (#app > div > div > div.resizer-y)
         self.resizer_y: Locator = page.locator("#app > div > div > div.resizer-y, .resizer-y")
+        self.toggle_full_chart_btn: Locator = self.resizer_y.locator(".toggleFullChart")
+        self.toggle_full_chart_icon: Locator = self.toggle_full_chart_btn.locator("i")
+        self.chart_bulk_close_btn: Locator = self.resizer_y.locator(".chart-bulk-close")
+        self.chart_bulk_close_list: Locator = self.resizer_y.locator(".chart-bulk-close-list")
+        self.bulk_close_buttons: Locator = self.chart_bulk_close_list.locator(".chart-bulk-btn")
 
-        # 3. Positions Pane (#app > div > div > div.div2.w100)
+        # Resizer Navigation Tabs
+        self.tab_positions: Locator = self.resizer_y.locator("[data-active='chartPostionsList']")
+        self.tab_pending: Locator = self.resizer_y.locator("[data-active='chartPendingList']")
+        self.tab_history_24h: Locator = self.resizer_y.locator("[data-active='chartClosedList']")
+        self.tab_cancelled_24h: Locator = self.resizer_y.locator("[data-active='chartCancelledList']")
+
+        # 3. Positions Pane & Sub-sections (#app > div > div > div.div2.w100)
         self.positions_pane: Locator = page.locator("#app > div > div > div.div2.w100, .div2.w100")
-        self.positions_table: Locator = self.positions_pane.locator("table").first
-        self.positions_headers: Locator = self.positions_pane.locator("thead.poscontent-head").first.locator("th")
-        self.position_rows: Locator = self.positions_pane.locator("tbody tr.allpos")
+        self.section_positions: Locator = self.positions_pane.locator(".chartPostionsList")
+        self.section_pending: Locator = self.positions_pane.locator(".chartPendingList")
+        self.section_history_24h: Locator = self.positions_pane.locator(".chartClosedList")
+        self.section_cancelled_24h: Locator = self.positions_pane.locator(".chartCancelledList")
+
+        self.positions_table: Locator = self.section_positions.locator("table").first
+        self.positions_headers: Locator = self.section_positions.locator("thead.poscontent-head").first.locator("th")
+        self.position_rows: Locator = self.section_positions.locator("tbody tr.allpos")
+
+        self.history_table: Locator = self.section_history_24h.locator("table").first
+        self.history_headers: Locator = self.section_history_24h.locator("thead th")
+        self.history_rows: Locator = self.section_history_24h.locator("tbody tr")
 
         # 4. Positions Account Summary Footer (tfoot.poscontent-foot)
         self.summary_footer: Locator = self.positions_pane.locator("tfoot.poscontent-foot")
@@ -312,3 +332,104 @@ class TradingChartPage(BasePage):
                 close_btn.click(force=True)
                 self.page.wait_for_timeout(2000)
                 self.dismiss_disclaimer_if_present()
+
+    # =========================================================================
+    # Resizer Pane Toggle & Bulk Close Controls
+    # =========================================================================
+
+    def toggle_full_chart(self) -> None:
+        """
+        Click .toggleFullChart to collapse or expand the position pane (.div2.w100).
+        """
+        logger.info("Toggling full chart / position pane view...")
+        expect(self.toggle_full_chart_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        self.toggle_full_chart_btn.click()
+        self.page.wait_for_timeout(600)
+
+    def is_position_pane_visible(self) -> bool:
+        """Return True if #app .div2.w100 is visible and has height > 0."""
+        box = self.positions_pane.bounding_box()
+        return box is not None and box["height"] > 10
+
+    def open_bulk_close_menu(self) -> None:
+        """Open the bulk close dropdown menu if not already open."""
+        if not self.chart_bulk_close_list.is_visible():
+            expect(self.chart_bulk_close_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+            self.chart_bulk_close_btn.click()
+            self.page.wait_for_timeout(400)
+        expect(self.chart_bulk_close_list).to_be_visible(timeout=TIMEOUT_DEFAULT)
+
+    def close_bulk_close_menu(self) -> None:
+        """Close the bulk close dropdown menu if currently open."""
+        if self.chart_bulk_close_list.is_visible():
+            self.resizer_y.click(position={"x": 10, "y": 10})
+            self.page.wait_for_timeout(400)
+
+    def get_bulk_close_buttons_info(self) -> List[Dict[str, Any]]:
+        """
+        Return text, data-type, and visibility status for each bulk operation button.
+        """
+        buttons = []
+        count = self.bulk_close_buttons.count()
+        for i in range(count):
+            btn = self.bulk_close_buttons.nth(i)
+            buttons.append({
+                "text": btn.inner_text().strip(),
+                "data_type": btn.get_attribute("data-type") or "",
+                "visible": btn.is_visible(),
+            })
+        return buttons
+
+    # =========================================================================
+    # Position Pane Tab Switching & Sections
+    # =========================================================================
+
+    def switch_positions_tab(self, tab: str) -> None:
+        """
+        Switch between 'positions', 'pending', 'history', and 'cancelled' tabs.
+        """
+        tab_lower = tab.lower()
+        logger.info(f"Switching positions pane tab to: {tab_lower}")
+        if "pos" in tab_lower:
+            target_tab = self.tab_positions
+            target_section = self.section_positions
+        elif "pend" in tab_lower:
+            target_tab = self.tab_pending
+            target_section = self.section_pending
+        elif "hist" in tab_lower or "closed" in tab_lower:
+            target_tab = self.tab_history_24h
+            target_section = self.section_history_24h
+        elif "cancel" in tab_lower:
+            target_tab = self.tab_cancelled_24h
+            target_section = self.section_cancelled_24h
+        else:
+            raise ValueError(f"Unknown tab: {tab}")
+
+        expect(target_tab).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        target_tab.click()
+        self.page.wait_for_timeout(500)
+        expect(target_section).to_be_visible(timeout=TIMEOUT_DEFAULT)
+
+    def get_history_positions_data(self) -> List[Dict[str, Any]]:
+        """
+        Extract closed orders from the History 24H section (.chartClosedList).
+        """
+        self.switch_positions_tab("history")
+        return self.page.evaluate("""() => {
+            const rows = document.querySelectorAll("#app .div2.w100 .chartClosedList tbody tr");
+            return Array.from(rows).map(row => {
+                const tds = row.querySelectorAll("td");
+                return {
+                    id: tds[0] ? tds[0].innerText.trim() : "",
+                    time: tds[1] ? tds[1].innerText.trim() : "",
+                    symbol: tds[2] ? tds[2].innerText.trim() : "",
+                    order: tds[3] ? tds[3].innerText.trim() : "",
+                    lot: tds[4] ? parseFloat(tds[4].innerText.trim() || "0") : 0.0,
+                    status: tds[5] ? tds[5].innerText.trim() : "",
+                    type: tds[6] ? tds[6].innerText.trim() : "",
+                    entry_price: tds[9] ? parseFloat(tds[9].innerText.trim().replace(/,/g, "") || "0") : 0.0,
+                    exit_price: tds[10] ? parseFloat(tds[10].innerText.trim().replace(/,/g, "") || "0") : 0.0,
+                    pnl: tds[12] ? parseFloat(tds[12].innerText.trim().replace(/,/g, "") || "0") : 0.0,
+                };
+            });
+        }""")

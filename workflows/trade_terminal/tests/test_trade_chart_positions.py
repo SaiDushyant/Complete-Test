@@ -219,6 +219,191 @@ def test_chart_trade_execution_updates_position_and_calculates_pnl(
 
 
 @pytest.mark.trade
+@pytest.mark.smoke
+def test_chart_resizer_bulk_close_dropdown_buttons(
+    trading_chart_page: TradingChartPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify the bulk operations dropdown:
+    document.querySelector("#app > div > div > div.resizer-y > div.chart-bulk-close-list.showOrdersList")
+    1. Clicking .chart-bulk-close opens the bulk actions list.
+    2. On 'Positions' tab, verify position bulk buttons:
+       - 'Close all position' (data-type='all') is visible.
+       - 'Close profitable position' (data-type='profit') is visible.
+       - 'Close losing position' (data-type='loss') is visible.
+       - Pending cancel buttons are hidden.
+    3. Switching to 'Pending' tab updates the contextual bulk actions:
+       - 'Cancel all order' (data-type='pending-all') is visible.
+       - 'Cancel limit order' (data-type='pending-limit') is visible.
+       - 'Cancel stop order' (data-type='pending-stop') is visible.
+       - Position close buttons are hidden.
+    4. Clicking .chart-bulk-close again closes the menu.
+    """
+    trading_chart_page.navigate_to_chart()
+    assert_url_contains(trading_chart_page.page, "/dashboard", timeout=15000)
+
+    # 1. Switch to Positions tab and open bulk menu
+    trading_chart_page.switch_positions_tab("positions")
+    trading_chart_page.open_bulk_close_menu()
+    assert_element_is_visible(
+        trading_chart_page.chart_bulk_close_list,
+        element_name="Chart Bulk Close Dropdown List",
+    )
+
+    # 2. Check position bulk buttons visibility
+    pos_btn_info = trading_chart_page.get_bulk_close_buttons_info()
+    pos_types_visible = {b["data_type"]: b["visible"] for b in pos_btn_info}
+    assert pos_types_visible.get("all") is True, "Expected 'Close all position' to be visible on Positions tab"
+    assert pos_types_visible.get("profit") is True, "Expected 'Close profitable position' to be visible on Positions tab"
+    assert pos_types_visible.get("loss") is True, "Expected 'Close losing position' to be visible on Positions tab"
+    assert pos_types_visible.get("pending-all") is False, "Expected 'Cancel all order' to be hidden on Positions tab"
+
+    # Close bulk menu
+    trading_chart_page.close_bulk_close_menu()
+
+    # 3. Switch to Pending tab and open bulk menu
+    trading_chart_page.switch_positions_tab("pending")
+    trading_chart_page.open_bulk_close_menu()
+
+    pend_btn_info = trading_chart_page.get_bulk_close_buttons_info()
+    pend_types_visible = {b["data_type"]: b["visible"] for b in pend_btn_info}
+    assert pend_types_visible.get("pending-all") is True, "Expected 'Cancel all order' to be visible on Pending tab"
+    assert pend_types_visible.get("pending-limit") is True, "Expected 'Cancel limit order' to be visible on Pending tab"
+    assert pend_types_visible.get("pending-stop") is True, "Expected 'Cancel stop order' to be visible on Pending tab"
+    assert pend_types_visible.get("all") is False, "Expected 'Close all position' to be hidden on Pending tab"
+
+    # 4. Close bulk menu and restore Positions tab
+    trading_chart_page.close_bulk_close_menu()
+    trading_chart_page.switch_positions_tab("positions")
+
+
+@pytest.mark.trade
+@pytest.mark.smoke
+def test_chart_resizer_toggle_full_chart_collapses_and_expands_positions_pane(
+    trading_chart_page: TradingChartPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify the toggleFullChart button:
+    document.querySelector("#app > div > div > div.resizer-y > div.toggleFullChart")
+    1. Initially, positions pane (#app .div2.w100) is visible and toggle icon is chevron-down.
+    2. Click toggle button -> positions pane collapses down out of view, icon flips to chevron-up.
+    3. Click toggle button again -> positions pane expands up, class div2MaxHeight is applied,
+       positions table is visible again, and icon flips back to chevron-down.
+    """
+    trading_chart_page.navigate_to_chart()
+    assert_url_contains(trading_chart_page.page, "/dashboard", timeout=15000)
+
+    # 1. Initial expanded state
+    assert trading_chart_page.is_position_pane_visible(), "Expected positions pane to be visible initially"
+    initial_icon_class = trading_chart_page.toggle_full_chart_icon.get_attribute("class") or ""
+    assert "fa-chevron-down" in initial_icon_class, f"Expected chevron-down initially, got: {initial_icon_class}"
+
+    # 2. Click 1: Collapse position pane (comes down)
+    trading_chart_page.toggle_full_chart()
+    assert not trading_chart_page.is_position_pane_visible(), "Expected positions pane to be collapsed after first click"
+    collapsed_icon_class = trading_chart_page.toggle_full_chart_icon.get_attribute("class") or ""
+    assert "fa-chevron-up" in collapsed_icon_class, f"Expected chevron-up when collapsed, got: {collapsed_icon_class}"
+
+    # 3. Click 2: Expand position pane (comes up)
+    trading_chart_page.toggle_full_chart()
+    assert trading_chart_page.is_position_pane_visible(), "Expected positions pane to be visible after second click"
+    div2_classes = trading_chart_page.positions_pane.get_attribute("class") or ""
+    assert "div2MaxHeight" in div2_classes, f"Expected 'div2MaxHeight' class on expanded div2, got: {div2_classes}"
+    expanded_icon_class = trading_chart_page.toggle_full_chart_icon.get_attribute("class") or ""
+    assert "fa-chevron-down" in expanded_icon_class, f"Expected chevron-down when expanded, got: {expanded_icon_class}"
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_chart_positions_sections_tab_navigation_and_order_lifecycle(
+    trading_chart_page: TradingChartPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify the sections of the position pane (#app > div > div > div.div2.w100.div2MaxHeight):
+    1. Tab switching between all 4 sections:
+       - Positions (.chartPostionsList)
+       - Pending (.chartPendingList)
+       - History 24H (.chartClosedList)
+       - Cancelled 24H (.chartCancelledList)
+    2. Place an order on the chart and verify it is displayed in the Positions section.
+    3. Close the order and verify it is moved to and displayed in the History 24H section.
+    """
+    trading_chart_page.navigate_to_chart()
+    assert_url_contains(trading_chart_page.page, "/dashboard", timeout=15000)
+
+    # 1. Test navigation across all 4 sections
+    trading_chart_page.switch_positions_tab("pending")
+    assert_element_is_visible(trading_chart_page.section_pending, element_name="Pending Section")
+    assert not trading_chart_page.section_positions.is_visible()
+
+    trading_chart_page.switch_positions_tab("history")
+    assert_element_is_visible(trading_chart_page.section_history_24h, element_name="History 24H Section")
+    assert not trading_chart_page.section_pending.is_visible()
+    # Check History 24H headers
+    history_headers_count = trading_chart_page.history_headers.count()
+    assert history_headers_count >= 10, f"Expected at least 10 history headers, got: {history_headers_count}"
+
+    trading_chart_page.switch_positions_tab("cancelled")
+    assert_element_is_visible(trading_chart_page.section_cancelled_24h, element_name="Cancelled 24H Section")
+    assert not trading_chart_page.section_history_24h.is_visible()
+
+    # 2. Return to Positions tab
+    trading_chart_page.switch_positions_tab("positions")
+    assert_element_is_visible(trading_chart_page.section_positions, element_name="Positions Section")
+
+    # 3. Capture baseline open positions
+    before_positions = trading_chart_page.get_all_positions_data()
+    before_ids = {p["id"] for p in before_positions}
+
+    # 4. Execute a BUY trade
+    test_symbol = "AUDUSD"
+    trading_chart_page.open_trade_modal(test_symbol, side="buy")
+    trading_chart_page.set_trade_modal_lot(0.01)
+    trading_chart_page.submit_market_order()
+
+    # Poll for new position in Positions section
+    start_time = time.time()
+    new_ids = set()
+    while time.time() - start_time < 15:
+        after_positions = trading_chart_page.get_all_positions_data()
+        diff = {p["id"] for p in after_positions} - before_ids
+        if diff:
+            new_ids = diff
+            break
+        trading_chart_page.page.wait_for_timeout(500)
+
+    assert len(new_ids) >= 1, f"Expected new position in Positions section, got diff: {new_ids}"
+    target_id = sorted(list(new_ids))[-1]
+
+    # Verify order is displayed in Positions section
+    pos_row = trading_chart_page.get_position_row_by_id(target_id)
+    assert_element_is_visible(pos_row, element_name=f"Position Row {target_id} in Positions Section")
+
+    # 5. Close the position
+    trading_chart_page.close_position_by_id(target_id)
+    trading_chart_page.wait_for_position_closed(target_id)
+
+    # 6. Switch to History 24H section and verify closed order is correctly displayed there
+    history_records = trading_chart_page.get_history_positions_data()
+    history_ids = {h["id"] for h in history_records}
+    assert target_id in history_ids, (
+        f"Expected closed position ID {target_id} to be displayed in History 24H section, "
+        f"found history IDs: {sorted(history_ids)}"
+    )
+
+    # Verify history details for target_id
+    history_item = next(h for h in history_records if h["id"] == target_id)
+    assert history_item["status"].lower() == "closed", f"Expected status 'closed', got: {history_item['status']}"
+    assert history_item["lot"] == 0.01, f"Expected lot 0.01 in history, got: {history_item['lot']}"
+
+    # Restore Positions tab
+    trading_chart_page.switch_positions_tab("positions")
+
+
+@pytest.mark.trade
 @pytest.mark.regression
 def test_chart_positions_runtime_diagnostics_clean(
     trading_chart_page: TradingChartPage,
