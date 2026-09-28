@@ -16,6 +16,7 @@ from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.diagnostics import PageDiagnostics
 from workflows.shared.utils.logger import get_logger
 from workflows.shared.utils.screenshot import capture_screenshot
+from workflows.trade_terminal.pages.history_page import HistoryPage
 from workflows.trade_terminal.pages.login_page import TradeLoginPage
 from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
@@ -156,5 +157,12 @@ def watchlist_page(authenticated_trade_page: Page) -> WatchlistPage:
 def trading_chart_page(authenticated_trade_page: Page) -> TradingChartPage:
     """Provide an authenticated TradingChartPage object."""
     return TradingChartPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def history_page(authenticated_trade_page: Page) -> HistoryPage:
+    """Provide an authenticated HistoryPage object."""
+    return HistoryPage(authenticated_trade_page)
+
 
 

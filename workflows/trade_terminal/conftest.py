@@ -14,6 +14,7 @@ from workflows.shared.fixtures.browser_fixtures import (
 from workflows.trade_terminal.fixtures.trade_fixtures import (
     authenticated_trade_context,
     authenticated_trade_page,
+    history_page,
     order_entry_page,
     positions_page,
     profile_menu_page,
