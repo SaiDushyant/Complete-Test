@@ -23,16 +23,19 @@ def _perform_trade_login(page: Page, creds) -> None:
     """Helper used during fresh session generation."""
     login_page = TradeLoginPage(page)
     login_page.navigate(creds.login_url or creds.base_url)
-    login_page.login(
-        username=creds.username,
-        password=creds.password,
-        remember_me=True,
-    )
-    if creds.post_login_url_pattern:
-        try:
-            page.wait_for_url(creds.post_login_url_pattern, timeout=15000)
-        except Exception:
-            pass
+    try:
+        login_page.login_and_wait_for_dashboard(
+            username=creds.username,
+            password=creds.password,
+            remember_me=True,
+            timeout=25000,
+        )
+    except Exception:
+        if creds.post_login_url_pattern:
+            try:
+                page.wait_for_url(creds.post_login_url_pattern, timeout=15000)
+            except Exception:
+                pass
 
 
 @pytest.fixture(scope="function")

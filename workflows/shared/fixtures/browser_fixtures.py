@@ -20,16 +20,49 @@ logger = get_logger("browser_fixtures")
 
 
 @pytest.fixture(scope="session")
-def workflow_browser(playwright: Playwright) -> Generator[Browser, None, None]:
+def workflow_browser(
+    playwright: Playwright,
+    pytestconfig: pytest.Config,
+) -> Generator[Browser, None, None]:
     """
-    Session-scoped Playwright Browser instance configured via settings.
+    Session-scoped Playwright Browser instance configured via settings and CLI flags.
+    Respects --headed and --slowmo CLI flags, as well as BROWSER_HEADLESS / BROWSER_SLOW_MO env vars.
     """
+    # 1. Determine headless mode: CLI flag --headed takes precedence, then settings / env vars
+    headed_flag = False
+    try:
+        headed_flag = bool(pytestconfig.getoption("--headed"))
+    except Exception:
+        pass
+
+    headless = False if headed_flag else settings.browser.headless
+
+    # 2. Determine slow_mo: CLI flag --slowmo takes precedence, then settings / env vars
+    slow_mo = settings.browser.slow_mo
+    try:
+        cli_slowmo = pytestconfig.getoption("--slowmo")
+        if cli_slowmo is not None:
+            slow_mo = int(cli_slowmo)
+    except Exception:
+        pass
+
+    # If running headed and slow_mo is 0, introduce a reasonable 300ms delay so interactions can be observed
+    if not headless and slow_mo == 0:
+        env_slow_mo = os.getenv("BROWSER_SLOW_MO")
+        if env_slow_mo is not None:
+            try:
+                slow_mo = int(env_slow_mo)
+            except ValueError:
+                slow_mo = 300
+        else:
+            slow_mo = 300
+
     logger.info(
-        f"Launching {settings.browser.browser_type} (headless={settings.browser.headless}, slow_mo={settings.browser.slow_mo}ms)"
+        f"Launching {settings.browser.browser_type} (headless={headless}, slow_mo={slow_mo}ms)"
     )
     browser = playwright.chromium.launch(
-        headless=settings.browser.headless,
-        slow_mo=settings.browser.slow_mo,
+        headless=headless,
+        slow_mo=slow_mo,
     )
     yield browser
     logger.info("Closing session browser.")
