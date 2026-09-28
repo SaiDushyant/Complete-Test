@@ -5,14 +5,14 @@ Encapsulates all view tabs inside #sidebar-nav.
 
 from __future__ import annotations
 
-from playwright.sync_api import Page, expect
+from workflows.shared.pages.base_page import BasePage
 
 
-class ClientSidebarComponent:
+class ClientSidebarComponent(BasePage):
     """Sidebar navigation component for switching views in the Client Portal."""
 
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
         self.sidebar_container = page.locator("#sidebar-nav, aside, [aria-label='Client portal navigation']")
         self.dashboard_tab = self.sidebar_container.get_by_role("button", name="Dashboard")
         self.deposit_tab = self.sidebar_container.get_by_role("button", name="Deposit")

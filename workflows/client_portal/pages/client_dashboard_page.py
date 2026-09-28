@@ -73,3 +73,15 @@ class ClientDashboardPage(BasePage):
             self.cash_flow_month_tab.first.click()
         else:
             raise ValueError(f"Unknown cash flow period '{period}'. Use 'Day', 'Week', or 'Month'.")
+
+    def get_cash_flow_period_tab(self, period: str) -> Locator:
+        """Return the locator for the given cash flow period tab."""
+        period_lower = period.lower()
+        if period_lower == "day":
+            return self.cash_flow_day_tab.first
+        elif period_lower == "week":
+            return self.cash_flow_week_tab.first
+        elif period_lower == "month":
+            return self.cash_flow_month_tab.first
+        raise ValueError(f"Unknown cash flow period '{period}'. Use 'Day', 'Week', or 'Month'.")
+

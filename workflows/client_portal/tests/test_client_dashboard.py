@@ -88,8 +88,35 @@ def test_client_dashboard_cash_flow_period_toggle(
 
     for period in ["Day", "Week", "Month"]:
         client_dashboard_page.select_cash_flow_period(period)
-        button_locator = client_dashboard_page.page.locator(f"button:has-text('{period}')").first
+        button_locator = client_dashboard_page.get_cash_flow_period_tab(period)
         expect(button_locator).to_be_visible()
 
     # Automated Error Check
     client_error_monitor.assert_no_errors("Dashboard Cash Flow Toggle")
+
+
+@pytest.mark.client
+@pytest.mark.regression
+def test_client_dashboard_negative_rapid_toggle_resilience(
+    client_dashboard_page: ClientDashboardPage,
+    client_error_monitor: ErrorMonitor,
+):
+    """
+    Negative Scenario: Stress & Rapid Interaction Resilience:
+    - Rapidly triggers cash flow period tabs without awaiting animation settles
+    - Ensures no race condition state corruption, duplicate DOM cards, or JS crashes
+    - Asserts ZERO console errors, JS crashes, and backend failures
+    """
+    client_dashboard_page.navigate()
+    expect(client_dashboard_page.cash_flow_container).to_be_visible()
+
+    # Rapid stress clicks across periods
+    for _ in range(3):
+        client_dashboard_page.select_cash_flow_period("Day")
+        client_dashboard_page.select_cash_flow_period("Week")
+        client_dashboard_page.select_cash_flow_period("Month")
+
+    expect(client_dashboard_page.cash_flow_container).to_be_visible()
+
+    client_error_monitor.assert_no_errors("Dashboard Rapid Toggle Resilience")
+

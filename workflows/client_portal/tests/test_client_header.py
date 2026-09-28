@@ -294,3 +294,30 @@ def test_client_header_logout_and_profile_controls(
     expect(header.logout_button).to_have_attribute("title", "Logout from client portal")
 
     client_error_monitor.assert_no_errors("Header Logout Control")
+
+
+@pytest.mark.client
+@pytest.mark.regression
+def test_client_header_negative_search_special_characters_resilience(
+    client_dashboard_page: ClientDashboardPage,
+    client_error_monitor: ErrorMonitor,
+):
+    """
+    Negative Scenario: Header Search Input Resilience:
+    - Inputting special characters, symbols, or script tags into header search
+    - Search handles cleanly without layout collapse or DOM crashes
+    - Clearing search restores pristine header state
+    - Asserts ZERO console errors, JS crashes, and backend failures
+    """
+    client_dashboard_page.navigate()
+    header = client_dashboard_page.header
+
+    # Test special characters and potential XSS strings
+    header.search("!@#$%^&*()<script>alert(1)</script>")
+    expect(header.search_input).to_have_value("!@#$%^&*()<script>alert(1)</script>")
+
+    header.clear_search()
+    expect(header.search_input).to_have_value("")
+
+    client_error_monitor.assert_no_errors("Header Negative Search Resilience")
+

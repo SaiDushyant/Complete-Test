@@ -20,4 +20,10 @@ from workflows.client_portal.fixtures.client_fixtures import (
     client_refer_earn_page,
     client_settings_page,
     client_deposit_page,
+    client_withdraw_page,
+    client_internal_transfer_page,
+    client_wallet_page,
+    client_copy_trading_page,
+    client_mam_page,
+    client_pamm_page,
 )

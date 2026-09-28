@@ -12,11 +12,17 @@ import pytest
 from playwright.sync_api import Browser, BrowserContext, Page
 
 from config.settings import settings
+from workflows.client_portal.pages.client_copy_trading_page import ClientCopyTradingPage
 from workflows.client_portal.pages.client_dashboard_page import ClientDashboardPage
 from workflows.client_portal.pages.client_deposit_page import ClientDepositPage
+from workflows.client_portal.pages.client_internal_transfer_page import ClientInternalTransferPage
 from workflows.client_portal.pages.client_login_page import ClientLoginPage
+from workflows.client_portal.pages.client_mam_page import ClientMAMPage
+from workflows.client_portal.pages.client_pamm_page import ClientPAMMPage
 from workflows.client_portal.pages.client_refer_earn_page import ClientReferEarnPage
 from workflows.client_portal.pages.client_settings_page import ClientSettingsPage
+from workflows.client_portal.pages.client_wallet_page import ClientWalletPage
+from workflows.client_portal.pages.client_withdraw_page import ClientWithdrawPage
 from workflows.client_portal.pages.profile_page import ClientProfilePage
 from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.error_monitor import ErrorMonitor
@@ -112,4 +118,43 @@ def client_profile_page(authenticated_client_page: Page) -> ClientProfilePage:
 def client_deposit_page(authenticated_client_page: Page) -> ClientDepositPage:
     """Provide an authenticated ClientDepositPage object."""
     return ClientDepositPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_withdraw_page(authenticated_client_page: Page) -> ClientWithdrawPage:
+    """Provide an authenticated ClientWithdrawPage object."""
+    return ClientWithdrawPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_internal_transfer_page(authenticated_client_page: Page) -> ClientInternalTransferPage:
+    """Provide an authenticated ClientInternalTransferPage object."""
+    return ClientInternalTransferPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_wallet_page(authenticated_client_page: Page) -> ClientWalletPage:
+    """Provide an authenticated ClientWalletPage object."""
+    return ClientWalletPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_copy_trading_page(authenticated_client_page: Page) -> ClientCopyTradingPage:
+    """Provide an authenticated ClientCopyTradingPage object."""
+    return ClientCopyTradingPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_mam_page(authenticated_client_page: Page) -> ClientMAMPage:
+    """Provide an authenticated ClientMAMPage object."""
+    return ClientMAMPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_pamm_page(authenticated_client_page: Page) -> ClientPAMMPage:
+    """Provide an authenticated ClientPAMMPage object."""
+    return ClientPAMMPage(authenticated_client_page)
+
+
+
 

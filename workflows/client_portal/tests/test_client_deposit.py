@@ -433,8 +433,7 @@ def test_client_deposit_proof_dropzone_and_table_sorting_characteristics(
     expect(client_deposit_page.proof_upload_input).to_have_attribute("accept", "image/*")
 
     # Verify no unexpected modal dialog is present on the page
-    modal_dialogs = client_deposit_page.page.locator("div[role='dialog']:visible, .modal:visible")
-    assert modal_dialogs.count() == 0, "No modal dialog should be displayed by default on deposit page"
+    assert client_deposit_page.visible_modal_dialogs.count() == 0, "No modal dialog should be displayed by default on deposit page"
 
     # 2. Table Header Characteristics
     headers = client_deposit_page.get_table_headers()
@@ -458,5 +457,37 @@ def test_client_deposit_proof_dropzone_and_table_sorting_characteristics(
 
     # Strict Zero Error Check
     client_error_monitor.assert_no_errors("Proof Dropzone and Table Sorting Characteristics")
+
+
+@pytest.mark.client
+@pytest.mark.regression
+def test_client_deposit_negative_invalid_amount_and_thresholds(
+    client_deposit_page: ClientDepositPage,
+    client_error_monitor: ErrorMonitor,
+):
+    """
+    Negative Scenario: Deposit Form Validation Thresholds:
+    - Amount is zero -> Submit remains disabled
+    - Amount is below minimum deposit limit -> Submit remains disabled
+    - Cleared/empty amount -> Submit remains disabled
+    - Asserts ZERO console errors, JS crashes, and backend failures
+    """
+    client_deposit_page.navigate()
+    client_deposit_page.select_destination_account("10026")
+
+    # 1. Zero amount
+    client_deposit_page.enter_deposit_amount("0")
+    expect(client_deposit_page.submit_button).to_be_disabled()
+
+    # 2. Sub-minimum amount ($10 when min is $50/200)
+    client_deposit_page.enter_deposit_amount("10")
+    expect(client_deposit_page.submit_button).to_be_disabled()
+
+    # 3. Empty amount
+    client_deposit_page.enter_deposit_amount("")
+    expect(client_deposit_page.submit_button).to_be_disabled()
+
+    client_error_monitor.assert_no_errors("Deposit Negative Threshold Validation")
+
 
 

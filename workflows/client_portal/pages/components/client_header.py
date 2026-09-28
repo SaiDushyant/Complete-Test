@@ -20,11 +20,14 @@ from typing import List
 from playwright.sync_api import Locator, Page, expect
 
 
-class ClientHeaderComponent:
+from workflows.shared.pages.base_page import BasePage
+
+
+class ClientHeaderComponent(BasePage):
     """Comprehensive header component shared across all Client Portal views."""
 
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
         self.header_container = page.locator("header")
         self.logo_image = page.locator("header img.newmenu-img")
         self.menu_toggle_button = page.locator(

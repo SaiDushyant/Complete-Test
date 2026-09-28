@@ -86,6 +86,8 @@ class ClientDepositPage(BasePage):
         self.minimum_deposit_hint = page.locator("main div").filter(
             has_text=re.compile(r"Minimum\s*deposit:\s*\$", re.I)
         )
+        self.visible_modal_dialogs = page.locator("div[role='dialog']:visible, .modal:visible")
+
 
     def navigate(self) -> None:
         """Navigate to Deposit view via sidebar."""

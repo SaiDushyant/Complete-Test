@@ -173,3 +173,28 @@ def test_client_refer_earn_referred_clients_table_and_rows_dropdown(
 
     # Automated Error Check
     client_error_monitor.assert_no_errors("Refer & Earn Clients Table & Dropdown")
+
+
+@pytest.mark.client
+@pytest.mark.regression
+def test_client_refer_earn_negative_referral_link_readonly(
+    client_refer_earn_page: ClientReferEarnPage,
+    client_error_monitor: ErrorMonitor,
+):
+    """
+    Negative Scenario: Referral Link Protection:
+    - Referral link input must be protected (read-only)
+    - User cannot manually alter or overwrite the affiliate link
+    - Asserts ZERO console errors, JS crashes, and backend failures
+    """
+    client_refer_earn_page.navigate()
+    expect(client_refer_earn_page.unique_link_input).to_be_visible()
+
+    # The link should have readonly attribute
+    is_readonly = client_refer_earn_page.unique_link_input.get_attribute("readonly")
+    assert is_readonly is not None or client_refer_earn_page.unique_link_input.is_disabled(), (
+        "Expected referral link input to be read-only or disabled."
+    )
+
+    client_error_monitor.assert_no_errors("Refer & Earn Negative Link Protection")
+

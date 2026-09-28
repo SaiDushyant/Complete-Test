@@ -181,3 +181,26 @@ def test_client_settings_end_to_end_journey_zero_errors(
     assert summary["total_errors"] == 0, (
         f"Errors encountered during Settings multi-tab journey:\n{summary}"
     )
+
+
+@pytest.mark.client
+@pytest.mark.regression
+def test_client_settings_negative_email_field_is_immutable(
+    client_settings_page: ClientSettingsPage,
+    client_error_monitor: ErrorMonitor,
+):
+    """
+    Negative Scenario: Client Email Immutability:
+    - Email address is the primary authentication identifier
+    - Asserts email input is disabled / read-only to prevent tampering
+    - Asserts ZERO console errors, JS crashes, and backend failures
+    """
+    client_settings_page.navigate()
+    client_settings_page.open_subtab("Personal Information")
+
+    # Email input must strictly be disabled
+    expect(client_settings_page.email_input.first).to_be_visible()
+    expect(client_settings_page.email_input.first).to_be_disabled()
+
+    client_error_monitor.assert_no_errors("Settings Negative Email Immutability")
+
