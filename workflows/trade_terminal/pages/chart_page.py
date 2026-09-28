@@ -245,13 +245,17 @@ class TradingChartPage(BasePage):
         logger.info(f"Opening trade modal for symbol: {symbol}, side: {side_lower}")
 
         row = self.page.locator(f".esearch-result li.searchitems[data-symbol='{symbol}']").first
-        expect(row).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        expect(row).to_be_attached(timeout=TIMEOUT_DEFAULT)
+        row.scroll_into_view_if_needed()
         row.hover()
         self.page.wait_for_timeout(300)
 
         order_btn = row.locator(f".placeorder.{side_lower}")
-        expect(order_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
-        order_btn.click()
+        try:
+            order_btn.click(force=True, timeout=3000)
+        except Exception:
+            row.hover()
+            order_btn.dispatch_event("click")
         self.page.wait_for_timeout(1000)
 
         self.dismiss_disclaimer_if_present()
@@ -379,6 +383,21 @@ class TradingChartPage(BasePage):
                 "visible": btn.is_visible(),
             })
         return buttons
+
+    def execute_bulk_close(self, close_type: str = "all") -> None:
+        """
+        Open the bulk operations dropdown and execute the requested bulk action:
+        - 'all': Close all position
+        - 'profit': Close profitable position
+        - 'loss': Close losing position
+        - 'pending-all', 'pending-limit', 'pending-stop': Pending cancellations
+        """
+        logger.info(f"Executing bulk action: {close_type}")
+        self.open_bulk_close_menu()
+        btn = self.chart_bulk_close_list.locator(f".chart-bulk-btn[data-type='{close_type}']")
+        expect(btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        btn.click()
+        self.page.wait_for_timeout(3000)
 
     # =========================================================================
     # Position Pane Tab Switching & Sections

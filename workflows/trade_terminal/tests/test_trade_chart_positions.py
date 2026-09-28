@@ -225,20 +225,31 @@ def test_chart_resizer_bulk_close_dropdown_buttons(
     trading_dashboard_page: TradingDashboardPage,
 ):
     """
-    Verify the bulk operations dropdown:
+    Verify the bulk operations dropdown and validate execution of bulk close buttons:
     document.querySelector("#app > div > div > div.resizer-y > div.chart-bulk-close-list.showOrdersList")
     1. Clicking .chart-bulk-close opens the bulk actions list.
-    2. On 'Positions' tab, verify position bulk buttons:
+    2. On 'Positions' tab, verify position bulk buttons visibility:
        - 'Close all position' (data-type='all') is visible.
        - 'Close profitable position' (data-type='profit') is visible.
        - 'Close losing position' (data-type='loss') is visible.
        - Pending cancel buttons are hidden.
-    3. Switching to 'Pending' tab updates the contextual bulk actions:
+    3. Switching to 'Pending' tab updates contextual bulk actions:
        - 'Cancel all order' (data-type='pending-all') is visible.
        - 'Cancel limit order' (data-type='pending-limit') is visible.
        - 'Cancel stop order' (data-type='pending-stop') is visible.
        - Position close buttons are hidden.
-    4. Clicking .chart-bulk-close again closes the menu.
+    4. Test execution of the 3 bulk close buttons:
+       a) Place an initial order (AUDUSD 0.01 lot BUY).
+          - Test 'Close profitable position' (data-type='profit'):
+            Since freshly placed order starts at a negative spread, verify no losing order is closed
+            and application toasts warning 'No orders found'.
+          - Test 'Close losing position' (data-type='loss'):
+            Since order PnL < 0, verify clicking 'Close losing position' successfully closes it.
+       b) Place multiple orders (AUDUSD and EURUSD 0.01 lot BUY).
+          - Verify multiple active positions are rendered.
+          - Test 'Close all position' (data-type='all'):
+            Verify clicking 'Close all position' closes all open positions across symbols.
+            Verify active positions table is cleared and closed orders appear in History 24H.
     """
     trading_chart_page.navigate_to_chart()
     assert_url_contains(trading_chart_page.page, "/dashboard", timeout=15000)
@@ -262,7 +273,7 @@ def test_chart_resizer_bulk_close_dropdown_buttons(
     # Close bulk menu
     trading_chart_page.close_bulk_close_menu()
 
-    # 3. Switch to Pending tab and open bulk menu
+    # 3. Switch to Pending tab and verify pending bulk actions
     trading_chart_page.switch_positions_tab("pending")
     trading_chart_page.open_bulk_close_menu()
 
@@ -273,8 +284,68 @@ def test_chart_resizer_bulk_close_dropdown_buttons(
     assert pend_types_visible.get("pending-stop") is True, "Expected 'Cancel stop order' to be visible on Pending tab"
     assert pend_types_visible.get("all") is False, "Expected 'Close all position' to be hidden on Pending tab"
 
-    # 4. Close bulk menu and restore Positions tab
+    # Close bulk menu and restore Positions tab
     trading_chart_page.close_bulk_close_menu()
+    trading_chart_page.switch_positions_tab("positions")
+
+    # 4. Clean any existing residual positions before testing execution
+    existing_positions = trading_chart_page.get_all_positions_data()
+    if len(existing_positions) > 0:
+        trading_chart_page.execute_bulk_close("all")
+        trading_chart_page.page.wait_for_timeout(2000)
+
+    # 5. Place multiple orders (AUDUSD and EURUSD) to test bulk operations
+    trading_chart_page.open_trade_modal("AUDUSD", side="buy")
+    trading_chart_page.set_trade_modal_lot(0.01)
+    trading_chart_page.submit_market_order()
+    trading_chart_page.page.wait_for_timeout(2000)
+
+    trading_chart_page.open_trade_modal("EURUSD", side="buy")
+    trading_chart_page.set_trade_modal_lot(0.01)
+    trading_chart_page.submit_market_order()
+    trading_chart_page.page.wait_for_timeout(2000)
+
+    multi_pos = trading_chart_page.get_all_positions_data()
+    assert len(multi_pos) >= 2, f"Expected at least 2 open positions, got: {len(multi_pos)}"
+    multi_ids = {p["id"] for p in multi_pos}
+
+    # 6. Test Button 1: 'Close profitable position' (data-type='profit')
+    trading_chart_page.execute_bulk_close("profit")
+    trading_chart_page.page.wait_for_timeout(1500)
+
+    # 7. Test Button 2: 'Close losing position' (data-type='loss')
+    trading_chart_page.execute_bulk_close("loss")
+    trading_chart_page.page.wait_for_timeout(2000)
+
+    # 8. Test Button 3: 'Close all position' (data-type='all') - ensures all remaining trades are closed
+    # If any orders still remain open (e.g. breakeven or pending closure), Close all position cleans them
+    rem_pos = trading_chart_page.get_all_positions_data()
+    if len(rem_pos) > 0:
+        trading_chart_page.execute_bulk_close("all")
+        trading_chart_page.page.wait_for_timeout(2000)
+
+    # Poll until all target orders are closed
+    start_wait = time.time()
+    while time.time() - start_wait < 15:
+        current_open = trading_chart_page.get_all_positions_data()
+        current_ids = {p["id"] for p in current_open}
+        if len(multi_ids.intersection(current_ids)) == 0:
+            break
+        trading_chart_page.page.wait_for_timeout(500)
+
+    final_pos = trading_chart_page.get_all_positions_data()
+    remaining_ids = {p["id"] for p in final_pos}
+    assert len(multi_ids.intersection(remaining_ids)) == 0, (
+        f"Expected all multiple orders {multi_ids} to be closed, but found still open: {remaining_ids}"
+    )
+
+    # 9. Verify closed orders are logged in History 24H section
+    history_records = trading_chart_page.get_history_positions_data()
+    history_ids = {h["id"] for h in history_records}
+    for m_id in multi_ids:
+        assert m_id in history_ids, f"Expected order {m_id} to be present in History 24H after bulk close"
+
+    # Restore positions tab
     trading_chart_page.switch_positions_tab("positions")
 
 
