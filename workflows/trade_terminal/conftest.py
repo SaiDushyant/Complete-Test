@@ -12,6 +12,7 @@ from workflows.shared.fixtures.browser_fixtures import (
 
 # Import trade terminal portal fixtures
 from workflows.trade_terminal.fixtures.trade_fixtures import (
+    api_access_page,
     authenticated_trade_context,
     authenticated_trade_page,
     history_page,

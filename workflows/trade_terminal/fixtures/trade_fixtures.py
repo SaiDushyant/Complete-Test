@@ -16,6 +16,7 @@ from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.diagnostics import PageDiagnostics
 from workflows.shared.utils.logger import get_logger
 from workflows.shared.utils.screenshot import capture_screenshot
+from workflows.trade_terminal.pages.api_access_page import ApiAccessPage
 from workflows.trade_terminal.pages.history_page import HistoryPage
 from workflows.trade_terminal.pages.login_page import TradeLoginPage
 from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
@@ -165,4 +166,7 @@ def history_page(authenticated_trade_page: Page) -> HistoryPage:
     return HistoryPage(authenticated_trade_page)
 
 
-
+@pytest.fixture(scope="function")
+def api_access_page(authenticated_trade_page: Page) -> ApiAccessPage:
+    """Provide an authenticated ApiAccessPage object."""
+    return ApiAccessPage(authenticated_trade_page)
