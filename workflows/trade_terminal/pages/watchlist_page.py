@@ -102,6 +102,16 @@ class WatchlistPage(BasePage):
         """Get the title text from the Quotes header."""
         return self.page_title.inner_text().strip()
 
+    def wait_for_quotes_loaded(self, timeout: int = 10000) -> None:
+        """Wait for live quotes (bid, spread) to populate from the price stream."""
+        try:
+            self.page.wait_for_function(
+                "() => { const el = document.querySelector('.esearch-result .spread'); return el && el.innerText.trim().length > 0; }",
+                timeout=timeout,
+            )
+        except Exception:
+            pass
+
     def get_top_quotes(self) -> List[Dict[str, str]]:
         """
         Dynamically extracts top ticker information (name, symbol, bid price).
@@ -119,6 +129,14 @@ class WatchlistPage(BasePage):
                 };
             });
         }""")
+
+    def get_top_tickers_names(self) -> List[str]:
+        """Return list of symbol names currently displayed in the top two ticker bar."""
+        return self.page.evaluate("""() => {
+            const icons = document.querySelectorAll(".toptwo .toptwoicons");
+            return Array.from(icons).map(el => el.getAttribute("data-name") || "").filter(Boolean);
+        }""")
+
 
     # =========================================================================
     # Omnisearch Functionality
@@ -266,4 +284,86 @@ class WatchlistPage(BasePage):
         if active_tab.count() > 0:
             return active_tab.first.get_attribute("data-wal")
         return None
+
+    # =========================================================================
+    # Advanced Workflow Actions: Top Tickers, Add/Remove, Chart Opening
+    # =========================================================================
+
+    def replace_top_ticker(self, symbol: str, section: int) -> None:
+        """
+        Replace top ticker at index `section` (0 for Fav 1, 1 for Fav 2)
+        with the specified watchlist `symbol`.
+        """
+        self.dismiss_disclaimer_if_present()
+        logger.info(f"Setting symbol '{symbol}' as top ticker section {section}")
+        row = self.favorites_list.locator(f"li.searchitems[data-symbol='{symbol}']").first
+        expect(row).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        row.hover()
+        self.page.wait_for_timeout(300)
+
+        more_trigger = row.locator(".showFavList")
+        more_trigger.hover()
+        self.page.wait_for_timeout(300)
+
+        add_btn = row.locator(f".addFavTop[data-section='{section}']")
+        expect(add_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        add_btn.click()
+        self.page.wait_for_timeout(1000)
+
+    def open_chart_for_symbol(self, symbol: str) -> None:
+        """
+        Hover over the specified symbol and click its chart icon to open the chart.
+        """
+        self.dismiss_disclaimer_if_present()
+        logger.info(f"Opening chart for symbol '{symbol}'")
+        row = self.favorites_list.locator(f"li.searchitems[data-symbol='{symbol}']").first
+        expect(row).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        row.hover()
+        self.page.wait_for_timeout(300)
+
+        chart_btn = row.locator(".openchart")
+        expect(chart_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        chart_btn.click()
+        self.page.wait_for_timeout(2000)
+
+    def add_symbol_to_favorites(self, symbol: str) -> None:
+        """
+        Search for `symbol` via Omnisearch and click the add/favorite icon to add it to favorites.
+        """
+        self.dismiss_disclaimer_if_present()
+        logger.info(f"Adding symbol '{symbol}' to favorites watchlist")
+        self.search_symbol(symbol)
+        self.page.wait_for_timeout(1000)
+
+        add_item = self.search_result_container.locator(f"li:has-text('{symbol}')").first
+        expect(add_item).to_be_visible(timeout=TIMEOUT_DEFAULT)
+
+        fav_icon = add_item.locator(".favourite")
+        expect(fav_icon).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        fav_icon.click()
+        self.page.wait_for_timeout(1000)
+
+        self.clear_search()
+        self.page.wait_for_timeout(1000)
+
+    def remove_symbol_from_favorites(self, symbol: str) -> None:
+        """
+        Hover over `symbol` in favorites list and click its trash icon to remove it.
+        """
+        self.dismiss_disclaimer_if_present()
+        logger.info(f"Removing symbol '{symbol}' from favorites watchlist")
+        row = self.favorites_list.locator(f"li.searchitems[data-symbol='{symbol}']").first
+        expect(row).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        row.hover()
+        self.page.wait_for_timeout(300)
+
+        del_btn = row.locator(".deletewl")
+        expect(del_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        del_btn.click()
+        self.page.wait_for_timeout(1000)
+
+    def is_symbol_in_favorites(self, symbol: str) -> bool:
+        """Check if symbol exists in the active favorites list."""
+        return self.favorites_list.locator(f"li.searchitems[data-symbol='{symbol}']").count() > 0
+
 

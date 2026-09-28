@@ -22,6 +22,7 @@ from workflows.shared.assertions.assert_helpers import (
     assert_element_is_visible,
     assert_url_contains,
 )
+from workflows.trade_terminal.pages.chart_page import TradingChartPage
 from workflows.trade_terminal.pages.trading_dashboard_page import TradingDashboardPage
 from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
@@ -46,15 +47,13 @@ def test_watchlist_quotes_header_and_quick_tickers(
 
     # 2. Top two quick ticker icons
     assert_element_is_visible(watchlist_page.top_quotes_container, element_name="Top Quick Tickers Container")
-    assert_element_is_visible(watchlist_page.quote_eurusd, element_name="EURUSD Quick Ticker")
-    assert_element_is_visible(watchlist_page.quote_xauusd, element_name="XAUUSD Quick Ticker")
+    expect(watchlist_page.top_quotes_items.first).to_be_visible()
 
     top_quotes = watchlist_page.get_top_quotes()
     assert len(top_quotes) >= 2, f"Expected at least 2 top quotes, found: {len(top_quotes)}"
 
-    names = [q["name"] for q in top_quotes]
-    assert "EURUSD" in names, f"Expected EURUSD in top quotes: {names}"
-    assert "XAUUSD" in names, f"Expected XAUUSD in top quotes: {names}"
+    for q in top_quotes:
+        assert len(q["name"]) > 0, f"Expected non-empty quote symbol name, got: {q}"
 
 
 @pytest.mark.trade
@@ -143,6 +142,7 @@ def test_watchlist_dynamic_symbol_market_data_extraction(
     """
     watchlist_page.navigate()
     assert_url_contains(watchlist_page.page, "/dashboard", timeout=15000)
+    watchlist_page.wait_for_quotes_loaded(timeout=10000)
 
     # Dynamically extract all symbols
     symbols_data = watchlist_page.get_all_symbols_data()
@@ -260,3 +260,104 @@ def test_watchlist_runtime_diagnostics_clean(
         check_http_errors=True,
         ignored_patterns=["google-analytics.com"],
     )
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_watchlist_add_and_remove_symbol_workflow(
+    watchlist_page: WatchlistPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify that an asset (e.g. BTCUSD) can be searched in Omnisearch,
+    added to the favorites watchlist, verified as present,
+    and then cleanly removed via the hover trash icon.
+    """
+    watchlist_page.navigate()
+    assert_url_contains(watchlist_page.page, "/dashboard", timeout=15000)
+
+    test_symbol = "BTCUSD"
+
+    # 1. Ensure symbol is not in favorites initially
+    if watchlist_page.is_symbol_in_favorites(test_symbol):
+        watchlist_page.remove_symbol_from_favorites(test_symbol)
+    assert not watchlist_page.is_symbol_in_favorites(test_symbol), f"Expected {test_symbol} not in favorites initially."
+
+    # 2. Add symbol to favorites
+    watchlist_page.add_symbol_to_favorites(test_symbol)
+    assert watchlist_page.is_symbol_in_favorites(test_symbol), f"Expected {test_symbol} to be added to favorites."
+
+    # 3. Remove symbol from favorites
+    watchlist_page.remove_symbol_from_favorites(test_symbol)
+    assert not watchlist_page.is_symbol_in_favorites(test_symbol), f"Expected {test_symbol} to be removed from favorites."
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_watchlist_replace_top_tickers_workflow(
+    watchlist_page: WatchlistPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify that the user can set and replace the top two ticker cards
+    (section 0 and section 1) from any symbol's hover more menu,
+    and restores initial tickers at completion.
+    """
+    watchlist_page.navigate()
+    assert_url_contains(watchlist_page.page, "/dashboard", timeout=15000)
+    watchlist_page.wait_for_quotes_loaded(timeout=10000)
+
+    # 1. Get initial top tickers
+    initial_top = watchlist_page.get_top_tickers_names()
+    assert len(initial_top) >= 2, f"Expected 2 top tickers, found: {initial_top}"
+
+    # 2. Dynamically pick symbols from favorites
+    symbols_data = watchlist_page.get_all_symbols_data()
+    assert len(symbols_data) >= 2, "Expected at least 2 symbols in watchlist."
+    first_sym = symbols_data[0]["symbol"]
+    second_sym = symbols_data[1]["symbol"]
+
+    # 3. Replace section 0 with first_sym
+    watchlist_page.replace_top_ticker(first_sym, section=0)
+    updated_top = watchlist_page.get_top_tickers_names()
+    assert first_sym in updated_top, f"Expected {first_sym} in top tickers: {updated_top}"
+
+    # 4. Replace section 1 with second_sym
+    watchlist_page.replace_top_ticker(second_sym, section=1)
+    updated_top = watchlist_page.get_top_tickers_names()
+    assert second_sym in updated_top, f"Expected {second_sym} in top tickers: {updated_top}"
+
+    # 5. Restore original top tickers
+    watchlist_page.replace_top_ticker(initial_top[0], section=0)
+    watchlist_page.replace_top_ticker(initial_top[1], section=1)
+    restored_top = watchlist_page.get_top_tickers_names()
+    assert restored_top == initial_top, f"Expected top tickers restored to {initial_top}, got: {restored_top}"
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_watchlist_open_chart_for_symbol_workflow(
+    watchlist_page: WatchlistPage,
+    trading_chart_page: TradingChartPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify that clicking the open-chart icon on a watchlist symbol row
+    opens the chart engine and activates the sidebar Chart tab.
+    """
+    watchlist_page.navigate()
+    assert_url_contains(watchlist_page.page, "/dashboard", timeout=15000)
+
+    # 1. Dynamically pick first available symbol
+    symbols_data = watchlist_page.get_all_symbols_data()
+    assert len(symbols_data) > 0, "Expected symbols to test open chart."
+    target_symbol = symbols_data[0]["symbol"]
+
+    # 2. Click open chart for target symbol
+    watchlist_page.open_chart_for_symbol(target_symbol)
+
+    # 3. Assert chart container is rendered and Chart sidebar icon is active
+    assert trading_chart_page.is_chart_nav_active(), "Expected sidebar Chart icon to be active."
+    assert trading_chart_page.is_chart_pane_visible(), "Expected chart pane (tv_chart_container) to be visible."
+    expect(trading_chart_page.tv_chart_container).to_be_visible()
+

@@ -20,6 +20,7 @@ from workflows.trade_terminal.pages.login_page import TradeLoginPage
 from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
 from workflows.trade_terminal.pages.profile_menu_page import ProfileMenuPage
+from workflows.trade_terminal.pages.chart_page import TradingChartPage
 from workflows.trade_terminal.pages.trading_dashboard_page import TradingDashboardPage
 from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
@@ -149,4 +150,11 @@ def profile_menu_page(authenticated_trade_page: Page) -> ProfileMenuPage:
 def watchlist_page(authenticated_trade_page: Page) -> WatchlistPage:
     """Provide an authenticated WatchlistPage object."""
     return WatchlistPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def trading_chart_page(authenticated_trade_page: Page) -> TradingChartPage:
+    """Provide an authenticated TradingChartPage object."""
+    return TradingChartPage(authenticated_trade_page)
+
 
