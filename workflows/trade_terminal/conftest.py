@@ -20,6 +20,7 @@ from workflows.trade_terminal.fixtures.trade_fixtures import (
     trade_login_page,
     trade_page,
     trading_dashboard_page,
+    watchlist_page,
 )
 from workflows.trade_terminal.utils.trade_logger import TradeTerminalLogger
 from workflows.shared.utils.test_logger import extract_test_meaning

@@ -21,6 +21,7 @@ from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
 from workflows.trade_terminal.pages.profile_menu_page import ProfileMenuPage
 from workflows.trade_terminal.pages.trading_dashboard_page import TradingDashboardPage
+from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
 logger = get_logger("trade_fixtures")
 
@@ -142,3 +143,10 @@ def profile_menu_page(authenticated_trade_page: Page) -> ProfileMenuPage:
     """Provide an authenticated ProfileMenuPage object."""
     profile = ProfileMenuPage(authenticated_trade_page)
     return profile
+
+
+@pytest.fixture(scope="function")
+def watchlist_page(authenticated_trade_page: Page) -> WatchlistPage:
+    """Provide an authenticated WatchlistPage object."""
+    return WatchlistPage(authenticated_trade_page)
+
