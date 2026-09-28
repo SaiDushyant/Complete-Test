@@ -69,6 +69,7 @@ class PositionsPage(BasePage):
         self.summary_free_margin: Locator = self.summary_footer.locator(".xfreemargin")
         self.summary_margin_level: Locator = self.summary_footer.locator(".xutilmargin")
         self.summary_total_profit: Locator = self.summary_footer.locator(".totalprofitvalue")
+        self.summary_credit: Locator = self.position_page_container.locator(".credit-value").first
 
         # 5. Pending Orders Section (.openpending / .openpendingmobile)
         self.pending_table: Locator = self.position_page_container.locator("table.openpending")
@@ -267,9 +268,12 @@ class PositionsPage(BasePage):
     def get_position_summary(self) -> Dict[str, float]:
         """
         Extract all financial metrics from the account summary footer bar:
-        balance, equity, used_margin, free_margin, margin_level, total_profit.
+        balance, equity, used_margin, free_margin, margin_level, total_profit, credit.
         """
         expect(self.summary_footer).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        credit_val = 0.0
+        if self.summary_credit.count() > 0:
+            credit_val = self._parse_numeric(self.summary_credit.inner_text())
         return {
             "balance": self._parse_numeric(self.summary_balance.inner_text()),
             "equity": self._parse_numeric(self.summary_equity.inner_text()),
@@ -277,6 +281,7 @@ class PositionsPage(BasePage):
             "free_margin": self._parse_numeric(self.summary_free_margin.inner_text()),
             "margin_level": self._parse_numeric(self.summary_margin_level.inner_text()),
             "total_profit": self._parse_numeric(self.summary_total_profit.inner_text()),
+            "credit": credit_val,
         }
 
     # =========================================================================
