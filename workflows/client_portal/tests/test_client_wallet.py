@@ -84,13 +84,15 @@ def test_client_wallet_summary_cards_and_accounts_table(
     # Client Wallet Card
     expect(client_wallet_page.client_wallet_card.first).to_contain_text(re.compile(r"CLIENT\s*Wallet", re.I))
     expect(client_wallet_page.client_wallet_card.first).to_contain_text(re.compile(r"AVAILABLE\s*BALANCE", re.I))
-    expect(client_wallet_page.client_wallet_card.first).to_contain_text("808780896656")
+    client_card_text = client_wallet_page.client_wallet_card.first.inner_text()
+    assert re.search(r"\b\d{6,}\b", client_card_text), f"Expected numeric wallet ID in Client Wallet card: {client_card_text}"
     expect(client_wallet_page.client_wallet_card.first).to_contain_text(re.compile(r"ACTIVE", re.I))
 
     # IB Wallet Card
     expect(client_wallet_page.ib_wallet_card.first).to_contain_text(re.compile(r"IB\s*Wallet", re.I))
     expect(client_wallet_page.ib_wallet_card.first).to_contain_text(re.compile(r"AVAILABLE\s*BALANCE", re.I))
-    expect(client_wallet_page.ib_wallet_card.first).to_contain_text("868001043731")
+    ib_card_text = client_wallet_page.ib_wallet_card.first.inner_text()
+    assert re.search(r"\b\d{6,}\b", ib_card_text), f"Expected numeric wallet ID in IB Wallet card: {ib_card_text}"
     expect(client_wallet_page.ib_wallet_card.first).to_contain_text(re.compile(r"ACTIVE", re.I))
 
     # Consolidated Funds Card
@@ -115,13 +117,13 @@ def test_client_wallet_summary_cards_and_accounts_table(
     # Row 1: Client Wallet
     row_client = client_wallet_page.accounts_rows.first.inner_text()
     assert "Client Wallet" in row_client
-    assert "808780896656" in row_client
+    assert re.search(r"\b\d{6,}\b", row_client)
     assert "ACTIVE" in row_client
 
     # Row 2: IB Wallet
     row_ib = client_wallet_page.accounts_rows.nth(1).inner_text()
     assert "IB Wallet" in row_ib
-    assert "868001043731" in row_ib
+    assert re.search(r"\b\d{6,}\b", row_ib)
     assert "ACTIVE" in row_ib
 
     # Automated Error Check

@@ -25,6 +25,9 @@ from config.settings import settings
 from workflows.client_portal.pages.components.client_header import ClientHeaderComponent
 from workflows.client_portal.pages.components.client_sidebar import ClientSidebarComponent
 from workflows.shared.pages.base_page import BasePage
+from workflows.shared.utils.logger import get_logger
+
+logger = get_logger("client_wallet_page")
 
 
 class ClientWalletPage(BasePage):
