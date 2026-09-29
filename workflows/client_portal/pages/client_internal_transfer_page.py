@@ -30,6 +30,9 @@ from config.settings import settings
 from workflows.client_portal.pages.components.client_header import ClientHeaderComponent
 from workflows.client_portal.pages.components.client_sidebar import ClientSidebarComponent
 from workflows.shared.pages.base_page import BasePage
+from workflows.shared.utils.logger import get_logger
+
+logger = get_logger("client_internal_transfer_page")
 
 
 class ClientInternalTransferPage(BasePage):
@@ -95,34 +98,47 @@ class ClientInternalTransferPage(BasePage):
         expect(self.transfer_details_heading.first).to_be_visible(timeout=10000)
         expect(self.source_select.locator("option").first).to_be_attached(timeout=10000)
 
-    def select_source(self, identifier: str) -> None:
+    def select_source(self, identifier: str | None = None) -> None:
         """Select source account or wallet."""
         expect(self.source_select.locator("option").first).to_be_attached(timeout=10000)
         options = self.source_select.locator("option").all()
         matched_val = None
-        for opt in options:
-            if identifier.lower() in opt.inner_text().lower():
-                matched_val = opt.get_attribute("value")
-                break
+        target = identifier or settings.client_portal.username
+        if target:
+            for opt in options:
+                opt_text = opt.inner_text().lower()
+                opt_val = (opt.get_attribute("value") or "").lower()
+                if target.lower() in opt_text or target.lower() == opt_val:
+                    matched_val = opt.get_attribute("value")
+                    break
         if matched_val:
             self.source_select.select_option(matched_val)
         else:
-            self.source_select.select_option(index=1)
+            if len(options) > 1:
+                self.source_select.select_option(index=len(options) - 1)
+            else:
+                self.source_select.select_option(index=1)
         self.page.wait_for_timeout(300)
 
-    def select_destination(self, identifier: str) -> None:
+    def select_destination(self, identifier: str | None = None) -> None:
         """Select destination account or wallet."""
         expect(self.destination_select.locator("option").first).to_be_attached(timeout=10000)
         options = self.destination_select.locator("option").all()
         matched_val = None
-        for opt in options:
-            if identifier.lower() in opt.inner_text().lower():
-                matched_val = opt.get_attribute("value")
-                break
+        if identifier:
+            for opt in options:
+                opt_text = opt.inner_text().lower()
+                opt_val = (opt.get_attribute("value") or "").lower()
+                if identifier.lower() in opt_text or identifier.lower() == opt_val:
+                    matched_val = opt.get_attribute("value")
+                    break
         if matched_val:
             self.destination_select.select_option(matched_val)
         else:
-            self.destination_select.select_option(index=1)
+            if len(options) > 2:
+                self.destination_select.select_option(index=2)
+            elif len(options) > 1:
+                self.destination_select.select_option(index=1)
         self.page.wait_for_timeout(300)
 
     def enter_amount(self, amount: str) -> None:

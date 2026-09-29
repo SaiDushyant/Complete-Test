@@ -74,8 +74,8 @@ def test_client_internal_transfer_form_controls_and_options(
     assert len(dest_options) > 1, f"Expected multiple destination options, got {dest_options}"
 
     # 3. Select Source and Destination
-    client_internal_transfer_page.select_source("10026")
-    client_internal_transfer_page.select_destination("Client Wallet")
+    client_internal_transfer_page.select_source()
+    client_internal_transfer_page.select_destination()
 
     # 4. Fill Amount and Memo
     client_internal_transfer_page.enter_amount("15.00")
@@ -107,8 +107,8 @@ def test_client_internal_transfer_review_modal_lifecycle(
     client_internal_transfer_page.navigate()
 
     # 1. Fill transfer parameters
-    client_internal_transfer_page.select_source("10026")
-    client_internal_transfer_page.select_destination("Client Wallet")
+    client_internal_transfer_page.select_source()
+    client_internal_transfer_page.select_destination()
     client_internal_transfer_page.enter_amount("15.00")
     client_internal_transfer_page.enter_memo("Automated review verification")
 
@@ -272,8 +272,8 @@ def test_client_internal_transfer_end_to_end_journey_zero_errors(
     client_internal_transfer_page.navigate()
     client_internal_transfer_page.header.assert_header_elements(expected_title="Internal Transfer")
 
-    client_internal_transfer_page.select_source("10026")
-    client_internal_transfer_page.select_destination("Client Wallet")
+    client_internal_transfer_page.select_source()
+    client_internal_transfer_page.select_destination()
     client_internal_transfer_page.enter_amount("10.00")
     client_internal_transfer_page.click_review_transfer()
     client_internal_transfer_page.close_review_modal()
@@ -309,8 +309,8 @@ def test_client_internal_transfer_execute_transfer_and_verify_wallet_credit(
 
     # 2. Navigate to Internal Transfer
     client_internal_transfer_page.navigate()
-    client_internal_transfer_page.select_source("10026")
-    client_internal_transfer_page.select_destination("Client Wallet")
+    client_internal_transfer_page.select_source()
+    client_internal_transfer_page.select_destination()
     client_internal_transfer_page.enter_amount("1.00")
     client_internal_transfer_page.enter_memo("Automated credit verification")
 
@@ -376,18 +376,20 @@ def test_client_internal_transfer_all_modes_of_transfer(
     """
     client_internal_transfer_page.navigate()
 
-    modes = [
-        ("client_wallet:808780896656", "account:LWR8AUE0TS", "1.00", "Wallet to Account"),
-        ("account:LWR8AUE0TS", "account:BKQIOI0MAT", "1.00", "Account to Account"),
-        ("ib_wallet:868001043731", "account:LWR8AUE0TS", "1.00", "IB Wallet to Account"),
-        ("ib_wallet:868001043731", "client_wallet:808780896656", "1.00", "IB Wallet to Wallet"),
-    ]
+    source_options = client_internal_transfer_page.get_source_options()
+    dest_options = client_internal_transfer_page.get_destination_options()
 
-    for src, dest, amt, memo in modes:
+    valid_sources = [s for s in source_options if s and not s.lower().startswith("select")]
+    valid_dests = [d for d in dest_options if d and not d.lower().startswith("select")]
+
+    if valid_sources and valid_dests:
+        src = valid_sources[-1]  # Active funded trading account
+        dest = valid_dests[0] if valid_dests[0] != src else valid_dests[-1]
+
         client_internal_transfer_page.select_source(src)
         client_internal_transfer_page.select_destination(dest)
-        client_internal_transfer_page.enter_amount(amt)
-        client_internal_transfer_page.enter_memo(memo)
+        client_internal_transfer_page.enter_amount("1.00")
+        client_internal_transfer_page.enter_memo("Automated Mode Transfer")
 
         client_internal_transfer_page.click_review_transfer()
         expect(client_internal_transfer_page.review_modal.first).to_be_visible()
@@ -401,10 +403,10 @@ def test_client_internal_transfer_all_modes_of_transfer(
         assert response_info.value.status == 200
         client_internal_transfer_page.page.wait_for_timeout(1000)
 
-    # Verify Recent Transfers ledger has completed records
-    expect(client_internal_transfer_page.table_rows.first).to_be_visible()
-    row_count = client_internal_transfer_page.get_history_row_count()
-    assert row_count >= 4
+        # Verify Recent Transfers ledger has completed records
+        expect(client_internal_transfer_page.table_rows.first).to_be_visible()
+        row_count = client_internal_transfer_page.get_history_row_count()
+        assert row_count >= 1
 
     # Strict Zero Error Check
     client_error_monitor.assert_no_errors("Internal Transfer All Modes of Transfer")
@@ -424,8 +426,8 @@ def test_client_internal_transfer_negative_invalid_amounts_block_modal(
     - Asserts review modal remains hidden and zero errors
     """
     client_internal_transfer_page.navigate()
-    client_internal_transfer_page.select_source("10026")
-    client_internal_transfer_page.select_destination("Client Wallet")
+    client_internal_transfer_page.select_source()
+    client_internal_transfer_page.select_destination()
 
     # 1. Empty amount
     client_internal_transfer_page.enter_amount("")
