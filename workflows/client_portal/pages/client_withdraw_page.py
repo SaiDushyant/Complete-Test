@@ -196,19 +196,25 @@ class ClientWithdrawPage(BasePage):
         self.save_details_button.click()
         self.page.wait_for_timeout(1000)
 
-    def select_withdraw_source(self, identifier: str) -> None:
+    def select_withdraw_source(self, identifier: str | None = None) -> None:
         """Select account or wallet from 'WITHDRAW FROM' dropdown."""
         expect(self.withdraw_from_select.locator("option").first).to_be_attached(timeout=10000)
         options = self.withdraw_from_select.locator("option").all()
         matched_val = None
-        for opt in options:
-            if identifier.lower() in opt.inner_text().lower():
-                matched_val = opt.get_attribute("value")
-                break
+        target = identifier or settings.client_portal.username
+        if target:
+            for opt in options:
+                if target.lower() in opt.inner_text().lower():
+                    matched_val = opt.get_attribute("value")
+                    break
         if matched_val:
             self.withdraw_from_select.select_option(matched_val)
         else:
-            self.withdraw_from_select.select_option(index=1)
+            # Fallback to funded trading account (temp - USD / last option) or index 1
+            if len(options) > 1:
+                self.withdraw_from_select.select_option(index=len(options) - 1)
+            else:
+                self.withdraw_from_select.select_option(index=1)
         self.page.wait_for_timeout(300)
 
     def select_payment_method(self, method_name: str) -> None:

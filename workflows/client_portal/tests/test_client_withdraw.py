@@ -161,7 +161,7 @@ def test_client_withdraw_request_form_validation_and_lifecycle(
     assert not client_withdraw_page.is_request_withdraw_enabled(), "Submit should initially be disabled"
 
     # 3. Select Source Account
-    client_withdraw_page.select_withdraw_source("10026")
+    client_withdraw_page.select_withdraw_source()
     assert not client_withdraw_page.is_request_withdraw_enabled(), "Submit should be disabled without amount"
 
     # 4. Select Mode of Payment
@@ -198,7 +198,7 @@ def test_client_withdraw_otp_modal_flow_and_dismiss(
     client_withdraw_page.navigate()
 
     # 1. Fill valid parameters
-    client_withdraw_page.select_withdraw_source("10026")
+    client_withdraw_page.select_withdraw_source()
     client_withdraw_page.select_payment_method("USDT TRC20")
     client_withdraw_page.enter_withdraw_amount("25.00")
 
@@ -576,7 +576,7 @@ def test_client_withdraw_negative_form_and_otp_validation(
     expect(client_withdraw_page.request_withdraw_button).to_be_disabled()
 
     # 2. Select source only -> Still disabled
-    client_withdraw_page.select_withdraw_source("10026")
+    client_withdraw_page.select_withdraw_source()
     expect(client_withdraw_page.request_withdraw_button).to_be_disabled()
 
     # 3. Select method only -> Still disabled
