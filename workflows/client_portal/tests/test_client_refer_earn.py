@@ -177,6 +177,45 @@ def test_client_refer_earn_referred_clients_table_and_rows_dropdown(
 
 @pytest.mark.client
 @pytest.mark.regression
+def test_client_refer_earn_referral_link_autofill_on_registration(
+    client_refer_earn_page: ClientReferEarnPage,
+    client_error_monitor: ErrorMonitor,
+):
+    """
+    End-to-End Attribute Scenario: Referral Link Registration Prefill:
+    - Extracts the unique referral URL from Refer & Earn view (e.g. '.../register?ref=DZ3FO9')
+    - Parses the referral code parameter (ref=...)
+    - Opens a new tab/page to the referral URL
+    - Verifies the Registration page automatically pre-fills the referral code in 'input[name=referral]'
+    - Asserts ZERO console errors, JS crashes, and backend failures
+    """
+    client_refer_earn_page.navigate()
+    referral_url = client_refer_earn_page.get_referral_link()
+    assert "ref=" in referral_url, f"Expected 'ref=' in referral link: {referral_url}"
+
+    # Extract referral code
+    ref_code = referral_url.split("ref=")[-1].strip()
+
+    # Open registration page in a fresh unauthenticated browser context
+    reg_context = client_refer_earn_page.page.context.browser.new_context()
+    reg_page = reg_context.new_page()
+    reg_page.goto(referral_url)
+    reg_page.wait_for_load_state("domcontentloaded")
+
+    # Assert referral code input is correctly prefilled in DOM
+    ref_input = reg_page.locator("input[name='referral'], #referral").first
+    expect(ref_input).to_have_value(ref_code, timeout=10000)
+    assert ref_input.input_value() == ref_code
+
+    reg_page.close()
+    reg_context.close()
+    client_error_monitor.assert_no_errors("Refer & Earn Registration Autofill")
+
+
+
+
+@pytest.mark.client
+@pytest.mark.regression
 def test_client_refer_earn_negative_referral_link_readonly(
     client_refer_earn_page: ClientReferEarnPage,
     client_error_monitor: ErrorMonitor,
@@ -197,4 +236,5 @@ def test_client_refer_earn_negative_referral_link_readonly(
     )
 
     client_error_monitor.assert_no_errors("Refer & Earn Negative Link Protection")
+
 
