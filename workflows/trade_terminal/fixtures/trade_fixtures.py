@@ -16,10 +16,18 @@ from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.diagnostics import PageDiagnostics
 from workflows.shared.utils.logger import get_logger
 from workflows.shared.utils.screenshot import capture_screenshot
+from workflows.trade_terminal.pages.api_access_page import ApiAccessPage
+from workflows.trade_terminal.pages.blacktrader_chart_page import BlackTraderChartPage
+from workflows.trade_terminal.pages.chart_page import TradingChartPage
+from workflows.trade_terminal.pages.history_page import HistoryPage
 from workflows.trade_terminal.pages.login_page import TradeLoginPage
+from workflows.trade_terminal.pages.navigation_bar_page import NavigationBarPage
 from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
+from workflows.trade_terminal.pages.profile_menu_page import ProfileMenuPage
 from workflows.trade_terminal.pages.trading_dashboard_page import TradingDashboardPage
+from workflows.trade_terminal.pages.tradingview_chart_page import TradingViewChartPage
+from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
 logger = get_logger("trade_fixtures")
 
@@ -134,3 +142,52 @@ def order_entry_page(authenticated_trade_page: Page) -> OrderEntryPage:
 def positions_page(authenticated_trade_page: Page) -> PositionsPage:
     """Provide an authenticated PositionsPage object."""
     return PositionsPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def profile_menu_page(authenticated_trade_page: Page) -> ProfileMenuPage:
+    """Provide an authenticated ProfileMenuPage object."""
+    profile = ProfileMenuPage(authenticated_trade_page)
+    return profile
+
+
+@pytest.fixture(scope="function")
+def watchlist_page(authenticated_trade_page: Page) -> WatchlistPage:
+    """Provide an authenticated WatchlistPage object."""
+    return WatchlistPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def trading_chart_page(authenticated_trade_page: Page) -> TradingChartPage:
+    """Provide an authenticated TradingChartPage object."""
+    return TradingChartPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def tradingview_chart_page(authenticated_trade_page: Page) -> TradingViewChartPage:
+    """Provide an authenticated TradingViewChartPage object dedicated to TradingView."""
+    return TradingViewChartPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def blacktrader_chart_page(authenticated_trade_page: Page) -> BlackTraderChartPage:
+    """Provide an authenticated BlackTraderChartPage object dedicated to Black Trader."""
+    return BlackTraderChartPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def history_page(authenticated_trade_page: Page) -> HistoryPage:
+    """Provide an authenticated HistoryPage object."""
+    return HistoryPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def api_access_page(authenticated_trade_page: Page) -> ApiAccessPage:
+    """Provide an authenticated ApiAccessPage object."""
+    return ApiAccessPage(authenticated_trade_page)
+
+
+@pytest.fixture(scope="function")
+def navigation_bar_page(authenticated_trade_page: Page) -> NavigationBarPage:
+    """Provide an authenticated NavigationBarPage object for sidebar navigation."""
+    return NavigationBarPage(authenticated_trade_page)
