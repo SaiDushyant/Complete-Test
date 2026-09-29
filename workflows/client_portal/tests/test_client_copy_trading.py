@@ -301,25 +301,32 @@ def test_client_copy_trading_follower_follow_and_unfollow_flow(
     """
     login_page = ClientLoginPage(page)
     login_page.navigate()
-    login_page.login_and_wait_for_dashboard(email="10008", password="Test@1234")
+    login_page.login_and_wait_for_dashboard(
+        email=settings.copy_trading.follower_username,
+        password=settings.copy_trading.follower_password,
+    )
     login_page.navigate_to_client_portal()
     page.wait_for_timeout(1000)
 
     copy_page = ClientCopyTradingPage(page)
     copy_page.navigate()
 
-    # 1. Follow Manager 10009
-    followed = copy_page.follow_manager(manager_name_or_id="temp", trade_method="Balance Based")
-    assert followed, "Expected account 10008 to successfully follow manager temp/10009"
+    mgr_name = settings.copy_trading.manager_name
+    mgr_user = settings.copy_trading.manager_username
+
+    # 1. Follow Manager
+    followed = copy_page.follow_manager(manager_name_or_id=mgr_name, trade_method="Balance Based")
+    assert followed, f"Expected account {settings.copy_trading.follower_username} to successfully follow manager {mgr_name}/{mgr_user}"
 
     # 2. Check active subscription in My Subscriptions
     subscriptions = copy_page.get_subscriptions_data()
-    assert any("10009" in s["account"] or "temp" in s["account"].lower() for s in subscriptions), (
-        f"Expected manager 10009 in subscriptions: {subscriptions}"
+    assert any(mgr_user in s["account"] or mgr_name.lower() in s["account"].lower() for s in subscriptions), (
+        f"Expected manager {mgr_user} in subscriptions: {subscriptions}"
     )
 
-    # 3. Unfollow Manager 10009
-    unfollowed = copy_page.unfollow_manager(manager_name_or_id="temp")
-    assert unfollowed, "Expected account 10008 to successfully unfollow manager temp/10009"
+    # 3. Unfollow Manager
+    unfollowed = copy_page.unfollow_manager(manager_name_or_id=mgr_name)
+    assert unfollowed, f"Expected account {settings.copy_trading.follower_username} to successfully unfollow manager {mgr_name}/{mgr_user}"
+
 
     client_error_monitor.assert_no_errors("Follower Follow and Unfollow Flow")

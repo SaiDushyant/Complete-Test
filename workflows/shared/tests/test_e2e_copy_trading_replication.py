@@ -26,11 +26,12 @@ from workflows.trade_terminal.pages.positions_page import PositionsPage
 
 logger = get_logger("e2e_copy_trading_replication")
 
-MANAGER_USER = "10009"
-MANAGER_PASS = "Temp@123"
+MANAGER_USER = settings.copy_trading.manager_username
+MANAGER_PASS = settings.copy_trading.manager_password
+MANAGER_NAME = settings.copy_trading.manager_name
 
-FOLLOWER_USER = "10008"
-FOLLOWER_PASS = "Test@1234"
+FOLLOWER_USER = settings.copy_trading.follower_username
+FOLLOWER_PASS = settings.copy_trading.follower_password
 
 
 def _login_client_portal(context: BrowserContext, user: str, pwd: str) -> tuple[Page, ClientCopyTradingPage]:
@@ -75,14 +76,14 @@ def test_e2e_follower_subscribes_to_manager(browser: Browser):
     ctx_follower = browser.new_context(viewport=settings.browser.viewport)
     page_follower, copy_page = _login_client_portal(ctx_follower, FOLLOWER_USER, FOLLOWER_PASS)
 
-    # 1. Follow Manager 10009
-    followed = copy_page.follow_manager("temp", trade_method="Balance Based")
-    assert followed, f"Expected {FOLLOWER_USER} to follow manager temp/10009"
+    # 1. Follow Manager
+    followed = copy_page.follow_manager(MANAGER_NAME, trade_method="Balance Based")
+    assert followed, f"Expected {FOLLOWER_USER} to follow manager {MANAGER_NAME}/{MANAGER_USER}"
 
     # 2. Verify subscription row
     subscriptions = copy_page.get_subscriptions_data()
-    assert any("10009" in s["account"] or "temp" in s["account"].lower() for s in subscriptions), (
-        f"Expected manager 10009 in active subscriptions: {subscriptions}"
+    assert any(MANAGER_USER in s["account"] or MANAGER_NAME.lower() in s["account"].lower() for s in subscriptions), (
+        f"Expected manager {MANAGER_USER} in active subscriptions: {subscriptions}"
     )
     ctx_follower.close()
 
@@ -92,7 +93,7 @@ def test_e2e_follower_subscribes_to_manager(browser: Browser):
 def test_e2e_manager_order_placement_and_follower_replication(browser: Browser):
     """
     Scenario 2: Manager executes order in Trade Terminal -> Replicates to Follower:
-    - Ensures Follower (10008) is actively following Manager (10009).
+    - Ensures Follower is actively following Manager.
     - Manager logs into Trade Terminal and executes Quick Buy trade.
     - Follower Trade Terminal reflects replicated position.
     - Manager closes position -> Follower reflects position closure.
@@ -100,7 +101,7 @@ def test_e2e_manager_order_placement_and_follower_replication(browser: Browser):
     # 1. Setup follower subscription in Client Portal
     ctx_follower_cp = browser.new_context(viewport=settings.browser.viewport)
     _, copy_follower = _login_client_portal(ctx_follower_cp, FOLLOWER_USER, FOLLOWER_PASS)
-    copy_follower.follow_manager("temp", trade_method="Balance Based")
+    copy_follower.follow_manager(MANAGER_NAME, trade_method="Balance Based")
     ctx_follower_cp.close()
 
     # 2. Open Trade Terminal for Manager
@@ -159,8 +160,8 @@ def test_e2e_unfollow_stops_order_replication(browser: Browser):
     # 1. Unfollow Manager in Client Portal
     ctx_follower_cp = browser.new_context(viewport=settings.browser.viewport)
     _, copy_follower = _login_client_portal(ctx_follower_cp, FOLLOWER_USER, FOLLOWER_PASS)
-    unfollowed = copy_follower.unfollow_manager("temp")
-    assert unfollowed, "Expected Follower to successfully unfollow Manager"
+    unfollowed = copy_follower.unfollow_manager(MANAGER_NAME)
+    assert unfollowed, f"Expected Follower to successfully unfollow Manager {MANAGER_NAME}"
     ctx_follower_cp.close()
 
     # 2. Open Trade Terminal sessions

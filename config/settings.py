@@ -40,6 +40,16 @@ def _get_int(key: str, default: int) -> int:
 
 
 @dataclass(frozen=True)
+class CopyTradingAccounts:
+    """Manager and Follower accounts for Copy Trading replication workflows."""
+    manager_username: str
+    manager_password: str
+    manager_name: str
+    follower_username: str
+    follower_password: str
+
+
+@dataclass(frozen=True)
 class PortalCredentials:
     """Credentials and endpoints for an individual portal."""
     base_url: str
@@ -94,6 +104,7 @@ class Settings:
     trade_terminal: PortalCredentials = field(init=False)
     admin_portal: PortalCredentials = field(init=False)
     client_portal: PortalCredentials = field(init=False)
+    copy_trading: CopyTradingAccounts = field(init=False)
 
     # Legacy / Crawler & Comparer URLs for backward compatibility
     baseline_url: str = field(init=False)
@@ -229,6 +240,15 @@ class Settings:
             login_url=os.getenv("CLIENT_LOGIN_URL", client_url),
             post_login_url_pattern=os.getenv("CLIENT_POST_LOGIN_URL_PATTERN", "**/dashboard**"),
             auth_state_path=client_auth_state,
+        )
+
+        # 7. Copy Trading Manager & Follower Accounts
+        self.copy_trading = CopyTradingAccounts(
+            manager_username=os.getenv("COPY_TRADING_MANAGER_USERNAME") or client_username or "10009",
+            manager_password=os.getenv("COPY_TRADING_MANAGER_PASSWORD") or client_password or "Temp@123",
+            manager_name=os.getenv("COPY_TRADING_MANAGER_NAME", "temp"),
+            follower_username=os.getenv("COPY_TRADING_FOLLOWER_USERNAME", "10008"),
+            follower_password=os.getenv("COPY_TRADING_FOLLOWER_PASSWORD", "Test@1234"),
         )
 
 
