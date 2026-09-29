@@ -74,3 +74,10 @@ Thumbs.db
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
+# ==============================================================================
+# SCRATCH & TEMPORARY SCRIPTS
+# ==============================================================================
+workflows/admin_portal/scratch/
+scripts/diag_modal_close.py
+

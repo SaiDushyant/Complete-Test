@@ -20,16 +20,24 @@ logger = get_logger("browser_fixtures")
 
 
 @pytest.fixture(scope="session")
-def workflow_browser(playwright: Playwright) -> Generator[Browser, None, None]:
+def workflow_browser(playwright: Playwright, pytestconfig: pytest.Config) -> Generator[Browser, None, None]:
     """
-    Session-scoped Playwright Browser instance configured via settings.
+    Session-scoped Playwright Browser instance configured via settings and CLI flags.
+    Supports standard pytest --headed and --slowmo <ms> flags as well as
+    BROWSER_HEADLESS and BROWSER_SLOW_MO environment variables.
     """
+    headed_cli = getattr(pytestconfig.option, "headed", False)
+    slowmo_cli = getattr(pytestconfig.option, "slowmo", 0)
+
+    headless = False if headed_cli else settings.browser.headless
+    slow_mo = slowmo_cli if slowmo_cli else settings.browser.slow_mo
+
     logger.info(
-        f"Launching {settings.browser.browser_type} (headless={settings.browser.headless}, slow_mo={settings.browser.slow_mo}ms)"
+        f"Launching {settings.browser.browser_type} (headless={headless}, slow_mo={slow_mo}ms)"
     )
     browser = playwright.chromium.launch(
-        headless=settings.browser.headless,
-        slow_mo=settings.browser.slow_mo,
+        headless=headless,
+        slow_mo=slow_mo,
     )
     yield browser
     logger.info("Closing session browser.")
