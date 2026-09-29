@@ -3,15 +3,15 @@ Client Portal Copy Trading Page Object.
 Comprehensive encapsulation of all minute controls:
 - Universal header integration and page title ('Copy Trading')
 - 4 Summary Cards (MANAGERS, MANAGED CAPITAL, CLOSED TRADES, FOLLOWERS)
-- View Switching ('TRADING MANAGER', 'MY FOLLOWERS' with Active/History tabs)
+- View Switching ('TRADING MANAGER', 'MY FOLLOWERS' / 'MY SUBSCRIPTION' with Active/History tabs)
 - Dropdown Filters (Range: 30D/90D/1Y/All Time, Risk, Fund, Rows: 10/25/50)
 - Refresh action button ('Refresh')
 - Search bar filter ('Search...')
 - Managers Leaderboard Table:
   * 9 columns (NAME, RANK, GROWTH, WIN RATE, TRADES, DRAWDOWN, MANAGED, RISK, ACTION)
-  * Dynamic rows per manager
+  * Dynamic rows per manager with account ID subtitle
   * Inline 'Statistics' icon button on each row
-  * Inline 'Follow' action button on each row
+  * Inline 'Follow' / 'Unfollow' action button on each row
 - Statistics Modal Dialog:
   * Modal title ('COPY TRADING STATISTICS')
   * Metric cards (NET PROFIT, GROWTH, WIN RATE, PROFIT FACTOR, CLOSED TRADES, TOTAL LOTS, DRAWDOWN, MANAGED)
@@ -29,13 +29,16 @@ Maintained by Developer 3 (Client Portal Owner).
 from __future__ import annotations
 
 import re
-from typing import Dict, List
+from typing import Any, Dict, List, Optional
 from playwright.sync_api import Locator, Page, expect
 
 from config.settings import settings
 from workflows.client_portal.pages.components.client_header import ClientHeaderComponent
 from workflows.client_portal.pages.components.client_sidebar import ClientSidebarComponent
 from workflows.shared.pages.base_page import BasePage
+from workflows.shared.utils.logger import get_logger
+
+logger = get_logger("client_copy_trading_page")
 
 
 class ClientCopyTradingPage(BasePage):
@@ -57,7 +60,7 @@ class ClientCopyTradingPage(BasePage):
 
         # View Switcher Buttons
         self.trading_manager_btn = page.locator("main button").filter(has_text=re.compile(r"TRADING\s*MANAGER", re.I)).first
-        self.my_followers_btn = page.locator("main button").filter(has_text=re.compile(r"MY\s*FOLLOWERS", re.I)).first
+        self.my_followers_btn = page.locator("main button").filter(has_text=re.compile(r"MY\s*(?:FOLLOWERS|SUBSCRIPTION)", re.I)).first
         self.followers_active_btn = page.locator("main button").filter(has_text=re.compile(r"^Active$", re.I)).first
         self.followers_history_btn = page.locator("main button").filter(has_text=re.compile(r"^History$", re.I)).first
 
@@ -68,7 +71,7 @@ class ClientCopyTradingPage(BasePage):
         self.rows_select = page.locator("main select").nth(3)
 
         # Refresh & Search
-        self.refresh_button = page.locator("main button[title='Refresh']").first
+        self.refresh_button = page.locator("main button[title='Refresh'], main button:has-text('Refresh')").first
         self.search_input = page.locator("main input[placeholder*='Search' i]").first
 
         # Managers Table & Pagination
@@ -118,10 +121,16 @@ class ClientCopyTradingPage(BasePage):
         }
 
     def switch_to_my_followers(self) -> None:
-        """Switch from Trading Manager leaderboard to My Followers view."""
+        """Switch from Trading Manager leaderboard to My Followers / My Subscription view."""
         expect(self.my_followers_btn).to_be_visible(timeout=5000)
         self.my_followers_btn.click()
-        expect(self.followers_active_btn).to_be_visible(timeout=5000)
+        self.page.wait_for_timeout(500)
+        if self.followers_active_btn.is_visible():
+            expect(self.followers_active_btn).to_be_visible(timeout=5000)
+
+    def switch_to_my_subscriptions(self) -> None:
+        """Alias for switch_to_my_followers."""
+        self.switch_to_my_followers()
 
     def switch_to_trading_manager(self) -> None:
         """Switch back from My Followers to Trading Manager leaderboard."""
@@ -130,11 +139,11 @@ class ClientCopyTradingPage(BasePage):
         expect(self.table).to_be_visible(timeout=5000)
 
     def get_followers_table_headers(self) -> List[str]:
-        """Return column headers of followers table."""
+        """Return column headers of followers/subscriptions table."""
         return [th.inner_text().strip() for th in self.page.locator("main table th").all()]
 
     def get_followers_count(self) -> int:
-        """Return row count of followers table."""
+        """Return row count of followers/subscriptions table."""
         return self.page.locator("main table tbody tr").count()
 
     def click_refresh(self) -> None:
@@ -154,17 +163,17 @@ class ClientCopyTradingPage(BasePage):
     def filter_by_search(self, query: str) -> None:
         """Type search query into manager filter input."""
         self.search_input.fill(query)
-        self.page.wait_for_timeout(300)
+        self.page.wait_for_timeout(500)
 
     def clear_search(self) -> None:
         """Clear search filter input."""
         self.search_input.fill("")
-        self.page.wait_for_timeout(300)
+        self.page.wait_for_timeout(500)
 
     def open_statistics_modal(self, row_index: int = 0) -> None:
         """Click Statistics button on a manager row and verify modal opens."""
         row = self.table_rows.nth(row_index)
-        stats_btn = row.locator("button[title='Statistics']").first
+        stats_btn = row.locator("button[title='Statistics'], button:has(svg)").first
         expect(stats_btn).to_be_visible(timeout=5000)
         stats_btn.click()
         expect(self.statistics_modal.first).to_be_visible(timeout=5000)
@@ -180,7 +189,7 @@ class ClientCopyTradingPage(BasePage):
         """Click Follow on a manager row and verify modal opens."""
         row = self.table_rows.nth(row_index)
         manager_name = row.locator("td").first.inner_text().strip().split("\n")[0]
-        follow_btn = row.locator("button").filter(has_text="Follow").first
+        follow_btn = row.locator("button").filter(has_text=re.compile(r"^Follow$", re.I)).first
         expect(follow_btn).to_be_visible(timeout=5000)
         follow_btn.click()
         expect(self.follow_modal.first).to_be_visible(timeout=5000)
@@ -192,3 +201,108 @@ class ClientCopyTradingPage(BasePage):
             expect(self.modal_cancel_btn).to_be_visible(timeout=5000)
             self.modal_cancel_btn.click()
             expect(self.follow_modal.first).not_to_be_visible(timeout=5000)
+
+    def is_following_manager(self, manager_name_or_id: str) -> bool:
+        """
+        Check whether the account is currently following the given manager.
+        """
+        self.filter_by_search(manager_name_or_id)
+        self.page.wait_for_timeout(600)
+        row = self.table_rows.first
+        if not row.is_visible():
+            return False
+        row_text = row.inner_text()
+        return "Unfollow" in row_text
+
+    def follow_manager(
+        self,
+        manager_name_or_id: str,
+        trade_method: str = "Balance Based",
+    ) -> bool:
+        """
+        Locate manager by name or ID, configure trade method, and confirm follow.
+        Returns True on successful subscription.
+        """
+        logger.info(f"Initiating follow workflow for manager: {manager_name_or_id} with method: {trade_method}")
+        self.filter_by_search(manager_name_or_id)
+        self.page.wait_for_timeout(600)
+        
+        row = self.table_rows.first
+        expect(row).to_be_visible(timeout=5000)
+        
+        # Check if already followed
+        if "Unfollow" in row.inner_text():
+            logger.info(f"Already following manager: {manager_name_or_id}")
+            return True
+
+        follow_btn = row.locator("button").filter(has_text=re.compile(r"Follow", re.I)).first
+        expect(follow_btn).to_be_visible(timeout=5000)
+        follow_btn.click()
+        
+        expect(self.follow_modal.first).to_be_visible(timeout=5000)
+        self.page.wait_for_timeout(500)
+
+        # Select trade method
+        method_btn = self.follow_modal.locator("button, label, div").filter(
+            has_text=re.compile(rf"^{trade_method}$", re.I)
+        ).first
+        if method_btn.is_visible():
+            method_btn.click()
+            self.page.wait_for_timeout(300)
+
+        expect(self.modal_confirm_btn).to_be_visible(timeout=5000)
+        self.modal_confirm_btn.click()
+        self.page.wait_for_timeout(2000)
+        
+        # Verify Unfollow button appears on row
+        self.filter_by_search(manager_name_or_id)
+        self.page.wait_for_timeout(500)
+        is_followed = "Unfollow" in self.table_rows.first.inner_text()
+        logger.info(f"Follow result for {manager_name_or_id}: {is_followed}")
+        return is_followed
+
+    def unfollow_manager(self, manager_name_or_id: str) -> bool:
+        """
+        Locate manager by name or ID and execute unfollow action.
+        """
+        logger.info(f"Initiating unfollow workflow for manager: {manager_name_or_id}")
+        self.filter_by_search(manager_name_or_id)
+        self.page.wait_for_timeout(600)
+        
+        row = self.table_rows.first
+        if not row.is_visible() or "Unfollow" not in row.inner_text():
+            # Check in My Subscriptions / My Followers
+            self.switch_to_my_subscriptions()
+            self.page.wait_for_timeout(600)
+            row = self.table_rows.first
+
+        unfollow_btn = row.locator("button").filter(has_text=re.compile(r"Unfollow", re.I)).first
+        if unfollow_btn.is_visible():
+            unfollow_btn.click()
+            self.page.wait_for_timeout(2000)
+            
+            # Switch back to Trading Manager and verify Follow button returned
+            self.switch_to_trading_manager()
+            self.filter_by_search(manager_name_or_id)
+            self.page.wait_for_timeout(500)
+            return "Follow" in self.table_rows.first.inner_text()
+        return True
+
+    def get_subscriptions_data(self) -> List[Dict[str, str]]:
+        """
+        Extract active subscription rows from My Subscriptions table.
+        """
+        self.switch_to_my_subscriptions()
+        self.page.wait_for_timeout(600)
+        rows = self.page.locator("main table tbody tr").all()
+        results = []
+        for r in rows:
+            tds = r.locator("td").all_inner_texts()
+            if tds and "No" not in tds[0]:
+                results.append({
+                    "account": tds[0] if len(tds) > 0 else "",
+                    "follow_date": tds[1] if len(tds) > 1 else "",
+                    "trade_method": tds[2] if len(tds) > 2 else "",
+                    "rank": tds[3] if len(tds) > 3 else "",
+                })
+        return results
