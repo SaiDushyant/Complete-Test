@@ -39,31 +39,51 @@ class ClientSidebarComponent(BasePage):
             return False
 
     def navigate_to_dashboard(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.dashboard_tab.first).to_be_visible(timeout=10000)
         self.dashboard_tab.first.click()
 
     def navigate_to_deposit(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.deposit_tab.first).to_be_visible(timeout=10000)
         self.deposit_tab.first.click()
 
     def navigate_to_withdraw(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.withdraw_tab.first).to_be_visible(timeout=10000)
         self.withdraw_tab.first.click()
 
     def navigate_to_internal_transfer(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.internal_transfer_tab.first).to_be_visible(timeout=10000)
         self.internal_transfer_tab.first.click()
 
     def navigate_to_wallet(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.wallet_tab.first).to_be_visible(timeout=10000)
         self.wallet_tab.first.click()
 
     def navigate_to_copy_trading(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.copy_trading_tab.first).to_be_visible(timeout=10000)
         self.copy_trading_tab.first.click()
 
     def navigate_to_mam(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.mam_tab.first).to_be_visible(timeout=10000)
         self.mam_tab.first.click()
 
     def navigate_to_pamm(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.pamm_tab.first).to_be_visible(timeout=10000)
         self.pamm_tab.first.click()
 
     def navigate_to_refer_earn(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.refer_earn_tab.first).to_be_visible(timeout=10000)
         self.refer_earn_tab.first.click()
 
     def navigate_to_settings(self) -> None:
+        expect(self.sidebar_container.first).to_be_visible(timeout=15000)
+        expect(self.settings_tab.first).to_be_visible(timeout=10000)
         self.settings_tab.first.click()

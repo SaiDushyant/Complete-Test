@@ -130,7 +130,7 @@ class TradeLoginPage(BasePage):
         self.login(username=username, password=password, remember_me=remember_me)
         post_login_pattern = settings.trade_terminal.post_login_url_pattern or "**/dashboard**"
         logger.info(f"Waiting for dashboard redirection matching: {post_login_pattern}")
-        self.page.wait_for_url(post_login_pattern, timeout=timeout)
+        self.page.wait_for_url(post_login_pattern, timeout=timeout, wait_until="domcontentloaded")
         return self.current_url
 
     def save_auth_state(self, path: Optional[Path | str] = None) -> Path:

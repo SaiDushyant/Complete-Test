@@ -151,6 +151,7 @@ def test_client_copy_trading_search_and_pagination(
 
     # 1. Search for manager 'temp'
     client_copy_trading_page.filter_by_search("temp")
+    expect(client_copy_trading_page.table_rows.first.locator("td").first).not_to_have_text("", timeout=10000)
     filtered_count = client_copy_trading_page.get_manager_count()
     assert filtered_count >= 1, "Expected at least 1 manager matching 'temp'"
 
@@ -194,6 +195,9 @@ def test_client_copy_trading_statistics_modal(
 
     modal = client_copy_trading_page.statistics_modal
     expect(modal).to_be_visible()
+
+    # Wait for async statistics data to load
+    expect(modal.locator("div, p, span, h2, h3, h4").filter(has_text="NET PROFIT").first).to_be_visible(timeout=15000)
 
     modal_text = modal.inner_text()
     expected_metrics = ["NET PROFIT", "GROWTH", "WIN RATE", "PROFIT FACTOR", "CLOSED TRADES", "TOTAL LOTS", "DRAWDOWN", "MANAGED"]

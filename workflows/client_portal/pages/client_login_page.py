@@ -134,7 +134,7 @@ class ClientLoginPage(BasePage):
         self.login(username=username, password=password, remember_me=remember_me, email=email)
         post_login_pattern = settings.client_portal.post_login_url_pattern or "**/dashboard**"
         logger.info(f"Waiting for dashboard redirection matching: {post_login_pattern}")
-        self.page.wait_for_url(post_login_pattern, timeout=timeout)
+        self.page.wait_for_url(post_login_pattern, timeout=timeout, wait_until="domcontentloaded")
         return self.current_url
 
     def navigate_to_client_portal(self, timeout: int = 15000) -> str:
