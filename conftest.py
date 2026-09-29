@@ -50,8 +50,15 @@ def live_url(base_url):
 
 
 # ============================================================
-# BROWSER
+# PLAYWRIGHT & BROWSER
 # ============================================================
+
+from playwright.sync_api import Playwright, sync_playwright
+
+@pytest.fixture(scope="session")
+def playwright():
+    with sync_playwright() as p:
+        yield p
 
 @pytest.fixture(scope="session")
 def browser(playwright: Playwright):
