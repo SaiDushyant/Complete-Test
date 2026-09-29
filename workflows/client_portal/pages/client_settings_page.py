@@ -10,6 +10,7 @@ Maintained by Developer 3 (Client Portal Owner).
 
 from __future__ import annotations
 
+import re
 from typing import List
 from playwright.sync_api import Locator, Page, expect
 
@@ -65,17 +66,19 @@ class ClientSettingsPage(BasePage):
         # 3. Documents / KYC
         # =====================================================================
         self.documents_heading = page.locator("main h2").filter(has_text="Documents")
-        self.document_status_badge = page.locator("main div, main span").filter(has_text="Pending Review").first
-        self.document_links = page.locator("main a[href*='/info/']")
+        self.document_status_badge = page.locator("main div, main span, main p, main strong").filter(has_text=re.compile(r"Verified|Pending|Under Review|Unverified|Rejected", re.I))
+        self.account_status_container = page.locator("main").filter(has_text=re.compile(r"Account Status", re.I))
+        self.document_links = page.locator("main a[href*='/info/'], main a:has(img)")
+        self.document_cards = page.locator("main div").filter(has_text=re.compile(r"Address Proof|National ID|Bank Statement", re.I))
 
         # =====================================================================
         # 4. Security / Change Password
         # =====================================================================
-        self.security_heading = page.locator("main h2").filter(has_text="Change Password")
+        self.security_heading = page.locator("main h2").filter(has_text=re.compile(r"Change Password|Security", re.I))
         self.current_password_input = page.locator("main input[type='password']").nth(0)
         self.new_password_input = page.locator("main input[type='password']").nth(1)
         self.confirm_password_input = page.locator("main input[type='password']").nth(2)
-        self.send_otp_button = page.locator("main button:has-text('Send OTP')")
+        self.send_otp_button = page.locator("main button").filter(has_text=re.compile(r"Send OTP|Change Password|Update Password", re.I))
 
     def navigate(self) -> None:
         """Navigate to Client Settings view via sidebar."""

@@ -117,6 +117,7 @@ def test_client_settings_documents_kyc_options(
     client_settings_page.open_subtab("Documents")
 
     expect(client_settings_page.documents_heading.first).to_be_visible()
+    expect(client_settings_page.account_status_container.first).to_be_visible()
     expect(client_settings_page.document_status_badge.first).to_be_visible()
 
     doc_count = client_settings_page.get_uploaded_document_count()
