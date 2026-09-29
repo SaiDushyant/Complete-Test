@@ -15,7 +15,9 @@ from workflows.trade_terminal.fixtures.trade_fixtures import (
     api_access_page,
     authenticated_trade_context,
     authenticated_trade_page,
+    blacktrader_chart_page,
     history_page,
+    navigation_bar_page,
     order_entry_page,
     positions_page,
     profile_menu_page,
@@ -23,6 +25,7 @@ from workflows.trade_terminal.fixtures.trade_fixtures import (
     trade_page,
     trading_chart_page,
     trading_dashboard_page,
+    tradingview_chart_page,
     watchlist_page,
 )
 from workflows.trade_terminal.utils.trade_logger import TradeTerminalLogger

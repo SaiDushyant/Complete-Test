@@ -32,16 +32,67 @@ class TradingChartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        # 1. Main Chart Page Container
+        # 1. Main Chart Page Container & Engines
         self.chart_page_container: Locator = page.locator(
             "body > div.body > div.main > div.rightbar > section > div:nth-child(3)"
         )
+        self.chart_top_pane: Locator = page.locator(
+            "#app > div > div > div.div1.initialHeight, .div1.initialHeight, .div1"
+        )
         self.app_container: Locator = page.locator("#app")
+        self.tradingview_widget_container: Locator = page.locator(".tradingview-widget-container")
         self.tv_chart_container: Locator = page.locator("#tv_chart_container")
         self.bt_chart_container: Locator = page.locator("#bt_chart_container")
         self.chart_panes: Locator = page.locator(".chart-pane")
         self.chart_iframe: Locator = page.locator("#tv_chart_container iframe, iframe[id*='tradingview']")
         self.chart_nav_icon: Locator = page.locator(".lefticons[data-tooltip='Chart']")
+
+        # Quick Trading Overlay Widget (.trade-buy-sell)
+        self.quick_trade_widget: Locator = page.locator(".trade-buy-sell.trade-click, .trade-buy-sell")
+        self.quick_trade_container: Locator = page.locator(".trade-buy-sell-container")
+        self.quick_buy_btn: Locator = page.locator("button#buy_symbol.trade_symbol_btn")
+        self.quick_sell_btn: Locator = page.locator("button#sell_symbol.trade_symbol_btn")
+        self.quick_lot_input: Locator = page.locator("input#trade-lot-size")
+        self.quick_lot_minus_btn: Locator = page.locator(".trade-buy-sell button.lot-action[data-type='minus']")
+        self.quick_lot_plus_btn: Locator = page.locator(".trade-buy-sell button.lot-action[data-type='plus']")
+
+        # TradingView Engine Iframe & Controls
+        self.tv_iframe = page.frame_locator("#tv_chart_container iframe")
+        self.tv_iframe_locator: Locator = page.locator("#tv_chart_container iframe")
+        self.tv_symbol_search_btn = self.tv_iframe.locator("#header-toolbar-symbol-search")
+        self.tv_compare_btn = self.tv_iframe.locator("#header-toolbar-compare")
+        self.tv_timeframe_buttons = self.tv_iframe.locator("button[aria-label*='minute'], button.menu-S_1OCXUK")
+        self.tv_chart_style_btn = self.tv_iframe.locator("button.menu-b3Cgff6l, button[aria-label='Candles']").first
+        self.tv_indicators_btn = self.tv_iframe.locator("button[data-name='open-indicators-dialog'], button:has-text('Indicators')").first
+        self.tv_save_layout_btn = self.tv_iframe.locator("#header-toolbar-save-load")
+        self.tv_properties_btn = self.tv_iframe.locator("button[data-name='header-toolbar-properties']")
+        self.tv_fullscreen_btn = self.tv_iframe.locator("button[data-name='header-toolbar-fullscreen']")
+        self.tv_drawing_cursors = self.tv_iframe.locator("div[data-name='linetool-group-cursors']")
+        self.tv_drawing_trendlines = self.tv_iframe.locator("div[data-name='linetool-group-trend-line']")
+        self.tv_drawing_fib = self.tv_iframe.locator("div[data-name='linetool-group-gann-and-fibonacci']")
+        self.tv_drawing_shapes = self.tv_iframe.locator("div[data-name='linetool-group-geometric-shapes']")
+
+        # Black Trader Engine Iframe & Controls
+        self.bt_iframe = page.frame_locator("#bt_chart_container iframe")
+        self.bt_iframe_locator: Locator = page.locator("#bt_chart_container iframe")
+        self.bt_symbol_btn = self.bt_iframe.locator("button:has-text('XTEN:'), button:has-text('XAUUSD')").first
+        self.bt_timeframe_btn = self.bt_iframe.locator("button[data-popup='DropMenu']")
+        self.bt_chart_type_btn = self.bt_iframe.locator("button[data-popup='ChartType']")
+        self.bt_indicators_btn = self.bt_iframe.locator("button:has-text('Indicators')")
+        self.bt_grid_menu_btn = self.bt_iframe.locator("button[data-popup='GridPopMenu']")
+        self.bt_fullscreen_btn = self.bt_iframe.locator("button[aria-label='Toggle fullscreen']")
+        self.bt_screenshot_btn = self.bt_iframe.locator("button[data-popup='Screenshot']")
+        self.bt_hide_trades_btn = self.bt_iframe.locator("button[aria-label='Hide All Trades']")
+
+        # Profile Menu Chart Switcher
+        self.profile_icon: Locator = page.locator(
+            "body > div.body > div.leftbar > div.leftlist.pcview > div.lefticons.toplefticon.toggleLeftMenu, "
+            ".lefticons.toplefticon.toggleLeftMenu, .toggleLeftMenu"
+        ).first
+        self.profile_menu: Locator = page.locator("#targetmenu.newmenu, #targetmenu")
+        self.profile_chart_row: Locator = self.profile_menu.locator(".xn-chart-row")
+        self.profile_bt_btn: Locator = self.profile_menu.locator(".chart-btn.blacktrader")
+        self.profile_tv_btn: Locator = self.profile_menu.locator(".chart-btn.tradingView")
 
         # 2. Resizer Separator & Controls (#app > div > div > div.resizer-y)
         self.resizer_y: Locator = page.locator("#app > div > div > div.resizer-y, .resizer-y")
@@ -111,14 +162,14 @@ class TradingChartPage(BasePage):
             self.chart_nav_icon.click()
             self.page.wait_for_timeout(1000)
 
-        expect(self.positions_pane).to_be_visible(timeout=TIMEOUT_DEFAULT)
-        try:
-            self.position_rows.first.wait_for(state="attached", timeout=4000)
-        except Exception:
-            pass
+        expect(self.chart_top_pane).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        if not self.is_blacktrader_active():
+            try:
+                self.positions_pane.wait_for(state="visible", timeout=3000)
+            except Exception:
+                pass
         self.page.wait_for_timeout(500)
         self.dismiss_disclaimer_if_present()
-
 
     def dismiss_disclaimer_if_present(self) -> None:
         """Dismiss One Click Trading disclaimer modal and backdrop if present."""
@@ -139,7 +190,7 @@ class TradingChartPage(BasePage):
             pass
 
     # =========================================================================
-    # Chart State Checkers
+    # Chart State Checkers & Engine Switching
     # =========================================================================
 
     def is_chart_pane_visible(self) -> bool:
@@ -152,9 +203,164 @@ class TradingChartPage(BasePage):
         return "active" in classes.split()
 
     def wait_for_chart_rendered(self, timeout: int = TIMEOUT_DEFAULT) -> None:
-        """Wait for chart container and iframe to be attached and visible."""
+        """Wait for active chart container and iframe to be attached and visible."""
         logger.info("Waiting for chart engine container to render...")
+        if self.is_blacktrader_active():
+            expect(self.bt_chart_container).to_be_visible(timeout=timeout)
+            expect(self.bt_iframe_locator).to_be_visible(timeout=timeout)
+        else:
+            expect(self.tv_chart_container).to_be_visible(timeout=timeout)
+            expect(self.tv_iframe_locator).to_be_visible(timeout=timeout)
+
+    def is_tradingview_active(self) -> bool:
+        """Return True if TradingView container is displayed and active."""
+        return self.tv_chart_container.is_visible() and "is-active" in (self.tv_chart_container.get_attribute("class") or "") or self.tv_chart_container.is_visible()
+
+    def is_blacktrader_active(self) -> bool:
+        """Return True if Black Trader container is displayed and active."""
+        return self.bt_chart_container.is_visible() and "is-active" in (self.bt_chart_container.get_attribute("class") or "")
+
+    def get_active_engine_name(self) -> str:
+        """Return 'blacktrader' or 'tradingview'."""
+        if self.is_blacktrader_active():
+            return "blacktrader"
+        return "tradingview"
+
+    def open_profile_menu(self) -> None:
+        """Open the profile menu drawer."""
+        self.dismiss_disclaimer_if_present()
+        if not self.profile_menu.is_visible():
+            expect(self.profile_icon).to_be_visible(timeout=TIMEOUT_DEFAULT)
+            self.profile_icon.click()
+            self.page.wait_for_timeout(600)
+
+    def close_profile_menu(self) -> None:
+        """Close profile menu drawer if open."""
+        if self.profile_menu.is_visible():
+            self.page.keyboard.press("Escape")
+            self.page.wait_for_timeout(400)
+
+    def switch_to_blacktrader(self, timeout: int = TIMEOUT_DEFAULT) -> None:
+        """Switch chart engine to Black Trader via profile menu toggle."""
+        logger.info("Switching chart engine to Black Trader...")
+        self.open_profile_menu()
+        expect(self.profile_bt_btn).to_be_visible(timeout=timeout)
+        self.profile_bt_btn.click()
+        self.page.wait_for_timeout(1000)
+        self.close_profile_menu()
+        expect(self.bt_chart_container).to_be_visible(timeout=timeout)
+        expect(self.bt_iframe_locator).to_be_visible(timeout=timeout)
+
+    def switch_to_tradingview(self, timeout: int = TIMEOUT_DEFAULT) -> None:
+        """Switch chart engine to Trading View via profile menu toggle."""
+        logger.info("Switching chart engine to Trading View...")
+        self.open_profile_menu()
+        expect(self.profile_tv_btn).to_be_visible(timeout=timeout)
+        self.profile_tv_btn.click()
+        self.page.wait_for_timeout(1000)
+        self.close_profile_menu()
         expect(self.tv_chart_container).to_be_visible(timeout=timeout)
+        expect(self.tv_iframe_locator).to_be_visible(timeout=timeout)
+
+    # =========================================================================
+    # Quick Trading Overlay Widget Methods (.trade-buy-sell)
+    # =========================================================================
+
+    def show_quick_trade_widget(self) -> None:
+        """Make quick trading overlay visible on chart."""
+        self.page.evaluate("""() => {
+            const qt = document.querySelector(".trade-buy-sell");
+            if (qt) qt.style.display = "block";
+        }""")
+        self.page.wait_for_timeout(200)
+
+    def get_quick_trade_lot_value(self) -> float:
+        """Return numeric lot size from #trade-lot-size."""
+        val = self.page.evaluate("""() => {
+            const input = document.querySelector("#trade-lot-size");
+            return input ? parseFloat(input.value || "0") : 0.0;
+        }""")
+        return float(val)
+
+    def set_quick_trade_lot_value(self, lot: float | str) -> None:
+        """Set lot size in quick trading widget."""
+        lot_str = str(lot)
+        logger.info(f"Setting quick trade lot size: {lot_str}")
+        self.show_quick_trade_widget()
+        self.quick_lot_input.fill(lot_str)
+        self.quick_lot_input.dispatch_event("input")
+        self.quick_lot_input.dispatch_event("change")
+        self.page.wait_for_timeout(300)
+
+    def adjust_quick_trade_lot(self, action: str = "plus") -> None:
+        """Click plus or minus lot action button."""
+        self.show_quick_trade_widget()
+        if action.lower() in ("plus", "increment", "+"):
+            self.quick_lot_plus_btn.click()
+        else:
+            self.quick_lot_minus_btn.click()
+        self.page.wait_for_timeout(300)
+
+    def trigger_quick_trade(self, side: str = "buy") -> None:
+        """Click BUY or SELL button on chart quick trading widget."""
+        self.dismiss_disclaimer_if_present()
+        self.show_quick_trade_widget()
+        side_lower = side.lower()
+        logger.info(f"Triggering quick trade: {side_lower}")
+        if side_lower == "buy":
+            self.quick_buy_btn.click()
+        else:
+            self.quick_sell_btn.click()
+        self.page.wait_for_timeout(1000)
+        self.dismiss_disclaimer_if_present()
+
+    # =========================================================================
+    # TradingView Engine Actions & Data Extraction
+    # =========================================================================
+
+    def get_tv_active_symbol(self) -> str:
+        """Return symbol displayed in TV header toolbar search button."""
+        expect(self.tv_symbol_search_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        return self.tv_symbol_search_btn.inner_text().strip()
+
+    def open_tv_symbol_search(self) -> None:
+        """Click TV symbol search button in toolbar."""
+        expect(self.tv_symbol_search_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        self.tv_symbol_search_btn.click()
+        self.page.wait_for_timeout(600)
+
+    def open_tv_indicators_dialog(self) -> None:
+        """Click TV indicators dialog button in toolbar."""
+        expect(self.tv_indicators_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        self.tv_indicators_btn.click()
+        self.page.wait_for_timeout(600)
+
+    # =========================================================================
+    # Black Trader Engine Actions & Data Extraction
+    # =========================================================================
+
+    def get_bt_active_symbol(self) -> str:
+        """Return symbol displayed in Black Trader toolbar badge."""
+        expect(self.bt_symbol_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        return self.bt_symbol_btn.inner_text().strip()
+
+    def open_bt_timeframe_menu(self) -> None:
+        """Click timeframe dropdown button in Black Trader."""
+        expect(self.bt_timeframe_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        self.bt_timeframe_btn.click()
+        self.page.wait_for_timeout(400)
+
+    def open_bt_chart_type_menu(self) -> None:
+        """Click chart type dropdown button in Black Trader."""
+        expect(self.bt_chart_type_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        self.bt_chart_type_btn.click()
+        self.page.wait_for_timeout(400)
+
+    def open_bt_grid_menu(self) -> None:
+        """Click multi-chart grid menu in Black Trader."""
+        expect(self.bt_grid_menu_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        self.bt_grid_menu_btn.click()
+        self.page.wait_for_timeout(400)
 
     # =========================================================================
     # Positions Table Data & Helpers
