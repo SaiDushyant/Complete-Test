@@ -17,6 +17,7 @@ import re
 import pytest
 from playwright.sync_api import expect
 
+from config.settings import settings
 from workflows.client_portal.pages.client_internal_transfer_page import ClientInternalTransferPage
 from workflows.client_portal.pages.client_wallet_page import ClientWalletPage
 from workflows.shared.utils.error_monitor import ErrorMonitor
