@@ -67,7 +67,7 @@ def test_client_internal_transfer_form_controls_and_options(
     # 1. Verify Source options
     source_options = client_internal_transfer_page.get_source_options()
     assert any("wallet" in opt.lower() for opt in source_options), f"Expected wallet in source options: {source_options}"
-    assert any("me" in opt.lower() for opt in source_options), f"Expected trading account in source options: {source_options}"
+    assert any(re.search(r"\b\d{4,}\b", opt) for opt in source_options), f"Expected trading account in source options: {source_options}"
 
     # 2. Verify Destination options
     dest_options = client_internal_transfer_page.get_destination_options()
@@ -309,8 +309,8 @@ def test_client_internal_transfer_execute_transfer_and_verify_wallet_credit(
 
     # 2. Navigate to Internal Transfer
     client_internal_transfer_page.navigate()
-    client_internal_transfer_page.select_source()
-    client_internal_transfer_page.select_destination()
+    client_internal_transfer_page.select_source(settings.client_portal.username)
+    client_internal_transfer_page.select_destination("Client Wallet")
     client_internal_transfer_page.enter_amount("1.00")
     client_internal_transfer_page.enter_memo("Automated credit verification")
 
