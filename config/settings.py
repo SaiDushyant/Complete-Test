@@ -40,13 +40,34 @@ def _get_int(key: str, default: int) -> int:
 
 
 @dataclass(frozen=True)
+class FollowerAccount:
+    """Individual Follower Account credentials."""
+    username: str
+    password: str
+
+
+@dataclass(frozen=True)
 class CopyTradingAccounts:
     """Manager and Follower accounts for Copy Trading replication workflows."""
     manager_username: str
     manager_password: str
     manager_name: str
-    follower_username: str
-    follower_password: str
+    followers: List[FollowerAccount]
+
+    @property
+    def primary_follower(self) -> FollowerAccount:
+        if self.followers:
+            return self.followers[0]
+        return FollowerAccount("10008", "Test@1234")
+
+    @property
+    def follower_username(self) -> str:
+        return self.primary_follower.username
+
+    @property
+    def follower_password(self) -> str:
+        return self.primary_follower.password
+
 
 
 @dataclass(frozen=True)
@@ -243,13 +264,35 @@ class Settings:
         )
 
         # 7. Copy Trading Manager & Follower Accounts
+        raw_followers_str = os.getenv(
+            "COPY_TRADING_FOLLOWERS_LIST",
+            "10008:Test@1234,10006:Test@1234,10098:123,10096:123,10102:Fake@123",
+        )
+        followers: List[FollowerAccount] = []
+        if raw_followers_str.strip():
+            for item in raw_followers_str.split(","):
+                item = item.strip()
+                if ":" in item:
+                    u, p = item.split(":", 1)
+                    followers.append(FollowerAccount(username=u.strip(), password=p.strip()))
+
+        # If primary follower is specified explicitly, make sure it is first in the list
+        primary_user = os.getenv("COPY_TRADING_FOLLOWER_USERNAME")
+        primary_pass = os.getenv("COPY_TRADING_FOLLOWER_PASSWORD")
+        if primary_user and primary_pass:
+            if not any(f.username == primary_user for f in followers):
+                followers.insert(0, FollowerAccount(username=primary_user, password=primary_pass))
+
+        if not followers:
+            followers.append(FollowerAccount(username="10008", password="Test@1234"))
+
         self.copy_trading = CopyTradingAccounts(
             manager_username=os.getenv("COPY_TRADING_MANAGER_USERNAME") or client_username or "10009",
             manager_password=os.getenv("COPY_TRADING_MANAGER_PASSWORD") or client_password or "Temp@123",
             manager_name=os.getenv("COPY_TRADING_MANAGER_NAME", "temp"),
-            follower_username=os.getenv("COPY_TRADING_FOLLOWER_USERNAME", "10008"),
-            follower_password=os.getenv("COPY_TRADING_FOLLOWER_PASSWORD", "Test@1234"),
+            followers=followers,
         )
+
 
 
 # Singleton instance for easy import across fixtures and pages
