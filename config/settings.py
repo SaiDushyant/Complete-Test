@@ -99,6 +99,13 @@ class Settings:
     baseline_url: str = field(init=False)
     live_url: str = field(init=False)
     enable_trade_tests: bool = field(init=False)
+    # MAM Specific Configurations
+    mam_master_account: str = field(init=False)
+    mam_master_password: str = field(init=False)
+    mam_follower_1_account: str = field(init=False)
+    mam_follower_1_password: str = field(init=False)
+    mam_follower_2_account: str = field(init=False)
+    mam_follower_2_password: str = field(init=False)
 
     def __post_init__(self):
         # 1. Initialize Directories
@@ -230,6 +237,14 @@ class Settings:
             post_login_url_pattern=os.getenv("CLIENT_POST_LOGIN_URL_PATTERN", "**/dashboard**"),
             auth_state_path=client_auth_state,
         )
+
+        # 7. MAM Credentials
+        self.mam_master_account = (os.getenv("MAM_MASTER_ACCOUNT") or os.getenv("CLIENT_USERNAME", "10026")).strip()
+        self.mam_master_password = (os.getenv("MAM_MASTER_PASSWORD") or os.getenv("CLIENT_PASSWORD", "Test@1234")).strip()
+        self.mam_follower_1_account = (os.getenv("MAM_FOLLOWER_1_ACCOUNT", "10100")).strip()
+        self.mam_follower_1_password = (os.getenv("MAM_FOLLOWER_1_PASSWORD", "Dhanya@123")).strip()
+        self.mam_follower_2_account = (os.getenv("MAM_FOLLOWER_2_ACCOUNT", "10102")).strip()
+        self.mam_follower_2_password = (os.getenv("MAM_FOLLOWER_2_PASSWORD", "Fake@123")).strip()
 
 
 # Singleton instance for easy import across fixtures and pages
