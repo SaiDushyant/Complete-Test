@@ -48,7 +48,7 @@ class ClientHeaderComponent(BasePage):
         # 1. Account Switcher Dropdown
         self.account_switcher_dropdown = page.locator(
             "div.absolute, div.fixed"
-        ).filter(has_text="SELECT ACCOUNT")
+        ).filter(has_text=re.compile(r"Select\s*Account", re.I))
 
         # 2. Notifications Drawer
         self.notifications_drawer = page.locator(
@@ -161,9 +161,22 @@ class ClientHeaderComponent(BasePage):
     # Account Switcher
     # =========================================================================
     def open_account_switcher(self) -> None:
-        """Click account badge to open 'SELECT ACCOUNT' dropdown."""
-        self.account_badge.first.click()
-        expect(self.account_switcher_dropdown.first).to_be_visible(timeout=5000)
+        """Click account badge to open 'SELECT ACCOUNT' dropdown if not already visible."""
+        if not self.account_switcher_dropdown.first.is_visible():
+            self.account_badge.first.click()
+            expect(self.account_switcher_dropdown.first).to_be_visible(timeout=5000)
+
+    def get_available_accounts(self) -> List[str]:
+        """Extract list of account IDs from the open account switcher dropdown."""
+        self.open_account_switcher()
+        buttons = self.account_switcher_dropdown.first.locator("button").all()
+        accounts: List[str] = []
+        for btn in buttons:
+            text = btn.inner_text().strip()
+            match = re.search(r"\b(\d{4,})\b", text)
+            if match:
+                accounts.append(match.group(1))
+        return accounts
 
     def select_account(self, account_id: str) -> None:
         """Select an account from the account switcher dropdown."""

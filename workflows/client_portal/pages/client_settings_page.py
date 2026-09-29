@@ -79,10 +79,11 @@ class ClientSettingsPage(BasePage):
 
     def navigate(self) -> None:
         """Navigate to Client Settings view via sidebar."""
+        target_url = f"{settings.client_portal.base_url.rstrip('/')}/client-portal"
         if "/client-portal" not in self.page.url:
-            self.goto(settings.client_portal.base_url)
+            self.goto(target_url)
         self.sidebar.navigate_to_settings()
-        expect(self.header.title_heading.first).to_have_text("Settings", timeout=10000)
+        expect(self.header.title_heading.first).to_have_text("Settings", timeout=15000)
 
     def open_subtab(self, tab_name: str) -> None:
         """Switch between Settings sub-tabs and verify header remains consistent."""

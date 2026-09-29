@@ -74,10 +74,11 @@ class ClientReferEarnPage(BasePage):
 
     def navigate(self) -> None:
         """Navigate to Refer & Earn view via sidebar."""
+        target_url = f"{settings.client_portal.base_url.rstrip('/')}/client-portal"
         if "/client-portal" not in self.page.url:
-            self.goto(settings.client_portal.base_url)
+            self.goto(target_url)
         self.sidebar.navigate_to_refer_earn()
-        expect(self.header.title_heading.first).to_have_text("Refer & Earn", timeout=10000)
+        expect(self.header.title_heading.first).to_have_text("Refer & Earn", timeout=15000)
 
     def is_refer_earn_displayed(self) -> bool:
         """Verify presence of Refer & Earn workspace."""

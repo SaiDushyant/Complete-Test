@@ -27,6 +27,9 @@ from config.settings import settings
 from workflows.client_portal.pages.components.client_header import ClientHeaderComponent
 from workflows.client_portal.pages.components.client_sidebar import ClientSidebarComponent
 from workflows.shared.pages.base_page import BasePage
+from workflows.shared.utils.logger import get_logger
+
+logger = get_logger("client_deposit_page")
 
 
 class ClientDepositPage(BasePage):
@@ -91,8 +94,9 @@ class ClientDepositPage(BasePage):
 
     def navigate(self) -> None:
         """Navigate to Deposit view via sidebar."""
+        target_url = f"{settings.client_portal.base_url.rstrip('/')}/client-portal"
         if "/client-portal" not in self.page.url:
-            self.goto(settings.client_portal.base_url)
+            self.goto(target_url)
         self.sidebar.navigate_to_deposit()
         expect(self.header.title_heading.first).to_have_text("Deposit", timeout=15000)
         expect(self.main_heading.first).to_be_visible(timeout=10000)

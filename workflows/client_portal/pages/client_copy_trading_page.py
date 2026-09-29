@@ -96,8 +96,9 @@ class ClientCopyTradingPage(BasePage):
 
     def navigate(self) -> None:
         """Navigate to Copy Trading view via sidebar."""
+        target_url = f"{settings.client_portal.base_url.rstrip('/')}/client-portal"
         if "/client-portal" not in self.page.url:
-            self.goto(settings.client_portal.base_url)
+            self.goto(target_url)
         self.sidebar.navigate_to_copy_trading()
         expect(self.header.title_heading.first).to_have_text("Copy Trading", timeout=15000)
         expect(self.main_heading.first).to_be_visible(timeout=10000)

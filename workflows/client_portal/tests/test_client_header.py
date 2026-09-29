@@ -228,13 +228,23 @@ def test_client_header_account_switcher_dropdown(
     client_dashboard_page.navigate()
     header = client_dashboard_page.header
 
-    # Switch to 10629
-    header.select_account("10629")
-    expect(header.account_badge).to_contain_text("10629")
+    initial_account = header.get_selected_account()
+    available_accounts = header.get_available_accounts()
+    assert len(available_accounts) > 0, "Expected at least one account in account switcher dropdown."
 
-    # Switch back to 10026
-    header.select_account("10026")
-    expect(header.account_badge).to_contain_text("10026")
+    # Dynamically cycle through every available account in the ledger
+    for account_id in available_accounts:
+        header.select_account(account_id)
+        selected_account = header.get_selected_account()
+        assert selected_account == account_id, (
+            f"Expected account badge to update to '{account_id}', but got '{selected_account}'"
+        )
+        expect(header.account_badge).to_contain_text(account_id)
+
+    # Restore initial account
+    if initial_account and initial_account in available_accounts:
+        header.select_account(initial_account)
+        expect(header.account_badge).to_contain_text(initial_account)
 
     client_error_monitor.assert_no_errors("Account Switcher Dropdown")
 

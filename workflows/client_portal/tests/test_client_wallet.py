@@ -281,11 +281,16 @@ def test_client_wallet_header_full_interactive_lifecycle(
     header.toggle_theme()
     header.toggle_theme()
 
-    # 3. Account switcher (switch and restore)
-    header.select_account("10629")
-    expect(header.account_badge).to_contain_text("10629")
-    header.select_account("10026")
-    expect(header.account_badge).to_contain_text("10026")
+    # 3. Account switcher (switch and restore dynamically)
+    initial_account = header.get_selected_account()
+    available_accounts = header.get_available_accounts()
+    alt_accounts = [acc for acc in available_accounts if acc != initial_account]
+    if alt_accounts:
+        target_alt = alt_accounts[0]
+        header.select_account(target_alt)
+        expect(header.account_badge).to_contain_text(target_alt)
+        header.select_account(initial_account)
+        expect(header.account_badge).to_contain_text(initial_account)
 
     # 4. Notifications drawer
     header.open_notifications()

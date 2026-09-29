@@ -23,6 +23,8 @@ from workflows.client_portal.pages.client_refer_earn_page import ClientReferEarn
 from workflows.client_portal.pages.client_settings_page import ClientSettingsPage
 from workflows.client_portal.pages.client_wallet_page import ClientWalletPage
 from workflows.client_portal.pages.client_withdraw_page import ClientWithdrawPage
+from workflows.client_portal.pages.components.client_header import ClientHeaderComponent
+from workflows.client_portal.pages.components.client_sidebar import ClientSidebarComponent
 from workflows.client_portal.pages.profile_page import ClientProfilePage
 from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.error_monitor import ErrorMonitor
@@ -32,16 +34,19 @@ def _perform_client_login(page: Page, creds) -> None:
     """Helper used to generate fresh Client authentication session."""
     login_page = ClientLoginPage(page)
     login_page.navigate(creds.login_url or creds.base_url)
-    login_page.login(
-        email=creds.username,
-        password=creds.password,
-        remember_me=True,
-    )
-    if creds.post_login_url_pattern:
-        try:
-            page.wait_for_url(creds.post_login_url_pattern, timeout=15000)
-        except Exception:
-            pass
+    try:
+        login_page.login_and_wait_for_dashboard(
+            username=creds.username,
+            password=creds.password,
+            remember_me=True,
+            timeout=25000,
+        )
+    except Exception:
+        if creds.post_login_url_pattern:
+            try:
+                page.wait_for_url(creds.post_login_url_pattern, timeout=15000)
+            except Exception:
+                pass
 
 
 @pytest.fixture(scope="function")
@@ -154,6 +159,19 @@ def client_mam_page(authenticated_client_page: Page) -> ClientMAMPage:
 def client_pamm_page(authenticated_client_page: Page) -> ClientPAMMPage:
     """Provide an authenticated ClientPAMMPage object."""
     return ClientPAMMPage(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_header(authenticated_client_page: Page) -> ClientHeaderComponent:
+    """Provide an authenticated ClientHeaderComponent object."""
+    return ClientHeaderComponent(authenticated_client_page)
+
+
+@pytest.fixture(scope="function")
+def client_sidebar(authenticated_client_page: Page) -> ClientSidebarComponent:
+    """Provide an authenticated ClientSidebarComponent object."""
+    return ClientSidebarComponent(authenticated_client_page)
+
 
 
 

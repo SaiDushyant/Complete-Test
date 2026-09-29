@@ -5,7 +5,12 @@ Encapsulates all view tabs inside #sidebar-nav.
 
 from __future__ import annotations
 
+from playwright.sync_api import Locator, Page, expect
+
 from workflows.shared.pages.base_page import BasePage
+from workflows.shared.utils.logger import get_logger
+
+logger = get_logger("client_sidebar")
 
 
 class ClientSidebarComponent(BasePage):

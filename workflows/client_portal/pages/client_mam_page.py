@@ -92,8 +92,9 @@ class ClientMAMPage(BasePage):
 
     def navigate(self) -> None:
         """Navigate to MAM view via sidebar."""
+        target_url = f"{settings.client_portal.base_url.rstrip('/')}/client-portal"
         if "/client-portal" not in self.page.url:
-            self.goto(settings.client_portal.base_url)
+            self.goto(target_url)
         self.sidebar.navigate_to_mam()
         expect(self.header.title_heading.first).to_have_text("MAM", timeout=15000)
         expect(self.main_heading.first).to_be_visible(timeout=10000)
