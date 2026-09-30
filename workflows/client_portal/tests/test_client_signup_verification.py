@@ -154,7 +154,7 @@ def test_client_signup_and_email_verification_lifecycle(browser: Browser):
 
         # 5. Open email and extract verification link
         mailinator.open_email(inbox_name=user["inbox"], msg_id=msg_id)
-        verify_link = mailinator.extract_verification_link()
+        verify_link = mailinator.extract_verification_link(inbox_name=user["inbox"], msg_id=msg_id)
         assert verify_link, "Expected verification link inside registration email"
         logger.info(f"Verification link retrieved: {verify_link}")
 
