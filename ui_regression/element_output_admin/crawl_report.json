@@ -1,7 +1,8 @@
 {
-  "timestamp": "2026-09-24T11:41:01.031924+00:00",
+  "timestamp": "2026-09-30T10:53:14.757531+00:00",
+  "baseline_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
   "base_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
-  "total_duration_seconds": 308.78,
+  "total_duration_seconds": 454.78,
   "viewports": [
     "sm",
     "md",
@@ -17,9 +18,9 @@
   },
   "by_viewport": {
     "sm": {
-      "start_time": "2026-09-24T11:36:00.515819+00:00",
-      "end_time": "2026-09-24T11:41:00.584761+00:00",
-      "duration_seconds": 300.07,
+      "start_time": "2026-09-30T10:45:52.678425+00:00",
+      "end_time": "2026-09-30T10:53:08.288545+00:00",
+      "duration_seconds": 435.61,
       "start_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
       "viewport": "sm",
       "viewport_size": {
@@ -28,7 +29,7 @@
       },
       "max_depth": 10,
       "max_pages": 100,
-      "pages_discovered": 86,
+      "pages_discovered": 101,
       "pages_crawled": 42,
       "in_dom_views_crawled": 0,
       "pages_skipped_non_html": 0,
@@ -36,6 +37,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
@@ -44,7 +53,7 @@
           "viewport": "sm",
           "depth": 0,
           "status": 200,
-          "elements": 1186,
+          "elements": 1064,
           "output_file": "admin_Controlbase_Dashboard_sm_e8965ea6.json",
           "type": "root_page"
         },
@@ -55,7 +64,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1186,
+          "elements": 1064,
           "output_file": "admin_Controlbase_dashboard_sm_35a475fd.json",
           "type": "root_page"
         },
@@ -66,7 +75,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_all_sm_eb39cb62.json",
           "type": "root_page"
         },
@@ -77,7 +86,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1193,
+          "elements": 1170,
           "output_file": "admin_Controlbase_order_open_sm_db4b568a.json",
           "type": "root_page"
         },
@@ -88,7 +97,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_closed_sm_62bc432f.json",
           "type": "root_page"
         },
@@ -99,7 +108,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 814,
           "output_file": "admin_Controlbase_aBook_sm_ea7e6847.json",
           "type": "root_page"
         },
@@ -110,7 +119,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 4399,
+          "elements": 4608,
           "output_file": "admin_Controlbase_bBook_sm_dbd9587f.json",
           "type": "root_page"
         },
@@ -121,7 +130,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 816,
+          "elements": 710,
           "output_file": "admin_Controlbase_aBookUserMargin_sm_b4846a27.json",
           "type": "root_page"
         },
@@ -132,7 +141,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 923,
+          "elements": 804,
           "output_file": "admin_Controlbase_bBookUserMargin_sm_886d5f13.json",
           "type": "root_page"
         },
@@ -143,7 +152,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1371,
+          "elements": 1324,
           "output_file": "admin_Controlbase_OrderReport_sm_41fba183.json",
           "type": "root_page"
         },
@@ -154,7 +163,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1044,
+          "elements": 956,
           "output_file": "admin_Controlbase_bookReport_sm_dd19e5b3.json",
           "type": "root_page"
         },
@@ -165,7 +174,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1918,
+          "elements": 1821,
           "output_file": "admin_Controlbase_user_sm_43a5c103.json",
           "type": "root_page"
         },
@@ -176,7 +185,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 922,
+          "elements": 795,
           "output_file": "admin_Controlbase_clientAccountRequests_sm_a085b432.json",
           "type": "root_page"
         },
@@ -187,7 +196,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 3377,
+          "elements": 3510,
           "output_file": "admin_Controlbase_userDocument_sm_9a5d13b7.json",
           "type": "root_page"
         },
@@ -198,7 +207,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1666,
+          "elements": 1528,
           "output_file": "admin_Controlbase_deposit_sm_0388ee88.json",
           "type": "root_page"
         },
@@ -209,7 +218,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1681,
+          "elements": 1560,
           "output_file": "admin_Controlbase_withdraw_sm_6ee37067.json",
           "type": "root_page"
         },
@@ -220,7 +229,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 957,
+          "elements": 838,
           "output_file": "admin_Controlbase_payment_sm_cf662ed2.json",
           "type": "root_page"
         },
@@ -231,7 +240,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 882,
+          "elements": 763,
           "output_file": "admin_Controlbase_managewithdraw_sm_9760a5be.json",
           "type": "root_page"
         },
@@ -242,7 +251,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1075,
+          "elements": 977,
           "output_file": "admin_Controlbase_follow_sm_49275fd4.json",
           "type": "root_page"
         },
@@ -253,7 +262,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 799,
           "output_file": "admin_Controlbase_managePrivateCopier_sm_7afa0cf8.json",
           "type": "root_page"
         },
@@ -264,7 +273,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1045,
+          "elements": 949,
           "output_file": "admin_Controlbase_manageMAM_sm_05bd4fa5.json",
           "type": "root_page"
         },
@@ -275,7 +284,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1147,
+          "elements": 1059,
           "output_file": "admin_Controlbase_managePAMM_sm_256618f6.json",
           "type": "root_page"
         },
@@ -286,7 +295,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 790,
+          "elements": 672,
           "output_file": "admin_Controlbase_report_sm_1c274e39.json",
           "type": "root_page"
         },
@@ -297,7 +306,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 976,
+          "elements": 872,
           "output_file": "admin_Controlbase_leads_sm_35b901ef.json",
           "type": "root_page"
         },
@@ -308,7 +317,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 825,
+          "elements": 746,
           "output_file": "admin_Controlbase_rolePermission_sm_b2099ca7.json",
           "type": "root_page"
         },
@@ -319,7 +328,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1124,
+          "elements": 1024,
           "output_file": "admin_Controlbase_admin_sm_3d0c8875.json",
           "type": "root_page"
         },
@@ -330,7 +339,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 904,
+          "elements": 795,
           "output_file": "admin_Controlbase_manager_sm_d9480352.json",
           "type": "root_page"
         },
@@ -341,7 +350,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 949,
+          "elements": 1024,
           "output_file": "admin_Controlbase_userGroup_sm_13fbe752.json",
           "type": "root_page"
         },
@@ -352,7 +361,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1392,
+          "elements": 1273,
           "output_file": "admin_Controlbase_symbolList_sm_f8e0987c.json",
           "type": "root_page"
         },
@@ -363,7 +372,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1808,
+          "elements": 1691,
           "output_file": "admin_Controlbase_symbolConfiguration_sm_4917dbd3.json",
           "type": "root_page"
         },
@@ -374,7 +383,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 855,
+          "elements": 736,
           "output_file": "admin_Controlbase_creditList_sm_6a7fd3d4.json",
           "type": "root_page"
         },
@@ -385,7 +394,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 781,
+          "elements": 655,
           "output_file": "admin_Controlbase_activeUsers_sm_49418053.json",
           "type": "root_page"
         },
@@ -396,7 +405,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 802,
+          "elements": 683,
           "output_file": "admin_Controlbase_aBookBalanceTransaction_sm_830659f0.json",
           "type": "root_page"
         },
@@ -407,7 +416,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1154,
+          "elements": 1035,
           "output_file": "admin_Controlbase_aBookLpBrokerageLog_sm_5a14893c.json",
           "type": "root_page"
         },
@@ -418,7 +427,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 783,
+          "elements": 664,
           "output_file": "admin_Controlbase_lpExecutionConfig_sm_90393903.json",
           "type": "root_page"
         },
@@ -429,7 +438,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 880,
+          "elements": 803,
           "output_file": "admin_Controlbase_userOrderReport_sm_68ec7f3a.json",
           "type": "root_page"
         },
@@ -440,7 +449,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 911,
+          "elements": 792,
           "output_file": "admin_Controlbase_referReport_sm_b076ef34.json",
           "type": "root_page"
         },
@@ -451,7 +460,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1363,
+          "elements": 1379,
           "output_file": "admin_Controlbase_orderEditLog_sm_b1469064.json",
           "type": "root_page"
         },
@@ -462,7 +471,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 1685,
+          "elements": 1566,
           "output_file": "admin_Controlbase_userTransactionLog_sm_4035129a.json",
           "type": "root_page"
         },
@@ -473,7 +482,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 799,
+          "elements": 680,
           "output_file": "admin_Controlbase_oxapayPaymentTrack_sm_ef6345fd.json",
           "type": "root_page"
         },
@@ -484,7 +493,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 829,
+          "elements": 710,
           "output_file": "admin_Controlbase_Settings_sm_9a0d00fb.json",
           "type": "root_page"
         },
@@ -495,19 +504,20 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 899,
+          "elements": 780,
           "output_file": "admin_Controlbase_cronJobs_sm_6fdfb98a.json",
           "type": "root_page"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "md": {
-      "start_time": "2026-09-24T11:36:00.525636+00:00",
-      "end_time": "2026-09-24T11:40:55.667094+00:00",
-      "duration_seconds": 295.14,
+      "start_time": "2026-09-30T10:45:52.681105+00:00",
+      "end_time": "2026-09-30T10:53:04.958451+00:00",
+      "duration_seconds": 432.28,
       "start_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
       "viewport": "md",
       "viewport_size": {
@@ -516,7 +526,7 @@
       },
       "max_depth": 10,
       "max_pages": 100,
-      "pages_discovered": 86,
+      "pages_discovered": 101,
       "pages_crawled": 42,
       "in_dom_views_crawled": 0,
       "pages_skipped_non_html": 0,
@@ -524,6 +534,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
@@ -532,7 +550,7 @@
           "viewport": "md",
           "depth": 0,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_Dashboard_md_2120d5ee.json",
           "type": "root_page"
         },
@@ -543,7 +561,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_dashboard_md_fdf639a2.json",
           "type": "root_page"
         },
@@ -554,7 +572,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_all_md_2196ce2d.json",
           "type": "root_page"
         },
@@ -565,7 +583,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1193,
+          "elements": 1170,
           "output_file": "admin_Controlbase_order_open_md_c239e2db.json",
           "type": "root_page"
         },
@@ -576,7 +594,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_closed_md_627c5145.json",
           "type": "root_page"
         },
@@ -587,7 +605,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 814,
           "output_file": "admin_Controlbase_aBook_md_07839ace.json",
           "type": "root_page"
         },
@@ -598,7 +616,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 4399,
+          "elements": 4608,
           "output_file": "admin_Controlbase_bBook_md_2fc31545.json",
           "type": "root_page"
         },
@@ -609,7 +627,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 816,
+          "elements": 710,
           "output_file": "admin_Controlbase_aBookUserMargin_md_47903570.json",
           "type": "root_page"
         },
@@ -620,7 +638,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 923,
+          "elements": 804,
           "output_file": "admin_Controlbase_bBookUserMargin_md_1e1a4450.json",
           "type": "root_page"
         },
@@ -631,7 +649,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1371,
+          "elements": 1324,
           "output_file": "admin_Controlbase_OrderReport_md_1bc15d69.json",
           "type": "root_page"
         },
@@ -642,7 +660,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1044,
+          "elements": 956,
           "output_file": "admin_Controlbase_bookReport_md_674ec689.json",
           "type": "root_page"
         },
@@ -653,7 +671,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1918,
+          "elements": 1821,
           "output_file": "admin_Controlbase_user_md_26193f58.json",
           "type": "root_page"
         },
@@ -664,7 +682,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 922,
+          "elements": 795,
           "output_file": "admin_Controlbase_clientAccountRequests_md_636c6cf0.json",
           "type": "root_page"
         },
@@ -675,7 +693,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 3377,
+          "elements": 3510,
           "output_file": "admin_Controlbase_userDocument_md_37fd9cd2.json",
           "type": "root_page"
         },
@@ -686,7 +704,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1666,
+          "elements": 1528,
           "output_file": "admin_Controlbase_deposit_md_7b41d1ca.json",
           "type": "root_page"
         },
@@ -697,7 +715,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1681,
+          "elements": 1560,
           "output_file": "admin_Controlbase_withdraw_md_0c8d4ef4.json",
           "type": "root_page"
         },
@@ -708,7 +726,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 957,
+          "elements": 838,
           "output_file": "admin_Controlbase_payment_md_ce0c04a3.json",
           "type": "root_page"
         },
@@ -719,7 +737,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 882,
+          "elements": 763,
           "output_file": "admin_Controlbase_managewithdraw_md_f5f5d55f.json",
           "type": "root_page"
         },
@@ -730,7 +748,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1075,
+          "elements": 977,
           "output_file": "admin_Controlbase_follow_md_2f4eafb3.json",
           "type": "root_page"
         },
@@ -741,7 +759,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 799,
           "output_file": "admin_Controlbase_managePrivateCopier_md_a9a979e0.json",
           "type": "root_page"
         },
@@ -752,7 +770,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1045,
+          "elements": 949,
           "output_file": "admin_Controlbase_manageMAM_md_22bccb61.json",
           "type": "root_page"
         },
@@ -763,7 +781,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1147,
+          "elements": 1059,
           "output_file": "admin_Controlbase_managePAMM_md_72116220.json",
           "type": "root_page"
         },
@@ -774,7 +792,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 790,
+          "elements": 672,
           "output_file": "admin_Controlbase_report_md_024c5287.json",
           "type": "root_page"
         },
@@ -785,7 +803,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 976,
+          "elements": 872,
           "output_file": "admin_Controlbase_leads_md_e34bab42.json",
           "type": "root_page"
         },
@@ -796,7 +814,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 825,
+          "elements": 746,
           "output_file": "admin_Controlbase_rolePermission_md_8b46f1b8.json",
           "type": "root_page"
         },
@@ -807,7 +825,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1124,
+          "elements": 1024,
           "output_file": "admin_Controlbase_admin_md_8161e174.json",
           "type": "root_page"
         },
@@ -818,7 +836,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 904,
+          "elements": 795,
           "output_file": "admin_Controlbase_manager_md_ceba315e.json",
           "type": "root_page"
         },
@@ -829,7 +847,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 949,
+          "elements": 1024,
           "output_file": "admin_Controlbase_userGroup_md_4fcf861f.json",
           "type": "root_page"
         },
@@ -840,7 +858,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1392,
+          "elements": 1273,
           "output_file": "admin_Controlbase_symbolList_md_17f13566.json",
           "type": "root_page"
         },
@@ -851,7 +869,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1808,
+          "elements": 1691,
           "output_file": "admin_Controlbase_symbolConfiguration_md_1f353d6b.json",
           "type": "root_page"
         },
@@ -862,7 +880,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 855,
+          "elements": 736,
           "output_file": "admin_Controlbase_creditList_md_ecd6f2bb.json",
           "type": "root_page"
         },
@@ -873,7 +891,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 781,
+          "elements": 676,
           "output_file": "admin_Controlbase_activeUsers_md_ab3a36c2.json",
           "type": "root_page"
         },
@@ -884,7 +902,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 802,
+          "elements": 683,
           "output_file": "admin_Controlbase_aBookBalanceTransaction_md_1979a677.json",
           "type": "root_page"
         },
@@ -895,7 +913,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1154,
+          "elements": 1035,
           "output_file": "admin_Controlbase_aBookLpBrokerageLog_md_31cfd7bf.json",
           "type": "root_page"
         },
@@ -906,7 +924,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 783,
+          "elements": 664,
           "output_file": "admin_Controlbase_lpExecutionConfig_md_2a7e158e.json",
           "type": "root_page"
         },
@@ -917,7 +935,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 880,
+          "elements": 803,
           "output_file": "admin_Controlbase_userOrderReport_md_d5937515.json",
           "type": "root_page"
         },
@@ -928,7 +946,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 911,
+          "elements": 792,
           "output_file": "admin_Controlbase_referReport_md_1fe73ad4.json",
           "type": "root_page"
         },
@@ -939,7 +957,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1363,
+          "elements": 1379,
           "output_file": "admin_Controlbase_orderEditLog_md_603faf35.json",
           "type": "root_page"
         },
@@ -950,7 +968,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 1685,
+          "elements": 1566,
           "output_file": "admin_Controlbase_userTransactionLog_md_0e8b9cc6.json",
           "type": "root_page"
         },
@@ -961,7 +979,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 799,
+          "elements": 680,
           "output_file": "admin_Controlbase_oxapayPaymentTrack_md_2a1fe49e.json",
           "type": "root_page"
         },
@@ -972,7 +990,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 829,
+          "elements": 710,
           "output_file": "admin_Controlbase_Settings_md_0b13b575.json",
           "type": "root_page"
         },
@@ -983,19 +1001,20 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 899,
+          "elements": 780,
           "output_file": "admin_Controlbase_cronJobs_md_71acd74b.json",
           "type": "root_page"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "lg": {
-      "start_time": "2026-09-24T11:36:00.518249+00:00",
-      "end_time": "2026-09-24T11:41:00.828744+00:00",
-      "duration_seconds": 300.31,
+      "start_time": "2026-09-30T10:45:52.684426+00:00",
+      "end_time": "2026-09-30T10:53:04.970130+00:00",
+      "duration_seconds": 432.29,
       "start_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
       "viewport": "lg",
       "viewport_size": {
@@ -1004,7 +1023,7 @@
       },
       "max_depth": 10,
       "max_pages": 100,
-      "pages_discovered": 86,
+      "pages_discovered": 101,
       "pages_crawled": 42,
       "in_dom_views_crawled": 0,
       "pages_skipped_non_html": 0,
@@ -1012,6 +1031,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
@@ -1020,7 +1047,7 @@
           "viewport": "lg",
           "depth": 0,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_Dashboard_lg_fdbd9cf2.json",
           "type": "root_page"
         },
@@ -1031,7 +1058,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_dashboard_lg_c0c91ac6.json",
           "type": "root_page"
         },
@@ -1042,7 +1069,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_all_lg_42bae8b5.json",
           "type": "root_page"
         },
@@ -1053,7 +1080,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1193,
+          "elements": 1170,
           "output_file": "admin_Controlbase_order_open_lg_531ba6ba.json",
           "type": "root_page"
         },
@@ -1064,7 +1091,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_closed_lg_8f50d2e7.json",
           "type": "root_page"
         },
@@ -1075,7 +1102,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 814,
           "output_file": "admin_Controlbase_aBook_lg_66861ff3.json",
           "type": "root_page"
         },
@@ -1086,7 +1113,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 4399,
+          "elements": 4608,
           "output_file": "admin_Controlbase_bBook_lg_a9ecd66b.json",
           "type": "root_page"
         },
@@ -1097,7 +1124,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 816,
+          "elements": 710,
           "output_file": "admin_Controlbase_aBookUserMargin_lg_da7b957b.json",
           "type": "root_page"
         },
@@ -1108,7 +1135,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 923,
+          "elements": 804,
           "output_file": "admin_Controlbase_bBookUserMargin_lg_cfeed5e4.json",
           "type": "root_page"
         },
@@ -1119,7 +1146,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1371,
+          "elements": 1324,
           "output_file": "admin_Controlbase_OrderReport_lg_1dc6a32a.json",
           "type": "root_page"
         },
@@ -1130,7 +1157,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1044,
+          "elements": 956,
           "output_file": "admin_Controlbase_bookReport_lg_380df1ac.json",
           "type": "root_page"
         },
@@ -1141,7 +1168,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1918,
+          "elements": 1821,
           "output_file": "admin_Controlbase_user_lg_1b727c29.json",
           "type": "root_page"
         },
@@ -1152,7 +1179,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 922,
+          "elements": 795,
           "output_file": "admin_Controlbase_clientAccountRequests_lg_88ffa2f6.json",
           "type": "root_page"
         },
@@ -1163,7 +1190,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 3377,
+          "elements": 3510,
           "output_file": "admin_Controlbase_userDocument_lg_3e6aa825.json",
           "type": "root_page"
         },
@@ -1174,7 +1201,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1666,
+          "elements": 1528,
           "output_file": "admin_Controlbase_deposit_lg_c716b192.json",
           "type": "root_page"
         },
@@ -1185,7 +1212,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1681,
+          "elements": 1560,
           "output_file": "admin_Controlbase_withdraw_lg_5c07d92c.json",
           "type": "root_page"
         },
@@ -1196,7 +1223,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 957,
+          "elements": 838,
           "output_file": "admin_Controlbase_payment_lg_af9caeba.json",
           "type": "root_page"
         },
@@ -1207,7 +1234,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 882,
+          "elements": 763,
           "output_file": "admin_Controlbase_managewithdraw_lg_8776e64c.json",
           "type": "root_page"
         },
@@ -1218,7 +1245,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1075,
+          "elements": 977,
           "output_file": "admin_Controlbase_follow_lg_a19915c6.json",
           "type": "root_page"
         },
@@ -1229,7 +1256,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 799,
           "output_file": "admin_Controlbase_managePrivateCopier_lg_fbebb4d8.json",
           "type": "root_page"
         },
@@ -1240,7 +1267,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1045,
+          "elements": 949,
           "output_file": "admin_Controlbase_manageMAM_lg_b9d789dd.json",
           "type": "root_page"
         },
@@ -1251,7 +1278,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1147,
+          "elements": 1059,
           "output_file": "admin_Controlbase_managePAMM_lg_fe3a1ad5.json",
           "type": "root_page"
         },
@@ -1262,7 +1289,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 790,
+          "elements": 672,
           "output_file": "admin_Controlbase_report_lg_97b6546e.json",
           "type": "root_page"
         },
@@ -1273,7 +1300,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 976,
+          "elements": 872,
           "output_file": "admin_Controlbase_leads_lg_4aca8bd4.json",
           "type": "root_page"
         },
@@ -1284,7 +1311,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 825,
+          "elements": 746,
           "output_file": "admin_Controlbase_rolePermission_lg_02f4c804.json",
           "type": "root_page"
         },
@@ -1295,7 +1322,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1124,
+          "elements": 1024,
           "output_file": "admin_Controlbase_admin_lg_65416fd1.json",
           "type": "root_page"
         },
@@ -1306,7 +1333,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 904,
+          "elements": 795,
           "output_file": "admin_Controlbase_manager_lg_ca102062.json",
           "type": "root_page"
         },
@@ -1317,7 +1344,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 949,
+          "elements": 1024,
           "output_file": "admin_Controlbase_userGroup_lg_7544da26.json",
           "type": "root_page"
         },
@@ -1328,7 +1355,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1392,
+          "elements": 1273,
           "output_file": "admin_Controlbase_symbolList_lg_35490e1d.json",
           "type": "root_page"
         },
@@ -1339,7 +1366,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1808,
+          "elements": 1691,
           "output_file": "admin_Controlbase_symbolConfiguration_lg_eca33fd1.json",
           "type": "root_page"
         },
@@ -1350,7 +1377,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 855,
+          "elements": 736,
           "output_file": "admin_Controlbase_creditList_lg_eaf7389f.json",
           "type": "root_page"
         },
@@ -1361,7 +1388,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 781,
+          "elements": 655,
           "output_file": "admin_Controlbase_activeUsers_lg_cd7f662e.json",
           "type": "root_page"
         },
@@ -1372,7 +1399,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 802,
+          "elements": 683,
           "output_file": "admin_Controlbase_aBookBalanceTransaction_lg_d0c8810c.json",
           "type": "root_page"
         },
@@ -1383,7 +1410,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1154,
+          "elements": 1035,
           "output_file": "admin_Controlbase_aBookLpBrokerageLog_lg_92572ec4.json",
           "type": "root_page"
         },
@@ -1394,7 +1421,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 783,
+          "elements": 664,
           "output_file": "admin_Controlbase_lpExecutionConfig_lg_b95e44c4.json",
           "type": "root_page"
         },
@@ -1405,7 +1432,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 880,
+          "elements": 803,
           "output_file": "admin_Controlbase_userOrderReport_lg_523bd4aa.json",
           "type": "root_page"
         },
@@ -1416,7 +1443,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 911,
+          "elements": 792,
           "output_file": "admin_Controlbase_referReport_lg_8e90320f.json",
           "type": "root_page"
         },
@@ -1427,7 +1454,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1363,
+          "elements": 1379,
           "output_file": "admin_Controlbase_orderEditLog_lg_02191fa2.json",
           "type": "root_page"
         },
@@ -1438,7 +1465,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 1685,
+          "elements": 1566,
           "output_file": "admin_Controlbase_userTransactionLog_lg_a29f66ef.json",
           "type": "root_page"
         },
@@ -1449,7 +1476,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 799,
+          "elements": 680,
           "output_file": "admin_Controlbase_oxapayPaymentTrack_lg_1b408275.json",
           "type": "root_page"
         },
@@ -1460,7 +1487,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 829,
+          "elements": 710,
           "output_file": "admin_Controlbase_Settings_lg_63c3ce49.json",
           "type": "root_page"
         },
@@ -1471,19 +1498,20 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 899,
+          "elements": 780,
           "output_file": "admin_Controlbase_cronJobs_lg_33ad1be0.json",
           "type": "root_page"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "xl": {
-      "start_time": "2026-09-24T11:36:00.525981+00:00",
-      "end_time": "2026-09-24T11:41:00.995500+00:00",
-      "duration_seconds": 300.47,
+      "start_time": "2026-09-30T10:45:52.677526+00:00",
+      "end_time": "2026-09-30T10:53:14.717673+00:00",
+      "duration_seconds": 442.04,
       "start_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
       "viewport": "xl",
       "viewport_size": {
@@ -1492,7 +1520,7 @@
       },
       "max_depth": 10,
       "max_pages": 100,
-      "pages_discovered": 86,
+      "pages_discovered": 101,
       "pages_crawled": 42,
       "in_dom_views_crawled": 0,
       "pages_skipped_non_html": 0,
@@ -1500,6 +1528,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
@@ -1508,7 +1544,7 @@
           "viewport": "xl",
           "depth": 0,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_Dashboard_xl_f1bc6a68.json",
           "type": "root_page"
         },
@@ -1519,7 +1555,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1186,
+          "elements": 1065,
           "output_file": "admin_Controlbase_dashboard_xl_66f0d018.json",
           "type": "root_page"
         },
@@ -1530,7 +1566,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_all_xl_9284f059.json",
           "type": "root_page"
         },
@@ -1541,7 +1577,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1193,
+          "elements": 1170,
           "output_file": "admin_Controlbase_order_open_xl_7ecd6b12.json",
           "type": "root_page"
         },
@@ -1552,7 +1588,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_closed_xl_04a31eb7.json",
           "type": "root_page"
         },
@@ -1563,7 +1599,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 814,
           "output_file": "admin_Controlbase_aBook_xl_610d71ba.json",
           "type": "root_page"
         },
@@ -1574,7 +1610,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 4399,
+          "elements": 4608,
           "output_file": "admin_Controlbase_bBook_xl_00004165.json",
           "type": "root_page"
         },
@@ -1585,7 +1621,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 816,
+          "elements": 710,
           "output_file": "admin_Controlbase_aBookUserMargin_xl_83fa0341.json",
           "type": "root_page"
         },
@@ -1596,7 +1632,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 923,
+          "elements": 804,
           "output_file": "admin_Controlbase_bBookUserMargin_xl_6bfc3059.json",
           "type": "root_page"
         },
@@ -1607,7 +1643,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1371,
+          "elements": 1324,
           "output_file": "admin_Controlbase_OrderReport_xl_f1e80fcc.json",
           "type": "root_page"
         },
@@ -1618,7 +1654,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1044,
+          "elements": 956,
           "output_file": "admin_Controlbase_bookReport_xl_82294fed.json",
           "type": "root_page"
         },
@@ -1629,7 +1665,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1918,
+          "elements": 1821,
           "output_file": "admin_Controlbase_user_xl_b16aeef4.json",
           "type": "root_page"
         },
@@ -1640,7 +1676,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 922,
+          "elements": 795,
           "output_file": "admin_Controlbase_clientAccountRequests_xl_a7e6c1d8.json",
           "type": "root_page"
         },
@@ -1651,7 +1687,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 3377,
+          "elements": 3510,
           "output_file": "admin_Controlbase_userDocument_xl_779f9a34.json",
           "type": "root_page"
         },
@@ -1662,7 +1698,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1666,
+          "elements": 1528,
           "output_file": "admin_Controlbase_deposit_xl_8e7a82d5.json",
           "type": "root_page"
         },
@@ -1673,7 +1709,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1681,
+          "elements": 1560,
           "output_file": "admin_Controlbase_withdraw_xl_32a59668.json",
           "type": "root_page"
         },
@@ -1684,7 +1720,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 957,
+          "elements": 838,
           "output_file": "admin_Controlbase_payment_xl_938a5c89.json",
           "type": "root_page"
         },
@@ -1695,7 +1731,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 882,
+          "elements": 763,
           "output_file": "admin_Controlbase_managewithdraw_xl_f42f1209.json",
           "type": "root_page"
         },
@@ -1706,7 +1742,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1075,
+          "elements": 977,
           "output_file": "admin_Controlbase_follow_xl_317a2dda.json",
           "type": "root_page"
         },
@@ -1717,7 +1753,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 799,
           "output_file": "admin_Controlbase_managePrivateCopier_xl_cf89e863.json",
           "type": "root_page"
         },
@@ -1728,7 +1764,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1045,
+          "elements": 949,
           "output_file": "admin_Controlbase_manageMAM_xl_b431ce68.json",
           "type": "root_page"
         },
@@ -1739,7 +1775,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1147,
+          "elements": 1059,
           "output_file": "admin_Controlbase_managePAMM_xl_2d459565.json",
           "type": "root_page"
         },
@@ -1750,7 +1786,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 790,
+          "elements": 672,
           "output_file": "admin_Controlbase_report_xl_dc18f399.json",
           "type": "root_page"
         },
@@ -1761,7 +1797,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 976,
+          "elements": 872,
           "output_file": "admin_Controlbase_leads_xl_f0b78b02.json",
           "type": "root_page"
         },
@@ -1772,7 +1808,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 825,
+          "elements": 746,
           "output_file": "admin_Controlbase_rolePermission_xl_62beacba.json",
           "type": "root_page"
         },
@@ -1783,7 +1819,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1124,
+          "elements": 1024,
           "output_file": "admin_Controlbase_admin_xl_26999a06.json",
           "type": "root_page"
         },
@@ -1794,7 +1830,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 904,
+          "elements": 795,
           "output_file": "admin_Controlbase_manager_xl_35aa1072.json",
           "type": "root_page"
         },
@@ -1805,7 +1841,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 949,
+          "elements": 1024,
           "output_file": "admin_Controlbase_userGroup_xl_f329a996.json",
           "type": "root_page"
         },
@@ -1816,7 +1852,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1392,
+          "elements": 1273,
           "output_file": "admin_Controlbase_symbolList_xl_b7cb1524.json",
           "type": "root_page"
         },
@@ -1827,7 +1863,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1808,
+          "elements": 1691,
           "output_file": "admin_Controlbase_symbolConfiguration_xl_7aee63c1.json",
           "type": "root_page"
         },
@@ -1838,7 +1874,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 855,
+          "elements": 736,
           "output_file": "admin_Controlbase_creditList_xl_ca417aa3.json",
           "type": "root_page"
         },
@@ -1849,7 +1885,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 781,
+          "elements": 655,
           "output_file": "admin_Controlbase_activeUsers_xl_6aff300b.json",
           "type": "root_page"
         },
@@ -1860,7 +1896,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 802,
+          "elements": 683,
           "output_file": "admin_Controlbase_aBookBalanceTransaction_xl_ee75be69.json",
           "type": "root_page"
         },
@@ -1871,7 +1907,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1154,
+          "elements": 1035,
           "output_file": "admin_Controlbase_aBookLpBrokerageLog_xl_bb2d98d6.json",
           "type": "root_page"
         },
@@ -1882,7 +1918,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 783,
+          "elements": 664,
           "output_file": "admin_Controlbase_lpExecutionConfig_xl_c5f2d1ab.json",
           "type": "root_page"
         },
@@ -1893,7 +1929,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 880,
+          "elements": 803,
           "output_file": "admin_Controlbase_userOrderReport_xl_817dddea.json",
           "type": "root_page"
         },
@@ -1904,7 +1940,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 911,
+          "elements": 792,
           "output_file": "admin_Controlbase_referReport_xl_c2bbce8c.json",
           "type": "root_page"
         },
@@ -1915,7 +1951,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1363,
+          "elements": 1379,
           "output_file": "admin_Controlbase_orderEditLog_xl_f8dbc336.json",
           "type": "root_page"
         },
@@ -1926,7 +1962,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 1685,
+          "elements": 1566,
           "output_file": "admin_Controlbase_userTransactionLog_xl_b651ee8a.json",
           "type": "root_page"
         },
@@ -1937,7 +1973,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 799,
+          "elements": 680,
           "output_file": "admin_Controlbase_oxapayPaymentTrack_xl_08f00f1c.json",
           "type": "root_page"
         },
@@ -1948,7 +1984,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 829,
+          "elements": 710,
           "output_file": "admin_Controlbase_Settings_xl_525693f3.json",
           "type": "root_page"
         },
@@ -1959,19 +1995,20 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 899,
+          "elements": 780,
           "output_file": "admin_Controlbase_cronJobs_xl_e31a93d0.json",
           "type": "root_page"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "2xl": {
-      "start_time": "2026-09-24T11:36:00.514190+00:00",
-      "end_time": "2026-09-24T11:41:00.573695+00:00",
-      "duration_seconds": 300.06,
+      "start_time": "2026-09-30T10:45:52.679673+00:00",
+      "end_time": "2026-09-30T10:53:04.792694+00:00",
+      "duration_seconds": 432.11,
       "start_url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
       "viewport": "2xl",
       "viewport_size": {
@@ -1980,7 +2017,7 @@
       },
       "max_depth": 10,
       "max_pages": 100,
-      "pages_discovered": 86,
+      "pages_discovered": 101,
       "pages_crawled": 42,
       "in_dom_views_crawled": 0,
       "pages_skipped_non_html": 0,
@@ -1988,6 +2025,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/admin/Controlbase/Dashboard",
@@ -1996,7 +2041,7 @@
           "viewport": "2xl",
           "depth": 0,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_Dashboard_2xl_ae8ed400.json",
           "type": "root_page"
         },
@@ -2007,7 +2052,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1189,
+          "elements": 1067,
           "output_file": "admin_Controlbase_dashboard_2xl_6350c37e.json",
           "type": "root_page"
         },
@@ -2018,7 +2063,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_all_2xl_2bfbd13c.json",
           "type": "root_page"
         },
@@ -2029,7 +2074,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1193,
+          "elements": 1170,
           "output_file": "admin_Controlbase_order_open_2xl_4b6df092.json",
           "type": "root_page"
         },
@@ -2040,7 +2085,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1765,
+          "elements": 1646,
           "output_file": "admin_Controlbase_order_closed_2xl_6a896b73.json",
           "type": "root_page"
         },
@@ -2051,7 +2096,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 814,
           "output_file": "admin_Controlbase_aBook_2xl_a3e31822.json",
           "type": "root_page"
         },
@@ -2062,7 +2107,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 4399,
+          "elements": 4608,
           "output_file": "admin_Controlbase_bBook_2xl_c842ccee.json",
           "type": "root_page"
         },
@@ -2073,7 +2118,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 816,
+          "elements": 710,
           "output_file": "admin_Controlbase_aBookUserMargin_2xl_482fbeb4.json",
           "type": "root_page"
         },
@@ -2084,7 +2129,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 923,
+          "elements": 804,
           "output_file": "admin_Controlbase_bBookUserMargin_2xl_ae7f2f48.json",
           "type": "root_page"
         },
@@ -2095,7 +2140,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1371,
+          "elements": 1324,
           "output_file": "admin_Controlbase_OrderReport_2xl_3fd0ca13.json",
           "type": "root_page"
         },
@@ -2106,7 +2151,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1044,
+          "elements": 956,
           "output_file": "admin_Controlbase_bookReport_2xl_02838a4a.json",
           "type": "root_page"
         },
@@ -2117,7 +2162,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1918,
+          "elements": 1821,
           "output_file": "admin_Controlbase_user_2xl_6e41bcee.json",
           "type": "root_page"
         },
@@ -2128,7 +2173,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 922,
+          "elements": 795,
           "output_file": "admin_Controlbase_clientAccountRequests_2xl_872dfcd3.json",
           "type": "root_page"
         },
@@ -2139,7 +2184,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 3377,
+          "elements": 3510,
           "output_file": "admin_Controlbase_userDocument_2xl_0031dcc6.json",
           "type": "root_page"
         },
@@ -2150,7 +2195,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1666,
+          "elements": 1528,
           "output_file": "admin_Controlbase_deposit_2xl_cfa07d0d.json",
           "type": "root_page"
         },
@@ -2161,7 +2206,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1681,
+          "elements": 1560,
           "output_file": "admin_Controlbase_withdraw_2xl_8e492806.json",
           "type": "root_page"
         },
@@ -2172,7 +2217,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 957,
+          "elements": 838,
           "output_file": "admin_Controlbase_payment_2xl_b5ff6dee.json",
           "type": "root_page"
         },
@@ -2183,7 +2228,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 882,
+          "elements": 763,
           "output_file": "admin_Controlbase_managewithdraw_2xl_daa8e01d.json",
           "type": "root_page"
         },
@@ -2194,7 +2239,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1075,
+          "elements": 977,
           "output_file": "admin_Controlbase_follow_2xl_2a2c5dbd.json",
           "type": "root_page"
         },
@@ -2205,7 +2250,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 918,
+          "elements": 799,
           "output_file": "admin_Controlbase_managePrivateCopier_2xl_8ff3fec3.json",
           "type": "root_page"
         },
@@ -2216,7 +2261,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1045,
+          "elements": 949,
           "output_file": "admin_Controlbase_manageMAM_2xl_29ec8235.json",
           "type": "root_page"
         },
@@ -2227,7 +2272,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1147,
+          "elements": 1059,
           "output_file": "admin_Controlbase_managePAMM_2xl_0ebc6af8.json",
           "type": "root_page"
         },
@@ -2238,7 +2283,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 790,
+          "elements": 672,
           "output_file": "admin_Controlbase_report_2xl_e205652b.json",
           "type": "root_page"
         },
@@ -2249,7 +2294,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 976,
+          "elements": 872,
           "output_file": "admin_Controlbase_leads_2xl_1943dd71.json",
           "type": "root_page"
         },
@@ -2260,7 +2305,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 825,
+          "elements": 746,
           "output_file": "admin_Controlbase_rolePermission_2xl_7c22623d.json",
           "type": "root_page"
         },
@@ -2271,7 +2316,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1124,
+          "elements": 1024,
           "output_file": "admin_Controlbase_admin_2xl_6dfe3d98.json",
           "type": "root_page"
         },
@@ -2282,7 +2327,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 904,
+          "elements": 795,
           "output_file": "admin_Controlbase_manager_2xl_8667c84d.json",
           "type": "root_page"
         },
@@ -2293,7 +2338,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 949,
+          "elements": 1024,
           "output_file": "admin_Controlbase_userGroup_2xl_8168fcb3.json",
           "type": "root_page"
         },
@@ -2304,7 +2349,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1392,
+          "elements": 1273,
           "output_file": "admin_Controlbase_symbolList_2xl_16403727.json",
           "type": "root_page"
         },
@@ -2315,7 +2360,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1808,
+          "elements": 1691,
           "output_file": "admin_Controlbase_symbolConfiguration_2xl_61d4281a.json",
           "type": "root_page"
         },
@@ -2326,7 +2371,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 855,
+          "elements": 736,
           "output_file": "admin_Controlbase_creditList_2xl_400452eb.json",
           "type": "root_page"
         },
@@ -2337,7 +2382,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 781,
+          "elements": 676,
           "output_file": "admin_Controlbase_activeUsers_2xl_2650c098.json",
           "type": "root_page"
         },
@@ -2348,7 +2393,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 802,
+          "elements": 683,
           "output_file": "admin_Controlbase_aBookBalanceTransaction_2xl_15a5f14a.json",
           "type": "root_page"
         },
@@ -2359,7 +2404,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1154,
+          "elements": 1035,
           "output_file": "admin_Controlbase_aBookLpBrokerageLog_2xl_dc778c40.json",
           "type": "root_page"
         },
@@ -2370,7 +2415,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 783,
+          "elements": 664,
           "output_file": "admin_Controlbase_lpExecutionConfig_2xl_a8b62df5.json",
           "type": "root_page"
         },
@@ -2381,7 +2426,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 880,
+          "elements": 803,
           "output_file": "admin_Controlbase_userOrderReport_2xl_f72b31bf.json",
           "type": "root_page"
         },
@@ -2392,7 +2437,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 911,
+          "elements": 792,
           "output_file": "admin_Controlbase_referReport_2xl_d9daca31.json",
           "type": "root_page"
         },
@@ -2403,7 +2448,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1363,
+          "elements": 1379,
           "output_file": "admin_Controlbase_orderEditLog_2xl_4139ffb0.json",
           "type": "root_page"
         },
@@ -2414,7 +2459,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 1685,
+          "elements": 1566,
           "output_file": "admin_Controlbase_userTransactionLog_2xl_db5a72b9.json",
           "type": "root_page"
         },
@@ -2425,7 +2470,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 799,
+          "elements": 680,
           "output_file": "admin_Controlbase_oxapayPaymentTrack_2xl_4e258646.json",
           "type": "root_page"
         },
@@ -2436,7 +2481,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 829,
+          "elements": 710,
           "output_file": "admin_Controlbase_Settings_2xl_735208a5.json",
           "type": "root_page"
         },
@@ -2447,14 +2492,15 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 899,
+          "elements": 780,
           "output_file": "admin_Controlbase_cronJobs_2xl_d8d0123a.json",
           "type": "root_page"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     }
   }
 }

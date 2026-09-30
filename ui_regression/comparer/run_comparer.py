@@ -127,14 +127,14 @@ def print_comparison_summary(report: dict, report_path: Path):
 
     # Per-View Breakdown Table
     print("VIEW / PAGE BREAKDOWN ACROSS VIEWPORTS:")
-    print("-" * 90)
-    print(f"{'View / Page Name':<34} | {'VP':<5} | {'Status':<16} | {'Match':<6} | {'Mod':<5} | {'Miss':<5} | {'Add':<5}")
-    print("-" * 90)
+    print("-" * 110)
+    print(f"{'View / Page Name':<32} | {'VP':<5} | {'Status':<15} | {'Match':<6} | {'Mod':<5} | {'Miss':<5} | {'Add':<5} | {'Errors (Console/JS/Net/HTTP)':<26}")
+    print("-" * 110)
 
     for p in pages:
         vname = p.get("view_name") or p.get("url", "")
-        if len(vname) > 32:
-            vname = vname[:29] + "..."
+        if len(vname) > 30:
+            vname = vname[:27] + "..."
         
         vp = p.get("viewport") or "-"
         status = p.get("status", "UNKNOWN")
@@ -144,15 +144,73 @@ def print_comparison_summary(report: dict, report_path: Path):
         miss = stats.get("missing", 0)
         add = stats.get("added", 0)
 
+        diag_sum = stats.get("diagnostics_summary", {})
+        c_errs = diag_sum.get("console_errors_count", 0)
+        js_errs = diag_sum.get("js_page_errors_count", 0)
+        net_errs = diag_sum.get("failed_requests_count", 0)
+        http_errs = diag_sum.get("http_errors_count", 0)
+        err_str = f"C:{c_errs} JS:{js_errs} Net:{net_errs} H:{http_errs}"
+        if c_errs + js_errs + net_errs + http_errs > 0:
+            err_str = f"⚠️  {err_str}"
+        else:
+            err_str = f"✅ {err_str}"
+
         status_icon = "✅ UNCHANGED" if status == "UNCHANGED" else "⚠️ DRIFT"
         if status == "PAGE_MISSING_IN_LIVE":
             status_icon = "❌ MISSING PAGE"
         elif status == "NEW_PAGE_IN_LIVE":
             status_icon = "✨ NEW PAGE"
 
-        print(f"{vname:<34} | {vp:<5} | {status_icon:<16} | {matched:<6} | {mod:<5} | {miss:<5} | {add:<5}")
+        print(f"{vname:<32} | {vp:<5} | {status_icon:<15} | {matched:<6} | {mod:<5} | {miss:<5} | {add:<5} | {err_str:<26}")
 
-    print("-" * 90)
+    print("-" * 110)
+
+    # Telemetry and Runtime Error Highlights
+    telemetry_errors = report.get("telemetry_errors", [])
+    telemetry_summary = summary.get("telemetry", {})
+    total_diag_errors = telemetry_summary.get("total_errors", 0)
+
+    print()
+    print("=" * 80)
+    print("DIAGNOSTIC TELEMETRY & RUNTIME ERRORS SUMMARY")
+    print("=" * 80)
+    print(f"Total Console Errors      : {telemetry_summary.get('console_errors_count', 0)}")
+    print(f"Total JS Exceptions       : {telemetry_summary.get('js_page_errors_count', 0)}")
+    print(f"Total Failed Requests     : {telemetry_summary.get('failed_requests_count', 0)}")
+    print(f"Total HTTP 4xx/5xx Errors : {telemetry_summary.get('http_errors_count', 0)}")
+
+    if telemetry_errors:
+        print("\n🚨 DETECTED RUNTIME / NETWORK / CONSOLE ERRORS:")
+        for idx, item in enumerate(telemetry_errors[:15], 1):
+            kind = item.get("kind", "error")
+            url = item.get("url", "")
+            vp = item.get("viewport", "")
+            detail = item.get("detail", {})
+            vp_label = f" [{vp}]" if vp else ""
+
+            if kind == "console_error":
+                text = detail.get("text", "")
+                loc = detail.get("location", {})
+                loc_str = f" ({loc.get('url', '')}:{loc.get('lineNumber', '')})" if loc and loc.get("url") else ""
+                print(f"   {idx}. [Console Error]{vp_label} on {url}: {text}{loc_str}")
+            elif kind == "js_page_error":
+                err = detail.get("error", "")
+                print(f"   {idx}. [JS Exception]{vp_label} on {url}: {err}")
+            elif kind == "network_failed_request":
+                req_url = detail.get("url", "")
+                fail = detail.get("failure", "")
+                print(f"   {idx}. [Failed Request]{vp_label} on {url}: {req_url} -> {fail}")
+            elif kind == "http_error":
+                req_url = detail.get("url", "")
+                status_code = detail.get("status", "")
+                status_txt = detail.get("status_text", "")
+                print(f"   {idx}. [HTTP Error]{vp_label} on {url}: {status_code} {status_txt} -> {req_url}")
+
+        if len(telemetry_errors) > 15:
+            print(f"   ... and {len(telemetry_errors) - 15} more runtime errors (see comparison report JSON)")
+    else:
+        print("✅ No uncaught runtime errors, console errors, or network failures detected across all pages!")
+    print("=" * 80)
 
     # Detailed Drift Highlights (if any)
     drifted_pages = [p for p in pages if p.get("status") not in ("UNCHANGED",)]

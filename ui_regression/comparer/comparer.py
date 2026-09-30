@@ -1094,6 +1094,8 @@ class ElementComparer:
                 if diff_result["modified_count"] > 0 or diff_result["missing_count"] > 0 or diff_result["added_count"] > 0:
                     status = "DRIFT_DETECTED"
 
+                page_diag = live_snap.get("diagnostics") or baseline_snap.get("diagnostics") or {}
+
                 pages_report.append({
                     "key": key,
                     "url": live_snap["page"].get("url") or baseline_snap["page"].get("url"),
@@ -1113,7 +1115,9 @@ class ElementComparer:
                         "modified": diff_result["modified_count"],
                         "missing": diff_result["missing_count"],
                         "added": diff_result["added_count"],
+                        "diagnostics_summary": page_diag.get("summary", {}),
                     },
+                    "diagnostics": page_diag,
                     "missing_elements": diff_result["missing_elements"],
                     "added_elements": diff_result["added_elements"],
                     "modified_elements": diff_result["modified_elements"],
@@ -1125,6 +1129,7 @@ class ElementComparer:
                 b_count = len(b_elems)
                 total_baseline_elements += b_count
                 total_missing += b_count
+                page_diag = baseline_snap.get("diagnostics") or {}
 
                 pages_report.append({
                     "key": key,
@@ -1145,7 +1150,9 @@ class ElementComparer:
                         "modified": 0,
                         "missing": b_count,
                         "added": 0,
+                        "diagnostics_summary": page_diag.get("summary", {}),
                     },
+                    "diagnostics": page_diag,
                     "missing_elements": baseline_snap.get("elements", []),
                     "added_elements": [],
                     "modified_elements": [],
@@ -1157,6 +1164,7 @@ class ElementComparer:
                 l_count = len(l_elems)
                 total_live_elements += l_count
                 total_added += l_count
+                page_diag = live_snap.get("diagnostics") or {}
 
                 pages_report.append({
                     "key": key,
@@ -1177,7 +1185,9 @@ class ElementComparer:
                         "modified": 0,
                         "missing": 0,
                         "added": l_count,
+                        "diagnostics_summary": page_diag.get("summary", {}),
                     },
+                    "diagnostics": page_diag,
                     "missing_elements": [],
                     "added_elements": live_snap.get("elements", []),
                     "modified_elements": [],
@@ -1185,6 +1195,16 @@ class ElementComparer:
 
         # Compute per-viewport summary breakdown
         by_viewport = {}
+        telemetry_errors = []
+        global_telemetry = {
+            "total_errors": 0,
+            "console_errors_count": 0,
+            "console_warnings_count": 0,
+            "js_page_errors_count": 0,
+            "failed_requests_count": 0,
+            "http_errors_count": 0,
+        }
+
         for vp in VIEWPORT_ORDER:
             by_viewport[vp] = {
                 "views_compared": 0,
@@ -1196,10 +1216,42 @@ class ElementComparer:
                 "added": 0,
                 "has_drift": False,
                 "drift_percentage": 0.0,
+                "console_errors": 0,
+                "js_page_errors": 0,
+                "failed_requests": 0,
+                "http_errors": 0,
             }
 
         for p in pages_report:
             vp = p.get("viewport")
+            diag = p.get("diagnostics", {})
+            diag_sum = diag.get("summary", {})
+
+            # Aggregate telemetry
+            c_errs = diag_sum.get("console_errors_count", 0)
+            js_errs = diag_sum.get("js_page_errors_count", 0)
+            net_errs = diag_sum.get("failed_requests_count", 0)
+            http_errs = diag_sum.get("http_errors_count", 0)
+
+            global_telemetry["total_errors"] += diag_sum.get("total_errors", 0)
+            global_telemetry["console_errors_count"] += c_errs
+            global_telemetry["console_warnings_count"] += diag_sum.get("console_warnings_count", 0)
+            global_telemetry["js_page_errors_count"] += js_errs
+            global_telemetry["failed_requests_count"] += net_errs
+            global_telemetry["http_errors_count"] += http_errs
+
+            # Collect explicit error items
+            url = p.get("url") or ""
+            vname = p.get("view_name") or ""
+            for ce in diag.get("console_errors", []):
+                telemetry_errors.append({"kind": "console_error", "url": url, "view_name": vname, "viewport": vp, "detail": ce})
+            for pe in diag.get("js_page_errors", []):
+                telemetry_errors.append({"kind": "js_page_error", "url": url, "view_name": vname, "viewport": vp, "detail": pe})
+            for fr in diag.get("failed_requests", []):
+                telemetry_errors.append({"kind": "network_failed_request", "url": url, "view_name": vname, "viewport": vp, "detail": fr})
+            for he in diag.get("http_errors", []):
+                telemetry_errors.append({"kind": "http_error", "url": url, "view_name": vname, "viewport": vp, "detail": he})
+
             if vp and vp in by_viewport:
                 st = p.get("statistics", {})
                 by_viewport[vp]["views_compared"] += 1
@@ -1209,6 +1261,10 @@ class ElementComparer:
                 by_viewport[vp]["modified"] += st.get("modified", 0)
                 by_viewport[vp]["missing"] += st.get("missing", 0)
                 by_viewport[vp]["added"] += st.get("added", 0)
+                by_viewport[vp]["console_errors"] += c_errs
+                by_viewport[vp]["js_page_errors"] += js_errs
+                by_viewport[vp]["failed_requests"] += net_errs
+                by_viewport[vp]["http_errors"] += http_errs
 
         for vp, vp_data in by_viewport.items():
             vp_drift = vp_data["modified"] + vp_data["missing"] + vp_data["added"]
@@ -1236,8 +1292,10 @@ class ElementComparer:
                 "drift_percentage": round(
                     ((total_modified + total_missing + total_added) / max(total_baseline_elements, 1)) * 100, 2
                 ),
+                "telemetry": global_telemetry,
                 "by_viewport": by_viewport,
             },
+            "telemetry_errors": telemetry_errors,
             "noise_filtering": {
                 "enabled": self.noise_filter.enabled,
                 "ignored_attributes": list(self.noise_filter.ignored_attributes),

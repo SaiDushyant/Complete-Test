@@ -1,7 +1,8 @@
 {
-  "timestamp": "2026-09-24T10:40:50.379607+00:00",
+  "timestamp": "2026-09-30T10:47:54.953524+00:00",
+  "baseline_url": "https://stage.xtremenext.com/",
   "base_url": "https://stage.xtremenext.com/",
-  "total_duration_seconds": 184.52,
+  "total_duration_seconds": 144.49,
   "viewports": [
     "sm",
     "md",
@@ -17,9 +18,9 @@
   },
   "by_viewport": {
     "sm": {
-      "start_time": "2026-09-24T10:38:46.837806+00:00",
-      "end_time": "2026-09-24T10:40:50.338594+00:00",
-      "duration_seconds": 123.5,
+      "start_time": "2026-09-30T10:45:44.770728+00:00",
+      "end_time": "2026-09-30T10:47:54.892996+00:00",
+      "duration_seconds": 130.12,
       "start_url": "https://stage.xtremenext.com/",
       "viewport": "sm",
       "viewport_size": {
@@ -36,6 +37,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/",
@@ -44,7 +53,7 @@
           "viewport": "sm",
           "depth": 0,
           "status": 200,
-          "elements": 2837,
+          "elements": 2831,
           "output_file": "home_sm_7d628b21.json",
           "type": "root_page"
         },
@@ -55,7 +64,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3068,
           "output_file": "home_view_accountlist_sm_809240a6.json",
           "type": "in_dom_view"
         },
@@ -66,7 +75,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3071,
           "output_file": "home_view_api_sm_614dcc2a.json",
           "type": "in_dom_view"
         },
@@ -77,7 +86,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3853,
           "output_file": "home_view_chart_sm_d615dc34.json",
           "type": "in_dom_view"
         },
@@ -88,7 +97,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3853,
           "output_file": "home_view_dashboard_sm_43cd3bc8.json",
           "type": "in_dom_view"
         },
@@ -99,7 +108,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_history_sm_54814750.json",
           "type": "in_dom_view"
         },
@@ -110,7 +119,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_moresetting_sm_48008b2d.json",
           "type": "in_dom_view"
         },
@@ -121,7 +130,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_position_sm_da5d2bda.json",
           "type": "in_dom_view"
         },
@@ -132,7 +141,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_support_sm_ba9fb4a4.json",
           "type": "in_dom_view"
         },
@@ -143,7 +152,7 @@
           "viewport": "sm",
           "depth": 1,
           "status": 200,
-          "elements": 410,
+          "elements": 418,
           "output_file": "client-portal_sm_6b34f63a.json",
           "type": "root_page"
         },
@@ -154,7 +163,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 410,
+          "elements": 418,
           "output_file": "client-portal_view_dashboard_sm_4f7c0981.json",
           "type": "in_dom_view"
         },
@@ -165,7 +174,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 471,
+          "elements": 472,
           "output_file": "client-portal_view_deposit_sm_da5219fe.json",
           "type": "in_dom_view"
         },
@@ -176,7 +185,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 484,
+          "elements": 501,
           "output_file": "client-portal_view_withdraw_sm_53070217.json",
           "type": "in_dom_view"
         },
@@ -187,7 +196,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 385,
+          "elements": 470,
           "output_file": "client-portal_view_internal_transfer_sm_8ea8f7d6.json",
           "type": "in_dom_view"
         },
@@ -198,7 +207,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 811,
+          "elements": 812,
           "output_file": "client-portal_view_wallet_sm_d6def255.json",
           "type": "in_dom_view"
         },
@@ -209,7 +218,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_copy_trading_sm_8c90e38c.json",
           "type": "in_dom_view"
         },
@@ -220,7 +229,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_mam_sm_e92102fd.json",
           "type": "in_dom_view"
         },
@@ -231,7 +240,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_pamm_sm_311a1a90.json",
           "type": "in_dom_view"
         },
@@ -242,7 +251,7 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 306,
+          "elements": 421,
           "output_file": "client-portal_view_refer_earn_sm_634558b8.json",
           "type": "in_dom_view"
         },
@@ -253,19 +262,20 @@
           "viewport": "sm",
           "depth": 2,
           "status": 200,
-          "elements": 234,
+          "elements": 235,
           "output_file": "client-portal_view_settings_sm_636b1a31.json",
           "type": "in_dom_view"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "md": {
-      "start_time": "2026-09-24T10:38:46.838784+00:00",
-      "end_time": "2026-09-24T10:40:21.769971+00:00",
-      "duration_seconds": 94.93,
+      "start_time": "2026-09-30T10:45:44.776741+00:00",
+      "end_time": "2026-09-30T10:47:30.318491+00:00",
+      "duration_seconds": 105.54,
       "start_url": "https://stage.xtremenext.com/",
       "viewport": "md",
       "viewport_size": {
@@ -282,6 +292,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/",
@@ -290,7 +308,7 @@
           "viewport": "md",
           "depth": 0,
           "status": 200,
-          "elements": 2837,
+          "elements": 3071,
           "output_file": "home_md_2af53fc4.json",
           "type": "root_page"
         },
@@ -301,7 +319,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3071,
           "output_file": "home_view_accountlist_md_80d0d73c.json",
           "type": "in_dom_view"
         },
@@ -312,7 +330,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3071,
           "output_file": "home_view_api_md_9dcc4e60.json",
           "type": "in_dom_view"
         },
@@ -323,7 +341,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3853,
           "output_file": "home_view_chart_md_6c47cd29.json",
           "type": "in_dom_view"
         },
@@ -334,7 +352,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3853,
           "output_file": "home_view_dashboard_md_4b86aa31.json",
           "type": "in_dom_view"
         },
@@ -345,7 +363,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_history_md_a2fb475b.json",
           "type": "in_dom_view"
         },
@@ -356,18 +374,18 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_moresetting_md_7a08b384.json",
           "type": "in_dom_view"
         },
         {
           "url": "https://stage.xtremenext.com/#position",
           "final_url": "https://stage.xtremenext.com/dashboard/",
-          "title": "Dashboard / XtremeNext - position",
+          "title": "Dashboard / XtremeNext - Positions (1)",
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_position_md_e39fffac.json",
           "type": "in_dom_view"
         },
@@ -378,7 +396,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_support_md_9fe37dbf.json",
           "type": "in_dom_view"
         },
@@ -389,7 +407,7 @@
           "viewport": "md",
           "depth": 1,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_md_d714da5d.json",
           "type": "root_page"
         },
@@ -400,7 +418,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_view_dashboard_md_795db24a.json",
           "type": "in_dom_view"
         },
@@ -411,7 +429,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 471,
+          "elements": 472,
           "output_file": "client-portal_view_deposit_md_c30b23b1.json",
           "type": "in_dom_view"
         },
@@ -422,7 +440,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 484,
+          "elements": 501,
           "output_file": "client-portal_view_withdraw_md_4a463bfd.json",
           "type": "in_dom_view"
         },
@@ -433,7 +451,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 385,
+          "elements": 470,
           "output_file": "client-portal_view_internal_transfer_md_e108034d.json",
           "type": "in_dom_view"
         },
@@ -444,7 +462,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 811,
+          "elements": 812,
           "output_file": "client-portal_view_wallet_md_c80235f2.json",
           "type": "in_dom_view"
         },
@@ -455,7 +473,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_copy_trading_md_15d12d7c.json",
           "type": "in_dom_view"
         },
@@ -466,7 +484,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_mam_md_f10713bc.json",
           "type": "in_dom_view"
         },
@@ -477,7 +495,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_pamm_md_94e839be.json",
           "type": "in_dom_view"
         },
@@ -488,7 +506,7 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 306,
+          "elements": 421,
           "output_file": "client-portal_view_refer_earn_md_9e1ff997.json",
           "type": "in_dom_view"
         },
@@ -499,19 +517,20 @@
           "viewport": "md",
           "depth": 2,
           "status": 200,
-          "elements": 234,
+          "elements": 235,
           "output_file": "client-portal_view_settings_md_b6f760b2.json",
           "type": "in_dom_view"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "lg": {
-      "start_time": "2026-09-24T10:38:46.836603+00:00",
-      "end_time": "2026-09-24T10:40:14.384645+00:00",
-      "duration_seconds": 87.55,
+      "start_time": "2026-09-30T10:45:44.777547+00:00",
+      "end_time": "2026-09-30T10:47:26.357102+00:00",
+      "duration_seconds": 101.58,
       "start_url": "https://stage.xtremenext.com/",
       "viewport": "lg",
       "viewport_size": {
@@ -528,6 +547,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 4,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/",
@@ -536,7 +563,7 @@
           "viewport": "lg",
           "depth": 0,
           "status": 200,
-          "elements": 2837,
+          "elements": 2831,
           "output_file": "home_lg_1a7eb30a.json",
           "type": "root_page"
         },
@@ -547,7 +574,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3071,
           "output_file": "home_view_accountlist_lg_22c1156d.json",
           "type": "in_dom_view"
         },
@@ -558,7 +585,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3071,
           "output_file": "home_view_api_lg_9362735d.json",
           "type": "in_dom_view"
         },
@@ -569,7 +596,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3853,
           "output_file": "home_view_chart_lg_041d1d80.json",
           "type": "in_dom_view"
         },
@@ -580,7 +607,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3853,
           "output_file": "home_view_dashboard_lg_04c8d596.json",
           "type": "in_dom_view"
         },
@@ -591,7 +618,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_history_lg_576cb70f.json",
           "type": "in_dom_view"
         },
@@ -602,18 +629,18 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_moresetting_lg_59c7cd16.json",
           "type": "in_dom_view"
         },
         {
           "url": "https://stage.xtremenext.com/#position",
           "final_url": "https://stage.xtremenext.com/dashboard/",
-          "title": "Dashboard / XtremeNext - position",
+          "title": "Dashboard / XtremeNext - Positions (1)",
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_position_lg_78c21229.json",
           "type": "in_dom_view"
         },
@@ -624,7 +651,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6546,
           "output_file": "home_view_support_lg_2b99e230.json",
           "type": "in_dom_view"
         },
@@ -635,7 +662,7 @@
           "viewport": "lg",
           "depth": 1,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_lg_c6d135c8.json",
           "type": "root_page"
         },
@@ -646,7 +673,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_view_dashboard_lg_3ceae697.json",
           "type": "in_dom_view"
         },
@@ -657,7 +684,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 471,
+          "elements": 472,
           "output_file": "client-portal_view_deposit_lg_a4bada1c.json",
           "type": "in_dom_view"
         },
@@ -668,7 +695,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 484,
+          "elements": 501,
           "output_file": "client-portal_view_withdraw_lg_206c577b.json",
           "type": "in_dom_view"
         },
@@ -679,7 +706,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 385,
+          "elements": 470,
           "output_file": "client-portal_view_internal_transfer_lg_2d0a4861.json",
           "type": "in_dom_view"
         },
@@ -690,7 +717,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 811,
+          "elements": 812,
           "output_file": "client-portal_view_wallet_lg_8425c480.json",
           "type": "in_dom_view"
         },
@@ -701,7 +728,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_copy_trading_lg_470fbcba.json",
           "type": "in_dom_view"
         },
@@ -712,7 +739,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_mam_lg_3ccb2284.json",
           "type": "in_dom_view"
         },
@@ -723,7 +750,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_pamm_lg_1acf251d.json",
           "type": "in_dom_view"
         },
@@ -734,7 +761,7 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 306,
+          "elements": 421,
           "output_file": "client-portal_view_refer_earn_lg_c59add37.json",
           "type": "in_dom_view"
         },
@@ -745,19 +772,20 @@
           "viewport": "lg",
           "depth": 2,
           "status": 200,
-          "elements": 234,
+          "elements": 235,
           "output_file": "client-portal_view_settings_lg_9d233901.json",
           "type": "in_dom_view"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "xl": {
-      "start_time": "2026-09-24T10:38:46.834628+00:00",
-      "end_time": "2026-09-24T10:40:21.764746+00:00",
-      "duration_seconds": 94.93,
+      "start_time": "2026-09-30T10:45:44.768756+00:00",
+      "end_time": "2026-09-30T10:47:22.765315+00:00",
+      "duration_seconds": 98.0,
       "start_url": "https://stage.xtremenext.com/",
       "viewport": "xl",
       "viewport_size": {
@@ -774,6 +802,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 2,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/",
@@ -782,7 +818,7 @@
           "viewport": "xl",
           "depth": 0,
           "status": 200,
-          "elements": 2837,
+          "elements": 2827,
           "output_file": "home_xl_b4b2a6da.json",
           "type": "root_page"
         },
@@ -793,7 +829,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3067,
           "output_file": "home_view_accountlist_xl_b08a03e0.json",
           "type": "in_dom_view"
         },
@@ -804,7 +840,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 3601,
+          "elements": 3067,
           "output_file": "home_view_api_xl_f75a93c2.json",
           "type": "in_dom_view"
         },
@@ -815,7 +851,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3849,
           "output_file": "home_view_chart_xl_d594d11f.json",
           "type": "in_dom_view"
         },
@@ -826,7 +862,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 3732,
+          "elements": 3849,
           "output_file": "home_view_dashboard_xl_382a2598.json",
           "type": "in_dom_view"
         },
@@ -837,7 +873,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6542,
           "output_file": "home_view_history_xl_9b74af07.json",
           "type": "in_dom_view"
         },
@@ -848,18 +884,18 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6542,
           "output_file": "home_view_moresetting_xl_877e1f18.json",
           "type": "in_dom_view"
         },
         {
           "url": "https://stage.xtremenext.com/#position",
           "final_url": "https://stage.xtremenext.com/dashboard/",
-          "title": "Dashboard / XtremeNext - Positions (5)",
+          "title": "Dashboard / XtremeNext - Positions (1)",
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6542,
           "output_file": "home_view_position_xl_d3693936.json",
           "type": "in_dom_view"
         },
@@ -870,7 +906,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 6645,
+          "elements": 6542,
           "output_file": "home_view_support_xl_de5ec28c.json",
           "type": "in_dom_view"
         },
@@ -881,7 +917,7 @@
           "viewport": "xl",
           "depth": 1,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_xl_46e60ae9.json",
           "type": "root_page"
         },
@@ -892,7 +928,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_view_dashboard_xl_ce47743d.json",
           "type": "in_dom_view"
         },
@@ -903,7 +939,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 471,
+          "elements": 472,
           "output_file": "client-portal_view_deposit_xl_d76aa3c3.json",
           "type": "in_dom_view"
         },
@@ -914,7 +950,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 484,
+          "elements": 501,
           "output_file": "client-portal_view_withdraw_xl_c73df5b4.json",
           "type": "in_dom_view"
         },
@@ -925,7 +961,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 385,
+          "elements": 470,
           "output_file": "client-portal_view_internal_transfer_xl_3eb1e391.json",
           "type": "in_dom_view"
         },
@@ -936,7 +972,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 811,
+          "elements": 812,
           "output_file": "client-portal_view_wallet_xl_f1845631.json",
           "type": "in_dom_view"
         },
@@ -947,7 +983,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_copy_trading_xl_19ea612a.json",
           "type": "in_dom_view"
         },
@@ -958,7 +994,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_mam_xl_1783b24f.json",
           "type": "in_dom_view"
         },
@@ -969,7 +1005,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_pamm_xl_5a3c7cef.json",
           "type": "in_dom_view"
         },
@@ -980,7 +1016,7 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 306,
+          "elements": 421,
           "output_file": "client-portal_view_refer_earn_xl_6ac90462.json",
           "type": "in_dom_view"
         },
@@ -991,19 +1027,20 @@
           "viewport": "xl",
           "depth": 2,
           "status": 200,
-          "elements": 234,
+          "elements": 235,
           "output_file": "client-portal_view_settings_xl_4bc601c3.json",
           "type": "in_dom_view"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     },
     "2xl": {
-      "start_time": "2026-09-24T10:38:46.835761+00:00",
-      "end_time": "2026-09-24T10:40:21.760330+00:00",
-      "duration_seconds": 94.92,
+      "start_time": "2026-09-30T10:45:44.769792+00:00",
+      "end_time": "2026-09-30T10:47:22.758109+00:00",
+      "duration_seconds": 97.99,
       "start_url": "https://stage.xtremenext.com/",
       "viewport": "2xl",
       "viewport_size": {
@@ -1020,6 +1057,14 @@
       "pages_skipped_depth": 0,
       "pages_skipped_limit": 0,
       "errors_count": 0,
+      "diagnostics_summary": {
+        "total_errors": 0,
+        "console_errors_count": 0,
+        "console_warnings_count": 0,
+        "js_page_errors_count": 0,
+        "failed_requests_count": 0,
+        "http_errors_count": 0
+      },
       "crawled_pages": [
         {
           "url": "https://stage.xtremenext.com/",
@@ -1028,7 +1073,7 @@
           "viewport": "2xl",
           "depth": 0,
           "status": 200,
-          "elements": 2833,
+          "elements": 2831,
           "output_file": "home_2xl_13e593a7.json",
           "type": "root_page"
         },
@@ -1039,7 +1084,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 3597,
+          "elements": 3071,
           "output_file": "home_view_accountlist_2xl_bdd5202d.json",
           "type": "in_dom_view"
         },
@@ -1050,7 +1095,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 3597,
+          "elements": 3071,
           "output_file": "home_view_api_2xl_0bd978c7.json",
           "type": "in_dom_view"
         },
@@ -1061,7 +1106,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 3728,
+          "elements": 3853,
           "output_file": "home_view_chart_2xl_dcda2df0.json",
           "type": "in_dom_view"
         },
@@ -1072,7 +1117,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 3728,
+          "elements": 3853,
           "output_file": "home_view_dashboard_2xl_f52c70bc.json",
           "type": "in_dom_view"
         },
@@ -1083,7 +1128,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 6641,
+          "elements": 6546,
           "output_file": "home_view_history_2xl_fbb5a416.json",
           "type": "in_dom_view"
         },
@@ -1094,7 +1139,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 6641,
+          "elements": 6546,
           "output_file": "home_view_moresetting_2xl_5feb6e4d.json",
           "type": "in_dom_view"
         },
@@ -1105,7 +1150,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 6641,
+          "elements": 6546,
           "output_file": "home_view_position_2xl_4b30eed1.json",
           "type": "in_dom_view"
         },
@@ -1116,7 +1161,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 6641,
+          "elements": 6546,
           "output_file": "home_view_support_2xl_099a22fa.json",
           "type": "in_dom_view"
         },
@@ -1127,7 +1172,7 @@
           "viewport": "2xl",
           "depth": 1,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_2xl_ccea6ed7.json",
           "type": "root_page"
         },
@@ -1138,7 +1183,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 410,
+          "elements": 421,
           "output_file": "client-portal_view_dashboard_2xl_1de4fb2b.json",
           "type": "in_dom_view"
         },
@@ -1149,7 +1194,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 471,
+          "elements": 472,
           "output_file": "client-portal_view_deposit_2xl_ef1a8ac3.json",
           "type": "in_dom_view"
         },
@@ -1160,7 +1205,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 484,
+          "elements": 501,
           "output_file": "client-portal_view_withdraw_2xl_a8378b1b.json",
           "type": "in_dom_view"
         },
@@ -1171,7 +1216,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 385,
+          "elements": 470,
           "output_file": "client-portal_view_internal_transfer_2xl_32a7e4eb.json",
           "type": "in_dom_view"
         },
@@ -1182,7 +1227,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 811,
+          "elements": 812,
           "output_file": "client-portal_view_wallet_2xl_c5468fcd.json",
           "type": "in_dom_view"
         },
@@ -1193,7 +1238,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_copy_trading_2xl_91f8a08f.json",
           "type": "in_dom_view"
         },
@@ -1204,7 +1249,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_mam_2xl_1fd6d315.json",
           "type": "in_dom_view"
         },
@@ -1215,7 +1260,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 475,
+          "elements": 470,
           "output_file": "client-portal_view_pamm_2xl_180452ab.json",
           "type": "in_dom_view"
         },
@@ -1226,7 +1271,7 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 306,
+          "elements": 421,
           "output_file": "client-portal_view_refer_earn_2xl_533f8488.json",
           "type": "in_dom_view"
         },
@@ -1237,14 +1282,15 @@
           "viewport": "2xl",
           "depth": 2,
           "status": 200,
-          "elements": 234,
+          "elements": 235,
           "output_file": "client-portal_view_settings_2xl_0f97dde0.json",
           "type": "in_dom_view"
         }
       ],
       "skipped_non_html": [],
       "skipped_external": [],
-      "errors": []
+      "errors": [],
+      "telemetry_events": []
     }
   }
 }

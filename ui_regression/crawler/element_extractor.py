@@ -112,8 +112,6 @@ async def extract_elements(
 
                 // 4. aria-label
                 const ariaLabel = element.getAttribute("aria-label");
-                // 4. aria-label
-                const ariaLabel = element.getAttribute("aria-label");
                 if (ariaLabel && ariaLabel.trim().length > 0 && ariaLabel.length < 80) {
                     const ariaSelector = `[aria-label="${ariaLabel.trim().replace(/"/g, '\\\\')}"]`;
                     try {

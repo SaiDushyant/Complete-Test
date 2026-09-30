@@ -64,16 +64,57 @@ def find_all_statuses(report_file):
         for page in pages
     )
 
+    summary = data.get("summary", {})
+    telemetry = summary.get("telemetry", {})
+    telemetry_errors = data.get("telemetry_errors", [])
+
     print("=" * 100)
     print(f"STATUS SUMMARY: {report_path.name}")
     print("=" * 100)
 
-    print(f"Total pages: {len(pages)}")
-    print(f"Unique statuses: {len(status_counts)}")
+    print(f"Total pages/views : {len(pages)}")
+    print(f"Unique statuses   : {len(status_counts)}")
     print()
 
     for status, count in status_counts.most_common():
-        print(f"{status}: {count}")
+        print(f"  {status:<22}: {count}")
+
+    if telemetry or telemetry_errors:
+        print()
+        print("-" * 100)
+        print("DIAGNOSTIC TELEMETRY & RUNTIME ERRORS:")
+        print("-" * 100)
+        print(f"  Console Errors (JS)      : {telemetry.get('console_errors_count', 0)}")
+        print(f"  Console Warnings         : {telemetry.get('console_warnings_count', 0)}")
+        print(f"  Uncaught JS Exceptions   : {telemetry.get('js_page_errors_count', 0)}")
+        print(f"  Failed Network Requests  : {telemetry.get('failed_requests_count', 0)}")
+        print(f"  HTTP 4xx/5xx Errors      : {telemetry.get('http_errors_count', 0)}")
+        print(f"  Total Runtime Issues     : {telemetry.get('total_errors', len(telemetry_errors))}")
+
+        if telemetry_errors:
+            print("\n  🚨 SPECIFIC ERROR INCIDENTS:")
+            for idx, err in enumerate(telemetry_errors[:20], 1):
+                kind = err.get("kind", "error")
+                url = err.get("url", "")
+                vp = err.get("viewport", "")
+                detail = err.get("detail", {})
+                vp_str = f" [{vp}]" if vp else ""
+
+                if kind == "console_error":
+                    loc = detail.get("location", {})
+                    loc_str = f" ({loc.get('url', '')}:{loc.get('lineNumber', '')})" if loc and loc.get("url") else ""
+                    print(f"    {idx}. [Console Error]{vp_str} {url}: {detail.get('text', '')}{loc_str}")
+                elif kind == "js_page_error":
+                    print(f"    {idx}. [JS Exception]{vp_str} {url}: {detail.get('error', '')}")
+                elif kind == "network_failed_request":
+                    print(f"    {idx}. [Failed Request]{vp_str} {url}: {detail.get('url', '')} -> {detail.get('failure', '')}")
+                elif kind == "http_error":
+                    print(f"    {idx}. [HTTP Error]{vp_str} {url}: {detail.get('status', '')} {detail.get('status_text', '')} -> {detail.get('url', '')}")
+
+            if len(telemetry_errors) > 20:
+                print(f"    ... and {len(telemetry_errors) - 20} more runtime errors.")
+        else:
+            print("\n  ✅ Zero runtime errors, uncaught exceptions, or network failures recorded.")
 
     print()
     print("=" * 100)
@@ -86,12 +127,19 @@ def find_all_statuses(report_file):
         print("-" * 100)
 
         for page in status_pages:
-            print(f"URL:    {page.get('url')}")
+            vp = page.get("viewport") or ""
+            vp_str = f" [{vp}]" if vp else ""
+            print(f"URL:    {page.get('url')}{vp_str}")
             print(f"Title:  {page.get('title')}")
             print(f"Type:   {page.get('type')}")
             print(f"File:   {page.get('baseline_file')}")
 
             stats = page.get("statistics", {})
+            diag_sum = stats.get("diagnostics_summary", {})
+            c_errs = diag_sum.get("console_errors_count", 0)
+            js_errs = diag_sum.get("js_page_errors_count", 0)
+            net_errs = diag_sum.get("failed_requests_count", 0)
+            http_errs = diag_sum.get("http_errors_count", 0)
 
             print(
                 f"Stats:  "
@@ -99,7 +147,8 @@ def find_all_statuses(report_file):
                 f"live={stats.get('live_element_count', 0)}, "
                 f"modified={stats.get('modified', 0)}, "
                 f"missing={stats.get('missing', 0)}, "
-                f"added={stats.get('added', 0)}"
+                f"added={stats.get('added', 0)} | "
+                f"errors=(Console:{c_errs}, JS:{js_errs}, Net:{net_errs}, HTTP:{http_errs})"
             )
             print("-" * 100)
 

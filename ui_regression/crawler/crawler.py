@@ -41,6 +41,7 @@ from crawler.crawler_config import (
     get_viewport_config,
     parse_viewports,
 )
+from crawler.diagnostics import AsyncPageDiagnostics
 from crawler.element_extractor import extract_elements
 
 
@@ -364,6 +365,9 @@ class Crawler:
         # Download event flag
         self._download_triggered = False
 
+        # Diagnostic telemetry observer (captures console, js, network, and http errors)
+        self.diagnostics = AsyncPageDiagnostics(self.page)
+
         # Metrics and reporting
         self.stats = {
             "start_time": None,
@@ -382,14 +386,44 @@ class Crawler:
             "pages_skipped_depth": 0,
             "pages_skipped_limit": 0,
             "errors_count": 0,
+            "diagnostics_summary": {
+                "total_errors": 0,
+                "console_errors_count": 0,
+                "console_warnings_count": 0,
+                "js_page_errors_count": 0,
+                "failed_requests_count": 0,
+                "http_errors_count": 0,
+            },
             "crawled_pages": [],
             "skipped_non_html": [],
             "skipped_external": [],
             "errors": [],
+            "telemetry_events": [],
         }
 
         # Setup download listener
         self.page.on("download", self._on_download)
+
+    def _record_diagnostics(self, url: str, view_name: str, diag_data: dict):
+        """Aggregate diagnostic errors into crawler stats."""
+        summary = diag_data.get("summary", {})
+        ds = self.stats["diagnostics_summary"]
+        ds["total_errors"] += summary.get("total_errors", 0)
+        ds["console_errors_count"] += summary.get("console_errors_count", 0)
+        ds["console_warnings_count"] += summary.get("console_warnings_count", 0)
+        ds["js_page_errors_count"] += summary.get("js_page_errors_count", 0)
+        ds["failed_requests_count"] += summary.get("failed_requests_count", 0)
+        ds["http_errors_count"] += summary.get("http_errors_count", 0)
+
+        # Collect critical error events
+        for ce in diag_data.get("console_errors", []):
+            self.stats["telemetry_events"].append({"kind": "console_error", "url": url, "view_name": view_name, "viewport": self.viewport, "detail": ce})
+        for pe in diag_data.get("js_page_errors", []):
+            self.stats["telemetry_events"].append({"kind": "js_page_error", "url": url, "view_name": view_name, "viewport": self.viewport, "detail": pe})
+        for fr in diag_data.get("failed_requests", []):
+            self.stats["telemetry_events"].append({"kind": "network_failed_request", "url": url, "view_name": view_name, "viewport": self.viewport, "detail": fr})
+        for he in diag_data.get("http_errors", []):
+            self.stats["telemetry_events"].append({"kind": "http_error", "url": url, "view_name": view_name, "viewport": self.viewport, "detail": he})
 
     def _on_download(self, download):
         """Handler for Playwright download events."""
@@ -479,6 +513,7 @@ class Crawler:
     async def crawl_page(self, url: str, depth: int):
         """Navigate to a single page, validate response, extract DOM, process in-DOM views, and discover new targets."""
         self._download_triggered = False
+        self.diagnostics.set_context(url=url, view_name="", viewport=self.viewport)
 
         response: Response = None
         for attempt in range(2):
@@ -576,6 +611,10 @@ class Crawler:
         # 3. Discover links on root page (excluding in-DOM view names)
         discovered_targets = await extract_safe_navigation_targets(self.page, final_url, in_dom_page_names)
 
+        # Collect diagnostics slice for root page
+        root_diag = self.diagnostics.get_current_slice_and_reset()
+        self._record_diagnostics(url, "", root_diag)
+
         # Save root page JSON
         root_filename = filename_from_url(url, viewport=self.viewport)
         root_filepath = self.output_dir / root_filename
@@ -596,8 +635,10 @@ class Crawler:
             "statistics": {
                 "element_count": len(elements),
                 "link_count": len(discovered_targets),
-                "in_dom_views_count": len(in_dom_views)
+                "in_dom_views_count": len(in_dom_views),
+                "diagnostics_summary": root_diag.get("summary", {})
             },
+            "diagnostics": root_diag,
             "elements": elements,
             "discovered_links": discovered_targets
         }
@@ -609,6 +650,7 @@ class Crawler:
             "page": page_record["page"],
             "elements": elements,
             "statistics": page_record["statistics"],
+            "diagnostics": root_diag,
         }
 
         if self.save_to_disk:
@@ -638,6 +680,7 @@ class Crawler:
                 pname = v["pageName"]
                 view_title = v.get("title") or pname
 
+                self.diagnostics.set_context(url=url, view_name=pname, viewport=self.viewport)
                 print(f"Activating in-DOM view: {pname} [{self.viewport}]...")
                 activated = await self._activate_in_dom_view(v)
                 if not activated:
@@ -653,6 +696,10 @@ class Crawler:
                 # Extract elements in this activated view state
                 view_elements = await extract_elements(self.page)
                 view_links = await extract_safe_navigation_targets(self.page, final_url, in_dom_page_names)
+
+                # Collect diagnostics slice for this in-DOM view
+                view_diag = self.diagnostics.get_current_slice_and_reset()
+                self._record_diagnostics(url, pname, view_diag)
 
                 view_filename = filename_from_url(url, view_suffix=pname, viewport=self.viewport)
                 view_filepath = self.output_dir / view_filename
@@ -672,8 +719,10 @@ class Crawler:
                     },
                     "statistics": {
                         "element_count": len(view_elements),
-                        "link_count": len(view_links)
+                        "link_count": len(view_links),
+                        "diagnostics_summary": view_diag.get("summary", {})
                     },
+                    "diagnostics": view_diag,
                     "elements": view_elements,
                     "discovered_links": view_links
                 }
@@ -685,6 +734,7 @@ class Crawler:
                     "page": view_record["page"],
                     "elements": view_elements,
                     "statistics": view_record["statistics"],
+                    "diagnostics": view_diag,
                 }
 
                 if self.save_to_disk:
@@ -854,6 +904,8 @@ async def crawl_public_auth_pages(
                         continue
 
                     page = await unauth_context.new_page()
+                    page_diag = AsyncPageDiagnostics(page)
+                    page_diag.set_context(url=normalized, view_name="", viewport=vp)
                     print(f"Crawling public auth page [{vp}] ({vp_size['width']}px): {normalized}")
 
                     try:
@@ -891,6 +943,8 @@ async def crawl_public_auth_pages(
                         page_title = await page.title()
                         status_code = response.status if response else 200
 
+                        diag_data = page_diag.get_diagnostics()
+
                         page_filename = filename_from_url(normalized, viewport=vp)
                         page_filepath = output_dir / page_filename
 
@@ -909,7 +963,9 @@ async def crawl_public_auth_pages(
                             "statistics": {
                                 "element_count": len(elements),
                                 "link_count": 0,
+                                "diagnostics_summary": diag_data.get("summary", {})
                             },
+                            "diagnostics": diag_data,
                             "elements": elements,
                         }
 
@@ -919,6 +975,7 @@ async def crawl_public_auth_pages(
                             "page": page_record["page"],
                             "elements": elements,
                             "statistics": page_record["statistics"],
+                            "diagnostics": diag_data,
                         }
 
                         if save_to_disk:
