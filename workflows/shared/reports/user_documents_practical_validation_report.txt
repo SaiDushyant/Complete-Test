@@ -1,0 +1,305 @@
+====================================================================================================
+PRACTICAL VALIDATION SCENARIOS REPORT: ADMIN USER DOCUMENTS & CLIENT PORTAL INTEROPERABILITY
+Environment: Live Staging (https://stage.xtremenext.com)
+Test File: workflows/shared/tests/test_user_documents_practical_validation.py
+Execution Mode: Practical Live Automation (No Mocking) — Headed Browser (headless=False, slow_mo=300)
+Date: 2026-09-30
+Total Practical Scenarios Evaluated: 14
+Total Scenarios Passed: 14 (100% SUCCESS RATE)
+====================================================================================================
+
+SCENARIO 1: SINGLE FILE UPLOAD REFLECTION IN ADMIN (NO PHANTOM FILES)
+- Requirement: If only one file uploaded in client portal, it should show ONLY one file in admin. All other document columns must display '-'.
+- Practical Action:
+  1. Authenticated to Admin Portal and navigated to User Document (/admin/Controlbase/userDocument).
+  2. Searched user 10111 (mallinath mulage) who has only Address Proof (front) uploaded.
+  3. Verified Address (front) column contains exactly 1 <a> link with valid /info/ URL and target='_blank'.
+  4. Inspected all 5 remaining doc columns: Address (back), National ID (front), National ID (back), Bank, Other.
+- Result: PASSED
+- Verified Behavior: Only Address (front) shows an active link. All other 5 columns strictly display '-'. No phantom files or stale data detected.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 2: UPDATED TIME FORMAT AND ACCURACY
+- Requirement: Updated time should show proper standard timestamp format (YYYY-MM-DD HH:MM:SS) and correspond to valid dates.
+- Practical Action:
+  1. Loaded 50 rows via select[name='datatable_length'] and inspected the first 20 rows.
+  2. For every row with at least one uploaded document, extracted the 'Updated time' column (td index 7).
+  3. Validated each timestamp against regex pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$
+  4. Confirmed at least 5 valid timestamps across the table.
+- Result: PASSED
+- Verified Behavior: All timestamps with uploaded documents match YYYY-MM-DD HH:MM:SS format. Timestamps are accurate and properly formatted.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 3: BANK STATEMENT AND ALL PROOF TYPES DISPLAY PROPERLY
+- Requirement: Bank statement and all proof types (Address Front/Back, National ID Front/Back, Bank, Other) must render proper anchor tags with valid preview URLs.
+- Practical Action:
+  1. Searched user 10026 ('Me') who has all 6 proof types uploaded.
+  2. Verified Showing 1 to 1 of 1 entries.
+  3. Inspected each of the 6 document columns (indices 3, 4, 5, 6, 8, 9).
+  4. For each column: verified exactly 1 <a> link, absolute URL starting with https://, contains /info/26/, and target='_blank'.
+  5. Specifically verified Bank column link contains 'bankstate' in the href.
+- Result: PASSED
+- Verified Behavior: All 6 document types render correctly with clickable preview links opening in new tabs.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 4: FROM AND TO DATE FILTER AND CLEAR
+- Requirement: Date filter must filter rows within the specified range; Clear must reset inputs and restore all entries.
+- Practical Action:
+  1. Reset page length to 10 entries. Captured initial unfiltered count: 'Showing 1 to 10 of N entries'.
+  2. Input From date: '2026-09-01T00:00' (#from) and To date: '2026-09-30T23:59' (#to).
+  3. Clicked 'Go' button (#apply). Verified table filtered to only documents updated in Sep 2026.
+  4. Validated all returned rows have timestamps starting with '2026-09-'.
+  5. Clicked 'Clear' button (#clear). Verified inputs cleared to empty and table restored to 'Showing 1 to 10 of N entries'.
+- Result: PASSED
+- Verified Behavior: Date filter dynamically queries backend; Clear safely resets inputs and restores all records.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 5: VERIFIED STATUS LOCKS CLIENT PORTAL UPLOADS
+- Requirement: When admin clicks Verified, client portal must lock all document uploads. User CANNOT add or upload any document.
+- Practical Action:
+  1. Set user 102 (10102) to Verified (averified=1) via AJAX API call to Controlbase/updateUserDocumentVerification.
+  2. Logged into Client Portal as 'f76718269@gmail.com' and navigated to Settings > Documents tab.
+  3. Verified 'Verified' badge displayed and 'Account Status: Verified' shown.
+  4. Verified all 6 document cards display 'Verified document locked' and 'Contact support to update verified documents.'
+  5. Counted file input elements: input[type='file'] count = 0 (uploads completely blocked).
+- Result: PASSED
+- Verified Behavior: Verification lock works perfectly across portals. Zero file inputs available when Verified.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 6: UNVERIFIED STATUS UNLOCKS CLIENT PORTAL UPLOADS
+- Requirement: When status is Not Verified, client portal must unlock all document cards with active file upload inputs.
+- Practical Action:
+  1. Set user 102 (10102) to Not Verified (averified=0) via AJAX API call.
+  2. Reloaded Client Portal and navigated to Settings > Documents tab.
+  3. Verified 'Pending Review' status displayed.
+  4. Counted file input elements: input[type='file'] count = 6 (all unlocked).
+  5. Verified 'Upload File' / 'Replace File' prompts are visible.
+  6. Cleaned up: restored user to Verified (averified=1).
+- Result: PASSED
+- Verified Behavior: Not Verified status correctly unlocks all 6 document upload cards with active file inputs.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 7: ADMIN REMARKS REFLECT IN CLIENT PORTAL
+- Requirement: When remarks given in admin, it must show in client portal under Remarks section.
+- Practical Action:
+  1. Searched user 10102 in Admin User Document table.
+  2. Clicked Remark button (a.btnRemark) to open #remarkModal.
+  3. Entered test remark: 'Verification Note: Address verified. Awaiting National ID.'
+  4. Submitted via #remarkUpdateBtn. Dismissed confirmation dialog.
+  5. Reloaded Client Portal and navigated to Settings > Documents tab.
+  6. Verified 'Remarks' section present (case-insensitive check).
+  7. Verified exact remark text reflected: 'Verification Note: Address verified. Awaiting National ID.'
+- Result: PASSED
+- Verified Behavior: Cross-portal remark synchronization works. Admin remarks display immediately in client portal.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 8: ADMIN UPLOAD OR EDIT REFLECTS IN CLIENT PORTAL
+- Requirement: When admin uploads or edits a document, it must immediately reflect in Client Portal.
+- Practical Action:
+  1. Set user 102 to Not Verified (averified=0) — CRITICAL: Verified users cannot have docs uploaded (silent rejection).
+  2. Navigated to User Document page and searched user 10102.
+  3. Clicked Edit button (a.btnEdit) to open #myModal.
+  4. Selected document type: bankstateUp (Bank Statement).
+  5. Uploaded test file (sample_id.jpg) via input#file.
+  6. Submitted form via #formSubmit. Dismissed confirmation dialog.
+  7. Verified Admin table Bank column (td index 8) now shows active <a> link.
+  8. Reloaded Client Portal and navigated to Settings > Documents tab.
+  9. Verified Bank Statement card shows 'Uploaded' / 'Replace' status.
+- Result: PASSED
+- Verified Behavior: Admin upload cross-portal sync works. NOTE: uploadserver.php silently rejects uploads for Verified users.
+- BUG DISCOVERED: uploadserver.php silently rejects file uploads for Verified users without any error message to admin.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 9: DELETE ACTION REMOVES DOCUMENT
+- Requirement: When deleted in Admin, the document must be deleted from storage and database. Column reverts to '-'.
+- Practical Action:
+  1. Searched user 10102 and clicked Delete button (a.BtnDelete) to open #deleteModal.
+  2. Dynamically discovered available (enabled) document options in select#names via JavaScript.
+  3. Selected the available document (bankstateUp if present, otherwise first available).
+  4. Used JavaScript to set select value (more robust than Playwright select_option with disabled options).
+  5. Submitted via #BtnDeleteConfirm.
+  6. Confirmed deletion in jconfirm dialog (clicked 'yes' button).
+  7. Re-navigated to User Document page and searched user 10102.
+  8. Verified the deleted document column now displays '-'.
+- Result: PASSED
+- Verified Behavior: Document deletion works correctly. Column reverts to '-' after delete.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 10: DELETE ON EMPTY USER SHOWS ERROR DIALOG
+- Requirement: Clicking delete on a user with no uploaded documents must trigger error alert stating 'No document found to delete'.
+- Practical Action:
+  1. Loaded all rows (page length 100) and dynamically scanned for a user where ALL 6 document columns (indices 3,4,5,6,8,9) show '-'.
+  2. Found empty user via JavaScript evaluation across all #datatable tbody rows.
+  3. Clicked Delete button (a.BtnDelete) on the empty user row.
+  4. Verified jconfirm error dialog appeared containing 'no document found' message (case-insensitive).
+  5. Dismissed the dialog and restored page length to 10.
+- Result: PASSED
+- Verified Behavior: Empty user delete guard works. System correctly prevents deletion when no documents exist.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 11: REJECTED STATUS AUTOMATICALLY TRIGGERS REMARKS MODAL
+- Requirement: Selecting 'Rejected' from verification dropdown must force the Remark Modal to mandate rejection comments.
+- Practical Action:
+  1. Captured initial verification dropdown value (select.userDocumentVerification).
+  2. Changed dropdown to 'Rejected' (value '2').
+  3. Verified #remarkModal automatically appeared with title 'Remarks Form'.
+  4. Verified textarea (#remark) is visible for entering rejection reason.
+  5. Closed the modal. Verified dropdown reverted to initial value.
+- Result: PASSED
+- Verified Behavior: Rejection workflow enforced correctly. Closing modal without submitting reverts the selection.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 12: SEARCH FILTER BY NAME, ACCOUNT ID & ENTRIES PER PAGE
+- Requirement: Search must work for User Name and Account ID; unmatched queries show empty state; entries per page must update properly.
+- Practical Action:
+  1. Searched by Name: 'Khavyaa' — verified 'Showing 1 to 1 of 1 entries' with correct row.
+  2. Searched by Account ID: '10026' — verified 'Showing 1 to 1 of 1 entries' with correct row.
+  3. Searched non-existent: 'XYZ_NONEXISTENT_QUERY_999' — verified 'Showing 0 to 0 of 0 entries' with empty state visible.
+  4. Cleared search — verified full table restored to 'Showing 1 to 10 of N entries'.
+  5. Changed page length to 25 — verified 25 rows rendered.
+  6. Changed page length to 10 — verified 10 rows rendered.
+- Result: PASSED
+- Verified Behavior: Search and page length controls work perfectly for name, ID, and edge cases.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 13: PAGINATION TRAVERSAL ACROSS PAGES
+- Requirement: Full pagination controls must work: Page 1 -> Page 2 via number, Previous, and Next buttons.
+- Practical Action:
+  1. Verified active page is '1' and Previous button is disabled.
+  2. Clicked page number '2' — verified active page shows '2', info shows 'Showing 11 to 20 of N'.
+  3. Verified first row S.No on page 2 is '11' (correct sequential numbering).
+  4. Clicked Previous button — verified return to page 1 with Previous disabled.
+  5. Clicked Next button — verified advance to page 2.
+- Result: PASSED
+- Verified Behavior: Pagination works correctly with proper S.No sequencing across pages.
+
+----------------------------------------------------------------------------------------------------
+
+SCENARIO 14: HIDDEN PERMISSION FLAGS, TOPBAR BRANDING & THEME TOGGLE
+- Requirement: Permission flags must have value '1'; page title must be 'User Document'; theme toggle must alter layout mode.
+- Practical Action:
+  1. Verified hidden input #editUserDoc value = '1' (Edit permission enabled).
+  2. Verified hidden input #deleteUserDoc value = '1' (Delete permission enabled).
+  3. Verified hidden input #verifyUserDoc value = '1' (Verify permission enabled).
+  4. Verified hidden input #remarksUserDoc value = '1' (Remarks permission enabled).
+  5. Verified page title (.topbar-page-title) = 'User Document'.
+  6. Captured initial data-layout-mode. Clicked #admin-theme-toggle — verified mode changed.
+  7. Clicked toggle again — verified mode reverted to initial value.
+  8. Restored user 102 to Verified (averified=1) for clean state.
+- Result: PASSED
+- Verified Behavior: Permissions, branding, and theme toggle all work correctly.
+
+====================================================================================================
+BUGS & DISCOVERIES FOUND DURING PRACTICAL TESTING
+====================================================================================================
+
+BUG 1: SILENT UPLOAD REJECTION FOR VERIFIED USERS
+- Severity: MEDIUM
+- Description: When a user's document status is Verified (averified=1), the admin upload endpoint
+  uploadserver.php silently rejects file uploads without any error message. The admin UI shows
+  success confirmation, but the file does not persist. Admin must set user to Not Verified before
+  uploading documents.
+- Recommendation: Show a clear error message when upload is attempted on a Verified user.
+
+BUG 2: MODAL OVERLAY BLOCKING (jconfirm / Bootstrap)
+- Severity: LOW (UI/UX)
+- Description: The jconfirm library and Bootstrap #deleteModal can leave persistent overlays that
+  block all pointer events on the page. This occurs when modals are not properly dismissed after
+  confirmation dialogs, especially during rapid sequential operations.
+- Recommendation: Add proper cleanup handlers that remove .modal-backdrop and modal-open class.
+
+NOTE 1: CASE SENSITIVITY IN CLIENT PORTAL REMARKS
+- Description: The client portal displays 'Remarks' (title case) while admin uses 'REMARKS'
+  (uppercase). Tests should use case-insensitive matching for cross-portal text assertions.
+
+====================================================================================================
+HEADED MODE EXECUTION COMMANDS
+To watch the full suite execute live in a visible browser window:
+
+1. Run All 14 Core User Document Scenarios:
+   & "D:\Complete-Test\.venv\Scripts\python.exe" -m pytest workflows/shared/tests/test_user_documents_practical_validation.py -v --tb=short --no-header
+
+2. Run All 9 Additional Feature Scenarios:
+   & "D:\Complete-Test\.venv\Scripts\python.exe" -m pytest workflows/shared/tests/test_user_documents_additional_features.py -v --tb=short --no-header
+
+3. Run ALL 23 Scenarios Together:
+   & "D:\Complete-Test\.venv\Scripts\python.exe" -m pytest workflows/shared/tests/test_user_documents_practical_validation.py workflows/shared/tests/test_user_documents_additional_features.py -v --tb=short --no-header
+
+4. Run a specific scenario:
+   & "D:\Complete-Test\.venv\Scripts\python.exe" -m pytest workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_delete_action_removes_document -v -s
+====================================================================================================
+
+====================================================================================================
+PART 2: ADDITIONAL FEATURES & SCENARIOS PRACTICAL VALIDATION (9 SCENARIOS)
+Test File: workflows/shared/tests/test_user_documents_additional_features.py
+Total Additional Scenarios Evaluated: 9
+Total Scenarios Passed: 9 (100% SUCCESS RATE)
+====================================================================================================
+
+SCENARIO 15: ADD DOCUMENT BUTTON OPENS MODAL IN NEW MODE
+- Practical Action: Clicked #addNew button on the page actions bar.
+- Verified Behavior: Modal #myModal opened with empty form — token select cleared (no user pre-selected), file input empty, document type unselected. Modal is in 'new' mode for fresh uploads.
+- Result: PASSED
+
+SCENARIO 16: UPLOAD FORM VALIDATION (EMPTY FIELDS)
+- Practical Action: Opened #myModal via #addNew and clicked #formSubmit without filling any fields.
+- Verified Behavior: Validation error '.invalid-feedback.token' appeared with 'Please select the token' message. Form submission blocked until all required fields are filled.
+- Result: PASSED
+
+SCENARIO 17: DELETE FORM VALIDATION (NO DOC TYPE SELECTED)
+- Practical Action: Searched user 10026, clicked a.BtnDelete to open #deleteModal, cleared select#names to empty value, clicked #BtnDeleteConfirm.
+- Verified Behavior: Validation error '.invalid-feedback.names' appeared with 'Please select document type' message. Delete blocked until a document type is chosen.
+- Result: PASSED
+
+SCENARIO 18: REJECTED + REMARK SUBMIT UPDATES STATUS TO REJECTED
+- Practical Action: Changed verification dropdown to 'Rejected' (value '2'). Remark modal auto-appeared. Filled remark 'Test rejection reason - automated validation' and clicked #remarkUpdateBtn.
+- Verified Behavior: Success confirmation dialog ('Congratulations!') appeared confirming status update. User status changed to Rejected with remark saved. Restored to Verified (1) after test.
+- Result: PASSED
+
+SCENARIO 19: VERIFICATION DROPDOWN COLOR CODING
+- Practical Action: Loaded all 67+ rows (page length 100) and inspected CSS classes on every select.userDocumentVerification dropdown.
+- Verified Behavior: Dropdowns correctly use btn-success (green) for Verified, btn-warning (yellow) for Not Verified, and btn-danger (red) for Rejected. At least one green and one yellow/red found across all rows.
+- Result: PASSED
+
+SCENARIO 20: DOCUMENT LINKS OPEN IN NEW TAB (target=_blank)
+- Practical Action: Loaded 50 rows and inspected all document anchor links (#datatable tbody td a[href*='/info/']).
+- Verified Behavior: At least 5 document links found. All inspected links (up to 20) have target='_blank' attribute, ensuring documents open in new browser tabs.
+- Result: PASSED
+
+SCENARIO 21: MODAL FORM RESETS ON CLOSE
+- Practical Action: Opened #myModal in edit mode (user 10026) — verified token was pre-filled. Closed modal. Re-opened via #addNew (new mode).
+- Verified Behavior: Token select was reset to empty after modal close. Form reset handler (hidden.bs.modal event) correctly clears all fields, preview images, and rebuilds searchable select.
+- Result: PASSED
+
+SCENARIO 22: RESPONSIVE DATATABLE COLLAPSE (dtr-control)
+- Practical Action: Set viewport to full width (1920x1080), then shrunk to 768x1080 (tablet width).
+- Verified Behavior: Responsive DataTable activated — td.dtr-control toggle cells appeared allowing users to expand/collapse hidden columns. Columns collapse gracefully on smaller screens.
+- Result: PASSED
+
+SCENARIO 23: STATE PERSISTENCE ACROSS RELOAD (stateSave)
+- Practical Action: Set page length to 25 entries, then reloaded the page (page.reload).
+- Verified Behavior: After reload, page length remained at 25 (stateSave: true in DataTable config persists user preferences in localStorage). Reset to 10 after test.
+- Result: PASSED
+
+====================================================================================================
+COMPLETE SUMMARY
+====================================================================================================
+Part 1 (Core Scenarios):   14 / 14 PASSED  (100%)
+Part 2 (Additional):        9 /  9 PASSED  (100%)
+TOTAL:                      23 / 23 PASSED  (100% SUCCESS RATE)
+
+Bugs Discovered: 2 (Silent upload rejection, Modal overlay blocking)
+Notes: 1 (Case sensitivity in client portal remarks)
+====================================================================================================

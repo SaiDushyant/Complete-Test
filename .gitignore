@@ -83,5 +83,7 @@ Thumbs.db
 # SCRATCH & TEMPORARY SCRIPTS
 # ==============================================================================
 workflows/admin_portal/scratch/
+workflows/shared/scratch/
+workflows/shared/tests/scratch_*.py
 scripts/diag_modal_close.py
 
