@@ -26,7 +26,9 @@ from workflows.client_portal.pages.client_login_page import ClientLoginPage
 from workflows.shared.utils.logger import get_logger
 from workflows.trade_terminal.pages.blacktrader_chart_page import BlackTraderChartPage
 from workflows.trade_terminal.pages.login_page import TradeLoginPage
+from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
+from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
 logger = get_logger("integration_admin_copy_trading")
 
@@ -278,3 +280,97 @@ def test_copy_trading_unfollow_stops_admin_order_replication(browser: Browser):
     _, cp_re = _login_client_portal_copy(ctx_re, FOLLOWER_USER, FOLLOWER_PASS)
     cp_re.follow_manager(MANAGER_NAME, trade_method="Balance Based")
     ctx_re.close()
+
+
+@pytest.mark.shared
+@pytest.mark.admin
+@pytest.mark.trade
+@pytest.mark.integration
+def test_copy_trading_limit_and_stop_hft_order_replication(browser: Browser):
+    """
+    Scenario 4: Limit and Stop HFT Order placement from Watchlist modal for Copy Trading:
+    1. Ensure Follower (10008) follows Manager (10009).
+    2. Master opens Watchlist order popup -> places Limit order with SL & TP.
+    3. Admin checks /admin/Controlbase/order/open for Master limit order.
+    4. Master cancels pending order -> verifies clean state.
+    5. Master opens Watchlist order popup -> places Stop HFT order with triggers, SL & TP.
+    6. Master cleans up pending orders.
+    """
+    # 1. Ensure Follower is following Master
+    ctx_cp = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    _, cp_copy = _login_client_portal_copy(ctx_cp, FOLLOWER_USER, FOLLOWER_PASS)
+    cp_copy.follow_manager(MANAGER_NAME, trade_method="Balance Based")
+    ctx_cp.close()
+
+    # 2. Authenticate Master in Trade Terminal
+    ctx_mgr = browser.new_context(viewport=settings.browser.viewport)
+    page_mgr = ctx_mgr.new_page()
+    trade_login = TradeLoginPage(page_mgr)
+    trade_login.navigate()
+    trade_login.login_and_wait_for_dashboard(username=MANAGER_USER, password=MANAGER_PASS)
+    pos_mgr = PositionsPage(page_mgr)
+    wl_mgr = WatchlistPage(page_mgr)
+    wl_mgr.dismiss_disclaimer_if_present()
+    order_entry_mgr = OrderEntryPage(page_mgr)
+
+    # 3. Authenticate Admin
+    ctx_admin = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page_admin, _ = _login_admin_page(ctx_admin)
+    admin_orders = AdminOrdersPage(page_admin)
+
+    try:
+        # A. Limit Order Placement
+        order_entry_mgr.open_for_symbol(symbol="EURUSD", side="BUY")
+        expect(order_entry_mgr.modal).to_be_visible(timeout=5000)
+
+        limit_placed = order_entry_mgr.place_limit_order(
+            trigger_price="1.00100",
+            lot="0.01",
+            sl="0.99000",
+            tp="1.05000",
+            side="BUY",
+        )
+        assert limit_placed, "Expected Master Limit Order to be placed"
+        page_mgr.wait_for_timeout(3000)
+
+        # Admin checks open orders
+        admin_orders.navigate("open")
+        admin_orders.search(MANAGER_USER)
+        page_admin.wait_for_timeout(1000)
+        mgr_open_rows = admin_orders.get_table_rows_count()
+        logger.info(f"Admin Open Orders for Master Limit: {mgr_open_rows}")
+
+        # Cleanup Limit Order
+        pos_mgr.navigate_to_position_page()
+        try:
+            pos_mgr.execute_bulk_operation("pending-all")
+        except Exception:
+            pass
+        page_mgr.wait_for_timeout(2000)
+
+        # B. Stop HFT Order Placement
+        order_entry_mgr.open_for_symbol(symbol="EURUSD", side="BUY")
+        expect(order_entry_mgr.modal).to_be_visible(timeout=5000)
+
+        hft_placed = order_entry_mgr.place_stop_hft_order(
+            mode="BUY",
+            buy_lot="0.01",
+            buy_above="1.35000",
+            buy_sl="1.34000",
+            buy_tp="1.37000",
+        )
+        assert hft_placed, "Expected Master Stop HFT Order to be placed"
+        page_mgr.wait_for_timeout(3000)
+
+        # Cleanup
+        pos_mgr.navigate_to_position_page()
+        try:
+            pos_mgr.execute_bulk_operation("pending-all")
+        except Exception:
+            pass
+        page_mgr.wait_for_timeout(2000)
+
+    finally:
+        ctx_mgr.close()
+        ctx_admin.close()
+

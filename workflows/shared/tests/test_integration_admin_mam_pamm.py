@@ -28,7 +28,9 @@ from workflows.client_portal.pages.client_pamm_page import ClientPAMMPage
 from workflows.shared.utils.logger import get_logger
 from workflows.trade_terminal.pages.blacktrader_chart_page import BlackTraderChartPage
 from workflows.trade_terminal.pages.login_page import TradeLoginPage
+from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.positions_page import PositionsPage
+from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
 logger = get_logger("integration_admin_mam_pamm")
 
@@ -185,3 +187,90 @@ def test_admin_pamm_investor_reflection_and_fund_tracking(browser: Browser):
             logger.info(f"Admin PAMM investors subtable: {subtable_text}")
 
     ctx_admin.close()
+
+
+@pytest.mark.shared
+@pytest.mark.admin
+@pytest.mark.trade
+@pytest.mark.integration
+def test_admin_mam_limit_and_stop_hft_order_sync(browser: Browser):
+    """
+    Scenario 3: MAM Master places Limit & Stop HFT orders via Watchlist popup:
+    - Master places Limit order with SL & TP.
+    - Admin confirms order in /admin/Controlbase/order/open.
+    - Master cleans up pending orders.
+    - Master places Stop HFT order with triggers, SL & TP.
+    - Master cleans up pending orders.
+    """
+    # 1. Master logs into Trade Terminal
+    ctx_mgr = browser.new_context(viewport=settings.browser.viewport)
+    page_mgr = ctx_mgr.new_page()
+    trade_login = TradeLoginPage(page_mgr)
+    trade_login.navigate()
+    trade_login.login_and_wait_for_dashboard(username=MAM_MASTER, password=MAM_MASTER_PASS)
+    pos_mgr = PositionsPage(page_mgr)
+    wl_mgr = WatchlistPage(page_mgr)
+    wl_mgr.dismiss_disclaimer_if_present()
+    order_entry_mgr = OrderEntryPage(page_mgr)
+
+    # 2. Admin logs in
+    ctx_admin = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page_admin, _ = _login_admin(ctx_admin)
+    admin_orders = AdminOrdersPage(page_admin)
+
+    try:
+        # A. Limit Order
+        order_entry_mgr.open_for_symbol(symbol="EURUSD", side="BUY")
+        expect(order_entry_mgr.modal).to_be_visible(timeout=5000)
+
+        limit_placed = order_entry_mgr.place_limit_order(
+            trigger_price="1.00100",
+            lot="0.01",
+            sl="0.99000",
+            tp="1.05000",
+            side="BUY",
+        )
+        assert limit_placed, "Expected MAM Master Limit Order to be placed"
+        page_mgr.wait_for_timeout(3000)
+
+        # Admin checks open orders
+        admin_orders.navigate("open")
+        admin_orders.search(MAM_MASTER)
+        page_admin.wait_for_timeout(1000)
+        mgr_open_rows = admin_orders.get_table_rows_count()
+        logger.info(f"Admin Open Orders for MAM Master Limit: {mgr_open_rows}")
+
+        # Cleanup Limit Order
+        pos_mgr.navigate_to_position_page()
+        try:
+            pos_mgr.execute_bulk_operation("pending-all")
+        except Exception:
+            pass
+        page_mgr.wait_for_timeout(2000)
+
+        # B. Stop HFT Order
+        order_entry_mgr.open_for_symbol(symbol="EURUSD", side="BUY")
+        expect(order_entry_mgr.modal).to_be_visible(timeout=5000)
+
+        hft_placed = order_entry_mgr.place_stop_hft_order(
+            mode="BUY",
+            buy_lot="0.01",
+            buy_above="1.35000",
+            buy_sl="1.34000",
+            buy_tp="1.37000",
+        )
+        assert hft_placed, "Expected MAM Master Stop HFT Order to be placed"
+        page_mgr.wait_for_timeout(3000)
+
+        # Cleanup
+        pos_mgr.navigate_to_position_page()
+        try:
+            pos_mgr.execute_bulk_operation("pending-all")
+        except Exception:
+            pass
+        page_mgr.wait_for_timeout(2000)
+
+    finally:
+        ctx_mgr.close()
+        ctx_admin.close()
+

@@ -23,6 +23,7 @@ from workflows.shared.assertions.assert_helpers import (
     assert_url_contains,
 )
 from workflows.trade_terminal.pages.chart_page import TradingChartPage
+from workflows.trade_terminal.pages.order_entry_page import OrderEntryPage
 from workflows.trade_terminal.pages.trading_dashboard_page import TradingDashboardPage
 from workflows.trade_terminal.pages.watchlist_page import WatchlistPage
 
@@ -360,4 +361,49 @@ def test_watchlist_open_chart_for_symbol_workflow(
     assert trading_chart_page.is_chart_nav_active(), "Expected sidebar Chart icon to be active."
     assert trading_chart_page.is_chart_pane_visible(), "Expected chart pane (tv_chart_container) to be visible."
     expect(trading_chart_page.tv_chart_container).to_be_visible()
+
+
+@pytest.mark.trade
+@pytest.mark.regression
+def test_watchlist_order_entry_market_limit_stop_hft_modals(
+    watchlist_page: WatchlistPage,
+    trading_dashboard_page: TradingDashboardPage,
+):
+    """
+    Verify that clicking Buy/Sell on a watchlist symbol row opens the Order Entry popup,
+    and all order type tabs (Market, Limit, Stop HFT) and input controls
+    (Lot, Stop Loss, Take Profit, Trigger Price, Stop HFT parameters) are functional.
+    """
+    watchlist_page.navigate()
+    assert_url_contains(watchlist_page.page, "/dashboard", timeout=15000)
+    watchlist_page.wait_for_quotes_loaded(timeout=10000)
+
+    order_entry = OrderEntryPage(watchlist_page.page)
+
+    # 1. Open popup for EURUSD BUY
+    order_entry.open_for_symbol("EURUSD", side="BUY")
+    expect(order_entry.modal).to_be_visible(timeout=5000)
+
+    # 2. Verify Market tab inputs
+    expect(order_entry.market_tab).to_be_visible()
+    expect(order_entry.market_lot_input).to_be_visible()
+    expect(order_entry.market_sl_input).to_be_visible()
+    expect(order_entry.market_tp_input).to_be_visible()
+
+    # 3. Switch to Limit tab and verify inputs
+    expect(order_entry.limit_tab).to_be_visible()
+    order_entry.limit_tab.click()
+    watchlist_page.page.wait_for_timeout(300)
+    expect(order_entry.limit_trigger_input).to_be_visible()
+
+    # 4. Switch to Stop HFT tab and verify inputs
+    expect(order_entry.stop_hft_tab).to_be_visible()
+    order_entry.stop_hft_tab.click()
+    watchlist_page.page.wait_for_timeout(300)
+    expect(order_entry.hft_buy_above_input).to_be_visible()
+
+    # 5. Safely close modal
+    order_entry.close_modal()
+    expect(order_entry.modal).not_to_be_visible(timeout=5000)
+
 
