@@ -330,3 +330,19 @@ class UserManagementPage(BasePage):
         if len(cells) > 28:
             return cells[28].inner_text().strip()
         return ""
+
+    def get_user_refer_by(self, email: str) -> str:
+        """Return the 'Refer by' (column 15) code for the user row."""
+        row = self.get_user_row(email)
+        cells = row.locator("td").all()
+        if len(cells) > 15:
+            return cells[15].inner_text().strip()
+        return ""
+
+    def get_user_ref_id(self, email: str) -> str:
+        """Return the 'Ref ID' (column 14) code for the user row."""
+        row = self.get_user_row(email)
+        cells = row.locator("td").all()
+        if len(cells) > 14:
+            return cells[14].inner_text().strip()
+        return ""
