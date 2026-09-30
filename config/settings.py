@@ -242,11 +242,16 @@ class Settings:
         )
 
         # 6. Client Portal Settings
-        client_url = (
+        raw_client_url = (
             os.getenv("CLIENT_PORTAL_URL")
             or os.getenv("BASELINE_URL")
             or os.getenv("BASE_URL", "https://stage.xtremenext.com/")
         )
+        if raw_client_url.rstrip("/").endswith("/client-portal"):
+            client_url = raw_client_url.rstrip("/")[:-len("/client-portal")]
+        else:
+            client_url = raw_client_url.rstrip("/")
+
         client_username = (
             os.getenv("CLIENT_USERNAME")
             or os.getenv("BASELINE_TEST_USER_EMAIL")
@@ -265,7 +270,7 @@ class Settings:
             base_url=client_url,
             username=client_username,
             password=client_password,
-            login_url=os.getenv("CLIENT_LOGIN_URL", client_url),
+            login_url=os.getenv("CLIENT_LOGIN_URL", f"{client_url}/login"),
             post_login_url_pattern=os.getenv("CLIENT_POST_LOGIN_URL_PATTERN", "**/dashboard**"),
             auth_state_path=client_auth_state,
         )
