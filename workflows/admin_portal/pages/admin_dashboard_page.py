@@ -5,7 +5,7 @@ Maintained by Developer 2 (Admin Portal Owner).
 
 from __future__ import annotations
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from config.settings import settings
 from workflows.admin_portal.pages.components.admin_sidebar import AdminSidebarComponent
