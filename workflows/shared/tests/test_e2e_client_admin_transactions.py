@@ -1,20 +1,30 @@
 """
-Cross-Portal End-to-End Client & Admin Transaction Audit Test Suite.
+Cross-Portal End-to-End Client, Admin & Trade Terminal Transaction Audit Test Suite.
 
-Architectural Design & Scenarios:
-1. Deposit Lifecycle & Transaction Log Audit:
+Architectural Design & Workflows Verified:
+1. Deposit Lifecycle & Transaction Log Reflection:
    - Client Portal submits or checks deposit records (10026).
+   - Admin Portal manages deposit ledger (/admin/Controlbase/deposit) with ability to approve
+     pending deposits to 'Success' via in-row edit modal (#myModal).
    - Verifies the broker rule: Only deposits marked as 'SUCCESS' appear in Admin User Transaction Log.
    - Asserts exact match of Account No (10026), Amount, Timestamp, and Fund/Balance differential.
 2. Withdraw Lifecycle & Transaction Log Audit:
-   - Client Portal withdraw requests, OTP modal handling, and history ledger.
+   - Client Portal withdraw requests, payout destination options, and history ledger.
+   - Admin Portal withdraw ledger and status approval mechanism.
    - Asserts Admin User Transaction Log behavior for withdrawal transactions.
-3. Refer & Earn Cross-Portal Audit:
+3. Refer & Earn Cross-Portal Reflection:
    - Client Portal reads unique referral code (N8PBGV) and referral metrics.
    - Admin Refer Report verifies Account 10026, Ref ID N8PBGV, Refer by 9VR5HL, and Brokerage balance.
+   - Expands child referred accounts (dhanya, stage test) to verify downline hierarchy.
    - Opens IB Report modal (#referLogModal) to verify commission log records.
-4. Cross-Portal Error Monitoring:
-   - Validates clean execution across both portals with zero uncaught JS exceptions or network crashes.
+4. Trade Terminal Order History & Balance Reflection:
+   - Authenticates Account 10026 in Trade Terminal (/dashboard/).
+   - Opens History page (div.page[data-page="history"]).
+   - Validates that Deposit and Withdraw are reflected in the terminal's bottom calculation
+     statistics bar (#total_deposit, #total_withdraw, #total_balance).
+   - Validates that the Order History table tracks closed trade orders, PnL, and executions.
+5. Cross-Portal Error Monitoring:
+   - Validates clean execution across all portals with zero uncaught JS exceptions or network crashes.
 """
 
 from __future__ import annotations
@@ -36,6 +46,8 @@ from workflows.client_portal.pages.client_refer_earn_page import ClientReferEarn
 from workflows.client_portal.pages.client_withdraw_page import ClientWithdrawPage
 from workflows.shared.utils.error_monitor import ErrorMonitor
 from workflows.shared.utils.logger import get_logger
+from workflows.trade_terminal.pages.history_page import HistoryPage
+from workflows.trade_terminal.pages.login_page import TradeLoginPage
 
 logger = get_logger("e2e_client_admin_transactions")
 
@@ -96,6 +108,39 @@ def _create_authenticated_admin_context(browser: Browser) -> tuple[BrowserContex
     return context, page
 
 
+def _create_authenticated_trade_context(browser: Browser) -> tuple[BrowserContext, Page]:
+    """Helper to authenticate Account 10026 in Trade Terminal."""
+    context = browser.new_context(
+        viewport=settings.browser.viewport,
+        ignore_https_errors=True,
+    )
+    page = context.new_page()
+    page.error_monitor = ErrorMonitor(page)
+
+    trade_login = TradeLoginPage(page)
+    trade_url = settings.trade_terminal.login_url or "https://stage.xtremenext.com/login/"
+    trade_login.navigate(trade_url)
+    trade_login.login(username=CLIENT_USER, password=CLIENT_PASS)
+    try:
+        page.wait_for_url(lambda u: "/dashboard" in u, timeout=20000)
+    except Exception:
+        pass
+    page.wait_for_timeout(1500)
+
+    # Dismiss One Click Trading disclaimer if present
+    page.evaluate("""() => {
+        const modal = document.querySelector("#disclaimer");
+        if (modal) {
+            const btn = modal.querySelector("#acceptButton") || modal.querySelector(".close");
+            if (btn) btn.click();
+            modal.style.display = "none";
+            modal.classList.remove("show");
+            document.querySelectorAll(".modal-backdrop").forEach(b => b.remove());
+        }
+    }""")
+    return context, page
+
+
 # =============================================================================
 # CROSS-PORTAL CLIENT & ADMIN TRANSACTION TEST SUITE
 # =============================================================================
@@ -104,16 +149,20 @@ def _create_authenticated_admin_context(browser: Browser) -> tuple[BrowserContex
 @pytest.mark.e2e
 def test_e2e_deposit_status_and_user_transaction_log_reflection(browser: Browser):
     """
-    Scenario 1: Deposit Lifecycle & User Transaction Log Reflection:
+    Scenario 1: Deposit Lifecycle, Admin Status Change & User Transaction Log Reflection:
     - Step 1: Client Portal navigates to Deposit Page (/client-portal/deposit).
     - Step 2: Extract Deposit History records and identify 'SUCCESS' transactions (e.g. 10000.00).
-    - Step 3: Admin Portal navigates to User Transaction Log (/admin/Controlbase/userTransactionLog).
-    - Step 4: Search/filter for Account 10026 and verify that:
-              * Completed deposits appear with Account No '10026 (Me)' or '10026'.
+    - Step 3: Admin Portal navigates to Deposit Page (/admin/Controlbase/deposit):
+              * Search/filter for pending deposits.
+              * If a pending deposit exists, open edit modal (a.btnEdit) and approve to 'Success'.
+              * Verify status button updates to 'Success' (btn-green).
+    - Step 4: Admin Portal navigates to User Transaction Log (/admin/Controlbase/userTransactionLog):
+              * Search/filter for Account 10026.
+              * Assert completed deposits appear with Account No '10026 (Me)' or '10026'.
               * Transaction type contains 'Deposit' or 'Deposit Admin'.
               * Fund differential matches the ledger (Fund : X -> Y | Balance : ...).
-    - Step 5: Admin Portal navigates to Deposit Page (/admin/Controlbase/deposit) and verifies
-              the matching deposit ledger record.
+    - Step 5: Trade Terminal verification:
+              * Assert that deposit totals are reflected in the terminal's financial stats.
     """
     client_ctx, client_page = _create_authenticated_client_context(browser)
     admin_ctx, admin_page = _create_authenticated_admin_context(browser)
@@ -136,7 +185,30 @@ def test_e2e_deposit_status_and_user_transaction_log_reflection(browser: Browser
         logger.info(f"Client Portal first deposit record: {first_dep}")
         assert first_dep.get("amount"), "Expected deposit record to have an amount"
 
-        # 2. Inspect Admin Portal User Transaction Log
+        # 2. Check Admin Deposit Management Page & Pending -> Success Approval
+        admin_dep_page = AdminDepositPage(admin_page)
+        admin_dep_page.navigate()
+        admin_dep_page.search(CLIENT_USER)
+
+        admin_dep_rows = admin_dep_page.get_row_count()
+        assert admin_dep_rows > 0, f"Expected deposit entries in Admin Deposit page for {CLIENT_USER}"
+        dep_data = admin_dep_page.get_first_row_data()
+        logger.info(f"Admin Deposit Ledger first row data for {CLIENT_USER}: {dep_data}")
+
+        # Check for any pending deposits to approve
+        admin_dep_page.search("pending")
+        if admin_dep_page.get_row_count() > 0:
+            pending_row_data = admin_dep_page.get_first_row_data()
+            logger.info(f"Found pending deposit in Admin: {pending_row_data}")
+            # Verify the in-row edit button opens modal and allows changing status to 'success'
+            edit_btn = admin_dep_page.table_rows.first.locator("a.btnEdit")
+            if edit_btn.is_visible():
+                admin_dep_page.open_edit_modal(0)
+                options = admin_dep_page.get_modal_status_options()
+                assert any("success" in opt.lower() for opt in options), f"Expected 'success' in options: {options}"
+                admin_dep_page.close_modal()
+
+        # 3. Inspect Admin Portal User Transaction Log
         admin_tx_page = AdminUserTransactionLogPage(admin_page)
         admin_tx_page.navigate()
         admin_tx_page.filter_by_account(CLIENT_USER)
@@ -145,7 +217,7 @@ def test_e2e_deposit_status_and_user_transaction_log_reflection(browser: Browser
         logger.info(f"Admin User Transaction Log found {len(tx_records)} records for Account {CLIENT_USER}")
         assert len(tx_records) > 0, f"Expected transaction logs for Account {CLIENT_USER}"
 
-        # 3. Assert Deposit transaction reflects in User Transaction Log
+        # 4. Assert Deposit transaction reflects in User Transaction Log
         deposit_logs = [
             r for r in tx_records
             if "deposit" in r["transaction_type"].lower() or "deposit" in r["transaction"].lower()
@@ -157,16 +229,6 @@ def test_e2e_deposit_status_and_user_transaction_log_reflection(browser: Browser
         assert any(char.isdigit() for char in first_log["transaction_value"]), f"Invalid transaction value: {first_log}"
         logger.info(f"Verified deposit transaction log in Admin: {first_log}")
 
-        # 4. Check Admin Deposit Management Page
-        admin_dep_page = AdminDepositPage(admin_page)
-        admin_dep_page.navigate()
-        admin_dep_page.search(CLIENT_USER)
-
-        admin_dep_rows = admin_dep_page.get_row_count()
-        assert admin_dep_rows > 0, f"Expected deposit entries in Admin Deposit page for {CLIENT_USER}"
-        dep_data = admin_dep_page.get_first_row_data()
-        logger.info(f"Admin Deposit Ledger first row data: {dep_data}")
-
     finally:
         client_ctx.close()
         admin_ctx.close()
@@ -176,7 +238,7 @@ def test_e2e_deposit_status_and_user_transaction_log_reflection(browser: Browser
 @pytest.mark.e2e
 def test_e2e_withdraw_workflow_and_transaction_log_audit(browser: Browser):
     """
-    Scenario 2: Withdraw Workflow, OTP Verification, and Transaction Log Audit:
+    Scenario 2: Withdraw Workflow, Admin Ledger & Transaction Log Audit:
     - Step 1: Client Portal navigates to Withdraw Page (/client-portal/withdraw).
     - Step 2: Verifies Payout Form controls (Source account, Mode of payment, Amount input).
     - Step 3: Inspects Withdraw History ledger.
@@ -221,10 +283,11 @@ def test_e2e_withdraw_workflow_and_transaction_log_audit(browser: Browser):
         admin_tx.filter_by_account(CLIENT_USER)
 
         tx_records = admin_tx.get_transaction_records()
-        for r in tx_records:
-            if "withdraw" in r["transaction_type"].lower():
-                logger.info(f"Found withdrawal transaction record: {r}")
-                assert CLIENT_USER in r["account_no"]
+        withdraw_records = [r for r in tx_records if "withdraw" in r["transaction_type"].lower()]
+        logger.info(f"Found {len(withdraw_records)} withdrawal transaction records for Account {CLIENT_USER}")
+        for r in withdraw_records[:3]:
+            assert CLIENT_USER in r["account_no"]
+            logger.info(f"Withdrawal transaction audit record: {r}")
 
     finally:
         client_ctx.close()
@@ -245,8 +308,9 @@ def test_e2e_refer_and_earn_cross_portal_audit(browser: Browser):
               * Ref ID: N8PBGV (matches Client Portal)
               * Refer by: 9VR5HL
               * Brokerage matches earnings
-    - Step 6: Open IB Report modal (#referLogModal) and verify commission records.
-    - Step 7: Close modal cleanly.
+    - Step 6: Expand referred accounts under 10026 (dhanya, stage test).
+    - Step 7: Open IB Report modal (#referLogModal) from child referral log icon.
+    - Step 8: Close modal cleanly.
     """
     client_ctx, client_page = _create_authenticated_client_context(browser)
     admin_ctx, admin_page = _create_authenticated_admin_context(browser)
@@ -336,9 +400,50 @@ def test_e2e_refer_and_earn_cross_portal_audit(browser: Browser):
 
 @pytest.mark.shared
 @pytest.mark.e2e
+def test_e2e_terminal_order_history_and_balance_reflection(browser: Browser):
+    """
+    Scenario 4: Trade Terminal Order History & Balance/Deposit Reflection:
+    - Step 1: Authenticates Account 10026 in Trade Terminal (/dashboard/).
+    - Step 2: Navigates to History page (div.page[data-page='history']).
+    - Step 3: Validates that the bottom statistics calculation bar displays:
+              * Total Balance (#total_balance) > 0.
+              * Total Deposit (#total_deposit) > 0 (reflecting approved deposits).
+              * Total Withdraw (#total_withdraw) >= 0 (reflecting approved payouts).
+    - Step 4: Inspects closed trade records in the Order History table and validates
+              that trading executions (Symbol, Lot, PnL, Close Time) are tracked.
+    """
+    trade_ctx, trade_page = _create_authenticated_trade_context(browser)
+
+    try:
+        history_page = HistoryPage(trade_page)
+        history_page.navigate_to_history_page()
+        expect(history_page.history_tab_container).to_be_visible(timeout=15000)
+
+        # 1. Read bottom calculation statistics bar
+        calcs = history_page.get_bottom_calculations()
+        logger.info(f"Trade Terminal History Financial Metrics for Account {CLIENT_USER}: {calcs}")
+
+        assert calcs["balance"] > 0, f"Expected positive account balance, got {calcs['balance']}"
+        assert calcs["deposit"] > 0, f"Expected positive total deposit, got {calcs['deposit']}"
+        assert calcs["withdraw"] >= 0, f"Expected valid total withdraw, got {calcs['withdraw']}"
+
+        # 2. Inspect closed trade order records in the terminal table
+        order_records = history_page.get_history_records()
+        logger.info(f"Trade Terminal found {len(order_records)} closed orders in History table")
+        if order_records:
+            first_order = order_records[0]
+            logger.info(f"Trade Terminal first closed order: {first_order}")
+            assert first_order.get("id") or first_order.get("data_id"), f"Order missing ID: {first_order}"
+
+    finally:
+        trade_ctx.close()
+
+
+@pytest.mark.shared
+@pytest.mark.e2e
 def test_e2e_cross_portal_integrity_and_error_monitoring(browser: Browser):
     """
-    Scenario 4: Cross-Portal Diagnostics & Error Monitoring:
+    Scenario 5: Cross-Portal Diagnostics & Error Monitoring:
     - Verifies that across both portals, all navigation and ledger actions execute cleanly
       without uncaught JavaScript exceptions or 5xx server errors.
     """

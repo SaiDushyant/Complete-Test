@@ -254,14 +254,23 @@ class AdminDepositPage(BasePage):
             self.modal_proof_input.set_input_files(proof_path)
             expect(self.modal_proof_remove_btn).to_be_visible(timeout=5000)
 
-    def get_deposit_form_values(self) -> Dict[str, str]:
-        """Return dict of currently filled values in Deposit Form modal."""
-        return {
-            "email": self.modal_email_input.input_value(),
-            "datetime": self.modal_datetime_input.input_value(),
-            "method": self.modal_method_input.input_value(),
-            "amount": self.modal_amount_input.input_value(),
-            "status": self.modal_status_select.input_value(),
-            "reason": self.modal_reason_textarea.input_value(),
-        }
+    def open_edit_modal(self, row_index: int = 0) -> None:
+        """Click in-row edit button (a.btnEdit) to open #myModal for a pending deposit."""
+        edit_btn = self.table_rows.nth(row_index).locator("a.btnEdit").first
+        expect(edit_btn).to_be_visible(timeout=10000)
+        edit_btn.click()
+        expect(self.modal).to_be_visible(timeout=10000)
+        expect(self.modal_status_select).to_be_visible(timeout=5000)
+
+    def change_status_and_save(self, new_status: str = "success") -> None:
+        """Change status dropdown in the edit modal and submit form."""
+        expect(self.modal_status_select).to_be_visible(timeout=5000)
+        self.modal_status_select.select_option(new_status.lower())
+        self.modal_save_button.click()
+        self.page.wait_for_timeout(1000)
+        confirm_btn = self.page.locator(".jconfirm-buttons button, button.btn-green:has-text('Thank You!'), .swal2-confirm")
+        if confirm_btn.is_visible(timeout=3000):
+            confirm_btn.click()
+            self.page.wait_for_timeout(1000)
+        self.modal.wait_for(state="hidden", timeout=10000)
 
