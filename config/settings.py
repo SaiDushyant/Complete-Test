@@ -85,7 +85,7 @@ class PortalCredentials:
 class BrowserSettings:
     """Browser launch and execution parameters."""
     browser_type: str = "chromium"
-    headless: bool = True
+    headless: bool = False
     slow_mo: int = 0
     timeout: int = 30000  # ms
     viewport_width: int = 1280
@@ -154,7 +154,7 @@ class Settings:
             directory.mkdir(parents=True, exist_ok=True)
 
         # 2. Browser Settings
-        headless = _get_bool("BROWSER_HEADLESS", _get_bool("CRAWLER_HEADLESS", True))
+        headless = _get_bool("BROWSER_HEADLESS", _get_bool("CRAWLER_HEADLESS", False))
         slow_mo = _get_int("BROWSER_SLOW_MO", 0)
         timeout = _get_int("BROWSER_TIMEOUT", _get_int("CRAWLER_TIMEOUT", 30000))
         viewport_w = _get_int("VIEWPORT_WIDTH", 1280)

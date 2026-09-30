@@ -17,9 +17,12 @@ from workflows.admin_portal.pages.account_requests_page import AccountRequestsPa
 from workflows.admin_portal.pages.admin_active_users_page import AdminActiveUsersPage
 from workflows.admin_portal.pages.admin_cron_jobs_page import AdminCronJobsPage
 from workflows.admin_portal.pages.admin_dashboard_page import AdminDashboardPage
+from workflows.admin_portal.pages.admin_deposit_list_page import AdminDepositListPage
+from workflows.admin_portal.pages.admin_deposit_page import AdminDepositPage
 from workflows.admin_portal.pages.admin_login_page import AdminLoginPage
 from workflows.admin_portal.pages.admin_lp_execution_config_page import AdminLpExecutionConfigPage
 from workflows.admin_portal.pages.admin_order_edit_log_page import AdminOrderEditLogPage
+from workflows.admin_portal.pages.admin_orders_page import AdminOrdersPage
 from workflows.admin_portal.pages.admin_oxapay_page import AdminOxapayPage
 from workflows.admin_portal.pages.admin_refer_report_page import AdminReferReportPage
 from workflows.admin_portal.pages.admin_settings_page import AdminSettingsPage
@@ -29,6 +32,8 @@ from workflows.admin_portal.pages.admin_user_bonus_page import AdminUserBonusPag
 from workflows.admin_portal.pages.admin_user_group_page import AdminUserGroupPage
 from workflows.admin_portal.pages.admin_user_order_report_page import AdminUserOrderReportPage
 from workflows.admin_portal.pages.admin_user_transaction_log_page import AdminUserTransactionLogPage
+from workflows.admin_portal.pages.admin_withdraw_list_page import AdminWithdrawListPage
+from workflows.admin_portal.pages.admin_withdraw_page import AdminWithdrawPage
 from workflows.admin_portal.pages.copy_trading_page import CopyTradingPage
 from workflows.admin_portal.pages.leads_report_page import LeadsReportPage
 from workflows.admin_portal.pages.lp_commission_log_page import LpCommissionLogPage
@@ -44,6 +49,7 @@ from workflows.admin_portal.pages.role_permission_page import RolePermissionPage
 from workflows.admin_portal.pages.user_document_page import UserDocumentPage
 from workflows.admin_portal.pages.user_management_page import UserManagementPage
 from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
+from workflows.shared.utils.error_monitor import ErrorMonitor
 
 
 @pytest.fixture(scope="session")
@@ -334,3 +340,33 @@ def admin_symbol_list_page(authenticated_admin_page: Page) -> AdminSymbolListPag
 def admin_user_group_page(authenticated_admin_page: Page) -> AdminUserGroupPage:
     """Provide an authenticated AdminUserGroupPage object."""
     return AdminUserGroupPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_deposit_page(authenticated_admin_page: Page) -> AdminDepositPage:
+    """Provide an authenticated AdminDepositPage object."""
+    return AdminDepositPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_withdraw_page(authenticated_admin_page: Page) -> AdminWithdrawPage:
+    """Provide an authenticated AdminWithdrawPage object."""
+    return AdminWithdrawPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_deposit_list_page(authenticated_admin_page: Page) -> AdminDepositListPage:
+    """Provide an authenticated AdminDepositListPage object."""
+    return AdminDepositListPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_withdraw_list_page(authenticated_admin_page: Page) -> AdminWithdrawListPage:
+    """Provide an authenticated AdminWithdrawListPage object."""
+    return AdminWithdrawListPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_orders_page(authenticated_admin_page: Page) -> AdminOrdersPage:
+    """Provide an authenticated AdminOrdersPage object."""
+    return AdminOrdersPage(authenticated_admin_page)

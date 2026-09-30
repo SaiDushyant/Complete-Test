@@ -14,9 +14,13 @@ from workflows.admin_portal.fixtures.admin_fixtures import (
     admin_active_users_page,
     admin_cron_jobs_page,
     admin_dashboard_page,
+    admin_deposit_list_page,
+    admin_deposit_page,
+    admin_error_monitor,
     admin_login_page,
     admin_lp_execution_config_page,
     admin_order_edit_log_page,
+    admin_orders_page,
     admin_oxapay_page,
     admin_page,
     admin_refer_report_page,
@@ -27,6 +31,8 @@ from workflows.admin_portal.fixtures.admin_fixtures import (
     admin_user_group_page,
     admin_user_order_report_page,
     admin_user_transaction_log_page,
+    admin_withdraw_list_page,
+    admin_withdraw_page,
     authenticated_admin_context,
     authenticated_admin_page,
     copy_trading_page,
@@ -1059,3 +1065,4 @@ def pytest_sessionfinish(session, exitstatus) -> None:
     """Write final Admin reports."""
     _write_test_results()
     _write_passed_results()
+
