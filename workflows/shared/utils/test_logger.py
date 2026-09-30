@@ -85,6 +85,7 @@ def extract_test_meaning(item_or_doc: Any, test_name: str = "") -> str:
 @dataclass
 class TestResultRecord:
     """Represents the execution outcome and metadata of a single test."""
+    __test__ = False
     test_id: str
     meaning: str
     status: str  # "PASSED", "FAILED", "SKIPPED"

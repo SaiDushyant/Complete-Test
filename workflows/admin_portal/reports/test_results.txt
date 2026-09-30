@@ -1,25 +1,5 @@
 Admin Portal Test Results
 
-Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_role_and_account_permission_reflection
-Meaning: The Admin Portal test completed successfully.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_manager_lifecycle_crud
-Meaning: The Admin Portal test completed successfully.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_user_group_lifecycle_and_subgroup_modal
-Meaning: The Admin Portal test completed successfully.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_list_edit_and_rollback
-Meaning: The Admin Portal test completed successfully.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_configuration_tabs_and_rollback
-Meaning: The Admin Portal test completed successfully.
-Status: PASSED
-
-Total: 5
-Passed: 5
+Total: 0
+Passed: 0
 Failed: 0

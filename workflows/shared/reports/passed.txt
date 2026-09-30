@@ -1,207 +1,62 @@
 Shared Workflows Passed Test Results
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_user_account_details_reflection
-Meaning: Client user 10102 (name 'fake', email 'f76718269@gmail.com') is correctly reflected in the Admin Account Details table with Active status and Standard account type.
+Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_role_and_account_permission_reflection
+Meaning: Workflow 1: - Validates that the active test account's sidebar reflects granted permissions: * Dashboard is visible. * Deposite/WDL is visible. - Validates that restricted menus are hidden: * Manage MAM is not present. * Manage PAMM is not present. * Fund Managers is not present. - Account remains logged in for the duration of the test suite.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_user_financial_metrics_sync
-Meaning: Financial Fund and Balance columns display valid numeric balances for client account 10102.
+Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_manager_lifecycle_crud
+Meaning: Workflow 2: - Step 1: Master Admin navigates to /admin/Controlbase/manager. - Step 2: Create a brand new manager (mgr_dhanya_<ts>). - Step 3: Verify manager appears in Datatable. - Step 4: Open in-row edit modal (a.btnEdit), update email, and save. - Step 5: Verify updated details in Datatable. - Step 6: Delete the test manager (a.BtnDelete) with SweetAlert & jconfirm and verify removal.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_second_account_reflection_for_same_client
-Meaning: Second trading account 10656 registered under client email 'f76718269@gmail.com' displays with active credentials and book assignment.
+Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_user_group_lifecycle_and_subgroup_modal
+Meaning: Workflow 3: - Step 1: Master Admin navigates to /admin/Controlbase/userGroup. - Step 2: Create a brand new User Group (GRP_DHANYA_<ts>). - Step 3: Search and verify in Datatable. - Step 4: Test in-row edit name button (a.btnNameEdit). - Step 5: Test Subgroup modal (a.btnSubgroup -> #subgroupModal) and close cleanly. - Step 6: Delete test user group (a.BtnDelete) with SweetAlert & jconfirm and verify removal.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_client_account_status_and_type_integrity
-Meaning: Trading accounts in Account Details display valid account type 'Standard' and active user status badge.
+Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_list_edit_and_rollback
+Meaning: Workflow 4: - Step 1: Master Admin navigates to /admin/Controlbase/symbolList. - Step 2: Pick 2 random symbols (e.g. C:XAUUSD, C:EURUSD). - Step 3: For each symbol: * Read and store original values (brokerage, swap points). * Modify brokerage (+1). * Submit and confirm update. * Re-open edit modal and restore exact original values. * Verify original brokerage is restored in Datatable.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_topbar_branding_and_title
-Meaning: Top navbar renders brand logo, page title 'User', and sidebar hamburger toggle button.
+Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_configuration_tabs_and_rollback
+Meaning: Workflow 5: - Step 1: Master Admin navigates to /admin/Controlbase/symbolConfiguration. - Step 2: Pick 2 random symbols (e.g. C:ALGUSD, C:BTCUSD). - Step 3: Open configuration modal (#symbolConfigModal). - Step 4: Validate navigation across all modal tabs (Market Hours, Holidays, Special Days, Upcoming Preview, General). - Step 5: Capture original step_size / default_lot, modify temporarily, submit save. - Step 6: In open modal, restore exact original value, save, and close cleanly (SECURE ROLLBACK).
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_sidebar_menu_toggle
-Meaning: Clicking vertical menu button toggles sidebar between expanded and collapsed states.
+Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_symbol_configuration_tabs_and_market_hours
+Meaning: Workflow 1: - Navigates to /admin/Controlbase/symbolConfiguration. - Searches target symbol (USDCAD) and opens #symbolConfigModal. - Inspects General Tab form inputs: config_uid, display_name, min/max lot, precision. - Inspects Hours Tab: checks market calendar schedule and tests #refreshMarketCalendar. - Inspects Holiday Tab: tests #addHolidayOverride button and holiday controls. - Inspects Special Tab: tests #addSpecialOverride button and date input #specialOverrideDate. - Inspects Upcoming Tab: tests #refreshUpcomingPreview button. - Closes modal cleanly.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_theme_toggle_action
-Meaning: Theme switch button toggles the layout mode between dark and light modes.
+Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_trade_disallowed_and_terminal_reflection
+Meaning: Workflow 2: - Step 1: In Admin Symbol Configuration, set Allow Trade = "0" (Not Allowed) for USDCAD. - Step 2: Save and verify Admin Datatable displays "Not Allowed". - Step 3: In Trade Terminal, inspect Watchlist for USDCAD. - Step 4: Open Order Entry dialog (#dragable_modal) for USDCAD and attempt order execution. - Step 5: Verify that order is blocked or returns trade not allowed / market closed toast. - Step 6: In Admin Symbol Configuration, re-enable Allow Trade = "1" (Allowed) and verify.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_notifications_dropdown
-Meaning: Notifications button opens the notification dropdown menu with mark all read option.
+Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_commission_brokerage_update_and_propagation
+Meaning: Workflow 3: - Step 1: Navigates to /admin/Controlbase/symbol. - Step 2: Search target symbol (USDCAD), open in-row edit modal (a.btnEdit -> #myModal). - Step 3: Update #brokerage to 5.00 and save (#formSubmit). - Step 4: Verify updated brokerage appears in Datatable row. - Step 5: Check Terminal order/specification calculation reflection. - Step 6: Restore original brokerage value and verify datatable restoration.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_profile_dropdown_and_logout
-Meaning: Admin profile menu opens with admin name, role, and valid logout link.
+Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_symbol_minute_workflow_and_form_values_inspection
+Meaning: Workflow 4: - Step 1: Navigates to /admin/Controlbase/symbolConfiguration. - Step 2: Open edit modal and inspect all input fields: min_lot, max_lot, default_lot, step_size, margin_index, precision_digits. - Step 3: Validate that numeric inputs reject invalid characters or enforce constraints. - Step 4: Close modal without saving and verify state integrity.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_page_actions_container
-Meaning: Page action buttons container displays Create Account, Add User, and Refresh buttons with correct styles.
+Test: workflows/shared/tests/test_e2e_admin_categories_a_b_c.py::test_e2e_category_a_realtime_order_execution_and_lifecycle
+Meaning: Category A Test: Real-Time Order Execution & State Lifecycle: - User logs in to Trade Terminal (Account 10098). - Position page extracts live account metrics (Balance, Equity, Free Margin, Used Margin). - Admin logs in -> Navigates to /admin/Controlbase/order/all. - Opens #orderModal for Account 10098 and verifies order state sync & summary cards.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_hidden_permission_flags
-Meaning: All 6 hidden permission configuration inputs exist in DOM with active values (value='1').
+Test: workflows/shared/tests/test_e2e_admin_categories_a_b_c.py::test_e2e_category_b_admin_b_book_order_placement_and_liquidation
+Meaning: Category B Test: Admin Direct B-Book Order Placement & User Terminal Sync: - Admin logs in -> Navigates to /admin/Controlbase/bBook. - Places a real B-Book Market Buy Order for Account 10098 using place_bbook_order(). - User logs in to Trade Terminal (Account 10098) -> Navigates to Positions Page. - Confirms that the Admin-placed B-Book order is reflected live on the User Trade Terminal. - Confirms order presence in Admin Order Details (/admin/Controlbase/order/all).
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_create_account_modal
-Meaning: Clicking Create Account opens the creation modal with correct title and close functionality.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_add_user_modal
-Meaning: Clicking Add User opens the user details modal with input fields and dismisses properly.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_table_refresh_persistence
-Meaning: Clicking the Refresh button reloads table data smoothly without layout errors.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_table_card_and_datatable_wrapper
-Meaning: The table card container, DataTable wrapper, and core table structure render properly.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_length_dropdown_selection
-Meaning: Changing page length dropdown dynamically updates displayed records count (10, 25, 50, 100).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_export_csv_button_rendered
-Meaning: CSV export button is present, visible, and has correct styling.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_export_pdf_button_rendered
-Meaning: PDF export button is present, visible, and has correct styling.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_export_excel_button_rendered
-Meaning: Excel export button is present, visible, and has correct styling.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_date_filter_inputs_rendered
-Meaning: From and To datetime-local inputs, Go button, and Clear button render properly in the date filter container.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_date_filter_and_clear
-Meaning: Date range filter inputs (From, To) with Go apply and Clear reset buttons work as expected.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_search_by_account_id
-Meaning: Searching for account ID '10102' filters the table and accurately displays the user.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_search_by_client_name
-Meaning: Searching for client name 'fake' filters the table to matching user records.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_search_by_email
-Meaning: Searching for client email 'f76718269@gmail.com' filters the table accurately.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_search_unmatched_query_empty_state
-Meaning: Searching for an unmatched query displays an empty state or zero records.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_search_clear_restores_data
-Meaning: Clearing search restores the full list of user accounts in the table.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_table_headers_column_integrity
-Meaning: All required table columns exist in the header (S.No, Deposit/Withdraw, Name, AC. ID, Email, Password, Inv. Password, E-Mail, Document, Account Type).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_row_credentials_integrity
-Meaning: User rows contain valid account IDs, email domains, and password credential fields.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_email_verification_select
-Meaning: Inline Email Verification select contains Verified (1) and Not Verified (0) options with dynamic status styling.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_document_verification_select
-Meaning: Inline Document Verification select contains Verified (1) and Not Verified (0) options with dynamic status styling.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_account_type_select
-Meaning: Inline Account Type select dropdown contains Standard and Cent account options.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_user_status_select
-Meaning: User Status displays valid active status indicator in user table child/responsive row.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_book_assignment_select
-Meaning: Book assignment displays valid A-Book or B-Book indicator in user table child/responsive row.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_inline_edit_account_id_button
-Meaning: Inline Edit AC. ID button is present on user rows with valid account_id attribute.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_row_deposit_withdraw_action_buttons
-Meaning: Each row contains Deposit/Withdraw Edit and Delete action buttons.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_responsive_row_expansion
-Meaning: Expanding responsive row details exposes trading actions (MAM, PAMM, Copy Trading, Switch Group).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_pagination_traversal
-Meaning: Pagination controls navigate between pages and update active page indicator.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_pagination_info_counter_text
-Meaning: Table status info string displays the expected 'Showing 1 to X of Y entries' pattern.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_live_cross_portal_sync.py::test_admin_creates_dummy_user_reflects_in_client_portal
-Meaning: Creating a new dummy user in Admin Account Details generates an Account ID, and allows the client to immediately log into the Client Portal dashboard with matching credentials.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_live_cross_portal_sync.py::test_admin_create_account_modal_generates_trading_account
-Meaning: Admin uses Create Account For User modal in Account Details to generate a new live trading account for a registered client, and verifies the new account row appears with a valid AC. ID.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_live_cross_portal_sync.py::test_client_portal_request_new_account_modal_and_admin_sync
-Meaning: Client initiates a new trading account request in Client Portal header, and verifies that the request workflow is synchronized across portals and visible in Admin Account Requests.
+Test: workflows/shared/tests/test_e2e_admin_categories_a_b_c.py::test_e2e_category_c_admin_order_edit_boundary_validations_and_log_sync
+Meaning: Category C Test: Advanced Multi-Field Edit, Target Price Calculation & Audit Log Sync: - Boundary Validation 1: Empty Lot size error ('please enter the lot'). - Boundary Validation 2: Negative Stop Loss error ('negative'). - Positive Flow: Multi-field edit (Lot, SL, Target calculated relative to Entry/Avg price, Brokerage). - Database Save: Real live POST request to backend DB. - Audit Log Verification: Verifies /admin/Controlbase/orderEditLog records before-vs-after diffs.
 Status: PASSED
 Reason: Test completed successfully
 
@@ -217,6 +72,11 @@ Reason: Test completed successfully
 
 Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_search_shows_valid_matching_user
 Meaning: Verify that the search input isolates valid matching users, shows empty state for unmatched queries, and restores data on clear.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_pencil_edit_deposit_balance_update
+Meaning: Verify that clicking the inline pencil icon (a.btnEdit) opens Change Balance modal, and depositing funds credits the user balance.
 Status: PASSED
 Reason: Test completed successfully
 
@@ -240,284 +100,14 @@ Meaning: Verify that when user's Email Verification is set to Not Verified (0), 
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_delete_user_workflow
-Meaning: Verify that the delete action button (a.BtnDelete) is present and operational for user deactivation/removal.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_pencil_edit_deposit_balance_update
-Meaning: Verify that clicking the inline pencil icon (a.btnEdit) opens Change Balance modal, and depositing funds credits the user balance.
-Status: PASSED
-Reason: Test completed successfully
-
 Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_document_verification_verified_locks_kyc_in_client_portal
 Meaning: Verify that when Document Verification is set to Verified (1) in Admin, the Client Portal Settings Documents reflects Verified status.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_account_type_toggle
-Meaning: Verify inline Account Type select dropdown allows switching between Standard and Cent trading account types.
+Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_delete_user_workflow
+Meaning: Verify that the delete action button (a.BtnDelete) is present and operational for user deactivation/removal.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_user_status_active_inactive_toggle
-Meaning: Verify inline User Status select contains Active (1) and Not Active (0) states for account access control.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_book_assignment_a_and_b_book
-Meaning: Verify Book assignment dropdown allows toggling between A-Book (STP LP routing) and B-Book (Broker Risk book).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_edit_user_modal_form
-Meaning: Verify clicking Edit User pencil (a.btnEditUser) opens #editUserModal with Name, Mobile, Fund, Equity, and Balance fields.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_add_credit_bonus_modal_form
-Meaning: Verify clicking Bonus button (button.userCredit) opens #userCreditBonus modal with Bonus Amount and Expire Date inputs.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_stopout_percentage_modal_form
-Meaning: Verify clicking Stopout pencil (a.btnEditStopout) opens #stopoutModal for setting custom stop-out percentage.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_edit_referby_id_modal_form
-Meaning: Verify clicking Refer By pencil (a.btnEditReferBy) opens #refreByModal for updating referral sponsor ID.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_password_reset_link_button
-Meaning: Verify Password Reset button (button.userPasswordResetLink) is present in row actions.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_make_copy_trading_modal_form
-Meaning: Verify clicking Copy Trading button (button.userCopyTrading) opens #copyTradingPopup with Rank, User name, and Fee inputs.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_private_copy_trading_modal_and_slaves
-Meaning: Verify clicking Private Copy button opens #privateCopierUserModal with Master display, Slave search, Copy Type, and Direction.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_switch_group_and_leverage_modal
-Meaning: Verify clicking Switch Group button opens #switchGroupModal with Group List options (ECN, Default, etc.) and Leverage selection.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_create_account_for_user_modal
-Meaning: Verify clicking Create Account topbar button opens #createAccountModal with user search (#caUserSearch) and send mail checkbox.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_add_user_registration_modal
-Meaning: Verify clicking Add User topbar button opens #userAddModal with all registration fields (Name, Email, Mobile, Pass, Group, Leverage).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_export_buttons_and_refresh
-Meaning: Verify CSV, PDF, Excel data export buttons are rendered, and the Refresh button reloads table data via AJAX without errors.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_make_mam_workflow
-Meaning: Verify clicking MAM action (button.userMam) triggers either #mampopup (Make MAM) or confirmation dialog (Disable MAM).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_additional_features.py::test_additional_make_pamm_workflow
-Meaning: Verify clicking PAMM action (button.userPamm) triggers either #pammpopup (Make PAMM) or confirmation dialog (Disable PAMM).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_single_file_upload_reflection_in_admin
-Meaning: Scenario 1: If only one file uploaded in client portal, it should show ONLY one file in admin. All other document columns must display '-' (no phantom files).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_updated_time_format_and_accuracy
-Meaning: Scenario 2: Updated time should show proper standard timestamp format (YYYY-MM-DD HH:MM:SS) and correspond to valid dates in the system.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_bank_and_all_proof_types_rendering
-Meaning: Scenario 3: Bank statement and all proof types (Address Front/Back, National ID Front/Back, Bank, Other) must display proper anchor tags with valid preview URLs and target='_blank'.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_verified_status_locks_client_portal_uploads
-Meaning: Scenario 5: When clicked 'Verified' in Admin: - Client portal reflects 'VERIFIED' badge and 'Account Status: Verified'. - All 6 document upload cards display 'Verified document locked' and 'Contact support to update verified documents.' - User CANNOT add or upload any document in client portal (0 file inputs available).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_unverified_status_unlocks_client_portal_uploads
-Meaning: Scenario 6: When status is Not Verified (0): - Client portal reflects 'Pending Review'. - All 6 document upload cards unlock with 'Upload File / Drag and drop here, or click to browse'. - Active file upload inputs (count = 6) become available for client submission.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_rejected_status_triggers_remark_modal
-Meaning: Scenario 11: Selecting 'Rejected' status option from verification dropdown automatically triggers the Remark Modal to mandate rejection comments. Closing modal resets status to previous value.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_date_filter_from_to_and_clear
-Meaning: Scenario 4: From and To date filter: - Filters rows strictly within the specified datetime range. - Go button (#apply) executes search. - Clear button (#clear) resets input fields and restores all table records.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_admin_remarks_reflect_in_client_portal
-Meaning: Scenario 7: When remarks given in admin, it shows in client portal under REMARKS / Remarks.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_admin_upload_or_edit_reflects_in_client_portal
-Meaning: Scenario 8: When admin uploads or edits a document via #addNew or a.btnEdit, it saves to /upload/uploadserver.php and immediately reflects in Client Portal. Must set user to Not Verified first (verified users cannot have docs uploaded).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_delete_action_removes_document
-Meaning: Scenario 9: When deleted in Admin, the document is deleted from storage and database. - Admin column reverts to '-'. - Client portal card reverts to 'Missing'. Deletes bank statement (uploaded in test 8).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_search_and_pagination_controls
-Meaning: Scenario 12: Search filter works for User Name and Account ID, displays empty state when unmatched, and restores on clear. Entries per page updates table length properly.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_pagination_traversal
-Meaning: Scenario 13: Full pagination controls: - Page 1 -> Page 2 via page number '2'. - Page 2 first row S.No is 11. - Return to Page 1 via Previous button. - Advance to Page 2 via Next button.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_page_permissions_and_theme_toggle
-Meaning: Scenario 14: Hidden permissions integrity and theme mode toggle: - #editUserDoc, #deleteUserDoc, #verifyUserDoc, #remarksUserDoc have value '1'. - Topbar branding and page title are 'User Document'. - Dark/Light mode theme toggle alters body layout attribute.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_practical_validation.py::test_doc_delete_on_empty_user_shows_error_dialog
-Meaning: Scenario 10: Clicking delete button on a user with no uploaded documents triggers error alert dialog stating 'No document found to delete'.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_add_document_button_opens_modal
-Meaning: #addNew button opens #myModal in 'new' mode with empty form.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_upload_form_validation_empty_fields
-Meaning: Submitting upload form without selecting user/doc/file shows validation errors.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_delete_form_validation_no_doc_selected
-Meaning: Clicking #BtnDeleteConfirm without selecting doc type shows 'Please select document type'.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_rejected_remark_submit_updates_status
-Meaning: Submitting remark from rejection flow actually updates status to Rejected (2).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_verification_dropdown_color_coding
-Meaning: Verification dropdown uses correct color classes: green=Verified, yellow=Not Verified, red=Rejected.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_document_links_open_in_new_tab
-Meaning: All document anchor links in the table have target='_blank'.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_modal_form_resets_on_close
-Meaning: #myModal form resets when modal is closed — fields cleared, preview emptied.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_responsive_datatable_collapse
-Meaning: DataTable responsive mode: shrinking viewport shows dtr-control toggle, expanding restores columns.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_user_documents_additional_features.py::test_state_save_persists_across_reload
-Meaning: stateSave: true — page length and search state persist after page reload.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_refresh_button_reloads_table
-Meaning: Scenario 1: Verify the Refresh button (#refreshAccountRequests) triggers a clean DataTable AJAX reload without a full page refresh.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_table_headers_and_action_unsortable
-Meaning: Scenario 2: Verify the 11 columns in Client Account Creation Requests table: S.No, Name, Email, Current Account, Requested Name, Type, Status, Created Account, Requested At, Reviewed By, Action. Verify Action column has sorting_disabled.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_status_badge_styling_and_colors
-Meaning: Scenario 3: Verify status badges have distinct semantic styling: - pending: yellow/orange badge (.request-status.pending) - approved: green badge (.request-status.approved) - rejected: red badge (.request-status.rejected).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_action_buttons_conditional_by_status
-Meaning: Scenario 4: Verify conditional rendering in Action column: - Pending requests MUST have Approve (.btnApproveAccountRequest) and Reject (.btnRejectAccountRequest) buttons with data-id. - Approved requests MUST display '-' with no action buttons. - Rejected requests MUST display '-' with no action buttons.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_timestamp_format_integrity
-Meaning: Scenario 5: Verify 'Requested At' column displays properly formatted timestamps matching YYYY-MM-DD HH:MM:SS format across all rows.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_reviewed_by_integrity
-Meaning: Scenario 6: Verify Reviewed By field logic: - Pending requests display '-' (not yet reviewed). - Approved/Rejected requests display the admin username (e.g. 'madmin').
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_search_filtering
-Meaning: Scenario 7: Verify search filter isolates matching records by: - Name ('fake') - Email ('f76718269@gmail.com') - Account ID ('10102') - Non-existent query shows empty state ('No matching records found') - Clearing search restores full records.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_column_sorting
-Meaning: Scenario 8: Verify clicking sortable column headers toggles sort order: - Initial order is Requested At descending (sorting_desc) - Click Name header -> sorts by Name (sorting_asc / sorting_desc) - Click Email header -> sorts by Email - Click S.No header -> sorts by S.No - Click Status header -> sorts by Status.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_page_length_options
-Meaning: Scenario 9: Verify page length dropdown options (10, 25, 50, 100 entries) update displayed records and table info accurately.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_pagination_navigation
-Meaning: Scenario 10: Verify multi-page pagination navigation: - Page 1: Previous disabled, active page is '1' - Click Next -> Page 2 active, Showing 11 to 20, Previous enabled - Click Next -> Page 3 active, Showing 21 to N - Click Previous -> Page 2 active - Click page '1' directly -> Page 1 active.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_sweetalert_cancel_dismissal
-Meaning: Scenario 11: Verify dismissing SweetAlert2 dialogs does not alter request state: - Click Approve -> SweetAlert opens -> Click Cancel -> request remains pending. - Click Reject -> SweetAlert opens -> Click Cancel -> request remains pending.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_responsive_dtr_control_expansion
-Meaning: Scenario 12: Verify responsive table features (dt-responsive): - Table has dt-responsive and dtr-inline classes. - First column has .dtr-control class for expanding collapsed details. - Clicking .dtr-control on a row expands the row and reveals child row (tr.child).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_reject_flow_does_not_create_account
-Meaning: Scenario 14: Client submits new account request -> Syncs to Admin -> Admin Rejects request: - Client portal: Open Create Account modal, submit request. - Admin portal: New pending request appears immediately. - Admin clicks Reject button -> SweetAlert2 opens with admin note textarea. - Admin enters rejection note (e.g. 'Automated Validation: Request rejected'). - Admin clicks Reject. - Verify request row transitions to 'rejected' (red badge). - Verify Created Account column strictly remains '-' (NO ACCOUNT CREATED). - Verify Reviewed By displays 'madmin'. - Verify Action column shows '-'. - In Client Portal: reload and verify NO account was created and rejection note appears in modal.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_requests_practical_validation.py::test_account_requests_approve_flow_creates_account
-Meaning: Scenario 13: Full lifecycle of Approve Account Request: - Locate pending request in Admin Portal. - Click Approve button -> SweetAlert2 opens -> Click Confirm ('Approve'). - Verify alertify success notification. - Verify request row transitions to 'approved' (green badge). - Verify Created Account column displays a new account ID (not '-'). - Verify Reviewed By displays 'madmin'. - Verify Action buttons disappear and column shows '-'. - In Client Portal: reload and verify the new trading account is added to client accounts.
-Status: PASSED
-Reason: Test completed successfully
-
-Total Passed: 104
+Total Passed: 22
