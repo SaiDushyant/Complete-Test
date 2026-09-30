@@ -285,3 +285,23 @@ class AdminWithdrawPage(BasePage):
             "reason": self.modal_reason_textarea.input_value(),
         }
 
+    def open_edit_modal(self, row_index: int = 0) -> None:
+        """Click in-row edit button (a.btnEdit) to open #myModal for a pending withdrawal."""
+        edit_btn = self.table_rows.nth(row_index).locator("a.btnEdit").first
+        expect(edit_btn).to_be_visible(timeout=10000)
+        edit_btn.click()
+        expect(self.modal).to_be_visible(timeout=10000)
+        expect(self.modal_status_select).to_be_visible(timeout=5000)
+
+    def change_status_and_save(self, new_status: str = "success") -> None:
+        """Change status dropdown in the edit modal and submit form."""
+        expect(self.modal_status_select).to_be_visible(timeout=5000)
+        self.modal_status_select.select_option(new_status.lower())
+        self.modal_save_button.click()
+        self.page.wait_for_timeout(1000)
+        confirm_btn = self.page.locator(".jconfirm-buttons button, button.btn-green:has-text('Thank You!'), .swal2-confirm")
+        if confirm_btn.is_visible(timeout=3000):
+            confirm_btn.click()
+            self.page.wait_for_timeout(1000)
+        self.modal.wait_for(state="hidden", timeout=10000)
+
