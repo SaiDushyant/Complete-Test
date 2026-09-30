@@ -99,6 +99,19 @@ class Settings:
     baseline_url: str = field(init=False)
     live_url: str = field(init=False)
     enable_trade_tests: bool = field(init=False)
+    # PAMM / MAM Specific Configurations
+    pamm_master_account: str = field(init=False)
+    pamm_master_password: str = field(init=False)
+    pamm_follower_1_account: str = field(init=False)
+    pamm_follower_1_password: str = field(init=False)
+    pamm_follower_2_account: str = field(init=False)
+    pamm_follower_2_password: str = field(init=False)
+    mam_master_account: str = field(init=False)
+    mam_master_password: str = field(init=False)
+    mam_follower_1_account: str = field(init=False)
+    mam_follower_1_password: str = field(init=False)
+    mam_follower_2_account: str = field(init=False)
+    mam_follower_2_password: str = field(init=False)
 
     def __post_init__(self):
         # 1. Initialize Directories
@@ -230,6 +243,20 @@ class Settings:
             post_login_url_pattern=os.getenv("CLIENT_POST_LOGIN_URL_PATTERN", "**/dashboard**"),
             auth_state_path=client_auth_state,
         )
+
+        # 7. PAMM / MAM Credentials
+        self.pamm_master_account = (os.getenv("PAMM_MASTER_ACCOUNT") or os.getenv("MAM_MASTER_ACCOUNT") or os.getenv("CLIENT_USERNAME", "10026")).strip()
+        self.pamm_master_password = (os.getenv("PAMM_MASTER_PASSWORD") or os.getenv("MAM_MASTER_PASSWORD") or os.getenv("CLIENT_PASSWORD", "Test@1234")).strip()
+        self.pamm_follower_1_account = (os.getenv("PAMM_FOLLOWER_1_ACCOUNT") or os.getenv("MAM_FOLLOWER_1_ACCOUNT", "10100")).strip()
+        self.pamm_follower_1_password = (os.getenv("PAMM_FOLLOWER_1_PASSWORD") or os.getenv("MAM_FOLLOWER_1_PASSWORD", "Dhanya@123")).strip()
+        self.pamm_follower_2_account = (os.getenv("PAMM_FOLLOWER_2_ACCOUNT") or os.getenv("MAM_FOLLOWER_2_ACCOUNT", "10102")).strip()
+        self.pamm_follower_2_password = (os.getenv("PAMM_FOLLOWER_2_PASSWORD") or os.getenv("MAM_FOLLOWER_2_PASSWORD", "Fake@123")).strip()
+        self.mam_master_account = self.pamm_master_account
+        self.mam_master_password = self.pamm_master_password
+        self.mam_follower_1_account = self.pamm_follower_1_account
+        self.mam_follower_1_password = self.pamm_follower_1_password
+        self.mam_follower_2_account = self.pamm_follower_2_account
+        self.mam_follower_2_password = self.pamm_follower_2_password
 
 
 # Singleton instance for easy import across fixtures and pages
