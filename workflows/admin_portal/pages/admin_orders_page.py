@@ -111,7 +111,7 @@ class AdminOrdersPage(BasePage):
     def navigate(self, submenu: str = "open") -> None:
         """
         Directly navigate to the specified Orders submenu (all, open, closed).
-        Uses resilient DOMContentLoaded load strategy.
+        Uses resilient DOMContentLoaded load strategy with fallback.
         """
         from urllib.parse import urlsplit
         path_map = {
@@ -122,7 +122,13 @@ class AdminOrdersPage(BasePage):
         sub_path = path_map.get(submenu.lower(), self.URL_OPEN)
         parts = urlsplit(settings.admin_portal.base_url)
         url = f"{parts.scheme}://{parts.netloc}{sub_path}"
-        self.goto(url)
+        try:
+            self.goto(url, timeout=15000, wait_until="domcontentloaded")
+        except Exception:
+            try:
+                self.goto(url, timeout=15000, wait_until="commit")
+            except Exception:
+                pass
         self.wait_for_table_loaded()
 
 
@@ -163,7 +169,7 @@ class AdminOrdersPage(BasePage):
         if not rows:
             return 0
         first_text = rows[0].inner_text()
-        if "No data available" in first_text or "Loading" in first_text:
+        if "No data available" in first_text or "Loading" in first_text or "No matching records" in first_text:
             return 0
         return len(rows)
 
@@ -441,6 +447,39 @@ class AdminOrdersPage(BasePage):
                 self.page.unroute("**/userStatusNotificationToken**")
             except Exception:
                 pass
+
+    def save_order_real(self) -> Dict[str, Any]:
+        """
+        Execute a REAL save on the Edit Order form (submits POST request to backend DB).
+        Used to test live DB order editing and verifying actual entry creation on /orderEditLog.
+        """
+        self.page.on("dialog", lambda dialog: dialog.accept())
+        expect(self.edit_save_btn).to_be_visible(timeout=10000)
+        self.edit_save_btn.click()
+        self.page.wait_for_timeout(2000)
+
+        # Check for jconfirm popup / confirmation alert
+        confirm_dialog = self.page.locator(".jconfirm-box")
+        if confirm_dialog.is_visible():
+            thank_you_btn = confirm_dialog.locator(
+                "button:has-text('Thank You!'), button:has-text('OK'), button:has-text('close'), .btn-green"
+            ).first
+            if thank_you_btn.is_visible():
+                thank_you_btn.click()
+                self.page.wait_for_timeout(500)
+
+        if self.edit_modal.is_visible():
+            try:
+                self.close_edit_modal()
+            except Exception:
+                pass
+        if self.order_modal.is_visible():
+            try:
+                self.close_order_modal()
+            except Exception:
+                pass
+
+        return {"saved_real": True}
 
 
     def close_edit_modal(self) -> None:

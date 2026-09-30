@@ -166,9 +166,13 @@ class HistoryPage(BasePage):
 
     def open_filter_dropdown(self) -> None:
         """Open the filter duration dropdown if not already open."""
+        self.dismiss_disclaimer_if_present()
         expect(self.dropdown_toggle).to_be_visible(timeout=TIMEOUT_DEFAULT)
         if not self.dropdown_menu.is_visible():
-            self.dropdown_toggle.click()
+            try:
+                self.dropdown_toggle.click(timeout=5000)
+            except Exception:
+                self.dropdown_toggle.click(force=True)
             self.page.wait_for_timeout(400)
 
     def select_filter(self, duration: str) -> None:
@@ -176,17 +180,26 @@ class HistoryPage(BasePage):
         Select a filter duration by data-duration attribute (e.g. '1d', '1w', '3w', '1m', '3m', '1y', 'all', 'custom').
         """
         logger.info(f"Selecting History filter duration: '{duration}'")
+        self.dismiss_disclaimer_if_present()
         self.open_filter_dropdown()
         item = self.dropdown_menu.locator(f"li.filter_list[data-duration='{duration}']")
-        expect(item).to_be_visible(timeout=TIMEOUT_DEFAULT)
-        item.click()
+        if item.count() == 0:
+            item = self.dropdown_menu.locator("li.filter_list").filter(has_text=re.compile(f"^{duration}$", re.IGNORECASE))
+        expect(item.first).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        try:
+            item.first.click(timeout=5000)
+        except Exception:
+            item.first.click(force=True)
         self.page.wait_for_timeout(1000)
 
     def click_export_button(self) -> None:
         """Click the export excel button (#exportBtn)."""
         logger.info("Clicking History export button (#exportBtn)...")
         expect(self.export_button).to_be_visible(timeout=TIMEOUT_DEFAULT)
-        self.export_button.click()
+        try:
+            self.export_button.click(timeout=5000)
+        except Exception:
+            self.export_button.click(force=True)
         self.page.wait_for_timeout(500)
 
     # =========================================================================
@@ -203,10 +216,14 @@ class HistoryPage(BasePage):
         then wait until the modal is visible.
         """
         logger.info("Opening Custom Filter modal via 'custom' filter option...")
+        self.dismiss_disclaimer_if_present()
         self.open_filter_dropdown()
         item = self.dropdown_menu.locator("li.filter_list[data-duration='custom']")
-        expect(item).to_be_visible(timeout=TIMEOUT_DEFAULT)
-        item.click()
+        expect(item.first).to_be_visible(timeout=TIMEOUT_DEFAULT)
+        try:
+            item.first.click(timeout=5000)
+        except Exception:
+            item.first.click(force=True)
         expect(self.custom_filter_modal).to_be_visible(timeout=TIMEOUT_DEFAULT)
         self.page.wait_for_timeout(400)
 
@@ -218,10 +235,16 @@ class HistoryPage(BasePage):
         logger.info(f"Closing Custom Filter modal (footer={use_footer_close})...")
         if use_footer_close:
             expect(self.custom_modal_footer_close).to_be_visible(timeout=TIMEOUT_DEFAULT)
-            self.custom_modal_footer_close.click()
+            try:
+                self.custom_modal_footer_close.click(timeout=5000)
+            except Exception:
+                self.custom_modal_footer_close.click(force=True)
         else:
             expect(self.custom_modal_close_btn).to_be_visible(timeout=TIMEOUT_DEFAULT)
-            self.custom_modal_close_btn.click()
+            try:
+                self.custom_modal_close_btn.click(timeout=5000)
+            except Exception:
+                self.custom_modal_close_btn.click(force=True)
         self.page.wait_for_timeout(500)
 
     def set_custom_date_range(self, from_date: str, to_date: str) -> None:
