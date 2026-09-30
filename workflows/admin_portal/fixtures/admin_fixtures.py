@@ -126,6 +126,8 @@ def _perform_admin_login(page: Page, creds) -> None:
 @pytest.fixture(scope="function")
 def admin_page(workflow_page: Page) -> Page:
     """Unauthenticated page for Admin login/public flow testing."""
+    if not hasattr(workflow_page, "error_monitor"):
+        workflow_page.error_monitor = ErrorMonitor(workflow_page)
     return workflow_page
 
 
@@ -154,8 +156,15 @@ def authenticated_admin_page(
     """Pre-authenticated page instance for Admin Console tests."""
     page = authenticated_admin_context.new_page()
     page.set_default_timeout(settings.browser.timeout)
+    page.error_monitor = ErrorMonitor(page)
     yield page
     page.close()
+
+
+@pytest.fixture(scope="function")
+def admin_error_monitor(authenticated_admin_page: Page) -> ErrorMonitor:
+    """Provide the active ErrorMonitor for the current admin test page."""
+    return authenticated_admin_page.error_monitor
 
 
 # =============================================================================
