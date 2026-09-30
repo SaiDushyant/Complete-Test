@@ -131,7 +131,13 @@ class Settings:
     baseline_url: str = field(init=False)
     live_url: str = field(init=False)
     enable_trade_tests: bool = field(init=False)
-    # MAM Specific Configurations
+    # PAMM & MAM Specific Configurations
+    pamm_master_account: str = field(init=False)
+    pamm_master_password: str = field(init=False)
+    pamm_follower_1_account: str = field(init=False)
+    pamm_follower_1_password: str = field(init=False)
+    pamm_follower_2_account: str = field(init=False)
+    pamm_follower_2_password: str = field(init=False)
     mam_master_account: str = field(init=False)
     mam_master_password: str = field(init=False)
     mam_follower_1_account: str = field(init=False)
@@ -270,6 +276,7 @@ class Settings:
             auth_state_path=client_auth_state,
         )
 
+<<<<<<< HEAD
         # 7. Copy Trading Manager & Follower Accounts
         raw_followers_str = os.getenv(
             "COPY_TRADING_FOLLOWERS_LIST",
@@ -300,13 +307,20 @@ class Settings:
             followers=followers,
         )
 
-        # 8. MAM Credentials
+        # 8. MAM & PAMM Credentials
         self.mam_master_account = (os.getenv("MAM_MASTER_ACCOUNT") or os.getenv("CLIENT_USERNAME", "10026")).strip()
         self.mam_master_password = (os.getenv("MAM_MASTER_PASSWORD") or os.getenv("CLIENT_PASSWORD", "Test@1234")).strip()
         self.mam_follower_1_account = (os.getenv("MAM_FOLLOWER_1_ACCOUNT", "10100")).strip()
         self.mam_follower_1_password = (os.getenv("MAM_FOLLOWER_1_PASSWORD", "Dhanya@123")).strip()
         self.mam_follower_2_account = (os.getenv("MAM_FOLLOWER_2_ACCOUNT", "10102")).strip()
         self.mam_follower_2_password = (os.getenv("MAM_FOLLOWER_2_PASSWORD", "Fake@123")).strip()
+
+        self.pamm_master_account = (os.getenv("PAMM_MASTER_ACCOUNT") or self.mam_master_account).strip()
+        self.pamm_master_password = (os.getenv("PAMM_MASTER_PASSWORD") or self.mam_master_password).strip()
+        self.pamm_follower_1_account = (os.getenv("PAMM_FOLLOWER_1_ACCOUNT") or self.mam_follower_1_account).strip()
+        self.pamm_follower_1_password = (os.getenv("PAMM_FOLLOWER_1_PASSWORD") or self.mam_follower_1_password).strip()
+        self.pamm_follower_2_account = (os.getenv("PAMM_FOLLOWER_2_ACCOUNT") or self.mam_follower_2_account).strip()
+        self.pamm_follower_2_password = (os.getenv("PAMM_FOLLOWER_2_PASSWORD") or self.mam_follower_2_password).strip()
 
 
 # Singleton instance for easy import across fixtures and pages
