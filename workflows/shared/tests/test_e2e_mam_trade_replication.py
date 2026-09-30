@@ -181,9 +181,10 @@ def test_e2e_mam_unfollow_stops_order_replication(browser: Browser):
     """
     # 1. Follower 2 unfollows Master in Client Portal
     ctx_f2_cp = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
-    _, mam_f2 = _login_client_portal_mam(ctx_f2_cp, FOLLOWER_2_USER, FOLLOWER_2_PASS)
+    page_f2_cp, mam_f2 = _login_client_portal_mam(ctx_f2_cp, FOLLOWER_2_USER, FOLLOWER_2_PASS)
     unfollowed = mam_f2.unfollow_manager(MASTER_USER)
     assert unfollowed in ("unfollowed", "already_unfollowed")
+    page_f2_cp.wait_for_timeout(2000)
     ctx_f2_cp.close()
 
     # 2. Open Trade Terminal sessions
