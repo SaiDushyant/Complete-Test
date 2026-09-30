@@ -276,7 +276,6 @@ class Settings:
             auth_state_path=client_auth_state,
         )
 
-<<<<<<< HEAD
         # 7. Copy Trading Manager & Follower Accounts
         raw_followers_str = os.getenv(
             "COPY_TRADING_FOLLOWERS_LIST",

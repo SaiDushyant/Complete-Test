@@ -108,6 +108,10 @@ class ClientPAMMPage(BasePage):
         expect(self.header.title_heading.first).to_have_text("PAMM", timeout=15000)
         expect(self.main_heading.first).to_be_visible(timeout=10000)
         expect(self.table).to_be_visible(timeout=10000)
+        try:
+            expect(self.table_rows.first.locator("td").first).not_to_have_text("", timeout=10000)
+        except Exception:
+            pass
 
     def is_pamm_displayed(self) -> bool:
         """Verify presence of PAMM elements."""
