@@ -20,6 +20,7 @@ can be rapidly identified and inspected.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -105,6 +106,20 @@ class TestResultRecord:
             f"Status: {self.status}\n"
             f"Reason: {self.reason}"
         )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert record to JSON-serializable dictionary."""
+        return {
+            "test_id": self.test_id,
+            "meaning": self.meaning,
+            "status": self.status,
+            "reason": self.reason,
+            "portal_name": self.portal_name,
+            "portal_slug": self.portal_slug,
+            "duration_seconds": round(self.duration, 3),
+            "timestamp": self.timestamp,
+            "error_traceback": self.error_traceback if self.status == "FAILED" else "",
+        }
 
 
 class GlobalTestLogger:
@@ -274,7 +289,7 @@ class GlobalTestLogger:
                 )
             )
 
-        # 4. Overall Execution Summary File
+        # 4. Overall Execution Summary File (TXT)
         summary_path = self.logs_dir / "global_test_summary.txt"
         summary_lines = [
             "Test Suite Execution Summary",
@@ -291,20 +306,63 @@ class GlobalTestLogger:
 
         # Group by portal
         portals: Dict[str, Dict[str, int]] = {}
+        portal_durations: Dict[str, float] = {}
         for r in self.records:
             if r.portal_name not in portals:
-                portals[r.portal_name] = {"PASSED": 0, "FAILED": 0, "SKIPPED": 0}
+                portals[r.portal_name] = {"PASSED": 0, "FAILED": 0, "SKIPPED": 0, "TOTAL": 0}
+                portal_durations[r.portal_name] = 0.0
             portals[r.portal_name][r.status] = portals[r.portal_name].get(r.status, 0) + 1
+            portals[r.portal_name]["TOTAL"] = portals[r.portal_name].get("TOTAL", 0) + 1
+            portal_durations[r.portal_name] += r.duration
 
         for portal, counts in sorted(portals.items()):
             summary_lines.append(
                 f"- {portal}: {counts.get('PASSED', 0)} Passed, "
                 f"{counts.get('FAILED', 0)} Failed, "
-                f"{counts.get('SKIPPED', 0)} Skipped"
+                f"{counts.get('SKIPPED', 0)} Skipped (Total: {counts.get('TOTAL', 0)})"
             )
 
         with open(summary_path, "w", encoding="utf-8") as f:
             f.write("\n".join(summary_lines) + "\n")
+
+        # 5. Global Structured JSON Summary Report
+        total_count = len(self.records)
+        pass_rate = round((len(passed_records) / max(total_count, 1)) * 100, 2)
+        total_dur = round(sum(r.duration for r in self.records), 3)
+
+        json_summary = {
+            "timestamp": datetime.now().isoformat(),
+            "summary": {
+                "total_tests": total_count,
+                "passed": len(passed_records),
+                "failed": len(failed_records),
+                "skipped": len(skipped_records),
+                "pass_rate_percentage": pass_rate,
+                "total_duration_seconds": total_dur,
+                "portal_breakdown": {
+                    portal: {
+                        "total": counts.get("TOTAL", 0),
+                        "passed": counts.get("PASSED", 0),
+                        "failed": counts.get("FAILED", 0),
+                        "skipped": counts.get("SKIPPED", 0),
+                        "duration_seconds": round(portal_durations.get(portal, 0.0), 3),
+                    }
+                    for portal, counts in sorted(portals.items())
+                },
+            },
+            "failed_tests": [r.to_dict() for r in failed_records],
+            "skipped_tests": [r.to_dict() for r in skipped_records],
+            "all_tests": [r.to_dict() for r in self.records],
+        }
+
+        # Save to both standard names for compatibility
+        for target_json_file in ("global_test_results.json", "test_results.json", "summary_report.json"):
+            json_file_path = self.logs_dir / target_json_file
+            try:
+                with open(json_file_path, "w", encoding="utf-8") as f:
+                    json.dump(json_summary, f, indent=2, ensure_ascii=False)
+            except Exception as json_err:
+                logger.warning(f"Failed to write JSON summary report to {json_file_path}: {json_err}")
 
     def finalize(self) -> None:
         """Called at pytest session finish to ensure all logs are flushed."""

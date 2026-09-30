@@ -160,7 +160,7 @@ class Settings:
             directory.mkdir(parents=True, exist_ok=True)
 
         # 2. Browser Settings
-        headless = _get_bool("BROWSER_HEADLESS", _get_bool("CRAWLER_HEADLESS", False))
+        headless = _get_bool("BROWSER_HEADLESS", _get_bool("CRAWLER_HEADLESS", True))
         slow_mo = _get_int("BROWSER_SLOW_MO", 0)
         timeout = _get_int("BROWSER_TIMEOUT", _get_int("CRAWLER_TIMEOUT", 30000))
         viewport_w = _get_int("VIEWPORT_WIDTH", 1280)

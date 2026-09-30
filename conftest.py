@@ -49,6 +49,28 @@ def live_url(base_url):
     return os.getenv("LIVE_URL") or base_url
 
 
+def pytest_addoption(parser):
+    """Register CLI options for browser execution."""
+    try:
+        parser.addoption(
+            "--headed",
+            action="store_true",
+            default=False,
+            help="Run tests in headed browser mode (default: headless)",
+        )
+    except Exception:
+        pass
+    try:
+        parser.addoption(
+            "--slowmo",
+            action="store",
+            default=None,
+            help="Slow down test execution in milliseconds",
+        )
+    except Exception:
+        pass
+
+
 # ============================================================
 # PLAYWRIGHT & BROWSER
 # ============================================================
@@ -61,10 +83,20 @@ def playwright():
         yield p
 
 @pytest.fixture(scope="session")
-def browser(playwright: Playwright):
+def browser(playwright: Playwright, pytestconfig: pytest.Config):
+    headed_flag = False
+    try:
+        headed_flag = bool(pytestconfig.getoption("--headed"))
+    except Exception:
+        pass
+
+    from config.settings import settings
+    headless = False if headed_flag else settings.browser.headless
+    slow_mo = 0 if headless else (settings.browser.slow_mo or 300)
+
     browser_instance = playwright.chromium.launch(
-        headless=False,
-        slow_mo=300,
+        headless=headless,
+        slow_mo=slow_mo,
     )
     yield browser_instance
     browser_instance.close()

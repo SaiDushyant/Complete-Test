@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Run DOM Regression & Drift Detection Test Suite
+# Run DOM Structural Regression & Drift Detection Test Suite
+# Default: Headless. Pass --headed to run with a visible browser.
 # ==============================================================================
 set -e
 
@@ -9,16 +10,12 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 cd "${ROOT_DIR}"
 
-echo "=================================================="
-echo "🛡️ Running DOM Regression & Accuracy Test Suite"
-echo "=================================================="
-
-if command -v pytest >/dev/null 2>&1; then
-    PYTEST_CMD="pytest"
-elif [ -f "/opt/miniconda3/envs/playwright-env/bin/pytest" ]; then
-    PYTEST_CMD="/opt/miniconda3/envs/playwright-env/bin/pytest"
+if command -v python3 >/dev/null 2>&1; then
+    PYTHON_CMD="python3"
+elif [ -f "/opt/miniconda3/envs/playwright-env/bin/python" ]; then
+    PYTHON_CMD="/opt/miniconda3/envs/playwright-env/bin/python"
 else
-    PYTEST_CMD="python -m pytest"
+    PYTHON_CMD="python"
 fi
 
-${PYTEST_CMD} ui_regression/tests "$@"
+${PYTHON_CMD} "${SCRIPT_DIR}/run_ui_tests.py" "$@"

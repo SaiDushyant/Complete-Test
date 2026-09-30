@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Run Admin Portal Behavioral Workflow Tests (Developer 2)
+# Run Admin Portal Behavioral Workflow Tests
+# Default: Headless. Pass --headed to run with a visible browser.
 # ==============================================================================
 set -e
 
@@ -9,31 +10,12 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 cd "${ROOT_DIR}"
 
-echo "=================================================="
-echo "🚀 Running Admin Portal Workflow Test Suite"
-echo "=================================================="
-
-if command -v pytest >/dev/null 2>&1; then
-    PYTEST_CMD="pytest"
-elif [ -f "/opt/miniconda3/envs/playwright-env/bin/pytest" ]; then
-    PYTEST_CMD="/opt/miniconda3/envs/playwright-env/bin/pytest"
+if command -v python3 >/dev/null 2>&1; then
+    PYTHON_CMD="python3"
+elif [ -f "/opt/miniconda3/envs/playwright-env/bin/python" ]; then
+    PYTHON_CMD="/opt/miniconda3/envs/playwright-env/bin/python"
 else
-    PYTEST_CMD="python -m pytest"
+    PYTHON_CMD="python"
 fi
 
-if [ $# -eq 0 ]; then
-    ${PYTEST_CMD} workflows/admin_portal/tests
-else
-    HAS_PATH=false
-    for arg in "$@"; do
-        if [[ ! "$arg" =~ ^- ]]; then
-            HAS_PATH=true
-            break
-        fi
-    done
-    if [ "$HAS_PATH" = true ]; then
-        ${PYTEST_CMD} "$@"
-    else
-        ${PYTEST_CMD} workflows/admin_portal/tests "$@"
-    fi
-fi
+${PYTHON_CMD} "${SCRIPT_DIR}/run_admin_tests.py" "$@"
