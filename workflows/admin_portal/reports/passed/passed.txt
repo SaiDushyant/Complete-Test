@@ -1410,4 +1410,34 @@ Meaning: The Manager table row action buttons display correct Edit and Delete to
 Status: PASSED
 Reason: Test completed successfully
 
-Total Passed: 282
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_role_creation_and_custom_permission_access
+Meaning: The Admin Portal test completed successfully.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_manager_lifecycle_crud
+Meaning: The Admin Portal test completed successfully.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_user_group_lifecycle_and_subgroup_modal
+Meaning: The Admin Portal test completed successfully.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_role_and_account_permission_reflection
+Meaning: The Admin Portal test completed successfully.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_list_edit_and_rollback
+Meaning: The Admin Portal test completed successfully.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_configuration_tabs_and_rollback
+Meaning: The Admin Portal test completed successfully.
+Status: PASSED
+Reason: Test completed successfully
+
+Total Passed: 288
