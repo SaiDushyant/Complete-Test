@@ -1,77 +1,25 @@
 Admin Portal Test Results
 
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_topbar_branding_and_title
-Meaning: The Manager Management topbar renders brand logo, page title 'Manager Management', and sidebar toggle button.
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_role_and_account_permission_reflection
+Meaning: The Admin Portal test completed successfully.
 Status: PASSED
 
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_topbar_sidebar_toggle_action
-Meaning: Clicking the vertical menu toggle button on Manager Management dynamically collapses or expands the sidebar.
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_manager_lifecycle_crud
+Meaning: The Admin Portal test completed successfully.
 Status: PASSED
 
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_theme_toggle_switches_modes
-Meaning: The theme switch button on Manager Management toggles the layout mode between dark and light.
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_user_group_lifecycle_and_subgroup_modal
+Meaning: The Admin Portal test completed successfully.
 Status: PASSED
 
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_notifications_dropdown
-Meaning: The notifications button on Manager Management opens the dropdown menu with badge and mark all read link.
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_list_edit_and_rollback
+Meaning: The Admin Portal test completed successfully.
 Status: PASSED
 
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_profile_dropdown_and_logout_link
-Meaning: The user profile menu on Manager Management displays admin details and a working Logout link.
+Test: workflows/admin_portal/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_configuration_tabs_and_rollback
+Meaning: The Admin Portal test completed successfully.
 Status: PASSED
 
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_permissions_hidden_inputs
-Meaning: The page-title-box hidden inputs define edit and delete manager permissions with active values.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_add_manager_button_and_modal
-Meaning: The Manager Management page displays Add Manager button and clicking opens the creation modal.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_add_modal_form_fields
-Meaning: The Add Manager modal renders all required form inputs: username, email, password, and submit button.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_table_card_and_column_headers
-Meaning: The Manager Management table card displays 5 column headers (S.No, Manager Name, Email, Password, Action) and data rows.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_table_sorting_by_manager_name
-Meaning: Clicking the Manager Name column header toggles DataTable sorting order between ascending and descending.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_table_rows_data_integrity
-Meaning: The Manager Management table rows display valid managers with sequential S.No, names, emails, and action buttons.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_passwords_are_masked
-Meaning: The Manager Management table rows display securely masked passwords for credentials protection.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_row_action_button_tooltips
-Meaning: The Manager table row action buttons display correct Edit and Delete tooltips, aria-labels, and icons.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_edit_manager_action_modal
-Meaning: Clicking the edit icon opens the Manager modal and close button dismisses it cleanly.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_delete_action_triggers_sweetalert
-Meaning: Clicking the delete icon on a manager triggers the SweetAlert2 confirmation dialog and cancel dismisses it safely.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_length_dropdown_selection
-Meaning: Changing entries per page dropdown updates visible managers count and pagination status info.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_search_filtering
-Meaning: Searching filters managers by name and displays empty state text when unmatched.
-Status: PASSED
-
-Test: workflows/admin_portal/tests/test_admin_manager_management.py::test_admin_manager_management_pagination_controls
-Meaning: Pagination controls traverse between page 1 and page 2 correctly when length is set to 10.
-Status: PASSED
-
-Total: 18
-Passed: 18
+Total: 5
+Passed: 5
 Failed: 0
