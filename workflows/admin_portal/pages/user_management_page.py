@@ -274,3 +274,59 @@ class UserManagementPage(BasePage):
         control = self.user_rows.nth(row_index).locator(".dtr-control")
         control.click()
         self.page.wait_for_timeout(300)
+
+    def find_user(self, email_or_id: str) -> bool:
+        """Search for a user by email or account ID and verify existence in the table."""
+        self.search_user(email_or_id)
+        return self.get_user_count() > 0
+
+    def get_user_row(self, email_or_id: str) -> Locator:
+        """Locate the row containing the specified email or account ID."""
+        self.search_user(email_or_id)
+        row = self.page.locator(f"#datatable tbody tr:has-text('{email_or_id}')").first
+        return row
+
+    def get_user_account_id(self, email: str) -> str:
+        """Extract the AC. ID (column 3) for the user matching the email."""
+        row = self.get_user_row(email)
+        cells = row.locator("td").all()
+        if len(cells) > 3:
+            return cells[3].inner_text().strip()
+        return ""
+
+    def get_user_email_verification_status(self, email: str) -> str:
+        """Return the current selection text ('Verified' or 'Not Verified') for Email Verification."""
+        row = self.get_user_row(email)
+        select = row.locator("select.userEmailVerification")
+        if select.count() > 0:
+            checked = select.locator("option:checked")
+            if checked.count() > 0:
+                return checked.inner_text().strip()
+            return select.input_value()
+        # Fallback to column text
+        cells = row.locator("td").all()
+        if len(cells) > 7:
+            return cells[7].inner_text().strip()
+        return ""
+
+    def get_user_account_type(self, email: str) -> str:
+        """Return the current account type selected ('Standard' or 'Cent')."""
+        row = self.get_user_row(email)
+        select = row.locator("select.updateAccountType")
+        if select.count() > 0:
+            checked = select.locator("option:checked")
+            if checked.count() > 0:
+                return checked.inner_text().strip()
+            return select.input_value()
+        cells = row.locator("td").all()
+        if len(cells) > 9:
+            return cells[9].inner_text().strip()
+        return ""
+
+    def get_user_mobile(self, email: str) -> str:
+        """Return the mobile number string for the user row."""
+        row = self.get_user_row(email)
+        cells = row.locator("td").all()
+        if len(cells) > 28:
+            return cells[28].inner_text().strip()
+        return ""

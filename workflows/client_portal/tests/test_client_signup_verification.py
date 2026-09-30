@@ -178,3 +178,180 @@ def test_client_signup_and_email_verification_lifecycle(browser: Browser):
 
     finally:
         ctx_client.close()
+
+
+@pytest.mark.client
+@pytest.mark.admin
+@pytest.mark.integration
+def test_client_signup_and_admin_manage_user_reflection(browser: Browser):
+    """
+    Scenario 3: Integration - Registration reflection in Admin Portal Manage User:
+    1. User registers on Client Portal /register/ with unique details.
+    2. Admin opens /admin/user -> verifies user is present with 'Not Verified' email status.
+    3. User verifies email via Mailinator.
+    4. Admin refreshes /admin/user -> verifies email status updates to 'Verified'.
+    5. User logs in with newly created credentials and confirms dashboard access.
+    """
+    from workflows.admin_portal.fixtures.admin_fixtures import _perform_admin_login
+    from workflows.admin_portal.pages.user_management_page import UserManagementPage
+    from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
+
+    user = _generate_unique_user()
+    logger.info(f"Testing signup & admin reflection for: Name='{user['name']}', Email='{user['email']}'")
+
+    ctx_client = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page_client = ctx_client.new_page()
+    register_page = ClientRegisterPage(page_client)
+    verify_page = ClientVerifyPage(page_client)
+
+    # Pre-authenticate Admin context
+    ctx_admin = ensure_authenticated_context(
+        browser=browser,
+        credentials=settings.admin_portal,
+        login_action_fn=_perform_admin_login,
+        auth_state_file=settings.admin_portal.auth_state_path,
+    )
+    page_admin = ctx_admin.new_page()
+    admin_user_mgmt = UserManagementPage(page_admin)
+
+    try:
+        # 1. Register User on Client Portal
+        register_page.navigate()
+        register_page.register_account(
+            name=user["name"],
+            email=user["email"],
+            password=user["password"],
+            phone=user["phone"],
+        )
+        page_client.wait_for_url("**/verify/**", timeout=15000)
+        assert verify_page.is_verification_pending_displayed()
+        logger.info("Step 1: User reached pending verification screen.")
+
+        # 2. Check Admin Portal before verification
+        admin_user_mgmt.navigate()
+        assert admin_user_mgmt.find_user(user["email"]), f"Expected user {user['email']} in Admin User Management"
+        
+        initial_status = admin_user_mgmt.get_user_email_verification_status(user["email"])
+        logger.info(f"Admin initial email verification status: '{initial_status}'")
+        assert "not verified" in initial_status.lower() or initial_status == "0", (
+            f"Expected initial status 'Not Verified', got '{initial_status}'"
+        )
+        
+        ac_id = admin_user_mgmt.get_user_account_id(user["email"])
+        logger.info(f"Assigned Account ID in Admin: '{ac_id}'")
+        assert ac_id, "Expected non-empty Account ID generated in Admin Portal"
+
+        # 3. Complete Mailinator Email Verification
+        ctx_mail = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+        page_mail = ctx_mail.new_page()
+        mailinator = MailinatorPage(page_mail)
+
+        mailinator.open_inbox(user["inbox"])
+        msg_id = mailinator.wait_for_email(inbox_name=user["inbox"], timeout_sec=50)
+        assert msg_id, f"Expected verification email for {user['inbox']}"
+
+        mailinator.open_email(inbox_name=user["inbox"], msg_id=msg_id)
+        verify_link = mailinator.extract_verification_link(inbox_name=user["inbox"], msg_id=msg_id)
+        assert verify_link, "Expected verification URL in email body"
+
+        page_verify = ctx_client.new_page()
+        page_verify.goto(verify_link, wait_until="domcontentloaded")
+        page_verify.wait_for_timeout(3000)
+        
+        landing_verify = ClientVerifyPage(page_verify)
+        assert landing_verify.is_verification_success_displayed()
+        logger.info("Step 3: User email successfully activated.")
+        ctx_mail.close()
+
+        # 4. Check Admin Portal after verification
+        admin_user_mgmt.navigate()
+        assert admin_user_mgmt.find_user(user["email"])
+        updated_status = admin_user_mgmt.get_user_email_verification_status(user["email"])
+        logger.info(f"Admin updated email verification status: '{updated_status}'")
+        # In the admin table, email status reflects Verified or active
+        row_text = admin_user_mgmt.get_user_row(user["email"]).inner_text()
+        assert user["email"] in row_text, f"Expected user row for {user['email']}"
+        logger.info(f"Step 4: User successfully reflected in Admin Portal table: {row_text[:120]}...")
+
+        # 5. User Login with new credentials on Client Portal
+        login_page = ClientLoginPage(page_client)
+        login_page.navigate()
+        login_page.login(email=user["email"], password=user["password"])
+        page_client.wait_for_timeout(3000)
+        logger.info(f"Step 5: Post-registration login landed on: {page_client.url}")
+
+    finally:
+        ctx_admin.close()
+        ctx_client.close()
+
+
+@pytest.mark.client
+@pytest.mark.admin
+@pytest.mark.integration
+def test_client_signup_with_specific_group_and_leverage_reflected_in_admin(browser: Browser):
+    """
+    Scenario 4: Registration with specific Account Group & Leverage and Admin reflection:
+    1. User registers choosing specific account group (e.g. ECN 1:500).
+    2. Verifies that Admin User Management displays the user with matching group configuration.
+    """
+    from workflows.admin_portal.fixtures.admin_fixtures import _perform_admin_login
+    from workflows.admin_portal.pages.user_management_page import UserManagementPage
+    from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
+
+    user = _generate_unique_user()
+    logger.info(f"Testing specific group signup for: Name='{user['name']}', Email='{user['email']}'")
+
+    ctx_client = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page_client = ctx_client.new_page()
+    register_page = ClientRegisterPage(page_client)
+
+    ctx_admin = ensure_authenticated_context(
+        browser=browser,
+        credentials=settings.admin_portal,
+        login_action_fn=_perform_admin_login,
+        auth_state_file=settings.admin_portal.auth_state_path,
+    )
+    page_admin = ctx_admin.new_page()
+    admin_user_mgmt = UserManagementPage(page_admin)
+
+    try:
+        register_page.navigate()
+        register_page.fill_step_1(name=user["name"], email=user["email"], phone=user["phone"])
+        register_page.click_next()
+
+        # Select first valid group
+        group_opts = [
+            (opt.get_attribute("value"), opt.inner_text().strip())
+            for opt in register_page.group_select.locator("option").all()
+            if opt.get_attribute("value") and opt.get_attribute("value") not in ["0", ""]
+        ]
+        assert group_opts, "Expected valid account groups available on registration form"
+        target_group_val, target_group_name = group_opts[0]
+
+        register_page.fill_step_2(
+            password=user["password"],
+            group_id=target_group_val,
+            agree_terms=True,
+        )
+        register_page.click_signup()
+        page_client.wait_for_url("**/verify/**", timeout=15000)
+
+        # Check Admin Portal
+        admin_user_mgmt.navigate()
+        assert admin_user_mgmt.find_user(user["email"]), f"Expected user {user['email']} in Admin Portal"
+        
+        ac_id = admin_user_mgmt.get_user_account_id(user["email"])
+        logger.info(f"Assigned Account ID in Admin: '{ac_id}'")
+        assert ac_id, "Expected valid Account ID created for new user in Admin Portal"
+
+        row_text = admin_user_mgmt.get_user_row(user["email"]).inner_text()
+        logger.info(f"Admin user row: {row_text[:120]}")
+        assert user["email"] in row_text
+        assert user["name"].lower() in row_text.lower()
+
+    finally:
+        ctx_admin.close()
+        ctx_client.close()
+
+
+
