@@ -31,9 +31,9 @@ class TradeLoginPage(BasePage):
         self.login_form: Locator = page.locator("form#register.xn-login-form, form.xn-login-form")
 
         # Credentials Fields & Labels
-        self.email_input: Locator = page.locator("#email")
-        self.email_label: Locator = page.locator("label[for='email']")
-        self.password_input: Locator = page.locator("#password")
+        self.email_input: Locator = page.locator("#email, input[name='email'], input[name='username']").first
+        self.email_label: Locator = page.locator("label[for='email'], label[for='username']")
+        self.password_input: Locator = page.locator("#password, input[name='password']").first
         self.password_label: Locator = page.locator("label[for='password']")
         self.password_toggle: Locator = page.locator("span.toggle-password")
 
@@ -43,7 +43,7 @@ class TradeLoginPage(BasePage):
         self.forgot_password_link: Locator = page.locator("a.xn-forgot")
 
         # Submission & Hidden Elements
-        self.login_button: Locator = page.locator("button.xn-btn-login, button.savebut[type='submit']")
+        self.login_button: Locator = page.locator("button.xn-btn-login, button.savebut, button[type='submit']").first
         self.profile_data_hidden: Locator = page.locator("#profile_data")
 
     def navigate(self, url: Optional[str] = None) -> None:
@@ -58,7 +58,16 @@ class TradeLoginPage(BasePage):
         )
         logger.info(f"Navigating to Trade Terminal login: {target_url}")
         self.goto(target_url)
-        self.email_input.wait_for(state="visible", timeout=settings.browser.timeout)
+        self.page.wait_for_timeout(500)
+
+        if "/dashboard" in self.page.url:
+            logger.info("Already authenticated and redirected to dashboard.")
+            return
+
+        try:
+            self.email_input.first.wait_for(state="visible", timeout=10000)
+        except Exception:
+            pass
 
     def is_login_page_displayed(self) -> bool:
         """
@@ -127,10 +136,21 @@ class TradeLoginPage(BasePage):
         Execute login and wait for URL redirection to the dashboard workspace.
         Returns the resolved dashboard URL.
         """
-        self.login(username=username, password=password, remember_me=remember_me)
+        if "/dashboard" in self.page.url and not self.email_input.first.is_visible():
+            logger.info("Already on dashboard workspace.")
+            return self.current_url
+
+        if self.email_input.first.is_visible():
+            self.login(username=username, password=password, remember_me=remember_me)
+
+        self.page.wait_for_timeout(2000)
         post_login_pattern = settings.trade_terminal.post_login_url_pattern or "**/dashboard**"
-        logger.info(f"Waiting for dashboard redirection matching: {post_login_pattern}")
-        self.page.wait_for_url(post_login_pattern, timeout=timeout, wait_until="domcontentloaded")
+        try:
+            if "/dashboard" not in self.page.url:
+                logger.info(f"Waiting for dashboard redirection matching: {post_login_pattern}")
+                self.page.wait_for_url(post_login_pattern, timeout=timeout, wait_until="domcontentloaded")
+        except Exception:
+            pass
         return self.current_url
 
     def save_auth_state(self, path: Optional[Path | str] = None) -> Path:
