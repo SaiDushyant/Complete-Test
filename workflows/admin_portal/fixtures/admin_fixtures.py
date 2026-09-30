@@ -6,31 +6,102 @@ Maintained by Developer 2 (Admin Portal Owner).
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Generator
 
 import pytest
-from playwright.sync_api import Browser, BrowserContext, Page
+from playwright.sync_api import Browser, BrowserContext, Page, Playwright
 
 from config.settings import settings
+from workflows.admin_portal.pages.account_requests_page import AccountRequestsPage
 from workflows.admin_portal.pages.admin_dashboard_page import AdminDashboardPage
 from workflows.admin_portal.pages.admin_login_page import AdminLoginPage
+from workflows.admin_portal.pages.copy_trading_page import CopyTradingPage
+from workflows.admin_portal.pages.leads_report_page import LeadsReportPage
+from workflows.admin_portal.pages.lp_commission_log_page import LpCommissionLogPage
+from workflows.admin_portal.pages.lp_execution_config_page import LpExecutionConfigPage
+from workflows.admin_portal.pages.lp_transaction_page import LpTransactionPage
+from workflows.admin_portal.pages.manage_leads_page import ManageLeadsPage
+from workflows.admin_portal.pages.mam_page import MamPage
+from workflows.admin_portal.pages.pamm_page import PammPage
+from workflows.admin_portal.pages.private_copy_trading_page import PrivateCopyTradingPage
+from workflows.admin_portal.pages.role_permission_page import RolePermissionPage
+from workflows.admin_portal.pages.user_document_page import UserDocumentPage
 from workflows.admin_portal.pages.user_management_page import UserManagementPage
+from workflows.admin_portal.pages.manager_management_page import ManagerManagementPage
+from workflows.admin_portal.pages.manager_user_management_page import ManagerUserManagementPage
 from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 
 
-def _perform_admin_login(page: Page, creds) -> None:
-    """Helper used to generate fresh Admin authentication session."""
-    login_page = AdminLoginPage(page)
-    login_page.navigate(creds.login_url or creds.base_url)
-    login_page.login(
-        username=creds.username,
-        password=creds.password,
+@pytest.fixture(scope="session")
+def workflow_browser(
+    playwright: Playwright,
+    pytestconfig: pytest.Config,
+) -> Generator[Browser, None, None]:
+    """
+    Session-scoped Playwright Browser instance for Admin Portal tests.
+    Respects pytest CLI flags (--headed, --slowmo) as well as settings.
+    """
+    is_headed = bool(getattr(pytestconfig.option, "headed", False))
+    slow_mo_val = getattr(pytestconfig.option, "slowmo", 0) or settings.browser.slow_mo
+
+    headless = False if is_headed else settings.browser.headless
+
+    browser = playwright.chromium.launch(
+        headless=headless,
+        slow_mo=slow_mo_val,
     )
-    if creds.post_login_url_pattern:
-        try:
-            page.wait_for_url(creds.post_login_url_pattern, timeout=15000)
-        except Exception:
-            pass
+    yield browser
+    browser.close()
+
+
+LOGIN_RESULT_FILE = (
+    Path(__file__).resolve().parents[1]
+    / "reports"
+    / "loginresult.txt"
+)
+
+
+def _write_login_result(status: str, reason: str = "") -> None:
+    """Overwrite the Admin login result file."""
+    LOGIN_RESULT_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    LOGIN_RESULT_FILE.write_text(
+        f"Admin login result\n"
+        f"Status: {status}\n"
+        f"Reason: {reason}\n",
+        encoding="utf-8",
+    )
+
+
+def _perform_admin_login(page: Page, creds) -> None:
+    """Perform Admin login and write the result to loginresult.txt."""
+    login_page = AdminLoginPage(page)
+
+    try:
+        login_page.navigate(creds.login_url or creds.base_url)
+        login_page.login(
+            username=creds.username,
+            password=creds.password,
+        )
+
+        if creds.post_login_url_pattern:
+            page.wait_for_url(
+                creds.post_login_url_pattern,
+                timeout=15000,
+            )
+
+        _write_login_result(
+            "PASSED",
+            "Admin dashboard opened successfully",
+        )
+
+    except Exception as exc:
+        _write_login_result(
+            "FAILED",
+            str(exc),
+        )
+        raise
 
 
 @pytest.fixture(scope="function")
@@ -40,7 +111,9 @@ def admin_page(workflow_page: Page) -> Page:
 
 
 @pytest.fixture(scope="function")
-def authenticated_admin_context(workflow_browser: Browser) -> Generator[BrowserContext, None, None]:
+def authenticated_admin_context(
+    workflow_browser: Browser,
+) -> Generator[BrowserContext, None, None]:
     """
     Browser context pre-authenticated with Admin Console permissions.
     Reuses auth_state_admin.json when valid.
@@ -51,32 +124,163 @@ def authenticated_admin_context(workflow_browser: Browser) -> Generator[BrowserC
         login_action_fn=_perform_admin_login,
         auth_state_file=settings.admin_portal.auth_state_path,
     )
+
     yield context
     context.close()
 
 
 @pytest.fixture(scope="function")
-def authenticated_admin_page(authenticated_admin_context: BrowserContext) -> Generator[Page, None, None]:
+def authenticated_admin_page(
+    authenticated_admin_context: BrowserContext,
+) -> Generator[Page, None, None]:
     """Pre-authenticated page instance for Admin Console tests."""
     page = authenticated_admin_context.new_page()
     page.set_default_timeout(settings.browser.timeout)
+
     yield page
     page.close()
 
 
 @pytest.fixture(scope="function")
-def admin_login_page(admin_page: Page) -> AdminLoginPage:
+def admin_login_page(
+    admin_page: Page,
+) -> AdminLoginPage:
     """Provide an unauthenticated AdminLoginPage object."""
     return AdminLoginPage(admin_page)
 
 
 @pytest.fixture(scope="function")
-def admin_dashboard_page(authenticated_admin_page: Page) -> AdminDashboardPage:
+def admin_dashboard_page(
+    authenticated_admin_page: Page,
+) -> AdminDashboardPage:
     """Provide an authenticated AdminDashboardPage object."""
     return AdminDashboardPage(authenticated_admin_page)
 
 
 @pytest.fixture(scope="function")
-def user_management_page(authenticated_admin_page: Page) -> UserManagementPage:
+def user_management_page(
+    authenticated_admin_page: Page,
+) -> UserManagementPage:
     """Provide an authenticated UserManagementPage object."""
     return UserManagementPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def copy_trading_page(
+    authenticated_admin_page: Page,
+) -> CopyTradingPage:
+    """Provide an authenticated CopyTradingPage object."""
+    return CopyTradingPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def private_copy_trading_page(
+    authenticated_admin_page: Page,
+) -> PrivateCopyTradingPage:
+    """Provide an authenticated PrivateCopyTradingPage object."""
+    return PrivateCopyTradingPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def mam_page(
+    authenticated_admin_page: Page,
+) -> MamPage:
+    """Provide an authenticated MamPage object."""
+    return MamPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def pamm_page(
+    authenticated_admin_page: Page,
+) -> PammPage:
+    """Provide an authenticated PammPage object."""
+    return PammPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def leads_report_page(
+    authenticated_admin_page: Page,
+) -> LeadsReportPage:
+    """Provide an authenticated LeadsReportPage object."""
+    return LeadsReportPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def manage_leads_page(
+    authenticated_admin_page: Page,
+) -> ManageLeadsPage:
+    """Provide an authenticated ManageLeadsPage object."""
+    return ManageLeadsPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def lp_transaction_page(
+    authenticated_admin_page: Page,
+) -> LpTransactionPage:
+    """Provide an authenticated LpTransactionPage object."""
+    return LpTransactionPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def lp_commission_log_page(
+    authenticated_admin_page: Page,
+) -> LpCommissionLogPage:
+    """Provide an authenticated LpCommissionLogPage object."""
+    return LpCommissionLogPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def lp_execution_config_page(
+    authenticated_admin_page: Page,
+) -> LpExecutionConfigPage:
+    """Provide an authenticated LpExecutionConfigPage object."""
+    return LpExecutionConfigPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def account_requests_page(
+    authenticated_admin_page: Page,
+) -> AccountRequestsPage:
+    """Provide an authenticated AccountRequestsPage object."""
+    return AccountRequestsPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def user_document_page(
+    authenticated_admin_page: Page,
+) -> UserDocumentPage:
+    """Provide an authenticated UserDocumentPage object."""
+    return UserDocumentPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def role_permission_page(
+    authenticated_admin_page: Page,
+) -> RolePermissionPage:
+    """Provide an authenticated RolePermissionPage object."""
+    return RolePermissionPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def manager_user_management_page(
+    authenticated_admin_page: Page,
+) -> ManagerUserManagementPage:
+    """Provide an authenticated ManagerUserManagementPage object."""
+    return ManagerUserManagementPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def manager_management_page(
+    authenticated_admin_page: Page,
+) -> ManagerManagementPage:
+    """Provide an authenticated ManagerManagementPage object."""
+    return ManagerManagementPage(authenticated_admin_page)
+
+
+
+
+
+
+
+
+

@@ -78,12 +78,18 @@ class BasePage:
         logger.info(f"Navigating to: {url} (wait_until={wait_until})")
         for attempt in range(2):
             try:
-                self.page.goto(url, wait_until=wait_until, timeout=timeout)
+                current_wait_until = "commit" if attempt > 0 else wait_until
+                self.page.goto(url, wait_until=current_wait_until, timeout=timeout)
+                if current_wait_until == "commit":
+                    try:
+                        self.page.wait_for_load_state("domcontentloaded", timeout=15000)
+                    except Exception:
+                        pass
                 return
             except Exception as e:
                 err_str = str(e).lower()
                 if attempt == 0 and ("timeout" in err_str or "net::" in err_str):
-                    logger.warning(f"Navigation timed out on {url}, retrying once: {e}")
+                    logger.warning(f"Navigation timed out on {url}, retrying once with commit: {e}")
                     self.page.wait_for_timeout(1000)
                     continue
                 raise
