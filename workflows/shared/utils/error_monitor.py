@@ -28,9 +28,10 @@ class ErrorMonitor:
     def _handle_console(self, msg: ConsoleMessage) -> None:
         """Capture browser console.error messages."""
         if msg.type == "error":
-            # Ignore harmless third-party favicon or expected websocket close notices if any
+            # Ignore harmless third-party favicon, expected websocket close notices, or external analytics CSP blocks
             text = msg.text
-            if not any(ign in text.lower() for ign in ["favicon.ico", "websocket closed clean"]):
+            ignored_tokens = ["favicon.ico", "websocket closed clean", "google-analytics.com", "analytics.js"]
+            if not any(ign in text.lower() for ign in ignored_tokens):
                 self.console_errors.append(f"Console Error: {text}")
 
     def _handle_pageerror(self, exc: Exception) -> None:

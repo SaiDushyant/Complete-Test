@@ -90,6 +90,13 @@ class ClientMAMPage(BasePage):
         self.modal_cancel_btn = self.follow_modal.locator("button").filter(has_text="Cancel").first
         self.modal_confirm_btn = self.follow_modal.locator("button").filter(has_text=re.compile(r"CONFIRM\s*FOLLOW", re.I)).first
 
+        # Unfollow MAM Modal Dialog
+        self.unfollow_modal = page.locator("div.fixed.inset-0.z-50").filter(
+            has_text=re.compile(r"Unfollow\s*Manager", re.I)
+        )
+        self.unfollow_cancel_btn = self.unfollow_modal.locator("button").filter(has_text="Cancel").first
+        self.unfollow_confirm_btn = self.unfollow_modal.locator("button").filter(has_text=re.compile(r"CONFIRM\s*UNFOLLOW", re.I)).first
+
     def navigate(self) -> None:
         """Navigate to MAM view via sidebar."""
         target_url = f"{settings.client_portal.base_url.rstrip('/')}/client-portal"
@@ -118,6 +125,8 @@ class ClientMAMPage(BasePage):
         expect(self.my_followers_btn).to_be_visible(timeout=5000)
         self.my_followers_btn.click()
         expect(self.followers_active_btn).to_be_visible(timeout=5000)
+        expect(self.table.locator("th").first).to_have_text(re.compile(r"Follower\s*Name", re.I), timeout=10000)
+        self.page.wait_for_timeout(1000)
 
     def switch_to_mam_manager(self) -> None:
         """Switch back to MAM Manager view."""
@@ -127,6 +136,7 @@ class ClientMAMPage(BasePage):
 
     def get_followers_table_headers(self) -> List[str]:
         """Return column headers of followers table."""
+        expect(self.table.locator("th").first).to_have_text(re.compile(r"Follower\s*Name", re.I), timeout=10000)
         return [th.inner_text().strip() for th in self.page.locator("main table th").all()]
 
     def get_followers_count(self) -> int:
@@ -150,12 +160,12 @@ class ClientMAMPage(BasePage):
     def filter_by_search(self, query: str) -> None:
         """Filter table by manager name."""
         self.search_input.fill(query)
-        self.page.wait_for_timeout(300)
+        self.page.wait_for_timeout(1000)
 
     def clear_search(self) -> None:
         """Clear search filter."""
         self.search_input.fill("")
-        self.page.wait_for_timeout(300)
+        self.page.wait_for_timeout(1000)
 
     def open_statistics_modal(self, row_index: int = 0) -> None:
         """Click Statistics button on a MAM row and verify modal opens."""
@@ -164,6 +174,10 @@ class ClientMAMPage(BasePage):
         expect(stats_btn).to_be_visible(timeout=5000)
         stats_btn.click()
         expect(self.statistics_modal.first).to_be_visible(timeout=5000)
+        loading = self.statistics_modal.first.get_by_text("Loading statistics...")
+        if loading.is_visible():
+            expect(loading).not_to_be_visible(timeout=10000)
+        self.page.wait_for_timeout(500)
 
     def close_statistics_modal(self) -> None:
         """Close Statistics modal via dismiss button."""
@@ -176,7 +190,7 @@ class ClientMAMPage(BasePage):
         """Click Follow on a MAM row and verify modal."""
         row = self.table_rows.nth(row_index)
         manager_name = row.locator("td").first.inner_text().strip().split("\n")[0]
-        follow_btn = row.locator("button").filter(has_text="Follow").first
+        follow_btn = row.locator("button").filter(has_text=re.compile(r"^Follow$", re.I)).first
         expect(follow_btn).to_be_visible(timeout=5000)
         follow_btn.click()
         expect(self.follow_modal.first).to_be_visible(timeout=5000)
@@ -188,3 +202,90 @@ class ClientMAMPage(BasePage):
             expect(self.modal_cancel_btn).to_be_visible(timeout=5000)
             self.modal_cancel_btn.click()
             expect(self.follow_modal.first).not_to_be_visible(timeout=5000)
+
+    def find_manager_row(self, identifier: str) -> Locator:
+        """
+        Locate manager row by account ID or manager name.
+        Uses search bar to ensure manager is visible.
+        """
+        query = "Me" if str(identifier) in ("10026", "Me") else str(identifier)
+        self.search_input.fill(query)
+        self.page.wait_for_timeout(1000)
+
+        row = self.table_rows.filter(has_text=identifier).first
+        expect(row).to_be_visible(timeout=10000)
+        return row
+
+    def follow_manager(self, identifier: str = "10026") -> str:
+        """
+        Follow specified manager.
+        Returns:
+            'followed': newly followed
+            'already_following': was already followed
+        """
+        row = self.find_manager_row(identifier)
+        follow_btn = row.locator("button").filter(has_text=re.compile(r"^Follow$", re.I)).first
+        unfollow_btn = row.locator("button").filter(has_text=re.compile(r"^Unfollow$", re.I)).first
+
+        if not follow_btn.is_visible() and unfollow_btn.is_visible():
+            return "already_following"
+
+        expect(follow_btn).to_be_visible(timeout=5000)
+        follow_btn.click()
+        expect(self.follow_modal.first).to_be_visible(timeout=5000)
+        expect(self.modal_confirm_btn).to_be_visible(timeout=5000)
+        self.modal_confirm_btn.click()
+        expect(self.follow_modal.first).not_to_be_visible(timeout=10000)
+        expect(row.locator("button").filter(has_text=re.compile(r"^Unfollow$", re.I)).first).to_be_visible(timeout=10000)
+        self.page.wait_for_timeout(1000)
+        return "followed"
+
+    def unfollow_manager(self, identifier: str = "10026") -> str:
+        """
+        Unfollow specified manager.
+        Returns:
+            'unfollowed': newly unfollowed
+            'already_unfollowed': was not following
+        """
+        row = self.find_manager_row(identifier)
+        unfollow_btn = row.locator("button").filter(has_text=re.compile(r"^Unfollow$", re.I)).first
+        follow_btn = row.locator("button").filter(has_text=re.compile(r"^Follow$", re.I)).first
+
+        if not unfollow_btn.is_visible() and follow_btn.is_visible():
+            return "already_unfollowed"
+
+        expect(unfollow_btn).to_be_visible(timeout=5000)
+        unfollow_btn.click()
+        expect(self.unfollow_modal.first).to_be_visible(timeout=5000)
+        expect(self.unfollow_confirm_btn).to_be_visible(timeout=5000)
+        self.unfollow_confirm_btn.click()
+        expect(self.unfollow_modal.first).not_to_be_visible(timeout=10000)
+        expect(row.locator("button").filter(has_text=re.compile(r"^Follow$", re.I)).first).to_be_visible(timeout=10000)
+        self.page.wait_for_timeout(1000)
+        return "unfollowed"
+
+    def get_followers_table_records(self) -> List[Dict[str, str]]:
+        """
+        Extract structured follower records from MY FOLLOWERS table.
+        Columns: ['FOLLOWER NAME', 'YOUR PROFIT SHARE', 'USER ID', 'MAM ID', 'ACTION']
+        """
+        expect(self.table.locator("th").first).to_have_text(re.compile(r"Follower\s*Name", re.I), timeout=10000)
+        self.page.wait_for_timeout(1500)
+        records = []
+        rows = self.page.locator("main table tbody tr")
+        for i in range(rows.count()):
+            row = rows.nth(i)
+            tds = row.locator("td").all()
+            if len(tds) >= 4:
+                follower_name = tds[0].inner_text().strip().replace("\n", " ")
+                profit_share = tds[1].inner_text().strip()
+                user_id = tds[2].inner_text().strip()
+                mam_id = tds[3].inner_text().strip()
+                if follower_name or user_id:
+                    records.append({
+                        "follower_name": follower_name,
+                        "profit_share": profit_share,
+                        "user_id": user_id,
+                        "mam_id": mam_id,
+                    })
+        return records
