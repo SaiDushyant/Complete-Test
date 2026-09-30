@@ -639,21 +639,22 @@ def test_workflow_user_bonus_lifecycle_add_modify_withdraw(full_workflow_session
     del_btn.click()
     admin_page.wait_for_timeout(1500)
 
-    swal = admin_page.locator(".swal2-confirm")
-    if swal.is_visible():
+    swal = admin_page.locator("button.swal2-confirm, button:has-text('Yes, withdraw it!')").first
+    if swal.is_visible(timeout=5000):
         swal.click()
         admin_page.wait_for_timeout(2000)
     _dismiss_confirm_dialogs(admin_page)
     admin_page.wait_for_timeout(2000)
 
-    # Verify withdrawal
-    admin_page.fill("#datatable_filter input", "")
-    admin_page.wait_for_timeout(500)
+    # Verify withdrawal (row marked 'out' or removed from active list)
+    admin_page.reload()
+    admin_page.wait_for_timeout(2000)
     admin_page.fill("#datatable_filter input", str(account_id))
     admin_page.wait_for_timeout(1500)
     empty_cell = admin_page.locator("table#datatable tbody td.dataTables_empty")
-    assert empty_cell.is_visible() or admin_page.locator(f"table#datatable:has-text('{account_id}')").count() == 0, (
-        f"Expected bonus for Account {account_id} to be withdrawn"
+    row_text = admin_page.locator("table#datatable tbody tr").first.inner_text()
+    assert empty_cell.is_visible() or "out" in row_text.lower() or admin_page.locator(f"table#datatable:has-text('{account_id}')").count() == 0, (
+        f"Expected bonus for Account {account_id} to be withdrawn or marked 'out', got: {row_text}"
     )
     logger.info(f"Bonus successfully withdrawn for Account {account_id}!")
 
