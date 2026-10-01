@@ -120,4 +120,74 @@ Meaning: Scenario 2: B Book Account 10098 & Admin Order Placement Verification: 
 Status: PASSED
 Reason: Test completed successfully
 
-Total Passed: 24
+Test: workflows/shared/tests/test_e2e_admin_a_and_b_book_user_margin_lifecycle.py::test_e2e_a_book_user_margin_account_10009_verification
+Meaning: Positive Scenario: A Book User Margin Verification for Account 10009: - Authenticates Trade Terminal with A-Book Account 10009 (temp / Test@1234). - Verifies open positions & financial summary on Trade Terminal. - Navigates to /admin/Controlbase/aBookUserMargin. - Verifies 9 table headers (User ID, Customer Name, Account ID, Fund, Balance, Equity, Margin Level, Group Name, Total PNL). - Searches Account ID 10009 and asserts matching row values. - Verifies CSV & Excel export buttons.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_a_and_b_book_user_margin_lifecycle.py::test_e2e_b_book_user_margin_account_10098_verification
+Meaning: Positive Scenario: B Book User Margin Verification for Account 10098: - Authenticates Trade Terminal with B-Book Account 10098 (black / 123). - Navigates to /admin/Controlbase/bBookUserMargin. - Verifies 9 table headers (User ID, Customer Name, Account ID, Fund, Balance, Equity, Margin Level, Group Name, Total PNL). - Searches Account ID 10098 / datatable rows and asserts live user margin data. - Verifies CSV & Excel export buttons.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_order_report_workflow.py::test_e2e_order_report_page_layout_and_headers_verification
+Meaning: Positive Scenario: Order Report Page Layout & Column Structure Verification: - Navigates to /admin/Controlbase/OrderReport. - Verifies top filter controls (From Date, To Date, Individual User select, Group Name select, Filter & Refresh buttons). - Verifies 24 table headers.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_order_report_workflow.py::test_e2e_order_report_filter_and_refresh_workflows
+Meaning: Positive Scenario: Order Report Group Filter, Search & Refresh Workflows: - Selects Group Name (e.g. 'ECN' or 'DEMO') and clicks Filter. - Clicks Refresh button to reset filter state. - Searches Account ID '10098' in datatable search box and verifies row matching.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_order_report_workflow.py::test_e2e_order_report_csv_and_excel_exports
+Meaning: Positive Scenario: Order Report CSV & Excel Export Verification: - Validates Playwright download events for CSV (.csv) and Excel (.xlsx) buttons. - Confirms generated files exist, have non-zero size, and match expected extension.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_book_report_workflow.py::test_e2e_book_report_page_layout_and_headers_verification
+Meaning: Positive Scenario: Book Report Page Layout & Column Structure Verification: - Navigates to /admin/Controlbase/bookReport. - Verifies top filter controls (Book select, Symbol select, Status select, Filter & Refresh buttons). - Verifies 6 table headers (S.No, Book, Symbol, Buy, Sell, Total).
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_book_report_workflow.py::test_e2e_book_report_filter_and_refresh_workflows
+Meaning: Positive Scenario: Book Report Dropdown Filters, Search & Refresh Workflows: - Selects Book Type (e.g. 'A book' or 'B book'), Symbol, and Status ('Open' / 'Closed') and clicks Filter. - Clicks Refresh button to reset filter state. - Searches query in datatable search box and verifies row matching.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_book_report_workflow.py::test_e2e_book_report_csv_and_excel_exports
+Meaning: Positive Scenario: Book Report CSV & Excel Export Verification: - Validates Playwright download events for CSV (.csv) and Excel (.xlsx) buttons. - Confirms generated files exist, have non-zero size, and match expected extension.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_user_order_lifecycle.py::test_e2e_show_orders_modal_all_elements_across_all_open_closed
+Meaning: Exhaustive Verification of User Order List Modal (#orderModal) across All, Open, and Closed submenus: 1. Header Title 'User Order List' & Top-Right Close Button (.ux-order-close). 2. Profile Badge & Account Details (Customer Name & Account ID). 3. 5 Summary Stat Cards (TOTAL PNL, COMMISSION, LP COMMISSION, SPREAD COMMISSION, Account ID). 4. In-Modal Date Duration Filter Buttons (Today, This Week, Last 3 Weeks, Last Month, Last 3 Months, Last Year, All). 5. In-Modal Excel Download Button (#btnH). 6. 24-Column Order History Table Headers (#orderHistory thead th). 7. In-Modal DataTable Status Info (#orderHistory_info) & Pagination Controls (#orderHistory_paginate). 8. Horizontal Scrollbar Container (.table-responsive).
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_user_order_lifecycle.py::test_e2e_admin_order_edit_negative_and_positive_validations
+Meaning: Positive & Negative Scenario: Admin Order Edit Form (#myModal): - Negative Validation 1: Submitting empty Lot size triggers 'please enter the lot' error. - Negative Validation 2: Submitting negative Stop Loss triggers 'negative' value error. - Positive Flow: Pre-populated values, field editability (lot, sl, target, avg), mock save payload check. - Order Edit Log Page Sync: Verifies /admin/Controlbase/orderEditLog table accessibility.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_user_order_lifecycle.py::test_e2e_trade_terminal_history_date_filters
+Meaning: Positive Scenario: Trade Terminal History Page Date Filters: - Verifies 'Today' (1d), 'Last Week' (1w), 'Last Month' (1m), and 'All' (all) duration filter options. - Verifies Custom Date Filter Modal (fromDate & toDate inputs and submission).
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_user_order_lifecycle.py::test_e2e_order_pnl_commission_swap_calculations
+Meaning: Positive Scenario: Financial Calculations Verification: - Verifies numeric parsing of PnL, Commission, Swap, and Balance/Equity values on Trade Terminal Standalone Positions Page & Account Summary Footer.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_user_order_lifecycle.py::test_e2e_excel_and_csv_report_exports
+Meaning: Positive Scenario: Excel & CSV Export Verification: - Validates Playwright download events for CSV and Excel buttons in Admin Orders module. - Confirms generated files exist, have non-zero size, and match suggested extension (.csv / .xlsx).
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_user_order_lifecycle.py::test_e2e_user_order_report_and_modal_date_filters
+Meaning: Scenario 6: User Order Report Page & In-Modal Date Filters Verification: - Navigates to /admin/Controlbase/userOrderReport. - Searches for Account ID 10098 and verifies report datatable rows & CSV export. - Opens #orderModal for 10098, tests in-modal date duration filter pills, and in-modal Excel download (#btnH).
+Status: PASSED
+Reason: Test completed successfully
+
+Total Passed: 38
