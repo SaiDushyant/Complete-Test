@@ -240,6 +240,7 @@ All scripts execute in **Headless mode by default** to maximize performance and 
 | `-k <expression>` | Workflow Runners | Pytest name filter substring. | `-k "test_deposit"` |
 | `-v` / `-vv` | Workflow Runners | Pytest verbosity level. | `-vv` |
 | `-n <workers>` | Workflow Runners | Parallel execution using pytest-xdist. | `-n 4` |
+| `--dist <mode>` | Workflow Runners | Parallel distribution mode (`loadfile`, `load`, `loadgroup`). | `--dist loadfile` |
 | `--viewports <names>`| UI Runners | Restricts UI crawl/comparison to specific viewports (`desktop`, `mobile`, `tablet`). | `--viewports desktop mobile` |
 | `--skip-crawl` | Full UI Pipeline | Skips baseline extraction and immediately runs comparison. | `--skip-crawl` |
 | `--max-pages <N>` | UI Crawler | Limits the maximum number of pages crawled per viewport. | `--max-pages 25` |
