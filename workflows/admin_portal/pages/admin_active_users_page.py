@@ -23,6 +23,7 @@ class AdminActiveUsersPage(BasePage):
         self.table_wrapper = page.locator("#au-datatable_wrapper")
         self.headers = page.locator("#au-datatable thead tr th")
         self.rows = page.locator("#au-datatable tbody tr")
+        self.data_rows = page.locator("#au-datatable tbody tr:not(:has(td.dataTables_empty))")
         
         # Datatable Controls
         self.entries_select = page.locator("select[name='au-datatable_length']")
@@ -39,6 +40,12 @@ class AdminActiveUsersPage(BasePage):
     def navigate(self, url: str = "https://stage.xtremenext.com/admin/Controlbase/activeUsers") -> None:
         """Navigate to the Active Users page."""
         self.goto(url)
+        self.table.wait_for(state="visible", timeout=15000)
+        try:
+            self.page.wait_for_selector("#au-datatable tbody tr", state="attached", timeout=10000)
+            self.page.wait_for_timeout(500)
+        except Exception:
+            pass
 
     def is_table_displayed(self) -> bool:
         """Check whether the active users table and controls are visible."""

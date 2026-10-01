@@ -1,113 +1,53 @@
 Shared Workflows Passed Test Results
 
-Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_role_and_account_permission_reflection
-Meaning: Workflow 1: - Validates that the active test account's sidebar reflects granted permissions: * Dashboard is visible. * Deposite/WDL is visible. - Validates that restricted menus are hidden: * Manage MAM is not present. * Manage PAMM is not present. * Fund Managers is not present. - Account remains logged in for the duration of the test suite.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_user_account_details_reflection
+Meaning: Client user 10102 (name 'fake', email 'f76718269@gmail.com') is correctly reflected in the Admin Account Details table with Active status and Standard account type.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_manager_lifecycle_crud
-Meaning: Workflow 2: - Step 1: Master Admin navigates to /admin/Controlbase/manager. - Step 2: Create a brand new manager (mgr_dhanya_<ts>). - Step 3: Verify manager appears in Datatable. - Step 4: Open in-row edit modal (a.btnEdit), update email, and save. - Step 5: Verify updated details in Datatable. - Step 6: Delete the test manager (a.BtnDelete) with SweetAlert & jconfirm and verify removal.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_user_financial_metrics_sync
+Meaning: Financial Fund and Balance columns display valid numeric balances for client account 10102.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_user_group_lifecycle_and_subgroup_modal
-Meaning: Workflow 3: - Step 1: Master Admin navigates to /admin/Controlbase/userGroup. - Step 2: Create a brand new User Group (GRP_DHANYA_<ts>). - Step 3: Search and verify in Datatable. - Step 4: Test in-row edit name button (a.btnNameEdit). - Step 5: Test Subgroup modal (a.btnSubgroup -> #subgroupModal) and close cleanly. - Step 6: Delete test user group (a.BtnDelete) with SweetAlert & jconfirm and verify removal.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_second_account_reflection_for_same_client
+Meaning: Second trading account 10656 registered under client email 'f76718269@gmail.com' displays with active credentials and book assignment.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_list_edit_and_rollback
-Meaning: Workflow 4: - Step 1: Master Admin navigates to /admin/Controlbase/symbolList. - Step 2: Pick 2 random symbols (e.g. C:XAUUSD, C:EURUSD). - Step 3: For each symbol: * Read and store original values (brokerage, swap points). * Modify brokerage (+1). * Submit and confirm update. * Re-open edit modal and restore exact original values. * Verify original brokerage is restored in Datatable.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_client_account_status_and_type_integrity
+Meaning: Trading accounts in Account Details display valid account type 'Standard' and active user status badge.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_admin_manager_group_symbols_workflow.py::test_workflow_symbol_configuration_tabs_and_rollback
-Meaning: Workflow 5: - Step 1: Master Admin navigates to /admin/Controlbase/symbolConfiguration. - Step 2: Pick 2 random symbols (e.g. C:ALGUSD, C:BTCUSD). - Step 3: Open configuration modal (#symbolConfigModal). - Step 4: Validate navigation across all modal tabs (Market Hours, Holidays, Special Days, Upcoming Preview, General). - Step 5: Capture original step_size / default_lot, modify temporarily, submit save. - Step 6: In open modal, restore exact original value, save, and close cleanly (SECURE ROLLBACK).
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_topbar_branding_and_title
+Meaning: Top navbar renders brand logo, page title 'User', and sidebar hamburger toggle button.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_symbol_configuration_tabs_and_market_hours
-Meaning: Workflow 1: - Navigates to /admin/Controlbase/symbolConfiguration. - Searches target symbol (USDCAD) and opens #symbolConfigModal. - Inspects General Tab form inputs: config_uid, display_name, min/max lot, precision. - Inspects Hours Tab: checks market calendar schedule and tests #refreshMarketCalendar. - Inspects Holiday Tab: tests #addHolidayOverride button and holiday controls. - Inspects Special Tab: tests #addSpecialOverride button and date input #specialOverrideDate. - Inspects Upcoming Tab: tests #refreshUpcomingPreview button. - Closes modal cleanly.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_sidebar_menu_toggle
+Meaning: Clicking vertical menu button toggles sidebar between expanded and collapsed states.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_trade_disallowed_and_terminal_reflection
-Meaning: Workflow 2: - Step 1: In Admin Symbol Configuration, set Allow Trade = "0" (Not Allowed) for USDCAD. - Step 2: Save and verify Admin Datatable displays "Not Allowed". - Step 3: In Trade Terminal, inspect Watchlist for USDCAD. - Step 4: Open Order Entry dialog (#dragable_modal) for USDCAD and attempt order execution. - Step 5: Verify that order is blocked or returns trade not allowed / market closed toast. - Step 6: In Admin Symbol Configuration, re-enable Allow Trade = "1" (Allowed) and verify.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_theme_toggle_action
+Meaning: Theme switch button toggles the layout mode between dark and light modes.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_commission_brokerage_update_and_propagation
-Meaning: Workflow 3: - Step 1: Navigates to /admin/Controlbase/symbol. - Step 2: Search target symbol (USDCAD), open in-row edit modal (a.btnEdit -> #myModal). - Step 3: Update #brokerage to 5.00 and save (#formSubmit). - Step 4: Verify updated brokerage appears in Datatable row. - Step 5: Check Terminal order/specification calculation reflection. - Step 6: Restore original brokerage value and verify datatable restoration.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_notifications_dropdown
+Meaning: Notifications button opens the notification dropdown menu with mark all read option.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_symbol_config_terminal_reflection_workflow.py::test_workflow_symbol_minute_workflow_and_form_values_inspection
-Meaning: Workflow 4: - Step 1: Navigates to /admin/Controlbase/symbolConfiguration. - Step 2: Open edit modal and inspect all input fields: min_lot, max_lot, default_lot, step_size, margin_index, precision_digits. - Step 3: Validate that numeric inputs reject invalid characters or enforce constraints. - Step 4: Close modal without saving and verify state integrity.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_profile_dropdown_and_logout
+Meaning: Admin profile menu opens with admin name, role, and valid logout link.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_admin_categories_a_b_c.py::test_e2e_category_a_realtime_order_execution_and_lifecycle
-Meaning: Category A Test: Real-Time Order Execution & State Lifecycle: - User logs in to Trade Terminal (Account 10098). - Position page extracts live account metrics (Balance, Equity, Free Margin, Used Margin). - Admin logs in -> Navigates to /admin/Controlbase/order/all. - Opens #orderModal for Account 10098 and verifies order state sync & summary cards.
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_page_actions_container
+Meaning: Page action buttons container displays Create Account, Add User, and Refresh buttons with correct styles.
 Status: PASSED
 Reason: Test completed successfully
 
-Test: workflows/shared/tests/test_e2e_admin_categories_a_b_c.py::test_e2e_category_b_admin_b_book_order_placement_and_liquidation
-Meaning: Category B Test: Admin Direct B-Book Order Placement & User Terminal Sync: - Admin logs in -> Navigates to /admin/Controlbase/bBook. - Places a real B-Book Market Buy Order for Account 10098 using place_bbook_order(). - User logs in to Trade Terminal (Account 10098) -> Navigates to Positions Page. - Confirms that the Admin-placed B-Book order is reflected live on the User Trade Terminal. - Confirms order presence in Admin Order Details (/admin/Controlbase/order/all).
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_e2e_admin_categories_a_b_c.py::test_e2e_category_c_admin_order_edit_boundary_validations_and_log_sync
-Meaning: Category C Test: Advanced Multi-Field Edit, Target Price Calculation & Audit Log Sync: - Boundary Validation 1: Empty Lot size error ('please enter the lot'). - Boundary Validation 2: Negative Stop Loss error ('negative'). - Positive Flow: Multi-field edit (Lot, SL, Target calculated relative to Entry/Avg price, Brokerage). - Database Save: Real live POST request to backend DB. - Audit Log Verification: Verifies /admin/Controlbase/orderEditLog records before-vs-after diffs.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_serial_number_uniqueness
-Meaning: Verify that all serial numbers (S.No) displayed in the Account Details table are unique and sequential.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_date_filters_from_and_to_date
-Meaning: Verify that the From and To date filter correctly filters records created within range, and Clear restores all data.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_search_shows_valid_matching_user
-Meaning: Verify that the search input isolates valid matching users, shows empty state for unmatched queries, and restores data on clear.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_pencil_edit_deposit_balance_update
-Meaning: Verify that clicking the inline pencil icon (a.btnEdit) opens Change Balance modal, and depositing funds credits the user balance.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_edit_account_id_validation_and_uniqueness
-Meaning: Verify that clicking the AC. ID edit pencil opens #editAccountId modal with current account number, and handles uniqueness.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_multi_account_unique_id_same_email
-Meaning: Verify that creating multiple trading accounts for the same client email generates unique Account IDs for each account row.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_edit_password_modal_and_investor_password
-Meaning: Verify that expanding a row reveals Edit Password (a.btnEditPass), which opens #editPassModal for updating both Password and Inv. Password.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_email_verification_unverified_redirects_to_login_or_verify
-Meaning: Verify that when user's Email Verification is set to Not Verified (0), the user is blocked from the dashboard and gated to verify/login.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_document_verification_verified_locks_kyc_in_client_portal
-Meaning: Verify that when Document Verification is set to Verified (1) in Admin, the Client Portal Settings Documents reflects Verified status.
-Status: PASSED
-Reason: Test completed successfully
-
-Test: workflows/shared/tests/test_account_details_practical_validation.py::test_practical_delete_user_workflow
-Meaning: Verify that the delete action button (a.BtnDelete) is present and operational for user deactivation/removal.
-Status: PASSED
-Reason: Test completed successfully
-
-Total Passed: 22
+Total Passed: 10

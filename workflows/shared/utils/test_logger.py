@@ -196,6 +196,7 @@ class GlobalTestLogger:
         portal_indiv_dir = self.individual_dir / record.portal_slug
         portal_indiv_dir.mkdir(parents=True, exist_ok=True)
         file_path = portal_indiv_dir / f"{safe_name}.txt"
+        json_path = portal_indiv_dir / f"{safe_name}.json"
 
         lines = [
             f"{record.portal_name} Test Execution Log",
@@ -227,7 +228,44 @@ class GlobalTestLogger:
         with open(file_path, "w", encoding="utf-8") as f:
             f.write("\n".join(lines) + "\n")
 
+        # Also write atomic JSON record for robust multi-worker / xdist aggregation
+        try:
+            with open(json_path, "w", encoding="utf-8") as f_json:
+                json.dump(record.to_dict(), f_json, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.debug(f"Failed writing individual test json: {e}")
+
         return file_path
+
+    def _get_all_aggregated_records(self) -> List[TestResultRecord]:
+        """
+        Aggregate records from both in-memory list and individual JSON files on disk.
+        This provides thread-safe and process-safe multi-worker (pytest-xdist) consolidation.
+        """
+        records_by_id: Dict[str, TestResultRecord] = {r.test_id: r for r in self.records}
+
+        if self.individual_dir.exists():
+            for json_file in self.individual_dir.glob("*/*.json"):
+                try:
+                    with open(json_file, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        test_id = data.get("test_id")
+                        if test_id and test_id not in records_by_id:
+                            records_by_id[test_id] = TestResultRecord(
+                                test_id=test_id,
+                                meaning=data.get("meaning", ""),
+                                status=data.get("status", "PASSED"),
+                                reason=data.get("reason", ""),
+                                portal_name=data.get("portal_name", "Global"),
+                                portal_slug=data.get("portal_slug", "global"),
+                                duration=data.get("duration_seconds", 0.0),
+                                timestamp=data.get("timestamp", ""),
+                                error_traceback=data.get("error_traceback", ""),
+                            )
+                except Exception:
+                    pass
+
+        return list(records_by_id.values())
 
     def _format_section(
         self,
@@ -252,9 +290,10 @@ class GlobalTestLogger:
 
     def _update_global_logs(self) -> None:
         """Persist aggregated global text files."""
-        passed_records = [r for r in self.records if r.status == "PASSED"]
-        failed_records = [r for r in self.records if r.status == "FAILED"]
-        skipped_records = [r for r in self.records if r.status == "SKIPPED"]
+        all_records = self._get_all_aggregated_records()
+        passed_records = [r for r in all_records if r.status == "PASSED"]
+        failed_records = [r for r in all_records if r.status == "FAILED"]
+        skipped_records = [r for r in all_records if r.status == "SKIPPED"]
 
         # 1. Global Passed Tests File
         passed_path = self.logs_dir / "global_passed_tests.txt"
@@ -307,7 +346,7 @@ class GlobalTestLogger:
         # Group by portal
         portals: Dict[str, Dict[str, int]] = {}
         portal_durations: Dict[str, float] = {}
-        for r in self.records:
+        for r in all_records:
             if r.portal_name not in portals:
                 portals[r.portal_name] = {"PASSED": 0, "FAILED": 0, "SKIPPED": 0, "TOTAL": 0}
                 portal_durations[r.portal_name] = 0.0
@@ -326,9 +365,9 @@ class GlobalTestLogger:
             f.write("\n".join(summary_lines) + "\n")
 
         # 5. Global Structured JSON Summary Report
-        total_count = len(self.records)
+        total_count = len(all_records)
         pass_rate = round((len(passed_records) / max(total_count, 1)) * 100, 2)
-        total_dur = round(sum(r.duration for r in self.records), 3)
+        total_dur = round(sum(r.duration for r in all_records), 3)
 
         json_summary = {
             "timestamp": datetime.now().isoformat(),
@@ -352,7 +391,7 @@ class GlobalTestLogger:
             },
             "failed_tests": [r.to_dict() for r in failed_records],
             "skipped_tests": [r.to_dict() for r in skipped_records],
-            "all_tests": [r.to_dict() for r in self.records],
+            "all_tests": [r.to_dict() for r in all_records],
         }
 
         # Save to both standard names for compatibility

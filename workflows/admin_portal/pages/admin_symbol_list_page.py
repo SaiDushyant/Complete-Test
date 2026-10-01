@@ -74,16 +74,14 @@ class AdminSymbolListPage(BasePage):
 
     def navigate(
         self,
-        url: str = "https://stage.xtremenext.com/admin/Controlbase/symbols",
+        url: str = "https://stage.xtremenext.com/admin/Controlbase/symbolList",
     ) -> None:
         """Navigate to the Symbol List page and wait for table load."""
         candidate_urls = [
             url,
+            "https://stage.xtremenext.com/admin/Controlbase/symbolList",
             "https://stage.xtremenext.com/admin/Controlbase/symbols",
             "https://stage.xtremenext.com/admin/Controlbase/symbol",
-            "https://stage.xtremenext.com/admin/Controlbase/symbolList",
-            "https://stage.xtremenext.com/admin/Controlbase/symbolSwap",
-            "https://stage.xtremenext.com/admin/Controlbase/swap",
         ]
         for cand in candidate_urls:
             try:

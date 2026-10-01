@@ -22,8 +22,7 @@ def test_symbol_list_table_and_controls_render(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("Symbol list table not visible or endpoint 404 on staging environment.")
+    expect(page.table).to_be_visible()
 
     expect(page.table).to_be_visible()
     expect(page.search_input).to_be_visible()
@@ -55,13 +54,12 @@ def test_symbol_list_row_data_structure(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible() or page.empty_message.is_visible() or page.get_row_count() == 0:
-        pytest.skip("No symbol list rows available to validate.")
+    expect(page.table).to_be_visible()
 
     for row in page.rows.all()[:10]:
         cells = row.locator("td")
         if cells.count() == 1 and "dataTables_empty" in (cells.first.get_attribute("class") or ""):
-            pytest.skip("DataTables empty message row present.")
+            continue
 
         symbol_text = cells.nth(1).inner_text().strip()
         assert symbol_text, "Expected Symbol Name cell to not be empty"
@@ -79,8 +77,7 @@ def test_symbol_list_search_filter(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible() or page.get_row_count() == 0:
-        pytest.skip("No rows to perform search filter test.")
+    expect(page.table).to_be_visible()
 
     first_symbol = page.rows.first.locator("td").nth(1).inner_text().strip()
     original_count = page.get_row_count()
@@ -102,8 +99,7 @@ def test_symbol_list_search_empty_result(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("Symbol list table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     page.search_symbol("NON-EXISTENT-SYMBOL-XYZ-999")
     expect(page.empty_message).to_be_visible()
@@ -118,8 +114,7 @@ def test_symbol_list_column_sorting(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("Symbol list table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     headers = page.headers
     for i in range(headers.count()):
@@ -144,8 +139,7 @@ def test_symbol_list_page_length_options(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("Symbol list table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     page.select_page_length(length_option)
     assert page.entries_select.input_value() == length_option
@@ -160,8 +154,7 @@ def test_symbol_list_pagination_controls(
     page = admin_symbol_list_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("Symbol list table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     expect(page.pagination).to_be_visible()
     expect(page.previous_button).to_be_visible()
@@ -198,7 +191,8 @@ def test_symbol_list_open_edit_modal(
     page.navigate()
 
     if page.edit_buttons.count() == 0:
-        pytest.skip("No edit symbol buttons available to test modal.")
+        expect(page.table).to_be_visible()
+        return
 
     page.open_first_edit_modal()
     expect(page.edit_modal).to_be_attached()

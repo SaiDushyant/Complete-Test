@@ -145,14 +145,17 @@ class WatchlistPage(BasePage):
     def search_symbol(self, query: str) -> None:
         """Type symbol query into search input."""
         logger.info(f"Searching watchlist for query: '{query}'")
+        self.search_input.click()
         self.search_input.fill(query)
-        self.page.wait_for_timeout(500)
+        self.page.evaluate("document.querySelector('#search-input')?.dispatchEvent(new Event('input', {bubbles: true}))")
+        self.page.wait_for_timeout(800)
 
     def clear_search(self) -> None:
         """Clear search input."""
         logger.info("Clearing watchlist search query.")
         self.search_input.fill("")
-        self.page.wait_for_timeout(500)
+        self.page.evaluate("document.querySelector('#search-input')?.dispatchEvent(new Event('input', {bubbles: true}))")
+        self.page.wait_for_timeout(800)
 
     def get_search_input_placeholder(self) -> str:
         """Get placeholder attribute of search input."""
@@ -197,8 +200,9 @@ class WatchlistPage(BasePage):
         symbol, orig, percent, spread, bid, offer, low, high, sector.
         """
         return self.page.evaluate("""() => {
-            const rows = document.querySelectorAll(".esearch-result li.searchitems");
-            return Array.from(rows).map(row => {
+            const rows = Array.from(document.querySelectorAll(".esearch-result li.searchitems, ul.search-result li"))
+                .filter(el => el.offsetParent !== null && window.getComputedStyle(el).display !== 'none');
+            return rows.map(row => {
                 const symbol = row.getAttribute("data-symbol") || "";
                 const origInput = row.querySelector("input[name='drag_symbol[]']");
                 const orig = origInput ? origInput.value : "";
@@ -229,6 +233,19 @@ class WatchlistPage(BasePage):
         return self.symbol_rows.locator(f"[data-symbol='{symbol}']").first or self.favorites_list.locator(
             f"li.searchitems[data-symbol='{symbol}']"
         )
+
+    def get_visible_symbols(self) -> List[str]:
+        """Return list of visible symbol names in the active watchlist or search result."""
+        search_val = (self.search_input.input_value() or "").strip()
+        if search_val:
+            return self.page.evaluate("""() => {
+                const searchList = document.querySelectorAll("ul.search-result li");
+                return Array.from(searchList)
+                    .map(li => li.getAttribute("data-symbol") || li.innerText.trim().split('\\n')[0])
+                    .filter(s => s && s.length > 0 && !s.toLowerCase().includes("no symbol"));
+            }""")
+        data = self.get_all_symbols_data()
+        return [d.get("symbol") for d in data if d.get("symbol")]
 
     # =========================================================================
     # Hover Action Controls

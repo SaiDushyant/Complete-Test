@@ -183,7 +183,16 @@ def test_saved_auth_allows_direct_dashboard_access(workflow_browser: Browser):
 
     # Ensure auth state exists before testing session reuse
     if not auth_state_file.exists() or auth_state_file.stat().st_size == 0:
-        pytest.skip(f"Auth state file '{auth_state_file}' not found. Run test_trader_can_login first.")
+        temp_ctx = workflow_browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+        temp_page = temp_ctx.new_page()
+        try:
+            login_page = TradeLoginPage(temp_page)
+            login_page.navigate()
+            login_page.login(settings.trade_terminal.username, settings.trade_terminal.password)
+            auth_state_file.parent.mkdir(parents=True, exist_ok=True)
+            temp_ctx.storage_state(path=str(auth_state_file))
+        finally:
+            temp_ctx.close()
 
     # Create new isolated context with saved storage state
     context = workflow_browser.new_context(

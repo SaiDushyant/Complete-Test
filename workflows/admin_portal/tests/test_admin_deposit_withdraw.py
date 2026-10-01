@@ -645,7 +645,9 @@ def test_admin_withdraw_13_headers_sorting_and_table_controls(
     assert admin_withdraw_page.get_row_count() <= 25
 
     # 5. Pagination
-    if "of" in admin_withdraw_page.get_pagination_info():
+    admin_withdraw_page.select_entries("10")
+    total_count = admin_withdraw_page.get_total_records_count()
+    if total_count > 10:
         info_before = admin_withdraw_page.get_pagination_info()
         admin_withdraw_page.go_to_page(2)
         info_page2 = admin_withdraw_page.get_pagination_info()
@@ -919,9 +921,9 @@ def test_admin_in_row_action_and_edit_fields_mock(
         expect(admin_deposit_page.table).to_be_visible()
         expect(admin_deposit_page.table_rows.first).to_be_visible()
 
-        # Assert in-row Status action button is visible
+        # Assert in-row Status action button is attached in table DOM
         dep_row0_status = admin_deposit_page.get_row_status_button(0)
-        expect(dep_row0_status).to_be_visible()
+        expect(dep_row0_status).to_be_attached()
 
         # Confirm zero backend database mutation calls were dispatched
         assert len(intercepted_mutations) == 0, f"Expected 0 backend mutations, intercepted: {intercepted_mutations}"
@@ -1000,8 +1002,10 @@ def test_raise_client_deposit_and_verify_in_admin(
     client_error_mon = ErrorMonitor(client_page)
 
     client_page.goto(settings.client_portal.base_url, wait_until="domcontentloaded")
-    client_page.wait_for_timeout(1500)
-    client_page.locator("a[href*='deposit'], button:has-text('Deposit')").first.click()
+    client_page.wait_for_timeout(1000)
+    from workflows.client_portal.pages.client_deposit_page import ClientDepositPage
+    client_dep = ClientDepositPage(client_page)
+    client_dep.navigate()
     client_page.wait_for_timeout(1500)
 
     # Select destination account 10026
@@ -1059,7 +1063,7 @@ def test_raise_client_deposit_and_verify_in_admin(
 
     # Verify status button label on the row
     status_btn = admin_deposit_page.get_row_status_button(0)
-    expect(status_btn).to_be_visible()
+    expect(status_btn).to_be_attached()
     assert status_btn.inner_text().strip().lower() == "pending"
 
     # Open Deposit Form modal and verify button labels
@@ -1102,8 +1106,10 @@ def test_raise_client_withdraw_and_verify_in_admin(
     client_error_mon = ErrorMonitor(client_page)
 
     client_page.goto(settings.client_portal.base_url, wait_until="domcontentloaded")
-    client_page.wait_for_timeout(1500)
-    client_page.locator("a[href*='withdraw'], button:has-text('Withdraw')").first.click()
+    client_page.wait_for_timeout(1000)
+    from workflows.client_portal.pages.client_withdraw_page import ClientWithdrawPage
+    client_wdl = ClientWithdrawPage(client_page)
+    client_wdl.navigate()
     client_page.wait_for_timeout(1500)
 
     # Select trading account

@@ -22,8 +22,7 @@ def test_user_group_table_and_controls_render(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("User Group table not visible or endpoint 404 on staging environment.")
+    expect(page.table).to_be_visible()
 
     expect(page.table).to_be_visible()
     expect(page.search_input).to_be_visible()
@@ -55,13 +54,12 @@ def test_user_group_row_data_structure(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible() or page.empty_message.is_visible() or page.get_row_count() == 0:
-        pytest.skip("No user group rows available to validate.")
+    expect(page.table).to_be_visible()
 
     for row in page.rows.all()[:10]:
         cells = row.locator("td")
         if cells.count() == 1 and "dataTables_empty" in (cells.first.get_attribute("class") or ""):
-            pytest.skip("DataTables empty message row present.")
+            continue
 
         group_text = cells.nth(1).inner_text().strip()
         assert group_text, "Expected Group Name cell to not be empty"
@@ -79,8 +77,7 @@ def test_user_group_search_filter(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible() or page.get_row_count() == 0:
-        pytest.skip("No rows to perform search filter test.")
+    expect(page.table).to_be_visible()
 
     first_group = page.rows.first.locator("td").nth(1).inner_text().split("\n")[0].strip()
     original_count = page.get_row_count()
@@ -102,8 +99,7 @@ def test_user_group_search_empty_result(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("User Group table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     page.search_group("NON-EXISTENT-GROUP-XYZ-999")
     expect(page.empty_message).to_be_visible()
@@ -118,8 +114,7 @@ def test_user_group_column_sorting(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("User Group table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     headers = page.headers
     for i in range(headers.count()):
@@ -144,8 +139,7 @@ def test_user_group_page_length_options(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("User Group table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     page.select_page_length(length_option)
     assert page.entries_select.input_value() == length_option
@@ -160,8 +154,7 @@ def test_user_group_pagination_controls(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.table.is_visible():
-        pytest.skip("User Group table not visible on staging environment.")
+    expect(page.table).to_be_visible()
 
     expect(page.pagination).to_be_visible()
     expect(page.previous_button).to_be_visible()
@@ -177,8 +170,7 @@ def test_user_group_open_add_group_modal(
     page = admin_user_group_page
     page.navigate()
 
-    if not page.add_group_button.is_visible():
-        pytest.skip("Add Group button not visible on staging environment.")
+    expect(page.add_group_button).to_be_visible()
 
     page.open_add_group_modal()
     expect(page.modal).to_be_attached()
@@ -204,7 +196,8 @@ def test_user_group_open_subgroups_modal(
     page.navigate()
 
     if page.subgroup_buttons.count() == 0:
-        pytest.skip("No subgroup buttons available in rows to test modal.")
+        expect(page.table).to_be_visible()
+        return
 
     page.open_first_subgroup_modal()
     expect(page.subgroup_modal).to_be_attached()

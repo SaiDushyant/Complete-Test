@@ -19,3 +19,8 @@ class AdminOrderEditLogPage(BasePage):
 
     def navigate(self, url: str = "https://stage.xtremenext.com/admin/Controlbase/orderEditLog") -> None:
         self.goto(url)
+        try:
+            self.page.wait_for_selector("#datatable tbody tr", state="attached", timeout=10000)
+            self.page.wait_for_timeout(600)
+        except Exception:
+            pass

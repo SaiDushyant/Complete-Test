@@ -60,7 +60,7 @@ class BlackTraderChartPage(BasePage):
         self.more_menu_btn: Locator = self.navbar.locator("button[data-popup='Menu']")
         self.undo_btn: Locator = self.navbar.locator("button[aria-label='Undo']")
         self.redo_btn: Locator = self.navbar.locator("button[aria-label='Redo']")
-        self.hide_trades_btn: Locator = self.navbar.locator("button[aria-label='Hide All Trades'], button[aria-label*='Trades']")
+        self.hide_trades_btn: Locator = self.navbar.locator("button[aria-label='Hide All Trades'], button[aria-label*='Trades'], button[title*='Trades']").first
 
         # 4. Modals and Dialogs
         self.indicators_dialog: Locator = self.bt_iframe.locator(".popup-content, [role='dialog']").first
@@ -112,7 +112,7 @@ class BlackTraderChartPage(BasePage):
         self.quick_sell_btn: Locator = self.bt_iframe.locator("button.sell-btn").first
         self.quick_qty_display: Locator = self.bt_iframe.locator("button.quantity-display").first
         self.quick_qty_input: Locator = self.bt_iframe.locator("input.quantity-input").first
-        self.hide_trades_btn: Locator = self.bt_iframe.locator("button.toolbar-hover-button[title='Hide Trades']").first
+        self.quick_hide_trades_btn: Locator = self.bt_iframe.locator("button.toolbar-hover-button[title='Hide Trades']").first
         self.hide_indicators_btn: Locator = self.bt_iframe.locator("button.indicator-toggle[title='Hide Indicators']").first
 
         # 7. Rightbar, Layers Panel & Multi-Chart Controls

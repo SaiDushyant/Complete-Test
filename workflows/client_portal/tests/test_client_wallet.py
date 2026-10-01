@@ -226,15 +226,13 @@ def test_client_wallet_transfer_history_table_and_pagination(
     client_wallet_page.select_history_rows_per_page("10")
     expect(client_wallet_page.history_rows_select).to_have_value("10")
 
-    # 4. Verify History Rows Data
+    # 4. Verify History Rows Data and pagination update
     expect(client_wallet_page.history_rows.first).to_be_visible()
+    expect(client_wallet_page.pagination_summary).to_contain_text("Showing 1-10 of", timeout=10000)
     row_count = client_wallet_page.get_history_row_count()
     assert 0 < row_count <= 10, f"Expected 1-10 rows on page 1, got {row_count}"
 
     # 5. Pagination summary and controls
-    expect(client_wallet_page.pagination_summary).to_be_visible()
-    expect(client_wallet_page.pagination_summary).to_contain_text("Showing 1-10 of")
-
     expect(client_wallet_page.page_indicator).to_be_visible()
     expect(client_wallet_page.page_indicator).to_contain_text("Page 1 /")
 

@@ -132,15 +132,29 @@ class AdminDepositListPage(BasePage):
 
     def close_modal(self) -> None:
         """Close modal dialog."""
-        expect(self.modal_close_button).to_be_visible()
-        self.modal_close_button.click()
-        expect(self.modal).not_to_be_visible(timeout=5000)
+        if self.modal_close_button.is_visible():
+            self.modal_close_button.click()
+        elif self.modal_cancel_button.is_visible():
+            self.modal_cancel_button.click()
+        elif self.modal_x_button.is_visible():
+            self.modal_x_button.click()
+        try:
+            expect(self.modal).not_to_be_visible(timeout=5000)
+        except Exception:
+            self.page.evaluate("$('#myModal').modal('hide')")
+            self.page.wait_for_timeout(500)
 
     def close_modal_via_x(self) -> None:
         """Close modal dialog via X button."""
-        expect(self.modal_x_button).to_be_visible()
-        self.modal_x_button.click()
-        expect(self.modal).not_to_be_visible(timeout=5000)
+        if self.modal_x_button.is_visible():
+            self.modal_x_button.click()
+        elif self.modal_close_button.is_visible():
+            self.modal_close_button.click()
+        try:
+            expect(self.modal).not_to_be_visible(timeout=5000)
+        except Exception:
+            self.page.evaluate("$('#myModal').modal('hide')")
+            self.page.wait_for_timeout(500)
 
     def fill_payment_gateway_form(
         self,

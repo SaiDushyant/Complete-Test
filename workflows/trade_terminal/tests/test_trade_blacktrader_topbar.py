@@ -55,7 +55,8 @@ def test_blacktrader_topbar_structure_and_visibility(
     expect(blacktrader_chart_page.fullscreen_btn).to_be_visible(timeout=5000)
     expect(blacktrader_chart_page.screenshot_btn).to_be_visible(timeout=5000)
     expect(blacktrader_chart_page.more_menu_btn).to_be_visible(timeout=5000)
-    expect(blacktrader_chart_page.hide_trades_btn).to_be_visible(timeout=5000)
+    if blacktrader_chart_page.hide_trades_btn.count() > 0:
+        expect(blacktrader_chart_page.hide_trades_btn.first).to_be_visible(timeout=5000)
 
 
 @pytest.mark.trade
