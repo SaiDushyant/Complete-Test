@@ -284,10 +284,9 @@ def test_e2e_category_c_admin_order_edit_boundary_validations_and_log_sync(brows
     admin_page.wait_for_timeout(2000)
 
     if target_oid:
-        edit_log_page.search.fill(target_oid)
-        edit_log_page.search.press("Enter")
+        edit_log_page.search(target_oid)
         admin_page.wait_for_timeout(1000)
-        log_rows = edit_log_page.rows.all()
+        log_rows = edit_log_page.table_rows.all()
         assert len(log_rows) > 0, f"Expected order edit log entry for OID '{target_oid}'"
         row_text = log_rows[0].inner_text()
         assert "No data available" not in row_text, f"Expected real log row for OID '{target_oid}'"
