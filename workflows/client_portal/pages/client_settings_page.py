@@ -41,15 +41,15 @@ class ClientSettingsPage(BasePage):
         # 1. Personal Information Form
         # =====================================================================
         self.personal_info_heading = page.locator("main h2").filter(has_text="Personal Information")
-        self.full_name_input = page.locator("main input[placeholder*='Full Name' i], main input[placeholder*='Name' i]").first
+        self.full_name_input = page.locator("main input").first
         self.email_input = page.locator("main input[type='email']").first
-        self.phone_input = page.locator("main input[type='tel']").first
+        self.phone_input = page.locator("main input[type='tel'], main input").nth(2)
         self.address_input = page.locator("main input[placeholder*='Address' i]").first
         self.city_input = page.locator("main input[placeholder*='City' i]").first
         self.state_input = page.locator("main input[placeholder*='State' i]").first
         self.zip_input = page.locator("main input[placeholder*='Zip' i]").first
         self.country_input = page.locator("main input[placeholder*='Country' i]").first
-        self.save_button = page.locator("main button:has-text('SAVE CHANGES'), main button:has-text('Save')").first
+        self.save_button = page.locator("main button:has-text('Save Changes'), main button:has-text('SAVE CHANGES')").first
         self.cancel_button = page.locator("main button:has-text('Cancel')").first
 
         # =====================================================================
