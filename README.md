@@ -9,7 +9,7 @@ A unified, production-grade automated testing platform built with Python and Pla
               │                                         │
               ▼                                         ▼
        ui_regression/                              workflows/
-       (29 tests)                                 (915 tests)
+       (29 tests)                                 (920 tests)
               │                                         │
        DOM / Structure                            Behavior / E2E
               │                                         │
@@ -36,7 +36,7 @@ A unified, production-grade automated testing platform built with Python and Pla
 
 ---
 
-## 🏛️ Two Testing Layers (944 Total Tests)
+## 🏛️ Two Testing Layers (920 Total Tests)
 
 ### 1. `ui_regression/` — DOM Structural Regression & Drift Detection (29 Tests)
 > **Answers**: *"Has the UI or DOM structure changed unexpectedly from the approved baseline?"*
@@ -46,14 +46,14 @@ A unified, production-grade automated testing platform built with Python and Pla
 - Captures live runtime diagnostics: Console JS errors, uncaught exceptions, HTTP 4xx/5xx responses, and network failures.
 - Preserves version-controlled baselines under `ui_regression/element_output/` and `ui_regression/element_output_admin/`.
 
-### 2. `workflows/` — Behavioral, Functional & E2E Testing (915 Tests)
+### 2. `workflows/` — Behavioral, Functional & E2E Testing (920 Tests)
 > **Answers**: *"Can a user successfully complete critical application workflows and journeys?"*
 - Tests end-to-end user actions (authentication, navigation, form inputs, trade actions, administrative controls).
-- Organized into three strictly isolated portal domains:
-  - **Trade Terminal** (`workflows/trade_terminal/` — 162 tests) — Maintained by Developer 1
-  - **Admin Portal** (`workflows/admin_portal/` — 397 tests) — Maintained by Developer 2
-  - **Client Portal** (`workflows/client_portal/` — 171 tests) — Maintained by Developer 3
-  - **Shared & Integrations** (`workflows/shared/` — 185 tests) — Cross-portal E2E and multi-system validation
+- Organized into four strictly isolated portal domains:
+  - **Trade Terminal** (`workflows/trade_terminal/` — 158 tests) — Maintained by Developer 1
+  - **Admin Portal** (`workflows/admin_portal/` — 425 tests) — Maintained by Developer 2; includes Order Edit Log, A Book, B Book page suites
+  - **Client Portal** (`workflows/client_portal/` — 161 tests) — Maintained by Developer 3
+  - **Shared & Integrations** (`workflows/shared/` — 176 tests) — Cross-portal E2E, Manager Hierarchy Isolation, A/B Book Lifecycle, Financial Calculation Verification
 - Shared infrastructure (`workflows/shared/`) provides `BasePage`, browser lifecycle fixtures, common assertions, waits, and multi-process safe logging.
 
 ---
@@ -94,7 +94,7 @@ Complete-Test/
 │   ├── element_output_admin/         # Version-controlled baseline snapshots (Admin)
 │   └── tests/                        # DOM regression unit & accuracy tests (29 tests)
 │
-├── workflows/                        # Behavioral / Functional / E2E workflow testing (915 tests)
+├── workflows/                        # Behavioral / Functional / E2E workflow testing (920 tests)
 │   ├── trade_terminal/               # Developer 1: Trade Terminal tests & pages
 │   │   ├── pages/                    # Page Objects (LoginPage, OrderEntryPage, WatchlistPage, etc.)
 │   │   ├── tests/                    # Behavioral workflow test suites

@@ -1,6 +1,6 @@
 # How to Run the Complete Test Framework: CLI & Execution Guide
 
-This comprehensive guide details how to configure, execute, and inspect all test suites in the **Complete Test Framework** across both **Behavioral Workflow Testing** (944 tests across all portals) and **UI DOM Structural Regression Testing**.
+This comprehensive guide details how to configure, execute, and inspect all test suites in the **Complete Test Framework** across both **Behavioral Workflow Testing** (920 tests across all portals) and **UI DOM Structural Regression Testing**.
 
 ---
 
@@ -37,7 +37,7 @@ The repository provides two logically independent, complementary testing systems
                  ┌─────────────────────┴─────────────────────┐
                  │                                           │
                  ▼                                           ▼
-      workflows/ (898 tests)                       ui_regression/ (29 tests)
+      workflows/ (920 tests)                       ui_regression/ (29 tests)
   Behavioral / Functional / E2E                   DOM Drift & Structural Accuracy
                  │                                           │
    ┌─────────────┼─────────────┐                ┌────────────┴────────────┐

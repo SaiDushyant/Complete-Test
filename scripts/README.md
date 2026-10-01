@@ -101,7 +101,7 @@ All scripts execute in **Headless mode by default** to maximize performance and 
 ---
 
 ### 4. Shared & Cross-Portal Runner (`run_shared_tests.py`)
-- **Purpose**: Executes integration tests in `workflows/shared/tests/` (e.g., Admin User Discovery, Manage User matrix, Multi-Portal Data Reflection, Negative Authentication).
+- **Purpose**: Executes integration tests in `workflows/shared/tests/` including Admin User Discovery, Manage User matrix, Multi-Portal Data Reflection, Negative Authentication, **Manager Hierarchy Data Isolation**, **A Book / B Book Order Lifecycle**, and **Financial Metric Calculation Verification**.
 - **Why Use It**: Verifies data synchronization and state consistency across Admin, Client, and Trade portals simultaneously.
 - **Usage**:
   ```bash
@@ -276,35 +276,42 @@ The test framework features dual-format reporting with intelligent session isola
 ### 3. Example JSON Report Schema (`summary_report.json`)
 ```json
 {
-  "timestamp": "2026-09-30T18:00:00.000000",
+  "timestamp": "2026-10-01T12:00:00.000000",
   "summary": {
-    "total_tests": 927,
-    "passed": 920,
+    "total_tests": 920,
+    "passed": 912,
     "failed": 0,
-    "skipped": 7,
-    "pass_rate_percentage": 99.24,
+    "skipped": 8,
+    "pass_rate_percentage": 99.13,
     "total_duration_seconds": 184.32,
     "portal_breakdown": {
       "Admin Portal": {
-        "total": 340,
-        "passed": 340,
+        "total": 425,
+        "passed": 425,
         "failed": 0,
         "skipped": 0,
-        "duration_seconds": 65.12
+        "duration_seconds": 82.10
       },
       "Client Portal": {
-        "total": 280,
-        "passed": 280,
+        "total": 161,
+        "passed": 161,
         "failed": 0,
         "skipped": 0,
-        "duration_seconds": 52.40
+        "duration_seconds": 34.20
       },
       "Trade Terminal": {
-        "total": 307,
-        "passed": 300,
+        "total": 158,
+        "passed": 150,
         "failed": 0,
-        "skipped": 7,
-        "duration_seconds": 66.80
+        "skipped": 8,
+        "duration_seconds": 38.50
+      },
+      "Shared & Integrations": {
+        "total": 176,
+        "passed": 176,
+        "failed": 0,
+        "skipped": 0,
+        "duration_seconds": 29.52
       }
     }
   },
