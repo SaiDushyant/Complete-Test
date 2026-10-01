@@ -110,4 +110,14 @@ Meaning: Verify that the delete action button (a.BtnDelete) is present and opera
 Status: PASSED
 Reason: Test completed successfully
 
-Total Passed: 22
+Test: workflows/shared/tests/test_e2e_admin_a_book_and_b_book_lifecycle.py::test_e2e_a_book_account_10009_order_placement_and_admin_verification
+Meaning: Scenario 1: A Book Account 10009 Verification: - Log into Trade Terminal with A Book account 10009 (password: Test@1234). - Log into Admin Console & navigate to /admin/Controlbase/aBook. - Verify A Book summary cards (Balance, Equity, Used Margin, Free Margin, Margin Level, Profit / Loss). - Search for Account 10009 in A Book table and verify row data. - Click Show Orders and verify #orderModal for Account 10009.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_admin_a_book_and_b_book_lifecycle.py::test_e2e_b_book_account_10098_admin_buy_sell_order_placement_and_order_details_sync
+Meaning: Scenario 2: B Book Account 10098 & Admin Order Placement Verification: - Log into Admin Console & navigate to /admin/Controlbase/bBook. - Verify B Book page summary metrics (Total Used Margin, Total P/L). - Search for B Book Account 10098 in table and verify row data. - Verify Admin Buy Order & Sell Order action buttons at top right. - Click Buy Order / Sell Order to verify Admin Order Placement modal readiness. - Verify Admin Order Details (/admin/Controlbase/order/open & /closed) displays open/closed orders for 10098.
+Status: PASSED
+Reason: Test completed successfully
+
+Total Passed: 24

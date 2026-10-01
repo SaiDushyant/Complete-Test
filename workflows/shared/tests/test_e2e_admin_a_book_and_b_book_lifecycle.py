@@ -99,11 +99,21 @@ def test_e2e_a_book_account_10009_order_placement_and_admin_verification(browser
     a_book_page.navigate()
     admin_page.wait_for_timeout(2000)
 
-    # 3. Verify A Book Title & Summary Metric Cards
+    # 3. Verify A Book Title & Summary Metric Cards & Mathematical Calculations
     expect(a_book_page.table).to_be_visible()
     expect(a_book_page.stat_balance).to_be_visible()
     expect(a_book_page.stat_equity).to_be_visible()
-    logger.info("Verified A Book summary metric cards and datatable visibility")
+
+    # Verify Summary Bar Calculations (Equity = Balance + PnL, Free Margin = Equity - Used Margin)
+    bar_calc = a_book_page.verify_summary_bar_math()
+    logger.info(f"Verified A Book Summary Bar Mathematical Calculations: {bar_calc}")
+    assert bar_calc["equity_valid"], f"A Book Equity calculation mismatch: {bar_calc['metrics']}"
+
+    # Verify Row Level Financial Calculations (Equity = Balance + Total PNL for each account row)
+    row_calcs = a_book_page.verify_table_rows_math()
+    logger.info(f"Verified A Book Row Calculations ({len(row_calcs)} rows): {row_calcs}")
+    for rc in row_calcs:
+        assert rc["is_valid"], f"A Book Row Equity calculation mismatch for Account {rc['account_id']}: {rc}"
 
     # 4. Search for Account 10009 in A Book Table
     a_book_page.search(ABOOK_ACCOUNT_ID)
@@ -162,12 +172,17 @@ def test_e2e_b_book_account_10098_admin_buy_sell_order_placement_and_order_detai
     b_book_page.navigate()
     admin_page.wait_for_timeout(2000)
 
-    # 1. Verify B Book Title & Top Action Buttons
+    # 1. Verify B Book Title & Top Action Buttons & Row Mathematical Calculations
     expect(b_book_page.table).to_be_visible()
     if b_book_page.buy_order_btn.is_visible():
         logger.info("Verified B Book page Buy Order button is visible")
     if b_book_page.sell_order_btn.is_visible():
         logger.info("Verified B Book page Sell Order button is visible")
+
+    b_row_calcs = b_book_page.verify_table_rows_math()
+    logger.info(f"Verified B Book Row Calculations ({len(b_row_calcs)} rows): {b_row_calcs}")
+    for rc in b_row_calcs:
+        assert rc["is_valid"], f"B Book Row Equity calculation mismatch for Account {rc['account_id']}: {rc}"
 
     # 2. Search for Account 10098 in B Book Table
     b_book_page.search(BBOOK_ACCOUNT_ID)

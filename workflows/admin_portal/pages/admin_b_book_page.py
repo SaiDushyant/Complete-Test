@@ -180,3 +180,28 @@ class AdminBBookPage(BasePage):
         submit_btn.click()
         self.page.wait_for_timeout(2000)
 
+    def verify_table_rows_math(self) -> List[Dict[str, Any]]:
+        """Verify for each row in B Book datatable that Equity = Balance + Total PNL."""
+        return self.page.evaluate("""() => {
+            const rows = Array.from(document.querySelectorAll("#datatable tbody tr"));
+            const results = [];
+            for (const row of rows) {
+                const tds = Array.from(row.querySelectorAll("td")).map(td => td.innerText.trim().replace(/,/g, ''));
+                if (tds.length < 9 || tds[0].includes("No data")) continue;
+                const balance = parseFloat(tds[4]) || 0.0;
+                const equity = parseFloat(tds[5]) || 0.0;
+                const total_pnl = parseFloat(tds[8]) || 0.0;
+                const expected_equity = Math.round((balance + total_pnl) * 100) / 100;
+                const is_valid = Math.abs(equity - expected_equity) < 0.10;
+                results.push({
+                    account_id: tds[2] || "",
+                    balance: balance,
+                    total_pnl: total_pnl,
+                    equity: equity,
+                    expected_equity: expected_equity,
+                    is_valid: is_valid
+                });
+            }
+            return results;
+        }""")
+
