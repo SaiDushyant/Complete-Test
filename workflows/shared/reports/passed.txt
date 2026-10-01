@@ -110,4 +110,29 @@ Meaning: Verify that the delete action button (a.BtnDelete) is present and opera
 Status: PASSED
 Reason: Test completed successfully
 
-Total Passed: 22
+Test: workflows/shared/tests/test_manager_hierarchy_data_isolation_workflow.py::test_workflow_manager_user_creation_and_association
+Meaning: Verify: 1. User 1 created from Manager CRM is listed under Manager's user list. 2. User 2 created via Registration URL is listed under Manager's user list. 3. User 3 created from MAdmin is NOT exposed to Manager CRM (Data Isolation).
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_manager_hierarchy_data_isolation_workflow.py::test_workflow_deposit_withdrawal_and_notifications_isolation
+Meaning: Verify: 1. Manager CRM can record/inspect deposits and withdrawals for manager users. 2. Notifications dropdown functions correctly. 3. Deposits/withdrawals for non-manager users do NOT appear in Manager CRM.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_manager_hierarchy_data_isolation_workflow.py::test_workflow_reports_and_overall_data_isolation
+Meaning: Verify: 1. User Order Report (/admin/Controlbase/userOrderReport) displays manager users and isolates non-manager users. 2. User Transaction Log (/admin/Controlbase/userTransactionLog) isolates non-manager users. 3. MAdmin retains complete global visibility across all reports and user data.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_manager_hierarchy_data_isolation_workflow.py::test_workflow_manager_creation_and_permissions
+Meaning: Verify: 1. Manager was successfully created from Manager/Group page. 2. Manager account logged in and active session established. 3. Assigned permissions are correctly reflected across sidebar menus. 4. Restricted administrative pages (e.g. /manager, /admin, /rolePermission) are blocked/redirected.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_manager_hierarchy_data_isolation_workflow.py::test_workflow_trade_visibility_and_isolation
+Meaning: Verify: 1. Manager CRM can access Order Management submenus (/order/open & /order/all). 2. Non-manager user trades and accounts (User 3) are strictly isolated and not exposed in Manager CRM. 3. MAdmin CRM retains global visibility across all order ledgers.
+Status: PASSED
+Reason: Test completed successfully
+
+Total Passed: 27
