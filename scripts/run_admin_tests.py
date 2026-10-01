@@ -74,6 +74,13 @@ def parse_arguments() -> argparse.Namespace:
         help="Number of parallel pytest workers (e.g. -n 4)",
     )
     parser.add_argument(
+        "--dist",
+        type=str,
+        default="loadfile",
+        choices=["load", "loadfile", "loadgroup", "worksteal"],
+        help="Parallel test distribution mode (default: loadfile)",
+    )
+    parser.add_argument(
         "--slowmo",
         type=int,
         default=None,
@@ -116,7 +123,7 @@ def main():
         cmd.extend(["-k", args.expression])
 
     if args.workers:
-        cmd.extend(["-n", str(args.workers)])
+        cmd.extend(["-n", str(args.workers), "--dist", args.dist])
 
     env = os.environ.copy()
     env["PYTHONPATH"] = str(ROOT_DIR)
