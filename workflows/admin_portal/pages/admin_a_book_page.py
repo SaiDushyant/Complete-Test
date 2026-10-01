@@ -113,3 +113,68 @@ class AdminABookPage(BasePage):
         else:
             self.page.keyboard.press("Escape")
         self.page.wait_for_timeout(500)
+
+    def get_summary_bar_metrics(self) -> Dict[str, float]:
+        """Extract and parse summary bar metrics (Balance, Equity, Used Margin, Free Margin, Margin Level, Profit / Loss)."""
+        return self.page.evaluate("""() => {
+            const bodyText = document.body.innerText;
+            const parseVal = (regex) => {
+                const match = bodyText.match(regex);
+                return match ? parseFloat(match[1].replace(/,/g, '')) : 0.0;
+            };
+            return {
+                balance: parseVal(/Balance\\s*:\\s*\\$\\s*(-?[\\d,]+\\.\\d+)/i),
+                equity: parseVal(/Equity\\s*:\\s*\\$\\s*(-?[\\d,]+\\.\\d+)/i),
+                used_margin: parseVal(/Used Margin\\s*:\\s*\\$\\s*(-?[\\d,]+\\.\\d+)/i),
+                free_margin: parseVal(/Free Margin\\s*:\\s*\\$\\s*(-?[\\d,]+\\.\\d+)/i),
+                margin_level: parseVal(/Margin Level\\s*:\\s*(-?[\\d,]+\\.\\d+)%/i),
+                profit_loss: parseVal(/Profit\\s*\\/\\s*Loss\\s*:\\s*\\$\\s*(-?[\\d,]+\\.\\d+)/i)
+            };
+        }""")
+
+    def verify_summary_bar_math(self) -> Dict[str, Any]:
+        """Verify mathematical relationships of summary bar metrics: Equity = Balance + PnL, Free Margin = Equity - Used Margin."""
+        m = self.get_summary_bar_metrics()
+        expected_equity = round(m["balance"] + m["profit_loss"], 2)
+        equity_valid = abs(m["equity"] - expected_equity) < 0.10
+
+        expected_free_margin = round(m["equity"] - m["used_margin"], 2)
+        free_margin_valid = abs(m["free_margin"] - expected_free_margin) < 0.10
+
+        margin_level_valid = True
+        if m["used_margin"] > 0:
+            expected_margin_level = round((m["equity"] / m["used_margin"]) * 100.0, 2)
+            margin_level_valid = abs(m["margin_level"] - expected_margin_level) < 1.0
+
+        return {
+            "metrics": m,
+            "equity_valid": equity_valid,
+            "free_margin_valid": free_margin_valid,
+            "margin_level_valid": margin_level_valid,
+            "all_valid": equity_valid and free_margin_valid and margin_level_valid
+        }
+
+    def verify_table_rows_math(self) -> List[Dict[str, Any]]:
+        """Verify for each row in datatable that Equity = Balance + Total PNL."""
+        return self.page.evaluate("""() => {
+            const rows = Array.from(document.querySelectorAll("#datatable tbody tr"));
+            const results = [];
+            for (const row of rows) {
+                const tds = Array.from(row.querySelectorAll("td")).map(td => td.innerText.trim().replace(/,/g, ''));
+                if (tds.length < 9 || tds[0].includes("No data")) continue;
+                const balance = parseFloat(tds[4]) || 0.0;
+                const equity = parseFloat(tds[5]) || 0.0;
+                const total_pnl = parseFloat(tds[8]) || 0.0;
+                const expected_equity = Math.round((balance + total_pnl) * 100) / 100;
+                const is_valid = Math.abs(equity - expected_equity) < 0.10;
+                results.push({
+                    account_id: tds[2] || "",
+                    balance: balance,
+                    total_pnl: total_pnl,
+                    equity: equity,
+                    expected_equity: expected_equity,
+                    is_valid: is_valid
+                });
+            }
+            return results;
+        }""")
