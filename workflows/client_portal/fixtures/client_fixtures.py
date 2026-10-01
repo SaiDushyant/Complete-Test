@@ -73,14 +73,19 @@ def authenticated_client_context(workflow_browser: Browser) -> Generator[Browser
     context.close()
 
 
+from workflows.shared.utils.diagnostics import PageDiagnostics
+
+
 @pytest.fixture(scope="function")
 def authenticated_client_page(authenticated_client_context: BrowserContext) -> Generator[Page, None, None]:
     """Pre-authenticated page instance with automated console, JS, and backend error monitoring."""
     page = authenticated_client_context.new_page()
     page.set_default_timeout(settings.browser.timeout)
     page.error_monitor = ErrorMonitor(page)
+    page._diagnostics = PageDiagnostics(page)
     yield page
     page.close()
+
 
 
 @pytest.fixture(scope="function")

@@ -149,6 +149,9 @@ def authenticated_admin_context(
     context.close()
 
 
+from workflows.shared.utils.diagnostics import PageDiagnostics
+
+
 @pytest.fixture(scope="function")
 def authenticated_admin_page(
     authenticated_admin_context: BrowserContext,
@@ -157,8 +160,10 @@ def authenticated_admin_page(
     page = authenticated_admin_context.new_page()
     page.set_default_timeout(settings.browser.timeout)
     page.error_monitor = ErrorMonitor(page)
+    page._diagnostics = PageDiagnostics(page)
     yield page
     page.close()
+
 
 
 @pytest.fixture(scope="function")
