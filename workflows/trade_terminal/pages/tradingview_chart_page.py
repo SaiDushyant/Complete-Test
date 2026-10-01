@@ -425,9 +425,9 @@ class TradingViewChartPage(BasePage):
         """Return list of tab names inside the Chart Settings modal (e.g. Symbol, Status line, Scales, Canvas)."""
         self.open_chart_settings_dialog()
         tabs = self.tv_iframe.locator("body").evaluate("""(body) => {
-            const dialog = body.querySelector("[data-name='series-properties-dialog'], [data-dialog-name='Chart settings'], div.dialog-qyCw0PaN");
+            const dialog = body.querySelector("[data-name='series-properties-dialog'], [data-dialog-name='Chart settings'], div.dialog-qyCw0PaN, [role='dialog']");
             if (!dialog) return [];
-            const tabEls = Array.from(dialog.querySelectorAll("button[class*='tab-'], [class*='tab-nGEmjtaX']"));
+            const tabEls = Array.from(dialog.querySelectorAll("[role='tab'], button[class*='tab'], [data-role='tab'], [class*='tab-']"));
             return tabEls.map(t => t.innerText ? t.innerText.trim() : "").filter(t => t.length > 0 && !t.includes('\\n'));
         }""")
         self.close_dialog()

@@ -40,50 +40,80 @@ class ClientSidebarComponent(BasePage):
 
     def navigate_to_dashboard(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.dashboard_tab.first).to_be_visible(timeout=10000)
-        self.dashboard_tab.first.click()
+        btn = self.dashboard_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Dashboard", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_deposit(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.deposit_tab.first).to_be_visible(timeout=10000)
-        self.deposit_tab.first.click()
+        btn = self.deposit_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Deposit", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_withdraw(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.withdraw_tab.first).to_be_visible(timeout=10000)
-        self.withdraw_tab.first.click()
+        btn = self.withdraw_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Withdraw", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_internal_transfer(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.internal_transfer_tab.first).to_be_visible(timeout=10000)
-        self.internal_transfer_tab.first.click()
+        btn = self.internal_transfer_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Internal Transfer", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_wallet(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.wallet_tab.first).to_be_visible(timeout=10000)
-        self.wallet_tab.first.click()
+        btn = self.wallet_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Wallet", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_copy_trading(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.copy_trading_tab.first).to_be_visible(timeout=10000)
-        self.copy_trading_tab.first.click()
+        btn = self.copy_trading_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Copy Trading", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_mam(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.mam_tab.first).to_be_visible(timeout=10000)
-        self.mam_tab.first.click()
+        btn = self.mam_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^MAM", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_pamm(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.pamm_tab.first).to_be_visible(timeout=10000)
-        self.pamm_tab.first.click()
+        btn = self.pamm_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^PAMM", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_refer_earn(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.refer_earn_tab.first).to_be_visible(timeout=10000)
-        self.refer_earn_tab.first.click()
+        btn = self.refer_earn_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Refer", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()
 
     def navigate_to_settings(self) -> None:
         expect(self.sidebar_container.first).to_be_visible(timeout=15000)
-        expect(self.settings_tab.first).to_be_visible(timeout=10000)
-        self.settings_tab.first.click()
+        btn = self.settings_tab.first
+        if not btn.is_visible():
+            btn = self.page.locator("aside button, #sidebar-nav button").filter(has_text=re.compile(r"^Settings", re.I)).first
+        expect(btn).to_be_visible(timeout=10000)
+        btn.click()

@@ -83,8 +83,8 @@ def test_user_transaction_log_row_structure_is_valid(
     page = admin_user_transaction_log_page
     page.navigate()
 
-    if page.rows.count() == 0:
-        pytest.skip("No data available for user transaction log.")
+    expect(page.rows.first).to_be_visible()
+    assert page.rows.count() > 0, "Expected transaction rows to be present."
 
     for row in page.rows.all()[:10]:
         cells = row.locator("td")
@@ -184,29 +184,31 @@ def test_user_transaction_log_pagination_changes_pages(
     page = admin_user_transaction_log_page
     page.navigate()
 
-    row_count = page.rows.count()
-    if row_count <= 10:
-        pytest.skip("Not enough rows to exercise pagination.")
+    expect(page.pagination).to_be_visible()
+    next_button = page.pagination.locator("a.next, #datatable_next, .next a").first
+    prev_button = page.pagination.locator("a.previous, #datatable_previous, .previous a").first
 
-    next_button = page.pagination.locator("a.next, #datatable_next").first
-    prev_button = page.pagination.locator("a.previous, #datatable_previous").first
+    prev_parent = prev_button.locator("..")
+    prev_classes = (prev_button.get_attribute("class") or "") + " " + (prev_parent.get_attribute("class") or "")
+    assert "disabled" in prev_classes or not prev_button.is_enabled()
 
-    next_classes = next_button.get_attribute("class") or ""
-    if "disabled" in next_classes:
-        pytest.skip("Next pagination is disabled for this dataset.")
+    next_parent = next_button.locator("..")
+    next_classes = (next_button.get_attribute("class") or "") + " " + (next_parent.get_attribute("class") or "")
 
-    before_info = page.info.inner_text().strip()
-    next_button.click()
-
-    expect(page.info).to_be_visible()
-    after_info = page.info.inner_text().strip()
-    assert after_info != before_info
-
-    prev_classes = prev_button.get_attribute("class") or ""
-    if "disabled" not in prev_classes:
-        prev_button.click()
+    if "disabled" not in next_classes and next_button.is_enabled():
+        before_info = page.info.inner_text().strip()
+        next_button.click()
         expect(page.info).to_be_visible()
-        assert page.info.inner_text().strip() != after_info
+        after_info = page.info.inner_text().strip()
+        assert after_info != before_info
+
+        prev_classes_now = (prev_button.get_attribute("class") or "") + " " + (prev_button.locator("..").get_attribute("class") or "")
+        if "disabled" not in prev_classes_now:
+            prev_button.click()
+            expect(page.info).to_be_visible()
+            assert page.info.inner_text().strip() != after_info
+    else:
+        assert "disabled" in next_classes or not next_button.is_enabled()
 
 
 @pytest.mark.admin
@@ -238,8 +240,8 @@ def test_user_transaction_log_date_values_are_valid(
     page = admin_user_transaction_log_page
     page.navigate()
 
-    if page.rows.count() == 0:
-        pytest.skip("No data available for timestamp validation.")
+    expect(page.rows.first).to_be_visible()
+    assert page.rows.count() > 0, "Expected transaction rows to be present."
 
     formats = [
         "%Y-%m-%d %H:%M:%S",

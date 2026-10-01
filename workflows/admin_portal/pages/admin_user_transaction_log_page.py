@@ -23,6 +23,10 @@ class AdminUserTransactionLogPage(BasePage):
     ) -> None:
         self.goto(url)
         self.table.wait_for(state="visible", timeout=15000)
+        try:
+            self.page.wait_for_selector("#datatable tbody tr", state="attached", timeout=10000)
+        except Exception:
+            pass
 
     def filter_by_account(self, account_no: str) -> None:
         """Filter DataTable by account number."""

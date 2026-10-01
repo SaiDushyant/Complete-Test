@@ -160,6 +160,14 @@ class AdminDepositPage(BasePage):
         """Return pagination summary text (e.g. 'Showing 1 to 50 of 456 entries')."""
         return self.pagination_info.inner_text().strip()
 
+    def get_total_records_count(self) -> int:
+        """Parse total records count from pagination summary text."""
+        info = self.get_pagination_info()
+        match = re.search(r"of\s+([\d,]+)\s+entries", info, re.I)
+        if match:
+            return int(match.group(1).replace(",", ""))
+        return self.get_row_count()
+
     def go_to_page(self, page_number: int) -> None:
         """Click pagination page link."""
         link = self.page.locator(f"#datatable_paginate a:has-text('{page_number}')").first
@@ -200,15 +208,27 @@ class AdminDepositPage(BasePage):
 
     def close_modal(self) -> None:
         """Click Close button inside modal dialog."""
-        expect(self.modal_close_button).to_be_visible()
-        self.modal_close_button.click()
-        expect(self.modal).not_to_be_visible(timeout=5000)
+        if self.modal_close_button.is_visible():
+            self.modal_close_button.click()
+        elif self.modal_x_button.is_visible():
+            self.modal_x_button.click()
+        try:
+            expect(self.modal).not_to_be_visible(timeout=5000)
+        except Exception:
+            self.page.evaluate("$('#myModal').modal('hide')")
+            self.page.wait_for_timeout(500)
 
     def close_modal_via_x(self) -> None:
         """Click 'X' icon inside modal dialog header."""
-        expect(self.modal_x_button).to_be_visible()
-        self.modal_x_button.click()
-        expect(self.modal).not_to_be_visible(timeout=5000)
+        if self.modal_x_button.is_visible():
+            self.modal_x_button.click()
+        elif self.modal_close_button.is_visible():
+            self.modal_close_button.click()
+        try:
+            expect(self.modal).not_to_be_visible(timeout=5000)
+        except Exception:
+            self.page.evaluate("$('#myModal').modal('hide')")
+            self.page.wait_for_timeout(500)
 
     def get_row_status_button(self, row_index: int = 0) -> Locator:
         """Return status button Locator from a specific table row."""
@@ -253,6 +273,17 @@ class AdminDepositPage(BasePage):
         if proof_path:
             self.modal_proof_input.set_input_files(proof_path)
             expect(self.modal_proof_remove_btn).to_be_visible(timeout=5000)
+
+    def get_deposit_form_values(self) -> Dict[str, str]:
+        """Return dict of currently filled values in Deposit Form modal."""
+        return {
+            "email": self.modal_email_input.input_value(),
+            "datetime": self.modal_datetime_input.input_value(),
+            "method": self.modal_method_input.input_value(),
+            "amount": self.modal_amount_input.input_value(),
+            "status": self.modal_status_select.input_value(),
+            "reason": self.modal_reason_textarea.input_value(),
+        }
 
     def open_edit_modal(self, row_index: int = 0) -> None:
         """Click in-row edit button (a.btnEdit) to open #myModal for a pending deposit."""

@@ -32,7 +32,7 @@ def test_admin_role_permission_matrix_checkboxes_structure(
     Verify that the Admin Role & Permission management page renders the permission matrix,
     allowing selection and deselection of granular system capabilities.
     """
-    role_permission_page.navigate_to_role_permission()
+    role_permission_page.navigate()
     page = role_permission_page.page
 
     page.wait_for_timeout(1000)
@@ -72,7 +72,7 @@ def test_admin_user_management_bulk_table_controls(
     """
     Verify that the User Management table provides functional select-all and row selection checkboxes.
     """
-    user_management_page.navigate_to_user_management()
+    user_management_page.navigate()
     page = user_management_page.page
 
     page.wait_for_timeout(1000)
@@ -87,7 +87,7 @@ def test_admin_symbol_configuration_boundary_fields(
     """
     Verify that Symbol Configuration modal contains bounded input fields for spreads, commissions, and leverage.
     """
-    admin_symbol_configuration_page.navigate_to_symbol_configuration()
+    admin_symbol_configuration_page.navigate()
     page = admin_symbol_configuration_page.page
 
     page.wait_for_timeout(1000)
@@ -105,7 +105,7 @@ def test_admin_stress_diagnostics_clean(
     """
     diagnostics: PageDiagnostics = getattr(role_permission_page.page, "_diagnostics", None)
     if diagnostics:
-        critical_js_errors = diagnostics.get_js_page_errors()
+        critical_js_errors = diagnostics.get_page_errors()
         assert len(critical_js_errors) == 0, (
             f"Uncaught JS exceptions encountered during admin stress testing: {critical_js_errors}"
         )

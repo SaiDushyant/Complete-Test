@@ -34,7 +34,7 @@ def test_trade_omnisearch_non_existent_symbol_empty_state(
     Verify searching for a non-existent symbol (e.g. 'NONEXISTENT_XYZ_999')
     displays a clean empty state or clears results without crashing the application.
     """
-    watchlist_page.navigate_to_watchlist()
+    watchlist_page.navigate()
 
     # Search for an impossible instrument query
     non_existent_query = "NONEXISTENT_XYZ_999"
@@ -64,7 +64,7 @@ def test_trade_order_entry_lot_size_boundary_validation(
     is properly handled by the order entry validation logic.
     """
     page = watchlist_page.page
-    watchlist_page.navigate_to_watchlist()
+    watchlist_page.navigate()
 
     # Try opening order popup for first available symbol
     symbols = watchlist_page.get_visible_symbols()
@@ -103,7 +103,7 @@ def test_trade_order_entry_stop_loss_take_profit_boundary_checks(
     Verify that entering Stop Loss and Take Profit levels out of valid market boundaries
     is prevented or validated before order submission.
     """
-    watchlist_page.navigate_to_watchlist()
+    watchlist_page.navigate()
     watchlist_page.page.wait_for_timeout(500)
     assert watchlist_page.page.is_visible("body"), "Trade page body must remain responsive."
 
@@ -131,7 +131,7 @@ def test_trade_websocket_network_offline_recovery_resilience(
     page.wait_for_timeout(2000)
 
     # Verify quotes or navigation are functional
-    watchlist_page.navigate_to_watchlist()
+    watchlist_page.navigate()
     assert page.is_visible("body"), "Dashboard restored after reconnection."
 
 
@@ -146,7 +146,7 @@ def test_trade_boundary_diagnostics_clean(
     """
     diagnostics: PageDiagnostics = getattr(watchlist_page.page, "_diagnostics", None)
     if diagnostics:
-        critical_js_errors = diagnostics.get_js_page_errors()
+        critical_js_errors = diagnostics.get_page_errors()
         assert len(critical_js_errors) == 0, (
             f"Uncaught JS exceptions encountered during boundary validation: {critical_js_errors}"
         )

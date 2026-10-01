@@ -1,5 +1,45 @@
 Admin Portal Test Results
 
-Total: 0
-Passed: 0
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_topbar_branding_and_title
+Meaning: The User Management topbar renders the brand logo, page title 'User', and sidebar toggle button.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_topbar_sidebar_toggle_action
+Meaning: Clicking the vertical menu toggle button on User Management dynamically collapses or expands the sidebar.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_theme_toggle_switches_modes
+Meaning: The theme switch button on User Management toggles the layout mode between dark and light.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_notifications_dropdown
+Meaning: The notifications button on User Management opens the dropdown menu with badge and mark all read link.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_profile_dropdown_and_logout_link
+Meaning: The user profile menu on User Management displays admin details and a working Logout link.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_page_actions_container_and_buttons_rendered
+Meaning: The User Management page renders the actions container with Create Account, Add User, and Refresh buttons.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_page_actions_hidden_permission_inputs
+Meaning: The User Management action container includes all 6 hidden permission configuration flags.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_create_account_button_opens_modal
+Meaning: Clicking Create Account opens the Create Account modal with valid title and close action.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_add_user_button_opens_modal
+Meaning: Clicking Add User opens the User Details modal with valid title and close action.
+Status: PASSED
+
+Test: workflows/admin_portal/tests/test_admin_user_management.py::test_admin_user_refresh_button_action
+Meaning: Clicking the Refresh button triggers page data reload without causing layout errors.
+Status: PASSED
+
+Total: 10
+Passed: 10
 Failed: 0

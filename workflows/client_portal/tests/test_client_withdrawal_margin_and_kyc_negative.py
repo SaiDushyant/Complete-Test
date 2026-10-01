@@ -32,7 +32,7 @@ def test_client_withdrawal_zero_and_negative_input_validation(
     """
     Verify that entering 0 or negative withdrawal amounts is rejected by input validation.
     """
-    client_withdraw_page.navigate_to_withdraw()
+    client_withdraw_page.navigate()
     page = client_withdraw_page.page
     page.wait_for_timeout(1000)
 
@@ -61,7 +61,7 @@ def test_client_withdrawal_exceeding_max_balance_validation(
     Verify that attempting to withdraw an astronomical amount (e.g. $999,999,999)
     triggers an insufficient balance / margin warning.
     """
-    client_withdraw_page.navigate_to_withdraw()
+    client_withdraw_page.navigate()
     page = client_withdraw_page.page
     page.wait_for_timeout(1000)
 
@@ -87,7 +87,7 @@ def test_client_internal_transfer_empty_fields_validation(
     Verify that submitting an Internal Transfer with empty or unselected source/target accounts
     is blocked with field validation messages.
     """
-    client_internal_transfer_page.navigate_to_internal_transfer()
+    client_internal_transfer_page.navigate()
     page = client_internal_transfer_page.page
     page.wait_for_timeout(1000)
 
@@ -107,7 +107,7 @@ def test_client_deposit_invalid_crypto_amount_boundary(
     Verify that entering non-numeric or sub-minimum crypto amounts on deposit form
     displays proper boundary formatting.
     """
-    client_deposit_page.navigate_to_deposit()
+    client_deposit_page.navigate()
     page = client_deposit_page.page
     page.wait_for_timeout(1000)
     assert page.is_visible("body"), "Deposit page rendered cleanly."
@@ -124,7 +124,7 @@ def test_client_boundary_diagnostics_clean(
     """
     diagnostics: PageDiagnostics = getattr(client_withdraw_page.page, "_diagnostics", None)
     if diagnostics:
-        critical_js_errors = diagnostics.get_js_page_errors()
+        critical_js_errors = diagnostics.get_page_errors()
         assert len(critical_js_errors) == 0, (
             f"Uncaught JS exceptions encountered during client boundary validation: {critical_js_errors}"
         )

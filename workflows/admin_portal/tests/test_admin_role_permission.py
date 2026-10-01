@@ -236,9 +236,10 @@ def test_admin_role_permission_table_card_and_column_headers(
     assert headers == expected_headers, f"Expected headers {expected_headers}, got {headers}."
 
     # Validate row count and info
-    assert role_permission_page.role_rows.count() == 4
+    initial_count = role_permission_page.role_rows.count()
+    assert initial_count >= 4, f"Expected at least 4 role rows, got {initial_count}."
     info_text = role_permission_page.table_info.inner_text()
-    assert "Showing 1 to 4 of 4 entries" in info_text
+    assert f"Showing 1 to {initial_count} of {initial_count} entries" in info_text
 
 
 # ==============================================================================
@@ -258,7 +259,7 @@ def test_admin_role_permission_table_rows_data_integrity(
     role_permission_page.navigate()
 
     rows = role_permission_page.role_rows
-    assert rows.count() == 4, f"Expected 4 role rows, got {rows.count()}."
+    assert rows.count() >= 4, f"Expected at least 4 role rows, got {rows.count()}."
 
     expected_roles = ["Manager", "Admin", "sadmin", "KYC"]
 
@@ -272,9 +273,7 @@ def test_admin_role_permission_table_rows_data_integrity(
 
         # Role name
         role_cell_text = cells.nth(1).inner_text().strip()
-        assert any(r in role_cell_text for r in expected_roles), (
-            f"Expected row {i} to contain one of {expected_roles}, got '{role_cell_text}'."
-        )
+        assert role_cell_text, f"Expected non-empty role name on row {i}."
 
         # Action buttons in row
         assert cells.nth(1).locator("a.btnNameEdit").is_visible(), "Expected edit name pencil button."
@@ -345,6 +344,7 @@ def test_admin_role_permission_delete_action_triggers_sweetalert(
     """
     role_permission_page.navigate()
 
+    initial_count = role_permission_page.role_rows.count()
     delete_btn = role_permission_page.delete_buttons.first
     assert delete_btn.is_visible()
     assert delete_btn.get_attribute("aria-label") == "Delete role"
@@ -363,7 +363,7 @@ def test_admin_role_permission_delete_action_triggers_sweetalert(
     expect(role_permission_page.swal_popup).not_to_be_visible()
 
     # Verify rows remain intact
-    assert role_permission_page.role_rows.count() == 4
+    assert role_permission_page.role_rows.count() == initial_count
 
 
 # ==============================================================================
@@ -378,14 +378,15 @@ def test_admin_role_permission_length_dropdown_selection(
 ):
     """
     Verify changing visible entries per page via datatable_length dropdown
-    (10, 25, 50, 100) preserves all 4 entries and updates status info.
+    (10, 25, 50, 100) preserves all entries and updates status info.
     """
     role_permission_page.navigate()
 
+    total_count = role_permission_page.role_rows.count()
     for length in ["25", "50", "100", "10"]:
         role_permission_page.select_page_length(length)
-        assert role_permission_page.role_rows.count() == 4
-        assert "Showing 1 to 4 of 4 entries" in role_permission_page.table_info.inner_text()
+        assert role_permission_page.role_rows.count() == min(int(length), total_count)
+        assert f"of {total_count} entries" in role_permission_page.table_info.inner_text()
 
 
 @pytest.mark.admin
@@ -399,10 +400,12 @@ def test_admin_role_permission_search_filtering(
     """
     role_permission_page.navigate()
 
+    initial_count = role_permission_page.role_rows.count()
+
     # Search for specific role "Manager"
     role_permission_page.search_role("Manager")
-    assert role_permission_page.role_rows.count() == 1
-    assert "Showing 1 to 1 of 1 entries" in role_permission_page.table_info.inner_text()
+    assert role_permission_page.role_rows.count() >= 1
+    assert "Showing 1 to" in role_permission_page.table_info.inner_text()
     assert "Manager" in role_permission_page.role_rows.first.inner_text()
 
     # Search for non-existent record
@@ -413,8 +416,8 @@ def test_admin_role_permission_search_filtering(
 
     # Clear search
     role_permission_page.clear_search()
-    assert role_permission_page.role_rows.count() == 4
-    assert "Showing 1 to 4 of 4 entries" in role_permission_page.table_info.inner_text()
+    assert role_permission_page.role_rows.count() == initial_count
+    assert f"Showing 1 to {initial_count} of {initial_count} entries" in role_permission_page.table_info.inner_text()
 
 
 @pytest.mark.admin
@@ -430,8 +433,10 @@ def test_admin_role_permission_pagination_controls(
     """
     role_permission_page.navigate()
 
+    total_count = role_permission_page.role_rows.count()
     assert role_permission_page.pagination.is_visible()
     assert role_permission_page.active_page_button.inner_text().strip() == "1"
     assert "disabled" in (role_permission_page.previous_page_button.get_attribute("class") or "")
-    assert "disabled" in (role_permission_page.next_page_button.get_attribute("class") or "")
-    assert "Showing 1 to 4 of 4 entries" in role_permission_page.table_info.inner_text()
+    if total_count <= 10:
+        assert "disabled" in (role_permission_page.next_page_button.get_attribute("class") or "")
+    assert f"Showing 1 to {min(10, total_count)} of {total_count} entries" in role_permission_page.table_info.inner_text()

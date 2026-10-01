@@ -56,7 +56,7 @@ class ClientMAMPage(BasePage):
 
         # Top Action Buttons (View Switching)
         self.mam_manager_btn = page.locator("main button").filter(has_text=re.compile(r"MAM\s*MANAGER", re.I)).first
-        self.my_followers_btn = page.locator("main button").filter(has_text=re.compile(r"MY\s*FOLLOWERS", re.I)).first
+        self.my_followers_btn = page.locator("main button").filter(has_text=re.compile(r"MY\s*(?:FOLLOWERS|SUBSCRIPTION)", re.I)).first
         self.followers_active_btn = page.locator("main button").filter(has_text=re.compile(r"^Active$", re.I)).first
         self.followers_history_btn = page.locator("main button").filter(has_text=re.compile(r"^History$", re.I)).first
 

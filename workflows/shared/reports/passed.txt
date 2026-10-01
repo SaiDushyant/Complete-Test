@@ -1,3 +1,53 @@
 Shared Workflows Passed Test Results
 
-Total Passed: 0
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_user_account_details_reflection
+Meaning: Client user 10102 (name 'fake', email 'f76718269@gmail.com') is correctly reflected in the Admin Account Details table with Active status and Standard account type.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_user_financial_metrics_sync
+Meaning: Financial Fund and Balance columns display valid numeric balances for client account 10102.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_second_account_reflection_for_same_client
+Meaning: Second trading account 10656 registered under client email 'f76718269@gmail.com' displays with active credentials and book assignment.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_client_account_status_and_type_integrity
+Meaning: Trading accounts in Account Details display valid account type 'Standard' and active user status badge.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_topbar_branding_and_title
+Meaning: Top navbar renders brand logo, page title 'User', and sidebar hamburger toggle button.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_sidebar_menu_toggle
+Meaning: Clicking vertical menu button toggles sidebar between expanded and collapsed states.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_theme_toggle_action
+Meaning: Theme switch button toggles the layout mode between dark and light modes.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_notifications_dropdown
+Meaning: Notifications button opens the notification dropdown menu with mark all read option.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_profile_dropdown_and_logout
+Meaning: Admin profile menu opens with admin name, role, and valid logout link.
+Status: PASSED
+Reason: Test completed successfully
+
+Test: workflows/shared/tests/test_e2e_user_account_details_sync.py::test_e2e_account_details_page_actions_container
+Meaning: Page action buttons container displays Create Account, Add User, and Refresh buttons with correct styles.
+Status: PASSED
+Reason: Test completed successfully
+
+Total Passed: 10

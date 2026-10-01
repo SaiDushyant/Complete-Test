@@ -35,17 +35,12 @@ def test_admin_sidebar_title_is_visible(
 ):
     """Verify that each top-level sidebar title is visible."""
     admin_dashboard_page.navigate()
+    admin_dashboard_page.sidebar.ensure_sidebar_expanded()
 
     sidebar = admin_dashboard_page.page.locator("#sidebar-menu")
-
-    if not sidebar.is_visible():
-        admin_dashboard_page.page.locator(
-            "#vertical-menu-btn"
-        ).click()
-
     sidebar.wait_for(state="visible", timeout=5000)
 
-    candidates = sidebar.locator("span[data-key]").filter(
+    candidates = sidebar.locator("span, a").filter(
         has_text=title
     )
 

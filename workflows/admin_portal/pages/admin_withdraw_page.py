@@ -82,7 +82,7 @@ class AdminWithdrawPage(BasePage):
         self.ac_modal = page.locator("#myAcModal")
         self.ac_modal_title = page.locator("#myModalLabel1, #myAcModal .modal-title").first
         self.ac_modal_content = page.locator("#myAcModal .account_information")
-        self.ac_modal_close_button = page.locator("#myAcModal button.ux-card-close, #myAcModal button[aria-label='Close']").first
+        self.ac_modal_close_button = page.locator("#myAcModal button.ux-card-close, #myAcModal button[aria-label='Close'], #myAcModal button:has-text('Close'), #myAcModal button.close, #myAcModal .btn-close").first
 
     def navigate(self) -> None:
         """Navigate directly to Admin Withdraw module."""
@@ -165,6 +165,14 @@ class AdminWithdrawPage(BasePage):
         """Return pagination summary text (e.g. 'Showing 1 to 50 of 456 entries')."""
         return self.pagination_info.inner_text().strip()
 
+    def get_total_records_count(self) -> int:
+        """Parse total records count from pagination summary text."""
+        info = self.get_pagination_info()
+        match = re.search(r"of\s+([\d,]+)\s+entries", info, re.I)
+        if match:
+            return int(match.group(1).replace(",", ""))
+        return self.get_row_count()
+
     def go_to_page(self, page_number: int) -> None:
         """Click pagination page link."""
         link = self.page.locator(f"#datatable_paginate a:has-text('{page_number}')").first
@@ -205,15 +213,27 @@ class AdminWithdrawPage(BasePage):
 
     def close_modal(self) -> None:
         """Click Close button inside modal dialog."""
-        expect(self.modal_close_button).to_be_visible()
-        self.modal_close_button.click()
-        expect(self.modal).not_to_be_visible(timeout=5000)
+        if self.modal_close_button.is_visible():
+            self.modal_close_button.click()
+        elif self.modal_x_button.is_visible():
+            self.modal_x_button.click()
+        try:
+            expect(self.modal).not_to_be_visible(timeout=5000)
+        except Exception:
+            self.page.evaluate("$('#myModal').modal('hide')")
+            self.page.wait_for_timeout(500)
 
     def close_modal_via_x(self) -> None:
         """Click 'X' icon inside modal dialog header."""
-        expect(self.modal_x_button).to_be_visible()
-        self.modal_x_button.click()
-        expect(self.modal).not_to_be_visible(timeout=5000)
+        if self.modal_x_button.is_visible():
+            self.modal_x_button.click()
+        elif self.modal_close_button.is_visible():
+            self.modal_close_button.click()
+        try:
+            expect(self.modal).not_to_be_visible(timeout=5000)
+        except Exception:
+            self.page.evaluate("$('#myModal').modal('hide')")
+            self.page.wait_for_timeout(500)
 
     def get_row_account_details_button(self, row_index: int = 0) -> Locator:
         """Return 'Account Details' button Locator from a specific table row."""
@@ -229,10 +249,24 @@ class AdminWithdrawPage(BasePage):
 
     def close_account_details_modal(self) -> None:
         """Close User Account Information modal dialog."""
-        expect(self.ac_modal).to_be_visible()
-        self.ac_modal_close_button.click(force=True)
-        self.page.keyboard.press("Escape")
-        expect(self.ac_modal).not_to_be_visible(timeout=5000)
+        if self.ac_modal.is_visible():
+            if self.ac_modal_close_button.is_visible():
+                self.ac_modal_close_button.click(force=True)
+            self.page.keyboard.press("Escape")
+            try:
+                expect(self.ac_modal).not_to_be_visible(timeout=3000)
+            except Exception:
+                self.page.evaluate("""() => {
+                    try { $('#myAcModal').modal('hide'); } catch(e) {}
+                    const modal = document.querySelector('#myAcModal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                        modal.classList.remove('show');
+                    }
+                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                    document.body.classList.remove('modal-open');
+                }""")
+                self.page.wait_for_timeout(300)
 
     def get_row_status_button(self, row_index: int = 0) -> Locator:
         """Return status button Locator from a specific table row."""

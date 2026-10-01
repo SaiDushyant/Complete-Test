@@ -202,6 +202,13 @@ class ClientCopyTradingPage(BasePage):
         expect(stats_btn).to_be_visible(timeout=8000)
         stats_btn.click()
         expect(self.statistics_modal.first).to_be_visible(timeout=5000)
+        loading = self.statistics_modal.first.get_by_text("Loading statistics...")
+        try:
+            if loading.is_visible():
+                expect(loading).not_to_be_visible(timeout=10000)
+        except Exception:
+            pass
+        self.page.wait_for_timeout(500)
 
     def close_statistics_modal(self) -> None:
         """Close Statistics modal via dismiss button."""
