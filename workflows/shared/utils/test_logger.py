@@ -210,6 +210,8 @@ class GlobalTestLogger:
             self.suite_dir = suite_dir
         elif logs_dir is not None:
             self.suite_dir = logs_dir.parent
+        elif "mock" in cmd_str or "test_mock_" in cmd_str or "/mock" in cmd_str:
+            self.suite_dir = settings.mock_reports_dir
         elif "validation" in cmd_str or "test_val_" in cmd_str:
             self.suite_dir = settings.validation_reports_dir
         elif "ui_regression" in cmd_str:
@@ -244,7 +246,9 @@ class GlobalTestLogger:
             return cls._instance
         if cls._instance is None:
             cmd_str = " ".join(sys.argv)
-            if "validation" in cmd_str or "test_val_" in cmd_str:
+            if "mock" in cmd_str or "test_mock_" in cmd_str or "/mock" in cmd_str:
+                cls._instance = cls(suite_dir=settings.mock_reports_dir)
+            elif "validation" in cmd_str or "test_val_" in cmd_str:
                 cls._instance = cls(suite_dir=settings.validation_reports_dir)
             elif "ui_regression" in cmd_str:
                 cls._instance = cls(suite_dir=settings.ui_regression_reports_dir)
@@ -261,6 +265,15 @@ class GlobalTestLogger:
             return clean_hint
 
         cmd_str = " ".join(sys.argv)
+
+        if "run_mock_tests" in cmd_str or "/mock" in cmd_str or "test_mock_" in cmd_str:
+            if "trade" in cmd_str:
+                return "Trade-Terminal-Mock"
+            if "admin" in cmd_str:
+                return "Admin-Portal-Mock"
+            if "client" in cmd_str:
+                return "Client-Portal-Mock"
+            return "Mock-Suite"
 
         if "run_admin_tests" in cmd_str or "admin_portal" in cmd_str:
             return "Admin-Portal"

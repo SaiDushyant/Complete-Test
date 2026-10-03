@@ -241,14 +241,24 @@ def pytest_sessionstart(session):
             target_hint = None
             markexpr = getattr(getattr(session.config, "option", None), "markexpr", "") or ""
             cmd_str = " ".join(sys.argv)
+            is_mock = "mock" in markexpr or "mock" in cmd_str or "test_mock_" in cmd_str or "/mock" in cmd_str
             is_val = "validation" in markexpr or "validation" in cmd_str or "test_val_" in cmd_str
             if hasattr(session.config, "args"):
                 for arg in session.config.args:
-                    if "test_val_" in arg or "validation" in arg:
+                    if "test_mock_" in arg or "/mock" in arg:
+                        is_mock = True
+                    elif "test_val_" in arg or "validation" in arg:
                         is_val = True
                     if "test_" in arg and not target_hint:
                         target_hint = Path(arg.split("::")[0]).stem
-            suite_dir = settings.validation_reports_dir if is_val else settings.workflow_reports_dir
+
+            if is_mock:
+                suite_dir = settings.mock_reports_dir
+            elif is_val:
+                suite_dir = settings.validation_reports_dir
+            else:
+                suite_dir = settings.workflow_reports_dir
+
             GlobalTestLogger.get_instance(suite_dir=suite_dir).prepare_fresh_session(run_type_hint=target_hint)
         except Exception:
             pass

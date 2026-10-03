@@ -113,6 +113,7 @@ class Settings:
     reports_dir: Path = ROOT_DIR / "reports"
     workflow_reports_dir: Path = ROOT_DIR / "reports" / "workflows"
     validation_reports_dir: Path = ROOT_DIR / "reports" / "validations"
+    mock_reports_dir: Path = ROOT_DIR / "reports" / "mock"
     ui_regression_reports_dir: Path = ROOT_DIR / "reports" / "ui_regression"
     screenshots_dir: Path = ROOT_DIR / "reports" / "workflows" / "screenshots"
     traces_dir: Path = ROOT_DIR / "reports" / "workflows" / "traces"
@@ -122,6 +123,10 @@ class Settings:
     validation_screenshots_dir: Path = ROOT_DIR / "reports" / "validations" / "screenshots"
     validation_traces_dir: Path = ROOT_DIR / "reports" / "validations" / "traces"
     validation_diagnostics_dir: Path = ROOT_DIR / "reports" / "validations" / "diagnostics"
+    mock_logs_dir: Path = ROOT_DIR / "reports" / "mock" / "logs"
+    mock_screenshots_dir: Path = ROOT_DIR / "reports" / "mock" / "screenshots"
+    mock_traces_dir: Path = ROOT_DIR / "reports" / "mock" / "traces"
+    mock_diagnostics_dir: Path = ROOT_DIR / "reports" / "mock" / "diagnostics"
 
     # Browser Execution Settings
     browser: BrowserSettings = field(init=False)
@@ -157,6 +162,7 @@ class Settings:
             self.reports_dir,
             self.workflow_reports_dir,
             self.validation_reports_dir,
+            self.mock_reports_dir,
             self.ui_regression_reports_dir,
             self.screenshots_dir,
             self.traces_dir,
@@ -166,6 +172,10 @@ class Settings:
             self.validation_screenshots_dir,
             self.validation_traces_dir,
             self.validation_diagnostics_dir,
+            self.mock_logs_dir,
+            self.mock_screenshots_dir,
+            self.mock_traces_dir,
+            self.mock_diagnostics_dir,
         ]:
             directory.mkdir(parents=True, exist_ok=True)
 

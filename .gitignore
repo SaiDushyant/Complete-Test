@@ -64,6 +64,18 @@ reports/validations/logs/*
 !reports/validations/logs/.gitkeep
 reports/validations/history/*
 
+reports/mock/*
+!reports/mock/.gitkeep
+reports/mock/screenshots/*
+!reports/mock/screenshots/.gitkeep
+reports/mock/traces/*
+!reports/mock/traces/.gitkeep
+reports/mock/diagnostics/*
+!reports/mock/diagnostics/.gitkeep
+reports/mock/logs/*
+!reports/mock/logs/.gitkeep
+reports/mock/history/*
+
 reports/ui_regression/*
 !reports/ui_regression/.gitkeep
 reports/ui_regression/history/*
