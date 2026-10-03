@@ -16,12 +16,13 @@ All scripts execute in **Headless mode by default** to maximize performance and 
    - [5. Admin Portal Runner (`run_admin_tests.py`)](#5-admin-portal-runner-run_admin_testspy)
    - [6. Client Portal Runner (`run_client_tests.py`)](#6-client-portal-runner-run_client_testspy)
    - [7. Trade Terminal Runner (`run_trade_tests.py`)](#7-trade-terminal-runner-run_trade_testspy)
+   - [8. Mock Testing Runner (`run_mock_tests.py`)](#8-mock-testing-runner-run_mock_testspy--run_mock_testssh)
 3. [UI DOM Regression & Drift Scripts](#ui-dom-regression--drift-scripts)
-   - [8. UI Drift Comparison (`run_ui_compare.py`)](#8-ui-drift-comparison-run_ui_comparepy)
-   - [9. Baseline Re-Crawl Generator (`run_ui_crawl.py`)](#9-baseline-re-crawl-generator-run_ui_crawlpy)
-   - [10. Full UI Regression Pipeline (`run_ui_full_pipeline.py`)](#10-full-ui-regression-pipeline-run_ui_full_pipelinepy)
-   - [11. UI Regression Assertions (`run_ui_tests.py`)](#11-ui-regression-assertions-run_ui_testspy)
-   - [12. Status Inspector (`status.py`)](#12-status-inspector-statuspy)
+   - [9. UI Drift Comparison (`run_ui_compare.py`)](#9-ui-drift-comparison-run_ui_comparepy)
+   - [10. Baseline Re-Crawl Generator (`run_ui_crawl.py`)](#10-baseline-re-crawl-generator-run_ui_crawlpy)
+   - [11. Full UI Regression Pipeline (`run_ui_full_pipeline.py`)](#11-full-ui-regression-pipeline-run_ui_full_pipelinepy)
+   - [12. UI Regression Assertions (`run_ui_tests.py`)](#12-ui-regression-assertions-run_ui_testspy)
+   - [13. Status Inspector (`status.py`)](#13-status-inspector-statuspy)
 4. [Universal CLI Flags & Options](#universal-cli-flags--options)
 5. [Reporting & Test Output Formats (JSON + TXT)](#reporting--test-output-formats-json--txt)
 
@@ -145,6 +146,29 @@ All scripts execute in **Headless mode by default** to maximize performance and 
   python scripts/run_trade_tests.py
   python scripts/run_trade_tests.py -m mam
   python scripts/run_trade_tests.py --headed
+  ```
+
+---
+
+### 8. Mock Testing Runner (`run_mock_tests.py` / `run_mock_tests.sh`)
+- **Purpose**: Executes offline Mock Server & Network Interception Test Suites (269 tests across Trade Terminal, Admin Portal, and Client Portal).
+- **Why Use It**: Fast, deterministic test execution with zero live database mutations. Injects HTTP 500/504 errors, 429 rate limiting, offline network drops, and extreme boundary states.
+- **Usage**:
+  ```bash
+  # Run all mock tests across all portals
+  python scripts/run_mock_tests.py
+  ./scripts/run_mock_tests.sh
+
+  # Filter mock tests by portal
+  python scripts/run_mock_tests.py --portal trade
+  python scripts/run_mock_tests.py --portal admin
+  python scripts/run_mock_tests.py --portal client
+
+  # Run mock tests with headed browser and slowmo
+  python scripts/run_mock_tests.py --portal trade --headed --slowmo 200
+
+  # Parallel execution with 4 workers
+  python scripts/run_mock_tests.py -n 4
   ```
 
 ---
@@ -274,6 +298,10 @@ The test framework features dual-format reporting with intelligent session isola
 | `reports/validations/logs/global_passed_tests.txt` | **TXT** | Detailed block log of all passed validation tests. |
 | `reports/validations/logs/global_test_results.json` | **JSON** | Full structured JSON telemetry dataset for validation tests. |
 | `reports/validations/history/<RunType> - <Date>_<Time>/` | **Archive** | Full archived session snapshot of logs, screenshots, traces, and diagnostics on each fresh session. |
+| `reports/mock/logs/global_test_summary.txt` | **TXT** | Human-readable summary for all 269 mock tests across Trade Terminal, Admin, and Client portals. |
+| `reports/mock/logs/global_passed_tests.txt` | **TXT** | Detailed block log of all passed mock tests with humanized meanings. |
+| `reports/mock/logs/global_test_results.json` | **JSON** | Full structured JSON dataset of mock test outcomes, durations, and injected scenarios. |
+| `reports/mock/history/<RunType> - <Date>_<Time>/` | **Archive** | Archived mock run session snapshots with logs, screenshots, and diagnostics. |
 | `reports/workflows/logs/individual/<portal>/<test>.txt`| **TXT** | Isolated diagnostic log with captured stdout/stderr, timestamps, and stack traces. |
 | `reports/ui_regression/comparison_report_admin.json` | **JSON** | Detailed DOM element drift and runtime telemetry error log for Admin Portal. |
 | `reports/ui_regression/comparison_report.json` | **JSON** | Detailed DOM element drift and runtime telemetry error log for Client Portal. |

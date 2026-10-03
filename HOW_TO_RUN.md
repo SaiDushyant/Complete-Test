@@ -8,19 +8,23 @@ This comprehensive guide details how to configure, execute, and inspect all test
 
 1. [Quick Start & Overview](#1-quick-start--overview)
 2. [Environment Setup & Configuration (`.env`)](#2-environment-setup--configuration-env)
-3. [Validation Test Suites (434 Tests)](#3-validation-test-suites-434-tests)
-   - [3.1 Full Platform Validation Suite](#31-full-platform-validation-suite)
-   - [3.2 Portal-Specific Validation Suites](#32-portal-specific-validation-suites)
-   - [3.3 Running Specific Validation Modules & Individual Tests](#33-running-specific-validation-modules--individual-tests)
-4. [Master & Specialized Workflow Test Runners (`scripts/`)](#4-master--specialized-workflow-test-runners-scripts)
-   - [4.1 Master Runner (`run_all_workflows.py`)](#41-master-runner-run_all_workflowspy)
-   - [4.2 Smoke Test Runner (`run_smoke_tests.py`)](#42-smoke-test-runner-run_smoke_testspy)
-   - [4.3 Regression Test Runner (`run_regression_tests.py`)](#43-regression-test-runner-run_regression_testspy)
-   - [4.4 Shared & Cross-Portal Runner (`run_shared_tests.py`)](#44-shared--cross-portal-runner-run_shared_testspy)
-5. [UI DOM Regression & Drift Detection Runners](#5-ui-dom-regression--drift-detection-runners)
-6. [High-Performance Parallel Execution (`pytest-xdist`)](#6-high-performance-parallel-execution-pytest-xdist)
-7. [Headed vs Headless Visual Debugging](#7-headed-vs-headless-visual-debugging)
-8. [Reporting & Suite-Level History Management](#8-reporting--suite-level-history-management)
+3. [Mock Testing Suites (269 Tests)](#3-mock-testing-suites-269-tests)
+   - [3.1 Full Platform Mock Suite](#31-full-platform-mock-suite)
+   - [3.2 Portal-Specific Mock Suites](#32-portal-specific-mock-suites)
+   - [3.3 Parallel Mock Execution & Fault Injection](#33-parallel-mock-execution--fault-injection)
+4. [Validation Test Suites (434 Tests)](#4-validation-test-suites-434-tests)
+   - [4.1 Full Platform Validation Suite](#41-full-platform-validation-suite)
+   - [4.2 Portal-Specific Validation Suites](#42-portal-specific-validation-suites)
+   - [4.3 Running Specific Validation Modules & Individual Tests](#43-running-specific-validation-modules--individual-tests)
+5. [Master & Specialized Workflow Test Runners (`scripts/`)](#5-master--specialized-workflow-test-runners-scripts)
+   - [5.1 Master Runner (`run_all_workflows.py`)](#51-master-runner-run_all_workflowspy)
+   - [5.2 Smoke Test Runner (`run_smoke_tests.py`)](#52-smoke-test-runner-run_smoke_testspy)
+   - [5.3 Regression Test Runner (`run_regression_tests.py`)](#53-regression-test-runner-run_regression_testspy)
+   - [5.4 Shared & Cross-Portal Runner (`run_shared_tests.py`)](#54-shared--cross-portal-runner-run_shared_testspy)
+6. [UI DOM Regression & Drift Detection Runners](#6-ui-dom-regression--drift-detection-runners)
+7. [High-Performance Parallel Execution (`pytest-xdist`)](#7-high-performance-parallel-execution-pytest-xdist)
+8. [Headed vs Headless Visual Debugging](#8-headed-vs-headless-visual-debugging)
+9. [Reporting & Suite-Level History Management](#9-reporting--suite-level-history-management)
 
 ---
 
@@ -31,17 +35,15 @@ The framework unifies all test suites into clean, non-conflicting domains:
 ```text
                             COMPLETE-TEST FRAMEWORK
                                        │
-                 ┌─────────────────────┴─────────────────────┐
-                 │                                           │
-                 ▼                                           ▼
-      workflows/ (1,354 tests)                     ui_regression/ (29 tests)
-  Behavioral & Validation Testing                 DOM Drift & Structural Accuracy
-                 │                                           │
-   ┌─────────────┼─────────────┐                ┌────────────┴────────────┐
-   │             │             │                │                         │
- Admin        Client         Trade          Crawler                   Comparer
-Portal        Portal       Terminal        (Baselines)             (Drift Diffing)
-(554 tests)  (246 tests)  (395 tests)
+                 ┌─────────────────────┼─────────────────────┐
+                 │                     │                     │
+                 ▼                     ▼                     ▼
+      workflows/ (1,325 tests)   mock/ (269 tests)    ui_regression/ (29 tests)
+  Behavioral & Validation Testing Network Mocking      DOM Drift & Structural
+                 │                     │                     │
+   ┌─────────────┼─────────────┐   ┌───┼───┐          ┌──────┴──────┐
+   │             │             │   │   │   │          │             │
+ Admin        Client         Trade Adm Cli Tra     Crawler       Comparer
 ```
 
 ### Quick Commands Cheat Sheet
@@ -50,25 +52,33 @@ Portal        Portal       Terminal        (Baselines)             (Drift Diffin
 # Activate Conda environment
 conda activate playwright-env
 
-# 1. Run All Platform Validation Tests (434 Tests)
+# 1. Run All Mock Tests across all portals (269 Tests in ~16s)
+python scripts/run_mock_tests.py --portal all
+
+# 2. Run Portal-Specific Mock Tests
+python scripts/run_mock_tests.py --portal trade
+python scripts/run_mock_tests.py --portal admin
+python scripts/run_mock_tests.py --portal client
+
+# 3. Run All Platform Validation Tests (434 Tests)
 pytest -m validation -v
 
-# 2. Run Trade Terminal Validation Tests (220 Tests)
+# 4. Run Trade Terminal Validation Tests (220 Tests)
 pytest workflows/trade_terminal/tests/test_val_trade_*.py -v
 
-# 3. Run Admin Portal Validation Tests (129 Tests)
+# 5. Run Admin Portal Validation Tests (129 Tests)
 pytest workflows/admin_portal/tests/test_val_admin_*.py -v
 
-# 4. Run Client Portal Validation Tests (85 Tests)
+# 6. Run Client Portal Validation Tests (85 Tests)
 pytest workflows/client_portal/tests/test_val_client_*.py -v
 
-# 5. Run all behavioral workflow tests headless
+# 7. Run all behavioral workflow tests headless
 python scripts/run_all_workflows.py
 
-# 6. Run critical smoke tests (< 2 mins)
+# 8. Run critical smoke tests (< 2 mins)
 python scripts/run_smoke_tests.py
 
-# 7. Run full UI DOM regression pipeline
+# 9. Run full UI DOM regression pipeline
 python scripts/run_ui_full_pipeline.py
 ```
 
@@ -101,17 +111,53 @@ ADMIN_PASSWORD=Test@1234
 
 ---
 
-## 3. Validation Test Suites (434 Tests)
+## 3. Mock Testing Suites (269 Tests)
+
+Mock testing uses Playwright route interception (`MockRouter`) to test frontend UI states, error handling, rate limiting, and zero-balance configurations 100% offline with zero database mutation.
+
+### 3.1 Full Platform Mock Suite
+Executes all 269 mock tests across Trade Terminal, Admin Portal, and Client Portal in ~16 seconds:
+```bash
+python scripts/run_mock_tests.py --portal all
+```
+
+### 3.2 Portal-Specific Mock Suites
+```bash
+# Trade Terminal Mock Suite (96 tests across 13 suites)
+python scripts/run_mock_tests.py --portal trade
+
+# Admin Portal Mock Suite (81 tests across 22 suites)
+python scripts/run_mock_tests.py --portal admin
+
+# Client Portal Mock Suite (92 tests across 7 suites)
+python scripts/run_mock_tests.py --portal client
+```
+
+### 3.3 Parallel Mock Execution & Fault Injection
+```bash
+# Run mock tests in parallel across 4 CPU workers
+python scripts/run_mock_tests.py -n 4
+
+# Run with visible browser and slowmo delay for visual demonstration
+python scripts/run_mock_tests.py --portal trade --headed --slowmo 200
+
+# Filter mock tests by keyword or scenario
+python scripts/run_mock_tests.py -k "server_errors or rate_limit"
+```
+
+---
+
+## 4. Validation Test Suites (434 Tests)
 
 Validation tests verify boundary values, SQL injection, XSS attacks, financial calculations, form submission guards, and UI controls across all portals.
 
-### 3.1 Full Platform Validation Suite
+### 4.1 Full Platform Validation Suite
 Executes all 434 validation tests across Admin, Client, and Trade Terminal:
 ```bash
 pytest -m validation -v
 ```
 
-### 3.2 Portal-Specific Validation Suites
+### 4.2 Portal-Specific Validation Suites
 ```bash
 # Trade Terminal Validation Suite (220 tests)
 pytest workflows/trade_terminal/tests/test_val_trade_*.py -v
@@ -123,7 +169,7 @@ pytest workflows/admin_portal/tests/test_val_admin_*.py -v
 pytest workflows/client_portal/tests/test_val_client_*.py -v
 ```
 
-### 3.3 Running Specific Validation Modules & Individual Tests
+### 4.3 Running Specific Validation Modules & Individual Tests
 
 #### Run a Single Test Module:
 ```bash
@@ -157,27 +203,27 @@ pytest -k "xss" -v
 
 ---
 
-## 4. Master & Specialized Workflow Test Runners (`scripts/`)
+## 5. Master & Specialized Workflow Test Runners (`scripts/`)
 
-### 4.1 Master Runner (`run_all_workflows.py`)
+### 5.1 Master Runner (`run_all_workflows.py`)
 Executes all behavioral workflow tests:
 ```bash
 python scripts/run_all_workflows.py
 ```
 
-### 4.2 Smoke Test Runner (`run_smoke_tests.py`)
+### 5.2 Smoke Test Runner (`run_smoke_tests.py`)
 Runs critical smoke paths for fast feedback:
 ```bash
 python scripts/run_smoke_tests.py
 ```
 
-### 4.3 Regression Test Runner (`run_regression_tests.py`)
+### 5.3 Regression Test Runner (`run_regression_tests.py`)
 Runs full behavioral regression suites:
 ```bash
 python scripts/run_regression_tests.py
 ```
 
-### 4.4 Shared & Cross-Portal Runner (`run_shared_tests.py`)
+### 5.4 Shared & Cross-Portal Runner (`run_shared_tests.py`)
 Runs multi-account, MAM/PAMM replication, and cross-portal synchronization workflows:
 ```bash
 python scripts/run_shared_tests.py
@@ -185,7 +231,7 @@ python scripts/run_shared_tests.py
 
 ---
 
-## 5. UI DOM Regression & Drift Detection Runners
+## 6. UI DOM Regression & Drift Detection Runners
 
 - **Compare Live against Baseline**:
   ```bash
@@ -202,10 +248,13 @@ python scripts/run_shared_tests.py
 
 ---
 
-## 6. High-Performance Parallel Execution (`pytest-xdist`)
+## 7. High-Performance Parallel Execution (`pytest-xdist`)
 
 Run tests concurrently across multiple CPU workers:
 ```bash
+# Run mock tests in parallel with 4 workers
+python scripts/run_mock_tests.py -n 4
+
 # Run validation tests in parallel with 4 workers
 pytest -m validation -n 4 -v
 
@@ -215,10 +264,11 @@ pytest workflows/ -n 4 --dist loadfile -v
 
 ---
 
-## 7. Headed vs Headless Visual Debugging
+## 8. Headed vs Headless Visual Debugging
 
 - **Headed Browser Mode**:
   ```bash
+  python scripts/run_mock_tests.py --portal trade --headed --slowmo 200
   pytest workflows/client_portal/tests/test_val_client_deposit.py -v --headed
   ```
 - **Slow Motion Delay** (e.g. 300ms pause between actions):
@@ -232,23 +282,23 @@ pytest workflows/ -n 4 --dist loadfile -v
 
 ---
 
-## 8. Reporting & Suite-Level History Management
+## 9. Reporting & Suite-Level History Management
 
 Reports are automatically partitioned into segregated suite folders under `reports/`:
 
 ```text
 reports/
+├── mock/                             # Mock testing outputs
+│   ├── logs/                         # global_test_summary.txt, global_test_results.json
+│   ├── history/                      # Timestamped prior mock run archives
+│   └── individual/                   # Individual test txt/json logs
+│
 ├── validations/                      # Active validation suite outputs
 │   ├── logs/                         # global_test_summary.txt, global_test_results.json
 │   ├── diagnostics/                  # Detailed telemetry JSONs (console errors, HTTP 4xx/5xx)
 │   ├── screenshots/                  # Failure PNG screenshots
 │   ├── traces/                       # Playwright timeline traces (.zip)
 │   └── history/                      # Timestamped prior run archives
-│       └── <RunType> - DD-MM-YYYY_HH-MM-SS/
-│           ├── logs/
-│           ├── diagnostics/
-│           ├── screenshots/
-│           └── traces/
 │
 ├── workflows/                        # Behavioral workflow suite outputs
 │   ├── logs/
@@ -260,6 +310,8 @@ reports/
     └── history/
 ```
 
-- **Active Summary**: [`reports/validations/logs/global_test_summary.txt`](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/reports/validations/logs/global_test_summary.txt)
-- **JSON Telemetry Report**: [`reports/validations/logs/global_test_results.json`](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/reports/validations/logs/global_test_results.json)
+- **Mock Tests Summary**: [`reports/mock/logs/global_test_summary.txt`](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/reports/mock/logs/global_test_summary.txt)
+- **Validation Summary**: [`reports/validations/logs/global_test_summary.txt`](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/reports/validations/logs/global_test_summary.txt)
+- **JSON Telemetry Report**: [`reports/mock/logs/global_test_results.json`](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/reports/mock/logs/global_test_results.json)
 - **Automatic History Archiving**: On every new session start, previous logs, screenshots, diagnostics, and traces are cleanly archived into `history/`, ensuring active test directories remain clean.
+

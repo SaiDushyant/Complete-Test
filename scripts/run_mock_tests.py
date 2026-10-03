@@ -147,6 +147,20 @@ def main() -> int:
         env["BROWSER_HEADLESS"] = "true"
 
     result = subprocess.run(cmd, cwd=str(ROOT_DIR), env=env)
+
+    logs_dir = ROOT_DIR / "reports" / "mock" / "logs"
+    print()
+    print("=" * 80)
+    print("📊 MOCK TEST REPORTS & ARTIFACTS GENERATED")
+    print("=" * 80)
+    print(f"  📄 Text Summary Report   : {logs_dir / 'global_test_summary.txt'}")
+    print(f"  📄 Passed Tests List     : {logs_dir / 'global_passed_tests.txt'}")
+    print(f"  📄 Failed Tests List     : {logs_dir / 'global_failed_tests.txt'}")
+    print(f"  📄 Skipped Tests List    : {logs_dir / 'global_skipped_tests.txt'}")
+    print(f"  📊 JSON Master Results   : {logs_dir / 'global_test_results.json'}")
+    print(f"  📁 Individual Test Logs  : {logs_dir / 'individual'}")
+    print("=" * 80)
+
     return result.returncode
 
 

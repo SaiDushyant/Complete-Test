@@ -1,35 +1,35 @@
 # Testing Framework Architecture
 
-This document describes the high-level architecture of the test automation repository, detailing why the **UI Regression Layer** and the **Behavioral & Validation Workflow Layer** are structured, how boundaries are maintained, and how multi-developer collaboration is structured across portals.
+This document describes the high-level architecture of the test automation repository, detailing why the **UI Regression Layer**, the **Behavioral & Validation Workflow Layer**, and the **Mock Testing & Fault Injection Layer** are structured, how boundaries are maintained, and how multi-developer collaboration is structured across portals.
 
 ---
 
-## 1. Conceptual Model: Dual-Layer Testing
+## 1. Conceptual Model: Three-Tier Testing Architecture
 
 ```text
-                    TEST AUTOMATION
-                          │
-             ┌────────────┴────────────┐
-             │                         │
-       UI REGRESSION              WORKFLOWS
-       DOM STRUCTURE             BEHAVIORAL & VALIDATION
-             │                         │
-       crawler/comparer          Trade / Admin / Client
-             │                         │
-   "Has the UI/DOM structure    "Can a user perform workflows
-    changed from baseline?"      and are all inputs validated?"
+                               TEST AUTOMATION PLATFORM
+                                          │
+            ┌─────────────────────────────┼─────────────────────────────┐
+            │                             │                             │
+      UI REGRESSION                   WORKFLOWS                   MOCK TESTING
+      DOM STRUCTURE            BEHAVIORAL & VALIDATION         NETWORK INTERCEPTION
+            │                             │                             │
+     crawler/comparer           Trade / Admin / Client        Trade / Admin / Client
+            │                             │                             │
+  "Has the UI/DOM structure    "Can a user perform workflows   "How does UI react under
+   changed from baseline?"      and are inputs validated?"      5xx errors, 429, & latency?"
 ```
 
 ### Why These Systems Are Logically Separated
 
-| Dimension | `ui_regression/` (DOM Structural Regression) | `workflows/` (Behavioral & Validation Layer) |
-| :--- | :--- | :--- |
-| **Primary Question** | *"Did any element change, move, disappear, or introduce unexpected CSS/attribute drift?"* | *"Can an end user perform workflows and are all boundaries, calculations, and security payloads guarded?"* |
-| **Execution Style** | Breadth-first crawl across canonical routes at 5 viewports (`sm`, `md`, `lg`, `xl`, `2xl`). | Linear, action-driven user journeys (click, fill, wait, assert) and boundary validation testing. |
-| **Ground Truth** | Static, approved JSON element trees stored in `element_output/` and `element_output_admin/`. | Dynamic business expectations and security vectors (`validation_payloads.py`). |
-| **Noise Filtering** | 6-tier matching engine normalizing timestamps, prices, ticket IDs, and loading skeletons. | Targeted Playwright locators asserting specific UI states or server responses. |
-| **Failure Indication** | Visual, layout, or structural drift from release milestones. | Functional bug, broken calculation, or missing input validation. |
-| **Speed & Cadence** | Deep audits run against staging/preprod or before major releases. | Fast smoke, regression, and validation suites (434 tests) run on feature PRs and CI. |
+| Dimension | `ui_regression/` (DOM Structural Regression) | `workflows/` (Behavioral & Validation Layer) | `mock/` (Network Interception Layer) |
+| :--- | :--- | :--- | :--- |
+| **Primary Question** | *"Did any element change, move, disappear, or introduce unexpected CSS/attribute drift?"* | *"Can an end user perform workflows and are all boundaries, calculations, and security payloads guarded?"* | *"How does the frontend react under severe 5xx errors, 429 rate limits, offline disconnects, and edge cases?"* |
+| **Execution Style** | Breadth-first crawl across canonical routes at 5 viewports (`sm`, `md`, `lg`, `xl`, `2xl`). | Linear, action-driven user journeys (click, fill, wait, assert) and boundary validation testing. | 100% offline network route interception via Playwright `page.route()` and `MockRouter`. |
+| **Ground Truth** | Static, approved JSON element trees stored in `element_output/` and `element_output_admin/`. | Dynamic business expectations and security vectors (`validation_payloads.py`). | Deterministic JSON datasets in `workflows/shared/mocks/mock_data/`. |
+| **Noise Filtering** | 6-tier matching engine normalizing timestamps, prices, ticket IDs, and loading skeletons. | Targeted Playwright locators asserting specific UI states or server responses. | Purely deterministic mock responses, zero live server noise or database mutations. |
+| **Failure Indication** | Visual, layout, or structural drift from release milestones. | Functional bug, broken calculation, or missing input validation. | Unhandled API exceptions, missing error toasts, broken offline states. |
+| **Speed & Cadence** | Deep audits run against staging/preprod or before major releases. | Fast smoke, regression, and validation suites (434 tests) run on feature PRs and CI. | Sub-second suite execution (~16s for all 269 tests across all 3 portals). |
 
 ---
 
@@ -45,34 +45,35 @@ Complete-Test/
 │   ├── element_output_admin/         # Authoritative Admin baseline DOM snapshots (sm-2xl)
 │   └── tests/                        # DOM regression unit & matching accuracy tests
 │
-├── workflows/                        # Behavioral & Validation Testing Layer (1,354 tests)
+├── workflows/                        # Core Testing Hierarchy (1,594 tests)
 │   ├── conftest.py                   # Root workflow fixtures (browser lifecycle)
 │   │
-│   ├── trade_terminal/               # Developer 1 Domain: Trade Terminal (395 tests)
+│   ├── trade_terminal/               # Developer 1 Domain: Trade Terminal (491 tests)
 │   │   ├── conftest.py               # Trade fixtures loader
 │   │   ├── pages/                    # Trade Page Objects (LoginPage, OrderEntryPage, WatchlistPage)
-│   │   ├── tests/                    # Workflow (test_trade_*.py) & Validation (test_val_trade_*.py)
+│   │   ├── tests/                    # Workflow (test_trade_*.py), Validation (test_val_trade_*.py), Mock (tests/mock/ - 96 tests)
 │   │   ├── fixtures/                 # Trade-specific session & page fixtures
 │   │   └── utils/                    # Trade calculation & helper functions
 │   │
-│   ├── admin_portal/                 # Developer 2 Domain: Admin Portal (554 tests)
+│   ├── admin_portal/                 # Developer 2 Domain: Admin Portal (635 tests)
 │   │   ├── conftest.py               # Admin fixtures loader
 │   │   ├── pages/                    # Admin Page Objects (AdminLoginPage, UserManagementPage)
-│   │   ├── tests/                    # Workflow (test_admin_*.py) & Validation (test_val_admin_*.py)
+│   │   ├── tests/                    # Workflow (test_admin_*.py), Validation (test_val_admin_*.py), Mock (tests/mock/ - 81 tests)
 │   │   ├── fixtures/                 # Admin session & page fixtures
 │   │   └── utils/                    # Admin navigation helpers, query utilities
 │   │
-│   ├── client_portal/                # Developer 3 Domain: Client Portal (246 tests)
+│   ├── client_portal/                # Developer 3 Domain: Client Portal (338 tests)
 │   │   ├── conftest.py               # Client fixtures loader
 │   │   ├── pages/                    # Client Page Objects (ClientLoginPage, ClientDepositPage)
-│   │   ├── tests/                    # Workflow (test_client_*.py) & Validation (test_val_client_*.py)
+│   │   ├── tests/                    # Workflow (test_client_*.py), Validation (test_val_client_*.py), Mock (tests/mock/ - 92 tests)
 │   │   ├── fixtures/                 # Client session & page fixtures
 │   │   └── utils/                    # Client validation utilities, session recovery
 │   │
 │   └── shared/                       # Reusable infrastructure & shared helpers
+│       ├── mocks/                    # MockRouter, MockScenarios, mock_data datasets
 │       ├── pages/base_page.py        # Abstract BasePage with resilient Playwright helpers
 │       ├── helpers/                  # validation_payloads.py, math_assertions.py
-│       ├── fixtures/                 # browser_fixtures.py, auth_fixtures.py
+│       ├── fixtures/                 # browser_fixtures.py, auth_fixtures.py, mock_fixtures.py
 │       ├── utils/                    # test_logger.py, diagnostics.py, error_monitor.py, waits.py
 │       ├── constants/                # timeouts.py, viewports.py, routes.py
 │       └── assertions/               # Domain-agnostic assertion wrappers
@@ -82,6 +83,7 @@ Complete-Test/
 │
 ├── auth/                             # Cached storage state sessions (gitignored)
 ├── reports/                          # Segregated multi-suite reporting and history
+│   ├── mock/                         # Active mock test logs, results JSON, individual traces & history
 │   ├── validations/                  # Active validation logs, screenshots, diagnostics, traces & history
 │   ├── workflows/                    # Active workflow logs, screenshots, traces & history
 │   └── ui_regression/                # DOM drift comparison reports & history

@@ -226,44 +226,137 @@ def test_mock_deposit_gateway_500_error(mock_router: MockRouter, workflow_page: 
 
 Here is the implementation roadmap of mock tests across all three portals. Any team member can implement any of these test cases:
 
-### Trade Terminal Mock Suites (`workflows/trade_terminal/tests/mock/`)
-- [ ] **Order Execution**:
+### Trade Terminal Mock Suites (`workflows/trade_terminal/tests/mock/` - 96 Tests)
+- [x] **Authentication & Session Management** (`test_mock_trade_auth_session.py` - 9 tests):
+  - `test_mock_trade_login_success`: Valid login with token injection.
+  - `test_mock_trade_login_invalid_credentials`: HTTP 401 invalid credentials alert.
+  - `test_mock_trade_session_expiration_401`: Dynamic session expiration and login redirect.
+  - `test_mock_trade_account_suspended_403`: HTTP 403 account suspension notice.
+  - `test_mock_trade_2fa_otp_challenge`: 2FA prompt rendering.
+  - `test_mock_trade_concurrent_session_kickout`: HTTP 409 multi-login kickout.
+  - `test_mock_trade_logout_clears_session`: Clean session tear-down.
+  - `test_mock_trade_password_reset_request`: Password reset link dispatch.
+  - `test_mock_trade_auth_service_500_resilience`: Auth service downtime handling.
+- [x] **Order Execution & Ticket Validation** (`test_mock_trade_order_execution.py` - 10 tests):
   - `test_mock_market_buy_success`: Successful buy fill with custom ticket ID.
   - `test_mock_market_sell_success`: Successful sell fill with custom execution price.
+  - `test_mock_limit_buy_order_placement`: Pending limit buy order placed.
+  - `test_mock_stop_loss_take_profit_submission`: SL/TP parameters submitted and acknowledged.
   - `test_mock_insufficient_margin_error`: HTTP 400 Insufficient margin toast.
   - `test_mock_market_halted_warning`: HTTP 400 Market closed alert.
   - `test_mock_order_rate_limit_429`: HTTP 429 Rapid order placement warning.
-- [ ] **Account Metrics & PnL**:
+  - `test_mock_order_lot_size_invalid`: Min/Max lot size boundaries rejection.
+  - `test_mock_order_execution_500_error`: Matching engine 500 error toast.
+  - `test_mock_order_delayed_fill_spinner`: Delayed order fill with progress indicator.
+- [x] **Account Metrics & Financial Balance** (`test_mock_trade_account_metrics.py` - 5 tests):
   - `test_mock_account_balance_zero`: Zero balance rendering, disables Trade button.
   - `test_mock_high_floating_pnl_equity`: Live equity calculation with floating profit.
   - `test_mock_margin_call_warning_level`: Margin level < 100% warning banner.
-- [ ] **Watchlist & Quotes**:
+  - `test_mock_margin_stop_out_notification`: Margin level < 50% stop-out alert.
+  - `test_mock_metrics_endpoint_500_resilience`: Fallback to cached metrics on server error.
+- [x] **Watchlist & Live Quotes** (`test_mock_trade_watchlist_quotes.py` - 9 tests):
+  - `test_mock_watchlist_symbols_render`: Watchlist symbols, bid/ask quotes rendering.
   - `test_mock_watchlist_empty_state`: Empty watchlist search message.
+  - `test_mock_watchlist_search_filter`: Symbol search filtering.
+  - `test_mock_watchlist_add_custom_symbol`: Custom symbol addition.
+  - `test_mock_watchlist_remove_symbol`: Symbol removal from watchlist.
   - `test_mock_watchlist_spread_formatting`: Spread and tick rendering accuracy.
-- [ ] **Server Resilience**:
+  - `test_mock_watchlist_live_tick_color_flash`: Green/Red price tick flashing.
+  - `test_mock_watchlist_quotes_timeout_indicator`: Disconnected quote feed indicator.
+  - `test_mock_watchlist_corrupted_symbol_data`: Graceful recovery from malformed quote JSON.
+- [x] **Open & Closed Positions Management** (`test_mock_trade_positions.py` - 10 tests):
+  - `test_mock_open_positions_table_render`: Position rows with symbol, volume, PnL, open price.
+  - `test_mock_close_single_position_success`: Immediate position closure and row removal.
+  - `test_mock_close_all_positions_success`: Bulk close-all action.
+  - `test_mock_partial_position_close`: Partial volume close.
+  - `test_mock_modify_position_sltp`: Modify SL/TP on active position.
+  - `test_mock_positions_empty_state`: "No open positions" banner.
+  - `test_mock_close_position_rejected_500`: Position close failure toast.
+  - `test_mock_position_auto_liquidated_badge`: Liquidation badge on forced close.
+  - `test_mock_positions_sorting_by_pnl`: Sorting table by floating PnL.
+  - `test_mock_positions_filter_by_symbol`: Filter positions by asset symbol.
+- [x] **Account Switcher & Multi-Account** (`test_mock_trade_account_switcher.py` - 6 tests):
+  - `test_mock_account_switcher_dropdown_render`: Live accounts list.
+  - `test_mock_switch_account_success`: Switch active account and refresh balance.
+  - `test_mock_demo_vs_live_account_badge`: Demo vs Live account badges.
+  - `test_mock_account_switcher_single_account`: Single account state.
+  - `test_mock_switch_account_network_failure`: Switch account network failure resilience.
+  - `test_mock_archived_account_grayed_out`: Inactive/archived account state.
+- [x] **Navigation & Layout Structure** (`test_mock_trade_navigation.py` - 5 tests):
+  - `test_mock_navigation_tabs_switching`: Seamless switching between Trade, Positions, History, Chart.
+  - `test_mock_responsive_layout_mobile_toggle`: Mobile navigation hamburger menu.
+  - `test_mock_dark_light_theme_toggle`: UI theme switching.
+  - `test_mock_fullscreen_chart_mode`: Chart expansion toggle.
+  - `test_mock_keyboard_shortcuts_modal`: Hotkeys cheatsheet modal.
+- [x] **Interactive Charting** (`test_mock_trade_chart.py` - 7 tests):
+  - `test_mock_chart_candlestick_data_load`: Historical candlestick bar rendering.
+  - `test_mock_chart_timeframe_switch_1m_1h_1d`: Dynamic timeframe interval changes.
+  - `test_mock_chart_empty_history_placeholder`: "No chart data available" placeholder.
+  - `test_mock_chart_data_stream_500_resilience`: Chart feed error recovery.
+  - `test_mock_chart_indicator_overlay_rsi_macd`: Technical indicator overlays.
+  - `test_mock_chart_drawing_tools_activation`: Trendline drawing tool activation.
+  - `test_mock_chart_zoom_pan_interaction`: Zoom in/out viewport interaction.
+- [x] **Trading History & Statement Export** (`test_mock_trade_history.py` - 7 tests):
+  - `test_mock_history_closed_trades_render`: Closed trades table.
+  - `test_mock_history_date_range_filter`: Date filtering (Today, Last 7 Days, Custom).
+  - `test_mock_history_empty_state`: Empty history ledger.
+  - `test_mock_history_pagination_50_plus`: Traversal of 50+ closed orders.
+  - `test_mock_history_export_csv`: CSV transaction report download.
+  - `test_mock_history_summary_aggregates`: Realized profit, commission, and swap totals.
+  - `test_mock_history_500_error_retry`: History fetch retry on error.
+- [x] **Terminal Dashboard & Workspace** (`test_mock_trade_dashboard.py` - 7 tests):
+  - `test_mock_dashboard_full_workspace_render`: Multi-pane workspace initialization.
+  - `test_mock_dashboard_quick_trade_widget`: One-click quick trade buttons.
+  - `test_mock_dashboard_market_sentiment_gauge`: Buy/Sell ratio bar.
+  - `test_mock_dashboard_economic_calendar_events`: Calendar high-impact news items.
+  - `test_mock_dashboard_widget_minimize_maximize`: Workspace panel resizing.
+  - `test_mock_dashboard_latency_meter`: Connection latency / ping meter.
+  - `test_mock_dashboard_skeleton_loader`: Initial skeleton loader during delayed API response.
+- [x] **Profile & Terminal Settings** (`test_mock_trade_profile_settings.py` - 7 tests):
+  - `test_mock_profile_details_render`: Account ID, email, leverage, group display.
+  - `test_mock_change_trading_password_success`: Password change with OTP.
+  - `test_mock_change_password_mismatch_error`: Password mismatch validation.
+  - `test_mock_default_lot_size_setting_save`: Preferred default lot size persistence.
+  - `test_mock_one_click_trading_toggle`: One-click trading disclaimer modal & toggle.
+  - `test_mock_sound_notifications_toggle`: Sound alert toggle.
+  - `test_mock_profile_save_500_error`: Profile update server error notification.
+- [x] **API Key & Webhook Access** (`test_mock_trade_api_access.py` - 6 tests):
+  - `test_mock_api_keys_list_render`: Active API keys and permission scopes.
+  - `test_mock_generate_new_api_key_modal`: New API key generation & secret display.
+  - `test_mock_revoke_api_key_success`: Key revocation confirmation.
+  - `test_mock_api_key_limit_reached`: Maximum API keys quota exceeded.
+  - `test_mock_ip_whitelist_update`: IP whitelist save confirmation.
+  - `test_mock_api_secret_copy_clipboard`: Secret copy-to-clipboard action.
+- [x] **Server Errors & Network Resilience** (`test_mock_trade_server_errors.py` - 8 tests):
   - `test_mock_trade_server_500_banner`: Server 500 crash notification.
+  - `test_mock_trade_server_502_bad_gateway`: 502 Bad Gateway fallback.
   - `test_mock_trade_server_503_maintenance`: Scheduled maintenance overlay.
   - `test_mock_trade_gateway_timeout_504`: Upstream liquidity timeout warning.
-  - `test_mock_trade_network_offline`: Browser offline banner.
+  - `test_mock_trade_rate_limit_429`: HTTP 429 rate limit with Retry-After header.
+  - `test_mock_trade_network_offline_abort`: Playwright offline network disconnect simulation.
+  - `test_mock_trade_corrupted_response_payload`: HTML error response in JSON endpoint resilience.
+  - `test_mock_trade_slow_network_reconnect_prompt`: Reconnection prompt under severe latency.
 
-### Admin Portal Mock Suites (`workflows/admin_portal/tests/mock/`)
-- [ ] **User Management**:
-  - `test_mock_admin_user_table_pagination`: 100+ mocked user records traversal.
-  - `test_mock_admin_user_filter_by_group`: Filtering VIP vs Standard accounts.
-  - `test_mock_admin_create_user_success`: Form submit 200 and table refresh.
-  - `test_mock_admin_create_user_duplicate_email`: 422 Duplicate email validation error.
-- [ ] **KYC & Document Verification**:
-  - `test_mock_admin_kyc_queue_empty`: "No pending KYC documents" placeholder.
-  - `test_mock_admin_kyc_approve_success`: Immediate status update to VERIFIED.
-  - `test_mock_admin_kyc_reject_with_remarks`: Status update to REJECTED with note.
-- [ ] **Deposits & Withdrawals Queue**:
-  - `test_mock_admin_approve_deposit_instant_sync`: Approval updates balance.
-  - `test_mock_admin_reject_withdrawal_refund`: Rejection returns funds to wallet.
-- [ ] **Security & Role Permissions**:
-  - `test_mock_admin_read_only_manager_action_denied`: 403 Forbidden alert.
-  - `test_mock_admin_audit_log_capture`: Verify user ID and timestamp captured.
+### Admin Portal Mock Suites (`workflows/admin_portal/tests/mock/` - 81 Tests)
+- [x] **Authentication & Role Authorization** (`test_mock_admin_auth.py`): SuperAdmin / Manager logins, 2FA, session expiry.
+- [x] **User Management & Accounts** (`test_mock_admin_users.py`): User list, pagination, balance adjustment, group modification.
+- [x] **Deposits & Fund Approvals** (`test_mock_admin_deposits.py`): Deposit approval, rejection, audit log verification.
+- [x] **Withdrawal Queue & Processing** (`test_mock_admin_withdrawals.py`): Payout approval, fee deduction, reversal.
+- [x] **KYC & Document Verification** (`test_mock_admin_kyc.py`): ID document review, approval, rejection with notes.
+- [x] **LP & Liquidity Providers** (`test_mock_admin_lp.py`): LP bridge health, feed status, symbol routing.
+- [x] **Orders & Trade Management** (`test_mock_admin_orders.py`): Order book audit, Category A/B/C inspection, force close.
+- [x] **Risk Management & A/B Books** (`test_mock_admin_risk_books.py`): Book allocation, toxic flow rules, exposure limits.
+- [x] **Automated Cron Jobs** (`test_mock_admin_cron_jobs.py`): Daily rollover, interest accrual, statement generation triggers.
+- [x] **PAMM / MAM Administration** (`test_mock_admin_pamm_mam.py`): Manager approval, investor detachment, fee settlement.
+- [x] **Admin Roles & Permissions** (`test_mock_admin_roles.py`): Granular permission matrix, read-only restriction enforcement.
+- [x] **System Settings & Maintenance** (`test_mock_admin_settings.py`): Global platform flags, maintenance mode switch.
+- [x] **Symbol & Spread Configuration** (`test_mock_admin_symbols.py`): Spread markups, swap rates, trading hours.
+- [x] **Bonus & Promotions** (`test_mock_admin_bonus.py`): Deposit bonus allocation, wagering requirements.
+- [x] **Leads & CRM Management** (`test_mock_admin_leads.py`): Lead assignment, sales stage updates.
+- [x] **Audit Logs & Security** (`test_mock_admin_audit.py`): Immutable audit trail, IP tracking.
+- [x] **Server Resilience & Fault Injection** (`test_mock_admin_server_errors.py`): HTTP 500/502/503/504 fault injection.
 
-### Client Portal Mock Suites (`workflows/client_portal/tests/mock/`)
+### Client Portal Mock Suites (`workflows/client_portal/tests/mock/` - 92 Tests)
 - [x] **Authentication & Security** (`test_mock_client_auth_security.py`):
   - `test_mock_client_login_success`: Mock JWT session injection and profile retrieval.
   - `test_mock_client_login_invalid_password`: HTTP 401 Invalid credentials banner.
