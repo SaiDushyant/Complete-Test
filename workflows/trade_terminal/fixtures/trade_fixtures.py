@@ -14,6 +14,7 @@ from playwright.sync_api import Browser, BrowserContext, Page
 from config.settings import settings
 from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.diagnostics import PageDiagnostics
+from workflows.shared.utils.error_monitor import ErrorMonitor
 from workflows.shared.utils.logger import get_logger
 from workflows.shared.utils.screenshot import capture_screenshot
 from workflows.trade_terminal.pages.api_access_page import ApiAccessPage
@@ -86,6 +87,7 @@ def authenticated_trade_page(
     page.set_default_timeout(settings.browser.timeout)
     diagnostics = PageDiagnostics(page)
     page._diagnostics = diagnostics
+    page.error_monitor = ErrorMonitor(page)
 
     yield page
 
@@ -117,6 +119,12 @@ def authenticated_trade_page(
         page.close()
     except Exception:
         pass
+
+
+@pytest.fixture(scope="function")
+def trade_error_monitor(authenticated_trade_page: Page) -> ErrorMonitor:
+    """Provide the active ErrorMonitor for the current Trade Terminal page."""
+    return authenticated_trade_page.error_monitor
 
 
 @pytest.fixture(scope="function")

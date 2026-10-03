@@ -78,6 +78,8 @@ class AdminDepositPage(BasePage):
         self.modal_status_select = self.modal.locator("#status_change")
         self.modal_type_select = self.modal.locator("#type")
         self.modal_reason_textarea = self.modal.locator("#Reason")
+        self.invalid_feedback_email = self.modal.locator(".invalid-feedback.email")
+        self.invalid_feedback = self.modal.locator(".invalid-feedback")
 
     def navigate(self) -> None:
         """Navigate directly to Admin Deposit module."""
@@ -100,8 +102,13 @@ class AdminDepositPage(BasePage):
     def sort_column(self, column_index: int) -> str:
         """Scroll column header into view, click to sort, and return updated class attribute."""
         th = self.table_headers.nth(column_index)
-        th.scroll_into_view_if_needed()
-        th.click(force=True)
+        try:
+            if th.is_visible():
+                th.click(force=True)
+            else:
+                th.dispatch_event("click")
+        except Exception:
+            th.dispatch_event("click")
         self.page.wait_for_timeout(300)
         return self.table_headers.nth(column_index).get_attribute("class") or ""
 

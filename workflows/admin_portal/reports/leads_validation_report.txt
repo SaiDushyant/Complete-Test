@@ -1,0 +1,39 @@
+==========================================================================================
+ADMIN PORTAL - LEADS MODULE COMPREHENSIVE VALIDATION REPORT
+Target Module: Leads (Leads Report, Manage Leads, Bulk Upload, Lead Types)
+Total Scenarios Evaluated: 30
+Positive / Passed: 16 | Negative / Rejected: 13 | Warnings: 1
+==========================================================================================
+
+| Scenario | Input | Result | Details |
+| :--- | :--- | :---: | :--- |
+| Route: Leads Report | `report` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Manage Leads | `leads` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Leads: Add Lead Button Presence | `#addNew locator` | ✅ Accepted | Present in DOM: True |
+| Leads: Bulk Upload Button Presence | `#bulkUpload locator` | ✅ Accepted | Present in DOM: True |
+| Leads: Lead Types Button Presence | `#manageLeadTypes locator` | ✅ Accepted | Present in DOM: True |
+| Lead Name: Standard Lead Name | `'Arthur Pendelton'` | ✅ Accepted | Valid multi-word alphabetical name |
+| Lead Name: Empty Lead Name (Negative) | `''` | ❌ Rejected | Mandatory lead name required |
+| Lead Name: Numbers in Lead Name (Negative) | `'Lead12345'` | ❌ Rejected | Numeric characters blocked in name |
+| Lead Name: Special Characters (Negative) | `'Lead#@!VIP'` | ❌ Rejected | Special characters blocked |
+| Lead Name: Whitespace Name (Negative) | `'     '` | ⚠️ Accepted | Whitespace requires trim/validation |
+| Lead Email: Valid Lead Email | `'prospect@corporate.com'` | ✅ Accepted | Standard RFC compliant email |
+| Lead Email: Missing At-Sign (Negative) | `'prospectcorporate.com'` | ❌ Rejected | Missing @ rejected |
+| Lead Email: Missing TLD (Negative) | `'prospect@corporate'` | ❌ Rejected | Incomplete domain rejected |
+| Lead Email: SQLi Payload in Lead Email | `'test' OR '1'='1'` | ❌ Rejected | SQL injection blocked |
+| Lead Phone: Valid International Phone | `'+14155552671'` | ✅ Accepted | Valid E.164 phone format |
+| Lead Phone: Local 10-Digit Phone | `'4155552671'` | ✅ Accepted | Valid 10-digit number |
+| Lead Phone: Letters in Phone (Negative) | `'phone_letters'` | ❌ Rejected | Alphabetical phone string blocked |
+| Lead Phone: Empty Phone (Negative) | `''` | ❌ Rejected | Empty required phone blocked |
+| Bulk Upload Modal DOM Presence | `#bulkUploadModal` | ✅ Accepted | Modal in DOM: True |
+| Bulk Upload: Allowed CSV Format | `'leads_import.csv'` | ✅ Accepted | Standard CSV lead structure accepted |
+| Bulk Upload: Allowed Excel XLSX Format | `'leads_batch.xlsx'` | ✅ Accepted | Standard Excel workbook accepted |
+| Bulk Upload: Disallowed Executable (Negative) | `'malware.exe'` | ❌ Rejected | Executable binary blocked |
+| Bulk Upload: Disallowed PHP Script (Negative) | `'backdoor.php'` | ❌ Rejected | Web script upload blocked |
+| Bulk Upload: Empty Submission (Negative) | `'No File Selected'` | ❌ Rejected | Submitting without file blocked by client form |
+| Lead Types Modal DOM Presence | `#leadTypeModal` | ✅ Accepted | Container in DOM: True |
+| Lead Type: Valid Lead Type | `'High Net Worth'` | ✅ Accepted | Custom lead category accepted |
+| Lead Type: Empty Lead Type (Negative) | `''` | ❌ Rejected | Empty lead type name blocked |
+| Lead Type: SQLi in Lead Type (Negative) | `'VIP' OR 1=1--'` | ❌ Rejected | SQL injection in category name blocked |
+| Leads Report: Ledger Render | `table#datatable` | ✅ Accepted | Report rendered: True |
+| Leads Report: Search Filter | `'VIP'` | ✅ Accepted | Search query processed dynamically |

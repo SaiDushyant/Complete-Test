@@ -1,0 +1,50 @@
+==========================================================================================
+ADMIN PORTAL - MANAGE USERS MODULE COMPREHENSIVE VALIDATION REPORT
+Target Module: Manage Users (Account Details, Account Requests, KYC User Documents, Active Users)
+Total Scenarios Evaluated: 41
+Positive / Passed: 18 | Negative / Rejected: 19 | Warnings: 4
+==========================================================================================
+
+| Scenario | Input | Result | Details |
+| :--- | :--- | :---: | :--- |
+| Route: Account Details | `user` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Account Requests | `clientAccountRequests` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: User Documents (KYC) | `userDocument` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Admin User Management | `admin` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Active Users | `activeUsers` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Add User Action Button | `#addNew button` | ✅ Accepted | Trigger button visible on Account Details |
+| Name Validation: Normal name | `'Test Python'` | ✅ Accepted | Standard alphabetical name accepted |
+| Name Validation: Multiple words | `'Test Kumar Python'` | ✅ Accepted | Multi-part alphabetical name accepted |
+| Name Validation: Empty | `''` | ❌ Rejected | Empty mandatory name rejected |
+| Name Validation: Numbers | `'Test12345'` | ❌ Rejected | Numeric digits rejected in name |
+| Name Validation: @ special character | `'Test@Python'` | ❌ Rejected | Special character '@' rejected in name |
+| Name Validation: Hyphen | `'Mary-Jane'` | ❌ Rejected | Hyphenated name rejected by strict alpha validator |
+| Name Validation: Apostrophe | `'Mary'Jane'` | ❌ Rejected | Apostrophe rejected by strict alpha validator |
+| Name Validation: Spaces only | `'   '` | ⚠️ Accepted | Whitespace string requires trimming/sanitization |
+| Name Validation: Leading/trailing spaces | `' Test Python '` | ⚠️ Accepted | Spaces require automatic strip() |
+| Name Validation: Single character | `'A'` | ⚠️ Accepted | Single letter accepted or requires min length check |
+| Name Validation: 100 characters | `100 x 'A'` | ⚠️ Accepted | 100-char boundary input evaluated |
+| Email Validation: Standard Email | `'user@example.com'` | ✅ Accepted | Standard valid RFC email |
+| Email Validation: Subdomain Email | `'user@sub.example.com'` | ✅ Accepted | Multi-level domain email |
+| Email Validation: Missing Domain | `'user@'` | ❌ Rejected | Missing domain rejected by email format |
+| Email Validation: Missing Username | `'@test.com'` | ❌ Rejected | Missing recipient username rejected |
+| Email Validation: Embedded Space | `'user space@test.com'` | ❌ Rejected | Illegal whitespace in email rejected |
+| Email Validation: Missing TLD | `'user@localhost'` | ❌ Rejected | Missing Top-Level Domain rejected |
+| Email Validation: SQLi Payload in Email | `'' OR '1'='1'` | ❌ Rejected | SQL injection rejected by email format |
+| Email Validation: XSS Payload in Email | `'<script>alert(1)</script>'` | ❌ Rejected | HTML tags rejected by email format |
+| Phone Validation: Standard E.164 Phone | `'+1234567890'` | ✅ Accepted | Valid international phone format |
+| Phone Validation: Standard 10-Digit Phone | `'9876543210'` | ✅ Accepted | Valid local 10-digit phone |
+| Phone Validation: Alphabet in Phone (Negative) | `'letters_in_phone'` | ❌ Rejected | Non-numeric phone string rejected |
+| Phone Validation: Empty Phone (Negative) | `''` | ❌ Rejected | Empty mandatory phone rejected |
+| Phone Validation: SQLi in Phone (Negative) | `'12345' OR '1'='1'` | ❌ Rejected | SQL injection in phone rejected |
+| Password Validation: Strong Password | `'StrongP@ssw0rd!'` | ✅ Accepted | Meets uppercase, lowercase, digit, and symbol constraints |
+| Password Validation: Weak Password (Negative) | `'123456'` | ❌ Rejected | Too short / trivial sequence rejected |
+| Password Validation: All Alphabets (Negative) | `'abcdefgh'` | ❌ Rejected | Missing required digit and special character |
+| Password Validation: Empty Password (Negative) | `''` | ❌ Rejected | Empty password blocked |
+| Date Filter: Standard Range | `2026-09-01 to 2026-09-30` | ✅ Accepted | Valid chronological date range |
+| Date Filter: Inverted Range (From > To) | `From > To Inversion` | ❌ Rejected | Inverted date range blocked (Start date cannot be after End date) |
+| Date Filter: Clear Reset | `Click #clear` | ✅ Accepted | Filters reset handled |
+| User Documents: Ledger Presence | `table#datatable` | ✅ Accepted | Document verification ledger rendered: True |
+| KYC: Rejection Remark Modal in DOM | `#remarkModal container` | ✅ Accepted | Remark modal present in DOM: True |
+| KYC: Document Status Dropdowns | `select.userDocumentVerification` | ✅ Accepted | Found 10 document verification action controls |
+| KYC: Empty Rejection Remark (Negative) | `Empty remark ''` | ❌ Rejected | Rejecting a KYC document without mandatory remarks is blocked |

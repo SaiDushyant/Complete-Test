@@ -17,6 +17,10 @@ from workflows.admin_portal.pages.account_requests_page import AccountRequestsPa
 from workflows.admin_portal.pages.admin_active_users_page import AdminActiveUsersPage
 from workflows.admin_portal.pages.admin_cron_jobs_page import AdminCronJobsPage
 from workflows.admin_portal.pages.admin_dashboard_page import AdminDashboardPage
+from workflows.admin_portal.pages.admin_a_book_page import AdminABookPage
+from workflows.admin_portal.pages.admin_a_book_user_margin_page import AdminABookUserMarginPage
+from workflows.admin_portal.pages.admin_b_book_page import AdminBBookPage
+from workflows.admin_portal.pages.admin_b_book_user_margin_page import AdminBBookUserMarginPage
 from workflows.admin_portal.pages.admin_deposit_list_page import AdminDepositListPage
 from workflows.admin_portal.pages.admin_deposit_page import AdminDepositPage
 from workflows.admin_portal.pages.admin_login_page import AdminLoginPage
@@ -384,3 +388,33 @@ def admin_withdraw_list_page(authenticated_admin_page: Page) -> AdminWithdrawLis
 def admin_orders_page(authenticated_admin_page: Page) -> AdminOrdersPage:
     """Provide an authenticated AdminOrdersPage object."""
     return AdminOrdersPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_a_book_page(authenticated_admin_page: Page) -> AdminABookPage:
+    """Provide an authenticated AdminABookPage object."""
+    return AdminABookPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_b_book_page(authenticated_admin_page: Page) -> AdminBBookPage:
+    """Provide an authenticated AdminBBookPage object."""
+    return AdminBBookPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_a_book_user_margin_page(authenticated_admin_page: Page) -> AdminABookUserMarginPage:
+    """Provide an authenticated AdminABookUserMarginPage object."""
+    return AdminABookUserMarginPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_b_book_user_margin_page(authenticated_admin_page: Page) -> AdminBBookUserMarginPage:
+    """Provide an authenticated AdminBBookUserMarginPage object."""
+    return AdminBBookUserMarginPage(authenticated_admin_page)
+
+
+@pytest.fixture(scope="function")
+def admin_order_edit_log_page(authenticated_admin_page: Page) -> AdminOrderEditLogPage:
+    """Provide an authenticated AdminOrderEditLogPage object."""
+    return AdminOrderEditLogPage(authenticated_admin_page)

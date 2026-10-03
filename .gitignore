@@ -82,6 +82,7 @@ Thumbs.db
 # ==============================================================================
 # SCRATCH & TEMPORARY SCRIPTS
 # ==============================================================================
+scratch/
 workflows/admin_portal/scratch/
 workflows/shared/scratch/
 workflows/shared/tests/scratch_*.py

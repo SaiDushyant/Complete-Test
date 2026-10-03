@@ -77,6 +77,8 @@ class AdminWithdrawPage(BasePage):
         self.modal_status_select = self.modal.locator("#status_change")
         self.modal_type_select = self.modal.locator("#type")
         self.modal_reason_textarea = self.modal.locator("#Reason")
+        self.invalid_feedback_email = self.modal.locator(".invalid-feedback.email")
+        self.invalid_feedback = self.modal.locator(".invalid-feedback")
 
         # Account Details Modal Dialog (#myAcModal - "User Account Information")
         self.ac_modal = page.locator("#myAcModal")
