@@ -7,16 +7,16 @@ To allow three developers to work concurrently in GitHub without stepping on eac
 ## 1. Domain Ownership Breakdown
 
 ```text
-┌─────────────────────────┬───────────────────────────────────┬───────────────┐
-│ Domain                  │ Primary Directory                 │ Primary Owner │
-├─────────────────────────┼───────────────────────────────────┼───────────────┤
-│ Trade Terminal          │ workflows/trade_terminal/         │ Developer 1   │
-│ Admin Portal            │ workflows/admin_portal/           │ Developer 2   │
-│ Client Portal           │ workflows/client_portal/          │ Developer 3   │
-│ Shared Infrastructure   │ workflows/shared/                 │ All Devs      │
-│ Configuration           │ config/                           │ All Devs      │
-│ UI Regression Engine    │ ui_regression/                    │ Automation TL │
-└─────────────────────────┴───────────────────────────────────┴───────────────┘
+┌─────────────────────────┬───────────────────────────────────┬───────────────┬─────────────┐
+│ Domain                  │ Primary Directory                 │ Primary Owner │ Total Tests │
+├─────────────────────────┼───────────────────────────────────┼───────────────┼─────────────┤
+│ Trade Terminal          │ workflows/trade_terminal/         │ Developer 1   │ 395 tests   │
+│ Admin Portal            │ workflows/admin_portal/           │ Developer 2   │ 554 tests   │
+│ Client Portal           │ workflows/client_portal/          │ Developer 3   │ 246 tests   │
+│ Shared Infrastructure   │ workflows/shared/                 │ All Devs      │ 159 tests   │
+│ Configuration           │ config/                           │ All Devs      │ N/A         │
+│ UI Regression Engine    │ ui_regression/                    │ Automation TL │ 29 tests    │
+└─────────────────────────┴───────────────────────────────────┴───────────────┴─────────────┘
 ```
 
 ---
@@ -24,54 +24,69 @@ To allow three developers to work concurrently in GitHub without stepping on eac
 ## 2. Developer 1 — Trade Terminal Domain
 
 - **Primary Directory**: `workflows/trade_terminal/`
+- **Total Tests**: **395 tests** (175 Workflow + 220 Validation tests)
 - **Subdirectories**:
-  - `pages/`: Trade Terminal Page Objects (`login_page.py`, `trading_dashboard_page.py`, `order_entry_page.py`, `positions_page.py`)
-  - `tests/`: Behavioral test suites for market orders, limit orders, chart interactions, watchlist selection, position lifecycle
+  - `pages/`: Trade Terminal Page Objects (`login_page.py`, `trading_dashboard_page.py`, `order_entry_page.py`, `positions_page.py`, `watchlist_page.py`)
+  - `tests/`:
+    - Workflow Suites: `test_trade_*.py` (market orders, limit orders, chart interactions, watchlist selection, position lifecycle)
+    - Validation Suites: `test_val_trade_*.py` (13 suites: order entry boundaries, account calculations, SQLi/XSS fuzzing, network resilience, password reset)
   - `fixtures/`: `trade_fixtures.py` (authenticated trade contexts, trading pages)
-  - `test_data/`: Instrument configurations, lot sizing fixtures, order parameters
   - `utils/`: Trade calculations, tick rounding, and order validation helpers
-- **Execution Command**:
+- **Execution Commands**:
   ```bash
-  pytest workflows/trade_terminal/
-  # or: ./scripts/run_trade_tests.sh
+  # Run all Trade Terminal tests
+  pytest workflows/trade_terminal/ -v
+
+  # Run Trade Terminal validation tests (220 tests)
+  pytest workflows/trade_terminal/tests/test_val_trade_*.py -v
   ```
-- **Marker**: `@pytest.mark.trade`
+- **Markers**: `@pytest.mark.trade`, `@pytest.mark.validation`
 
 ---
 
 ## 3. Developer 2 — Admin Portal Domain
 
 - **Primary Directory**: `workflows/admin_portal/`
+- **Total Tests**: **554 tests** (425 Workflow + 129 Validation tests)
 - **Subdirectories**:
-  - `pages/`: Admin Management Page Objects (`admin_login_page.py`, `admin_dashboard_page.py`, `user_management_page.py`)
-  - `tests/`: Behavioral test suites for administrator authentication, role permissions, user search, deposit approvals, account settings
+  - `pages/`: Admin Management Page Objects (`admin_login_page.py`, `admin_dashboard_page.py`, `user_management_page.py`, `deposit_withdraw_page.py`)
+  - `tests/`:
+    - Workflow Suites: `test_admin_*.py` (administrator authentication, role permissions, user search, deposit approvals, account settings)
+    - Validation Suites: `test_val_admin_*.py` (9 suites: orders calculation, input boundaries, user management, KYC document status, leads import, date filters)
   - `fixtures/`: `admin_fixtures.py` (authenticated admin contexts, admin pages)
-  - `test_data/`: Role matrices, mock administrative records, permission schemas
   - `utils/`: Admin navigation helpers, table row extractors, query utilities
-- **Execution Command**:
+- **Execution Commands**:
   ```bash
-  pytest workflows/admin_portal/
-  # or: ./scripts/run_admin_tests.sh
+  # Run all Admin Portal tests
+  pytest workflows/admin_portal/ -v
+
+  # Run Admin Portal validation tests (129 tests)
+  pytest workflows/admin_portal/tests/test_val_admin_*.py -v
   ```
-- **Marker**: `@pytest.mark.admin`
+- **Markers**: `@pytest.mark.admin`, `@pytest.mark.validation`
 
 ---
 
 ## 4. Developer 3 — Client Portal Domain
 
 - **Primary Directory**: `workflows/client_portal/`
+- **Total Tests**: **246 tests** (161 Workflow + 85 Validation tests)
 - **Subdirectories**:
-  - `pages/`: Client Portal Page Objects (`client_login_page.py`, `client_dashboard_page.py`, `client_watchlist_page.py`, `profile_page.py`)
-  - `tests/`: Behavioral test suites for client registration, login, profile updates, KYC document uploads, deposit/withdrawal requests, symbol watchlists
+  - `pages/`: Client Portal Page Objects (`client_login_page.py`, `client_dashboard_page.py`, `client_deposit_page.py`, `client_withdraw_page.py`, `client_settings_page.py`)
+  - `tests/`:
+    - Workflow Suites: `test_client_*.py` (client registration, login, profile updates, KYC document uploads, deposit/withdrawal requests, wallet transfers)
+    - Validation Suites: `test_val_client_*.py` (13 suites: exhaustive labels/dropdowns, auth inputs, deposits, withdrawals, internal transfers, MAM/PAMM, security edge cases)
   - `fixtures/`: `client_fixtures.py` (authenticated client contexts, client pages)
-  - `test_data/`: Client profile fixtures, KYC test documents, deposit amounts
   - `utils/`: Client validation utilities, session recovery helpers
-- **Execution Command**:
+- **Execution Commands**:
   ```bash
-  pytest workflows/client_portal/
-  # or: ./scripts/run_client_tests.sh
+  # Run all Client Portal tests
+  pytest workflows/client_portal/ -v
+
+  # Run Client Portal validation tests (85 tests)
+  pytest workflows/client_portal/tests/test_val_client_*.py -v
   ```
-- **Marker**: `@pytest.mark.client`
+- **Markers**: `@pytest.mark.client`, `@pytest.mark.validation`
 
 ---
 
@@ -80,11 +95,11 @@ To allow three developers to work concurrently in GitHub without stepping on eac
 The shared directory contains framework-level primitives reused across all three portals:
 
 - `workflows/shared/pages/base_page.py`: Universal base class with high-level Playwright wrappers.
+- `workflows/shared/helpers/`: Shared attack vectors (`validation_payloads.py`) and financial math formulas (`math_assertions.py`).
 - `workflows/shared/fixtures/`: Global browser lifecycle management (`browser_fixtures.py`) and auth caching (`auth_fixtures.py`).
-- `workflows/shared/utils/`: Safe waiting logic (`waits.py`), failure screenshot capture (`screenshot.py`), logger (`logger.py`), and browser configuration (`browser.py`).
+- `workflows/shared/utils/`: Multi-suite test logger (`test_logger.py`), runtime diagnostics telemetry (`diagnostics.py`), error monitor (`error_monitor.py`), and safe waits (`waits.py`).
 - `workflows/shared/constants/`: Standard timeouts (`timeouts.py`), viewports (`viewports.py`), canonical routes (`routes.py`).
 - `workflows/shared/assertions/`: Domain-agnostic assertion wrappers (`assert_helpers.py`).
-- `workflows/shared/test_data/`: Generic test data utilities like random email and string generators (`common_data.py`).
 
 ### Rules for Contributing to `shared/`
 1. **Never Put Portal-Specific Code in Shared**: If a method, locator, or test datum is only used by one portal, it belongs in that portal's directory.

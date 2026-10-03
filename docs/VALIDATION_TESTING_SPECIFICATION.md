@@ -17,24 +17,10 @@ Validation Testing verifies **element-level behavior, boundary conditions, input
 │ • Min / Max boundaries   │ • Double-click prevention│ • Dependent dropdown update        │
 │ • Special chars & string │ • Disabled state rules   │ • Search filtering options         │
 │ • SQLi & XSS payloads    │ • SweetAlert error modals│ • Dynamic options reflection       │
-├──────────────────────────┼──────────────────────────┼────────────────────────────────────┤
-│ 4. Dropzones & Uploads   │ 5. Date & Time Pickers   │ 6. Calculations & Tables           │
-│ • Disallowed extensions  │ • Inverted ranges (From>To)• Table column sums & totals       │
-│ • Exceeding file limits  │ • Future date restrictions• Balance & margin arithmetic       │
-│ • Empty 0-byte file      │ • Date clear / reset state• Empty state matching              │
-└──────────────────────────┴──────────────────────────┴────────────────────────────────────┘
-```
-
----
-
-## 2. Directory Structure to Follow
-
-All validation tests must be placed inside the portal-specific validation test directories:
-
-```text
-workflows/ (or validation_tests/)
+├──────────────────────────┼──────────────────────────┼────────────────────────────────�```text
+workflows/
 │
-├── admin_portal/
+├── admin_portal/                             # Admin Validation Suites (9 suites / 129 tests)
 │   ├── pages/                                # Page Object Models
 │   ├── fixtures/                             # Authenticated fixtures & page state
 │   └── tests/
@@ -48,14 +34,50 @@ workflows/ (or validation_tests/)
 │       ├── test_val_admin_role_permission.py # 🛡️ Role CRUD inputs & permission button states
 │       └── test_val_admin_date_filters.py    # 📅 Date range boundaries ("From > To") across all 10 logs
 │
-├── client_portal/
+├── client_portal/                            # Client Validation Suites (13 suites / 85 tests)
 │   ├── pages/                                # Page Object Models
 │   ├── fixtures/                             # Client authenticated fixtures
 │   └── tests/
+│       ├── test_val_all_elements_labels_dropdowns.py # 🔍 Exhaustive labels, dropdowns, checkboxes
 │       ├── test_val_client_auth_inputs.py    # 🔐 2-step signup inputs, weak passwords, SQLi/XSS
 │       ├── test_val_client_deposit.py        # 💳 Min/max deposit bounds, proof dropzone extensions
 │       ├── test_val_client_withdraw.py       # 🚫 Zero/negative amounts, KYC locks, margin buffers
 │       ├── test_val_client_internal_transfer.py# 🔁 Account-to-wallet arithmetic, balance exhaustion
+│       ├── test_val_client_kyc_upload.py     # 📁 Allowed document formats, file size constraints
+│       ├── test_val_client_copy_trading.py   # 📈 Investment minimums, profit-share deductions
+│       ├── test_val_client_dashboard.py      # 📊 Dashboard metrics cards formatting
+│       ├── test_val_client_mam.py            # 👥 MAM search SQLi/XSS resilience & modal lifecycles
+│       ├── test_val_client_pamm.py           # 📊 PAMM investment bounds & manager search
+│       ├── test_val_client_refer_earn.py     # 🔗 Referral link integrity & metrics cards
+│       ├── test_val_client_wallet.py         # 💼 Wallet summary cards & ledger controls
+│       └── test_val_client_security_edge_cases.py # 🛡️ Open redirect, logout invalidation, localStorage
+│
+├── trade_terminal/                           # Trade Terminal Validation Suites (13 suites / 220 tests)
+│   ├── pages/                                # Page Object Models
+│   ├── fixtures/                             # Trade terminal context & telemetry
+│   └── tests/
+│       ├── test_val_trade_order_entry.py     # 📈 Lot sizes (0.01-100), SL/TP inverted logic rules
+│       ├── test_val_trade_account_metrics.py # 🧮 Live calculations: Balance, Equity, Free Margin, %
+│       ├── test_val_trade_watchlist.py       # 🔍 Symbol search, empty search state, ticker replace
+│       ├── test_val_trade_network_resilience.py# 📡 WebSocket disconnect, offline banner, auto-reconnect
+│       ├── test_val_trade_login.py           # 🔐 Login empty submission, SQLi/XSS, password masking
+│       ├── test_val_trade_register.py        # 📝 2-step registration boundaries, terms, referrals
+│       ├── test_val_trade_positions.py       # 📊 Inline SL/TP edit, partial close, bulk actions
+│       ├── test_val_trade_order_history.py   # 📅 Date range inverted/future boundaries, fuzzing
+│       ├── test_val_trade_settings.py        # ⚙️ Directionality, theme toggle, copy multiplier bounds
+│       ├── test_val_trade_password_reset.py  # 🔑 Password reset link, email format, token expiry
+│       ├── test_val_trade_api_access.py      # 🔌 API token generation, copy feedback, revoke states
+│       ├── test_val_trade_profile_menu.py    # 👤 User info display, logout session invalidation
+│       └── test_val_trade_support.py         # 💬 Support & fund submenu link integrity
+│
+└── shared/
+    ├── helpers/
+    │   ├── validation_payloads.py            # Reusable SQLi, XSS, boundary number, and date payloads
+    │   └── math_assertions.py                # Reusable financial & margin calculation formulas
+    └── utils/
+        ├── test_logger.py                    # Multi-suite test result logger & history manager
+        └── diagnostics.py                    # Runtime telemetry (console errors, HTTP 4xx/5xx headers)
+```alance exhaustion
 │       ├── test_val_client_kyc_upload.py     # 📁 Allowed document formats, file size constraints
 │       └── test_val_client_copy_trading.py   # 📈 Investment minimums, profit-share deductions
 │
