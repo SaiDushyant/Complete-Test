@@ -50,9 +50,23 @@ reports/workflows/diagnostics/*
 !reports/workflows/diagnostics/.gitkeep
 reports/workflows/logs/*
 !reports/workflows/logs/.gitkeep
+reports/workflows/history/*
+
+reports/validations/*
+!reports/validations/.gitkeep
+reports/validations/screenshots/*
+!reports/validations/screenshots/.gitkeep
+reports/validations/traces/*
+!reports/validations/traces/.gitkeep
+reports/validations/diagnostics/*
+!reports/validations/diagnostics/.gitkeep
+reports/validations/logs/*
+!reports/validations/logs/.gitkeep
+reports/validations/history/*
 
 reports/ui_regression/*
 !reports/ui_regression/.gitkeep
+reports/ui_regression/history/*
 reports/*.html
 reports/*.xml
 
@@ -86,4 +100,6 @@ workflows/admin_portal/scratch/
 workflows/shared/scratch/
 workflows/shared/tests/scratch_*.py
 scripts/diag_modal_close.py
+scratch_*.py
+
 

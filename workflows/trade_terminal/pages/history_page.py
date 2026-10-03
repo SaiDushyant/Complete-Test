@@ -80,6 +80,10 @@ class HistoryPage(BasePage):
     # Navigation & Modal Guards
     # =========================================================================
 
+    def navigate(self, url: Optional[str] = None) -> None:
+        """Navigate to the History page."""
+        self.navigate_to_history_page(url)
+
     def navigate_to_history_page(self, url: Optional[str] = None) -> None:
         """
         Navigate to the dashboard and activate the History page

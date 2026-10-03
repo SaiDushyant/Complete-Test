@@ -144,6 +144,10 @@ class TestResultRecord:
                 url = req.get("url", "") if isinstance(req, dict) else ""
                 fail = req.get("failure", "") if isinstance(req, dict) else ""
                 lines.append(f"    {i}. [{method}] {url} -> {fail}")
+                if isinstance(req, dict) and req.get("request_headers"):
+                    lines.append(f"       Request Headers: {json.dumps(req['request_headers'])}")
+                if isinstance(req, dict) and req.get("request_payload"):
+                    lines.append(f"       Request Payload: {req['request_payload']}")
         else:
             lines.append("  • Failed Network Requests: None (Clean)")
 
@@ -155,6 +159,18 @@ class TestResultRecord:
                 stext = res.get("status_text", "") if isinstance(res, dict) else ""
                 url = res.get("url", "") if isinstance(res, dict) else ""
                 lines.append(f"    {i}. [{status} {stext}] {url}")
+                if isinstance(res, dict):
+                    if res.get("request_headers"):
+                        lines.append(f"       Request Headers: {json.dumps(res['request_headers'])}")
+                    if res.get("request_payload"):
+                        lines.append(f"       Request Payload: {res['request_payload']}")
+                    if res.get("response_headers"):
+                        lines.append(f"       Response Headers: {json.dumps(res['response_headers'])}")
+                    if res.get("response_body"):
+                        body_preview = res['response_body'][:500]
+                        if len(res['response_body']) > 500:
+                            body_preview += "... [truncated]"
+                        lines.append(f"       Response Body: {body_preview}")
         else:
             lines.append("  • HTTP 4xx/5xx Responses: None (Clean)")
 
@@ -181,15 +197,36 @@ class GlobalTestLogger:
     """
     Global test execution tracker and history manager.
     Collects results across all test modules, aggregates hidden runtime diagnostics,
-    rotates past runs into timestamped history folders, and exports formatted reports.
+    rotates past runs into timestamped history folders at the suite level
+    (reports/validations/history, reports/workflows/history, reports/ui_regression/history),
+    and exports formatted reports.
     """
 
     _instance: Optional[GlobalTestLogger] = None
 
-    def __init__(self, logs_dir: Optional[Path] = None):
-        self.logs_dir = logs_dir or (settings.reports_dir / "workflows" / "logs")
+    def __init__(self, suite_dir: Optional[Path] = None, logs_dir: Optional[Path] = None):
+        cmd_str = " ".join(sys.argv)
+        if suite_dir is not None:
+            self.suite_dir = suite_dir
+        elif logs_dir is not None:
+            self.suite_dir = logs_dir.parent
+        elif "validation" in cmd_str:
+            self.suite_dir = settings.validation_reports_dir
+        elif "ui_regression" in cmd_str:
+            self.suite_dir = settings.ui_regression_reports_dir
+        else:
+            self.suite_dir = settings.workflow_reports_dir
+
+        self.suite_dir.mkdir(parents=True, exist_ok=True)
+        self.logs_dir = self.suite_dir / "logs"
         self.logs_dir.mkdir(parents=True, exist_ok=True)
-        self.history_dir = self.logs_dir / "history"
+        self.screenshots_dir = self.suite_dir / "screenshots"
+        self.screenshots_dir.mkdir(parents=True, exist_ok=True)
+        self.diagnostics_dir = self.suite_dir / "diagnostics"
+        self.diagnostics_dir.mkdir(parents=True, exist_ok=True)
+        self.traces_dir = self.suite_dir / "traces"
+        self.traces_dir.mkdir(parents=True, exist_ok=True)
+        self.history_dir = self.suite_dir / "history"
         self.history_dir.mkdir(parents=True, exist_ok=True)
         self.individual_dir = self.logs_dir / "individual"
         self.individual_dir.mkdir(parents=True, exist_ok=True)
@@ -198,17 +235,26 @@ class GlobalTestLogger:
         self._session_initialized = False
 
     @classmethod
-    def get_instance(cls) -> GlobalTestLogger:
+    def get_instance(cls, suite_dir: Optional[Path] = None, logs_dir: Optional[Path] = None) -> GlobalTestLogger:
         """Singleton accessor for test session coordination."""
+        target_dir = suite_dir or (logs_dir.parent if logs_dir else None)
+        if target_dir is not None:
+            if cls._instance is None or cls._instance.suite_dir != target_dir:
+                cls._instance = cls(suite_dir=target_dir)
+            return cls._instance
         if cls._instance is None:
-            cls._instance = cls()
+            cmd_str = " ".join(sys.argv)
+            if "validation" in cmd_str:
+                cls._instance = cls(suite_dir=settings.validation_reports_dir)
+            elif "ui_regression" in cmd_str:
+                cls._instance = cls(suite_dir=settings.ui_regression_reports_dir)
+            else:
+                cls._instance = cls(suite_dir=settings.workflow_reports_dir)
         return cls._instance
 
     def detect_run_type(self, hint: Optional[str] = None) -> str:
         """
         Infer a human-readable run type label from command-line arguments or hint.
-        Examples: 'Full-Suite', 'Admin-Portal', 'Client-Portal', 'Trade-Terminal',
-                  'Shared-Portal', 'UI-Regression', 'Smoke-Tests', 'test_admin_orders'
         """
         if hint:
             clean_hint = re.sub(r"[^\w\-.]", "_", hint).strip("_")
@@ -216,7 +262,6 @@ class GlobalTestLogger:
 
         cmd_str = " ".join(sys.argv)
 
-        # Check for specific runner scripts or pytest targets
         if "run_admin_tests" in cmd_str or "admin_portal" in cmd_str:
             return "Admin-Portal"
         if "run_client_tests" in cmd_str or "client_portal" in cmd_str:
@@ -232,21 +277,23 @@ class GlobalTestLogger:
         if "run_regression_tests" in cmd_str:
             return "Regression-Tests"
 
-        # Check for single test file in arguments
         for arg in sys.argv:
             if "test_" in arg and (".py" in arg or "::" in arg):
                 file_part = arg.split("::")[0]
                 stem = Path(file_part).stem
                 return sanitize_filename(stem)
 
+        if "validation" in cmd_str:
+            return "Validation-Suite"
         if "run_all_workflows" in cmd_str or "workflows/" in cmd_str or "pytest" in cmd_str:
-            return "Full-Suite"
+            return "Workflow-Suite"
 
         return "Test-Run"
 
     def prepare_fresh_session(self, run_type_hint: Optional[str] = None) -> Optional[Path]:
         """
-        Archive previous test logs into history/ and prepare a clean session.
+        Archive previous suite artifacts (logs, screenshots, diagnostics, traces)
+        into suite_dir/history/run_<timestamp>/ and prepare a clean session.
         Returns the Path to the archived history folder, or None if no prior logs existed.
         """
         if self._session_initialized:
@@ -255,8 +302,8 @@ class GlobalTestLogger:
         self._session_initialized = True
         self.records.clear()
 
-        # Check if there are active log files from a previous run to archive
-        active_files = [
+        # Check if there are active artifacts from a previous run
+        active_log_files = [
             self.logs_dir / "global_test_summary.txt",
             self.logs_dir / "global_test_results.json",
             self.logs_dir / "global_failed_tests.txt",
@@ -265,48 +312,84 @@ class GlobalTestLogger:
             self.logs_dir / "summary_report.json",
             self.logs_dir / "test_results.json",
         ]
-        has_active_files = any(f.exists() and f.stat().st_size > 0 for f in active_files)
+        has_logs = any(f.exists() and f.stat().st_size > 0 for f in active_log_files)
         has_individual_logs = self.individual_dir.exists() and any(self.individual_dir.glob("*/*.json"))
-        has_legacy_dirs = (self.logs_dir / "client_portal").exists() or (self.logs_dir / "trade_terminal").exists()
+        has_screenshots = self.screenshots_dir.exists() and any(self.screenshots_dir.glob("*.png"))
+        has_diagnostics = self.diagnostics_dir.exists() and any(self.diagnostics_dir.glob("*.json"))
+        has_traces = self.traces_dir.exists() and any(self.traces_dir.glob("*.zip"))
 
         archived_dir: Optional[Path] = None
 
-        if has_active_files or has_individual_logs or has_legacy_dirs:
-            # Determine archive folder name
+        if has_logs or has_individual_logs or has_screenshots or has_diagnostics or has_traces:
             timestamp_str = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
             run_label = self.detect_run_type(run_type_hint)
             folder_name = f"{run_label} - {timestamp_str}"
             archived_dir = self.history_dir / folder_name
             archived_dir.mkdir(parents=True, exist_ok=True)
 
-            # Move active summary and result files into history
-            for f in active_files:
+            # 1. Archive logs
+            target_logs = archived_dir / "logs"
+            target_logs.mkdir(parents=True, exist_ok=True)
+            for f in active_log_files:
                 if f.exists():
                     try:
-                        shutil.move(str(f), str(archived_dir / f.name))
+                        shutil.move(str(f), str(target_logs / f.name))
                     except Exception as e:
                         logger.debug(f"Could not move {f.name} to history: {e}")
 
-            # Move individual directory into history
             if self.individual_dir.exists() and any(self.individual_dir.iterdir()):
-                target_indiv = archived_dir / "individual"
                 try:
-                    shutil.move(str(self.individual_dir), str(target_indiv))
+                    shutil.move(str(self.individual_dir), str(target_logs / "individual"))
                 except Exception as e:
                     logger.debug(f"Could not move individual/ to history: {e}")
 
-            # Clean up any legacy flat directories
-            for leg_name in ("client_portal", "trade_terminal"):
-                leg_path = self.logs_dir / leg_name
-                if leg_path.exists():
+            # Migrate any legacy history inside logs/
+            legacy_history = self.logs_dir / "history"
+            if legacy_history.exists():
+                for sub in legacy_history.iterdir():
                     try:
-                        shutil.move(str(leg_path), str(archived_dir / leg_name))
+                        shutil.move(str(sub), str(self.history_dir / sub.name))
                     except Exception:
-                        shutil.rmtree(str(leg_path), ignore_errors=True)
+                        pass
+                shutil.rmtree(str(legacy_history), ignore_errors=True)
 
-            logger.info(f"Archived previous test session to: {archived_dir}")
+            # 2. Archive screenshots
+            if has_screenshots:
+                target_screens = archived_dir / "screenshots"
+                target_screens.mkdir(parents=True, exist_ok=True)
+                for f in self.screenshots_dir.glob("*.png"):
+                    try:
+                        shutil.move(str(f), str(target_screens / f.name))
+                    except Exception as e:
+                        logger.debug(f"Could not move screenshot {f.name}: {e}")
 
-        # Re-create fresh individual portal directories
+            # 3. Archive diagnostics
+            if has_diagnostics:
+                target_diag = archived_dir / "diagnostics"
+                target_diag.mkdir(parents=True, exist_ok=True)
+                for f in self.diagnostics_dir.glob("*.*"):
+                    try:
+                        shutil.move(str(f), str(target_diag / f.name))
+                    except Exception as e:
+                        logger.debug(f"Could not move diagnostic {f.name}: {e}")
+
+            # 4. Archive traces
+            if has_traces:
+                target_traces = archived_dir / "traces"
+                target_traces.mkdir(parents=True, exist_ok=True)
+                for f in self.traces_dir.glob("*.zip"):
+                    try:
+                        shutil.move(str(f), str(target_traces / f.name))
+                    except Exception as e:
+                        logger.debug(f"Could not move trace {f.name}: {e}")
+
+            logger.info(f"Archived previous suite session to: {archived_dir}")
+
+        # Re-create fresh suite directories
+        self.logs_dir.mkdir(parents=True, exist_ok=True)
+        self.screenshots_dir.mkdir(parents=True, exist_ok=True)
+        self.diagnostics_dir.mkdir(parents=True, exist_ok=True)
+        self.traces_dir.mkdir(parents=True, exist_ok=True)
         self.individual_dir.mkdir(parents=True, exist_ok=True)
         for portal_slug in ("admin_portal", "client_portal", "trade_terminal", "shared", "ui_regression"):
             (self.individual_dir / portal_slug).mkdir(parents=True, exist_ok=True)

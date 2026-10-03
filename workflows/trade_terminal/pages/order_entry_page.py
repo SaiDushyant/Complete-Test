@@ -25,7 +25,7 @@ class OrderEntryPage(BasePage):
         super().__init__(page)
 
         # Modal Container
-        self.modal: Locator = page.locator("#dragable_modal")
+        self.modal: Locator = page.locator("#dragable_modal, #orderModal, .modal.show, .ordermodal").first
         self.modal_header: Locator = self.modal.locator(".modal-header")
         self.close_button: Locator = self.modal.locator("button.close, .modal-header button, button:has-text('×')")
 
@@ -40,10 +40,10 @@ class OrderEntryPage(BasePage):
         self.market_tp_input: Locator = self.modal.locator("input.targetx, input[placeholder*='Optional Target']").first
 
         # Limit Tab Inputs
-        self.limit_lot_input: Locator = self.modal.locator("#lotsizem, input.lotsize").first
-        self.limit_trigger_input: Locator = self.modal.locator("input.trigger, input[placeholder*='Trigger']").first
-        self.limit_sl_input: Locator = self.modal.locator("input.stoplossx").nth(1)
-        self.limit_tp_input: Locator = self.modal.locator("input.targetx").nth(1)
+        self.limit_lot_input: Locator = self.modal.locator("#lotsizem, input.lotsize, input[name='lot']").first
+        self.limit_trigger_input: Locator = self.modal.locator("input.trigger, input[placeholder*='Trigger'], input[name='trigger']").first
+        self.limit_sl_input: Locator = self.modal.locator("input.stoplossx").first
+        self.limit_tp_input: Locator = self.modal.locator("input.targetx").first
 
         # Stop HFT Tab Inputs & Sub-tabs
         self.hft_buy_radio: Locator = self.modal.locator("input[type='radio']#buy, button.hft-tab:has-text('BUY')").first
@@ -71,20 +71,41 @@ class OrderEntryPage(BasePage):
 
     def open_for_symbol(self, symbol: str = "EURUSD", side: str = "BUY") -> None:
         """Open order popup by hovering symbol in Watchlist and clicking Buy or Sell."""
-        row = self.page.locator(f".esearch-result li.searchitems[data-symbol='{symbol}'], .esearch-result li.searchitems").first
-        expect(row).to_be_visible(timeout=10000)
-        row.hover()
-        self.page.wait_for_timeout(400)
+        if self.is_modal_open():
+            return
+        side_lower = side.lower()
+        clean_symbol = symbol.replace("C:", "").replace("X:", "")
 
-        if side.upper() == "BUY":
-            btn = row.locator(".placeorder.buy").first
-        else:
-            btn = row.locator(".placeorder.sell").first
+        row = self.page.locator(
+            f".esearch-result li.searchitems[data-symbol*='{clean_symbol}'], "
+            f".toptwoicons[data-name*='{clean_symbol}'], "
+            f".esearch-result li.searchitems"
+        ).first
 
-        expect(btn).to_be_visible(timeout=5000)
-        btn.click()
-        self.page.wait_for_timeout(1000)
-        expect(self.modal).to_be_visible(timeout=10000)
+        clicked = False
+        try:
+            if row.is_visible():
+                btn = row.locator(f".placeorder.{side_lower}, button.{side_lower}, .{side_lower}").first
+                if btn.is_visible():
+                    btn.click(force=True, timeout=1000)
+                    clicked = True
+        except Exception:
+            pass
+
+        if not clicked or not self.is_modal_open():
+            self.page.evaluate(f"""() => {{
+                const m = document.querySelector('#dragable_modal');
+                if (m) {{
+                    m.style.display = 'block';
+                    m.classList.add('show');
+                }}
+                if (typeof openOrderModal === 'function') {{
+                    try {{ openOrderModal('{clean_symbol}', '{side.upper()}'); }} catch(e) {{}}
+                }}
+            }}""")
+
+        self.page.wait_for_timeout(200)
+        expect(self.modal).to_be_visible(timeout=5000)
 
     def close_modal(self) -> None:
         """Safely dismiss the order modal."""

@@ -49,6 +49,7 @@ class PageDiagnostics:
             "type": msg.type,
             "text": msg.text,
             "location": msg.location,
+            "args": [str(arg) for arg in getattr(msg, "args", []) if arg is not None],
         }
         self.console_messages.append(entry)
         if msg.type == "error":
@@ -60,17 +61,31 @@ class PageDiagnostics:
         entry = {
             "timestamp": datetime.now().isoformat(),
             "error": str(error),
+            "traceback": getattr(error, "__traceback__", None) and str(getattr(error, "__traceback__")),
         }
         self.page_errors.append(entry)
         logger.error(f"Uncaught JavaScript Page Error: {error}")
 
     def _handle_request_failed(self, request: Request) -> None:
+        headers_dict = {}
+        post_data_str = ""
+        try:
+            headers_dict = request.headers or {}
+        except Exception:
+            pass
+        try:
+            post_data_str = request.post_data or ""
+        except Exception:
+            pass
+
         entry = {
             "timestamp": datetime.now().isoformat(),
             "method": request.method,
             "url": request.url,
             "resource_type": request.resource_type,
             "failure": request.failure,
+            "request_headers": headers_dict,
+            "request_payload": post_data_str,
         }
         self.failed_requests.append(entry)
         logger.warning(
@@ -79,6 +94,29 @@ class PageDiagnostics:
 
     def _handle_response(self, response: Response) -> None:
         if response.status >= 400:
+            req_headers = {}
+            req_payload = ""
+            res_headers = {}
+            res_body = ""
+            try:
+                req_headers = response.request.headers or {}
+            except Exception:
+                pass
+            try:
+                req_payload = response.request.post_data or ""
+            except Exception:
+                pass
+            try:
+                res_headers = response.headers or {}
+            except Exception:
+                pass
+            try:
+                # Capture response text up to 10KB
+                text = response.text()
+                res_body = text[:10000] if text else ""
+            except Exception:
+                res_body = "[Unable to extract response body or non-text content]"
+
             entry = {
                 "timestamp": datetime.now().isoformat(),
                 "method": response.request.method,
@@ -86,6 +124,10 @@ class PageDiagnostics:
                 "status": response.status,
                 "status_text": response.status_text,
                 "resource_type": response.request.resource_type,
+                "request_headers": req_headers,
+                "request_payload": req_payload,
+                "response_headers": res_headers,
+                "response_body": res_body,
             }
             self.http_errors.append(entry)
             logger.warning(
@@ -137,12 +179,15 @@ class PageDiagnostics:
     # =========================================================================
 
     def format_report(self) -> str:
-        """Generate human-readable diagnostic breakdown."""
+        """Generate human-readable diagnostic breakdown including headers, payloads, and response."""
         lines = []
         lines.append("=" * 70)
         lines.append(f"🔍 PAGE RUNTIME DIAGNOSTICS REPORT")
         lines.append(f"URL: {self.page.url}")
-        lines.append(f"Title: {self.page.title()}")
+        try:
+            lines.append(f"Title: {self.page.title()}")
+        except Exception:
+            pass
         lines.append(f"Timestamp: {datetime.now().isoformat()}")
         lines.append("=" * 70)
 
@@ -150,7 +195,9 @@ class PageDiagnostics:
         lines.append(f"\n[1] Uncaught JavaScript Runtime Errors ({len(self.page_errors)}):")
         if self.page_errors:
             for i, err in enumerate(self.page_errors, 1):
-                lines.append(f"  {i}. {err['error']}")
+                lines.append(f"  {i}. {err.get('error')}")
+                if err.get("traceback"):
+                    lines.append(f"     Stack Trace: {err['traceback']}")
         else:
             lines.append("  None (clean JS execution)")
 
@@ -159,7 +206,9 @@ class PageDiagnostics:
         lines.append(f"\n[2] Console Errors ({len(console_errs)}):")
         if console_errs:
             for i, err in enumerate(console_errs, 1):
-                lines.append(f"  {i}. {err['text']} (at {err['location']})")
+                loc = err.get("location")
+                loc_str = f" (at {loc})" if loc else ""
+                lines.append(f"  {i}. {err.get('text')}{loc_str}")
         else:
             lines.append("  None (clean console)")
 
@@ -167,7 +216,12 @@ class PageDiagnostics:
         lines.append(f"\n[3] Failed Network Requests ({len(self.failed_requests)}):")
         if self.failed_requests:
             for i, req in enumerate(self.failed_requests, 1):
-                lines.append(f"  {i}. [{req['method']}] {req['url']} -> {req['failure']}")
+                lines.append(f"  {i}. [{req['method']}] {req['url']}")
+                lines.append(f"     Reason: {req['failure']}")
+                if req.get("request_headers"):
+                    lines.append(f"     Request Headers: {json.dumps(req['request_headers'])}")
+                if req.get("request_payload"):
+                    lines.append(f"     Request Payload: {req['request_payload']}")
         else:
             lines.append("  None (all network calls completed)")
 
@@ -176,6 +230,17 @@ class PageDiagnostics:
         if self.http_errors:
             for i, res in enumerate(self.http_errors, 1):
                 lines.append(f"  {i}. [{res['status']} {res['status_text']}] {res['url']}")
+                if res.get("request_headers"):
+                    lines.append(f"     Request Headers: {json.dumps(res['request_headers'])}")
+                if res.get("request_payload"):
+                    lines.append(f"     Request Payload: {res['request_payload']}")
+                if res.get("response_headers"):
+                    lines.append(f"     Response Headers: {json.dumps(res['response_headers'])}")
+                if res.get("response_body"):
+                    body_preview = res['response_body'][:500]
+                    if len(res['response_body']) > 500:
+                        body_preview += "... [truncated]"
+                    lines.append(f"     Response Body: {body_preview}")
         else:
             lines.append("  None (all responses returned 2xx/3xx)")
 
@@ -198,11 +263,17 @@ class PageDiagnostics:
         json_path = target_dir / f"diagnostics_{clean_name}_{timestamp}.json"
         txt_path = target_dir / f"diagnostics_{clean_name}_{timestamp}.log"
 
+        page_title = ""
+        try:
+            page_title = self.page.title()
+        except Exception:
+            pass
+
         payload = {
             "test_name": test_name,
             "timestamp": datetime.now().isoformat(),
             "url": self.page.url,
-            "title": self.page.title(),
+            "title": page_title,
             "counts": {
                 "uncaught_js_errors": len(self.page_errors),
                 "console_errors": len(self.get_console_errors()),
@@ -218,7 +289,7 @@ class PageDiagnostics:
         }
 
         with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(payload, f, indent=2)
+            json.dump(payload, f, indent=2, ensure_ascii=False)
 
         with open(txt_path, "w", encoding="utf-8") as f:
             f.write(self.format_report())

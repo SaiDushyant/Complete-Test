@@ -70,6 +70,28 @@ def workflow_browser(
     browser.close()
 
 
+def _get_suite_artifact_dirs(nodeid: str):
+    """Resolve the appropriate screenshots, diagnostics, and traces directories for the test."""
+    if "validation" in nodeid:
+        return (
+            settings.validation_screenshots_dir,
+            settings.validation_diagnostics_dir,
+            settings.validation_traces_dir,
+        )
+    elif "ui_regression" in nodeid:
+        return (
+            settings.ui_regression_reports_dir / "screenshots",
+            settings.ui_regression_reports_dir / "diagnostics",
+            settings.ui_regression_reports_dir / "traces",
+        )
+    else:
+        return (
+            settings.screenshots_dir,
+            settings.diagnostics_dir,
+            settings.traces_dir,
+        )
+
+
 @pytest.fixture(scope="function")
 def workflow_context(
     workflow_browser: Browser,
@@ -93,11 +115,13 @@ def workflow_context(
 
     yield context
 
-    # Test failure handling: save trace
+    # Test failure handling: save trace into respective suite traces dir
     test_failed = hasattr(request.node, "rep_call") and request.node.rep_call.failed
     if test_failed and settings.browser.trace_on_failure:
+        _, _, traces_dir = _get_suite_artifact_dirs(request.node.nodeid)
+        traces_dir.mkdir(parents=True, exist_ok=True)
         clean_name = sanitize_filename(request.node.name)
-        trace_path = settings.traces_dir / f"trace_{clean_name}.zip"
+        trace_path = traces_dir / f"trace_{clean_name}.zip"
         try:
             context.tracing.stop(path=str(trace_path))
             logger.info(f"Test failed. Trace saved to: {trace_path}")
@@ -128,25 +152,31 @@ def workflow_page(
 
     yield page
 
-    # Screenshot and diagnostics capture on test failure
+    # Screenshot and diagnostics capture on test failure or background runtime flags
     test_failed = hasattr(request.node, "rep_call") and request.node.rep_call.failed
-    if test_failed:
-        if settings.browser.screenshot_on_failure:
+    has_diag_errors = diagnostics.has_errors()
+    screens_dir, diag_dir, _ = _get_suite_artifact_dirs(request.node.nodeid)
+    screens_dir.mkdir(parents=True, exist_ok=True)
+    diag_dir.mkdir(parents=True, exist_ok=True)
+
+    if test_failed or has_diag_errors:
+        suffix = "failure" if test_failed else "diagnostic_flag"
+        if settings.browser.screenshot_on_failure or test_failed:
             capture_screenshot(
                 page=page,
                 test_name=request.node.name,
-                suffix="failure",
-                destination_dir=settings.screenshots_dir,
+                suffix=suffix,
+                destination_dir=screens_dir,
             )
         try:
             diag_path = diagnostics.save_report(
                 test_name=request.node.name,
-                destination_dir=settings.diagnostics_dir,
+                destination_dir=diag_dir,
             )
-            logger.info(f"Saved failure diagnostic telemetry to: {diag_path}")
-            if diagnostics.has_errors():
-                logger.error(
-                    f"Diagnostic errors detected during failed test '{request.node.name}':\n"
+            logger.info(f"Saved diagnostic telemetry to: {diag_path}")
+            if has_diag_errors:
+                logger.warning(
+                    f"Diagnostic flags detected for '{request.node.name}':\n"
                     f"{diagnostics.format_report()}"
                 )
         except Exception as e:

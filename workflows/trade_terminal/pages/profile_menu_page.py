@@ -113,6 +113,14 @@ class ProfileMenuPage(BasePage):
         except Exception:
             return False
 
+    def navigate(self, url: Optional[str] = None) -> None:
+        """Navigate to the dashboard where the Profile slide-out menu is accessible."""
+        target_url = url or f"{settings.trade_terminal.base_url.rstrip('/')}/dashboard/"
+        if "/dashboard" not in self.page.url:
+            self.goto(target_url)
+            self.page.wait_for_timeout(1000)
+        self.dismiss_disclaimer_if_present()
+
     def open_menu(self, timeout: int = TIMEOUT_DEFAULT) -> None:
         """Open the profile menu by clicking the sidebar toggle if not already open."""
         self.dismiss_disclaimer_if_present()

@@ -83,6 +83,10 @@ class PositionsPage(BasePage):
     # Navigation & Activation
     # =========================================================================
 
+    def navigate(self, url: Optional[str] = None) -> None:
+        """Navigate to the standalone Position page."""
+        self.navigate_to_position_page(url)
+
     def navigate_to_position_page(self, url: Optional[str] = None) -> None:
         """
         Navigate to the dashboard and activate the standalone Position page

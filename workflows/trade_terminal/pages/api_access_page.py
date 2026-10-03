@@ -85,6 +85,10 @@ class ApiAccessPage(BasePage):
     # Navigation & Activation
     # =========================================================================
 
+    def navigate(self, url: Optional[str] = None) -> None:
+        """Navigate to the API Access page."""
+        self.navigate_to_api_page(url)
+
     def navigate_to_api_page(self, url: Optional[str] = None) -> None:
         """
         Navigate to the dashboard and activate the API Access page

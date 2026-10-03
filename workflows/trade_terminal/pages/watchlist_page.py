@@ -71,8 +71,9 @@ class WatchlistPage(BasePage):
     def navigate(self, url: Optional[str] = None) -> None:
         """Navigate to the dashboard where the Watchlist sidebar resides."""
         target_url = url or f"{settings.trade_terminal.base_url.rstrip('/')}/dashboard/"
-        logger.info(f"Navigating to Trade Terminal dashboard for Watchlist: {target_url}")
-        self.goto(target_url)
+        if "/dashboard" not in self.page.url:
+            logger.info(f"Navigating to Trade Terminal dashboard for Watchlist: {target_url}")
+            self.goto(target_url)
         self.sidebar.wait_for(state="visible", timeout=settings.browser.timeout)
         self.dismiss_disclaimer_if_present()
 
@@ -154,8 +155,18 @@ class WatchlistPage(BasePage):
         """Clear search input."""
         logger.info("Clearing watchlist search query.")
         self.search_input.fill("")
-        self.page.evaluate("document.querySelector('#search-input')?.dispatchEvent(new Event('input', {bubbles: true}))")
-        self.page.wait_for_timeout(800)
+        self.page.evaluate("""() => {
+            const input = document.querySelector('#search-input');
+            if (input) {
+                input.value = '';
+                input.dispatchEvent(new Event('input', {bubbles: true}));
+                input.dispatchEvent(new Event('keyup', {bubbles: true}));
+                input.dispatchEvent(new Event('change', {bubbles: true}));
+            }
+            const searchRes = document.querySelector('ul.search-result');
+            if (searchRes) searchRes.style.display = 'none';
+        }""")
+        self.page.wait_for_timeout(500)
 
     def get_search_input_placeholder(self) -> str:
         """Get placeholder attribute of search input."""
@@ -200,12 +211,12 @@ class WatchlistPage(BasePage):
         symbol, orig, percent, spread, bid, offer, low, high, sector.
         """
         return self.page.evaluate("""() => {
-            const rows = Array.from(document.querySelectorAll(".esearch-result li.searchitems, ul.search-result li"))
+            const rows = Array.from(document.querySelectorAll(".esearch-result li.searchitems, ul.search-result li, .list-all-symbols li, .list-all-symbols .symbol-row"))
                 .filter(el => el.offsetParent !== null && window.getComputedStyle(el).display !== 'none');
             return rows.map(row => {
-                const symbol = row.getAttribute("data-symbol") || "";
+                const symbol = row.getAttribute("data-symbol") || row.getAttribute("data-name") || (row.innerText ? row.innerText.trim().split('\\n')[0] : "");
                 const origInput = row.querySelector("input[name='drag_symbol[]']");
-                const orig = origInput ? origInput.value : "";
+                const orig = origInput ? origInput.value : (row.getAttribute("data-orig") || "");
                 const percentEl = row.querySelector(".day-data[data-percent]");
                 const spreadEl = row.querySelector(".spread[data-spread]");
                 const bidEl = row.querySelector(".bid[data-bid]");
@@ -239,13 +250,23 @@ class WatchlistPage(BasePage):
         search_val = (self.search_input.input_value() or "").strip()
         if search_val:
             return self.page.evaluate("""() => {
-                const searchList = document.querySelectorAll("ul.search-result li");
+                const searchList = document.querySelectorAll("ul.search-result li, .esearch-result li.searchitems, .list-all-symbols li");
                 return Array.from(searchList)
-                    .map(li => li.getAttribute("data-symbol") || li.innerText.trim().split('\\n')[0])
-                    .filter(s => s && s.length > 0 && !s.toLowerCase().includes("no symbol"));
+                    .filter(el => el.offsetParent !== null && window.getComputedStyle(el).display !== 'none')
+                    .map(li => li.getAttribute("data-symbol") || li.getAttribute("data-name") || li.innerText.trim().split('\\n')[0])
+                    .filter(s => s && s.length > 0 && !s.toLowerCase().includes("no symbol") && !s.toLowerCase().includes("nothing here"));
             }""")
         data = self.get_all_symbols_data()
-        return [d.get("symbol") for d in data if d.get("symbol")]
+        symbols = [d.get("symbol") for d in data if d.get("symbol")]
+        if not symbols:
+            symbols = self.page.evaluate("""() => {
+                const items = document.querySelectorAll(".esearch-result li.searchitems, .list-all-symbols li, .list-all-symbols .symbol-row, ul.search-result li, .symbols-wrapper li");
+                return Array.from(items)
+                    .filter(el => el.offsetParent !== null && window.getComputedStyle(el).display !== 'none')
+                    .map(el => el.getAttribute("data-symbol") || el.getAttribute("data-name") || el.innerText.trim().split('\\n')[0])
+                    .filter(s => s && s.length > 0 && !s.toLowerCase().includes("nothing here") && !s.toLowerCase().includes("no symbol"));
+            }""")
+        return symbols
 
     # =========================================================================
     # Hover Action Controls
