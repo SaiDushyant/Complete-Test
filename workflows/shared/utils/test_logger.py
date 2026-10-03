@@ -210,7 +210,7 @@ class GlobalTestLogger:
             self.suite_dir = suite_dir
         elif logs_dir is not None:
             self.suite_dir = logs_dir.parent
-        elif "validation" in cmd_str:
+        elif "validation" in cmd_str or "test_val_" in cmd_str:
             self.suite_dir = settings.validation_reports_dir
         elif "ui_regression" in cmd_str:
             self.suite_dir = settings.ui_regression_reports_dir
@@ -244,7 +244,7 @@ class GlobalTestLogger:
             return cls._instance
         if cls._instance is None:
             cmd_str = " ".join(sys.argv)
-            if "validation" in cmd_str:
+            if "validation" in cmd_str or "test_val_" in cmd_str:
                 cls._instance = cls(suite_dir=settings.validation_reports_dir)
             elif "ui_regression" in cmd_str:
                 cls._instance = cls(suite_dir=settings.ui_regression_reports_dir)

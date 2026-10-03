@@ -22,17 +22,23 @@ from workflows.shared.utils.test_logger import (
 from pathlib import Path
 
 
+from config.settings import settings
+
+
 def pytest_sessionstart(session):
     """Archive prior test runs and prepare fresh log session on test startup."""
     if not hasattr(session.config, "workerinput"):
         try:
             target_hint = None
+            is_val = False
             if hasattr(session.config, "args"):
                 for arg in session.config.args:
-                    if "test_" in arg:
+                    if "test_val_" in arg or "validation" in arg:
+                        is_val = True
+                    if "test_" in arg and not target_hint:
                         target_hint = Path(arg.split("::")[0]).stem
-                        break
-            GlobalTestLogger.get_instance().prepare_fresh_session(run_type_hint=target_hint)
+            suite_dir = settings.validation_reports_dir if is_val else settings.workflow_reports_dir
+            GlobalTestLogger.get_instance(suite_dir=suite_dir).prepare_fresh_session(run_type_hint=target_hint)
         except Exception:
             pass
 
