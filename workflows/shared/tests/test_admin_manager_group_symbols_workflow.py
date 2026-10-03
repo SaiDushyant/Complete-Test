@@ -37,6 +37,7 @@ Workflows Tested:
 
 from __future__ import annotations
 
+import os
 import re
 import time
 from typing import Any, Dict, Generator
@@ -49,7 +50,7 @@ from workflows.shared.utils.logger import get_logger
 logger = get_logger("admin_manager_group_symbols_workflow")
 
 ADMIN_USER = settings.admin_portal.username or "madmin"
-ADMIN_PASS = settings.admin_portal.password or "Test@1234"
+ADMIN_PASS = settings.admin_portal.password
 
 
 def _dismiss_confirm_dialogs(page: Page, timeout: int = 4000) -> None:
@@ -89,7 +90,7 @@ def admin_workflow_session(browser: Browser) -> Generator[Dict[str, Any], None, 
     ts = int(time.time())
     role_name = f"Role_Dhanya_{ts}"
     user_name = f"adm_dhanya_{ts}"
-    user_pass = "Test@1234"
+    user_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
     user_email = f"adm_dhanya_{ts}@testcorp.com"
 
     role_id = None
@@ -336,7 +337,7 @@ def test_workflow_manager_lifecycle_crud(admin_workflow_session: Dict[str, Any])
     mgr_username = f"mgr_dhanya_{ts}"
     mgr_email = f"mgr_dhanya_{ts}@testcorp.com"
     mgr_updated_email = f"mgr_dhanya_{ts}_upd@testcorp.com"
-    mgr_password = "Test@1234"
+    mgr_password = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
 
     admin_page.goto("https://stage.xtremenext.com/admin/Controlbase/manager")
     admin_page.wait_for_timeout(2000)

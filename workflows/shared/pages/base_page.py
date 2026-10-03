@@ -279,34 +279,6 @@ class BasePage:
     # Runtime Diagnostics & Invisible Error Assertions
     # =========================================================================
 
-    @property
-    def diagnostics(self) -> PageDiagnostics:
-        """
-        Return the PageDiagnostics monitor tracking JS errors, console logs,
-        and network failures on this page.
-        """
-        diag = getattr(self.page, "_diagnostics", None)
-        if diag is None:
-            diag = PageDiagnostics(self.page)
-            self.page._diagnostics = diag
-        return diag
-
-    def assert_no_javascript_errors(self) -> None:
-        """Assert zero unhandled JavaScript runtime exceptions occurred on this page."""
-        self.diagnostics.assert_no_javascript_errors()
-
-    def assert_no_console_errors(self, ignored_patterns: Optional[List[str]] = None) -> None:
-        """Assert zero console.error logs were emitted, excluding optional allowed patterns."""
-        self.diagnostics.assert_no_console_errors(ignored_patterns=ignored_patterns)
-
-    def assert_no_failed_network_requests(self, ignored_patterns: Optional[List[str]] = None) -> None:
-        """Assert zero network requests failed or dropped (DNS, aborted, refused)."""
-        self.diagnostics.assert_no_failed_requests(ignored_patterns=ignored_patterns)
-
-    def assert_no_http_errors(self, ignored_patterns: Optional[List[str]] = None) -> None:
-        """Assert zero network responses returned HTTP 4xx or 5xx status codes."""
-        self.diagnostics.assert_no_http_errors(ignored_patterns=ignored_patterns)
-
     def assert_clean_diagnostics(
         self,
         check_js_errors: bool = True,

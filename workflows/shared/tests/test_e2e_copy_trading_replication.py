@@ -3,8 +3,8 @@ Cross-Portal End-to-End Copy Trading and Order Replication Test Suite.
 
 Architectural Overview:
 - Isolated Browser Contexts per actor to prevent cookie / session cross-contamination:
-  * Manager Actor: 10009 (Password: Temp@123)
-  * Follower Actor: 10008 (Password: Test@1234)
+  * Manager Actor: 10009
+  * Follower Actor: 10008
 - Cross-Portal End-to-End Workflows:
   * Scenario 1 (Client Portal): Follower discovers and subscribes to Manager 10009 (Balance Based).
   * Scenario 2 (Trade Terminal): Manager places Market Order -> Order replicates to Follower's terminal -> Manager closes position -> Follower position closes.
@@ -70,11 +70,11 @@ def test_e2e_multiple_followers_subscribe_to_manager(browser: Browser):
     """
     Scenario 1: Comprehensive Multi-Follower Subscription Lifecycle:
     - Iterates through all configured follower accounts:
-      * 10008 (Test@1234) -> Balance Based
-      * 10006 (Test@1234) -> Equity Based
-      * 10098 (123)       -> Multiplier Based
-      * 10096 (123)       -> Balance Based
-      * 10102 (Fake@123)  -> Equity Based
+      * 10008 -> Balance Based
+      * 10006 -> Equity Based
+      * 10098 -> Multiplier Based
+      * 10096 -> Balance Based
+      * 10102 -> Equity Based
     - Subscribes each follower account to Manager 10009 in Client Portal.
     - Verifies active status in 'MY SUBSCRIPTION' tab for each follower.
     """

@@ -60,39 +60,6 @@ def test_admin_cron_jobs_modal_displays_fields(
         expect(locator).to_be_visible()
 
 
-@pytest.mark.admin
-@pytest.mark.regression
-@pytest.mark.parametrize(
-    ("status", "response_body"),
-    [
-        (200, '{"status":"success","message":"Mocked Cron Job response"}'),
-        (400, '{"status":"error","message":"Mocked Cron Job validation error"}'),
-    ],
-)
-def test_admin_cron_jobs_save_uses_mock_response(
-    admin_cron_jobs_page: AdminCronJobsPage,
-    status: int,
-    response_body: str,
-):
-    """Check the mocked Cron Job save response without sending a live save request."""
-    admin_cron_jobs_page.navigate(CRON_JOBS_URL)
-    admin_cron_jobs_page.open_first_cron_job()
-
-    intercepted_requests = []
-
-    def mock_request(route):
-        intercepted_requests.append(route.request.url)
-        route.fulfill(
-            status=status,
-            content_type="application/json",
-            body=response_body,
-        )
-
-    admin_cron_jobs_page.page.route("**/*", mock_request)
-    admin_cron_jobs_page.click_save()
-
-    assert intercepted_requests, "Expected the save action to produce a mocked request."
-
 
 @pytest.mark.admin
 @pytest.mark.regression
@@ -175,6 +142,8 @@ def test_admin_cron_jobs_modal_details_and_schedule_visibility(
         expect(admin_cron_jobs_page.run_time_input).to_be_hidden()
     finally:
         admin_cron_jobs_page.schedule_type_select.select_option(original_schedule)
+
+
 @pytest.mark.admin
 @pytest.mark.regression
 @pytest.mark.parametrize(

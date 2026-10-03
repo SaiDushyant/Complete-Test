@@ -58,7 +58,7 @@ class CopyTradingAccounts:
     def primary_follower(self) -> FollowerAccount:
         if self.followers:
             return self.followers[0]
-        return FollowerAccount("10008", "Test@1234")
+        return FollowerAccount("10008", "")
 
     @property
     def follower_username(self) -> str:
@@ -304,7 +304,7 @@ class Settings:
         # 7. Copy Trading Manager & Follower Accounts
         raw_followers_str = os.getenv(
             "COPY_TRADING_FOLLOWERS_LIST",
-            "10008:Test@1234,10006:Test@1234,10098:123,10096:123,10102:Fake@123",
+            "",
         )
         followers: List[FollowerAccount] = []
         if raw_followers_str.strip():
@@ -322,22 +322,22 @@ class Settings:
                 followers.insert(0, FollowerAccount(username=primary_user, password=primary_pass))
 
         if not followers:
-            followers.append(FollowerAccount(username="10008", password="Test@1234"))
+            followers.append(FollowerAccount(username="10008", password=""))
 
         self.copy_trading = CopyTradingAccounts(
             manager_username=os.getenv("COPY_TRADING_MANAGER_USERNAME") or client_username or "10009",
-            manager_password=os.getenv("COPY_TRADING_MANAGER_PASSWORD") or client_password or "Temp@123",
+            manager_password=os.getenv("COPY_TRADING_MANAGER_PASSWORD") or client_password or "",
             manager_name=os.getenv("COPY_TRADING_MANAGER_NAME", "temp"),
             followers=followers,
         )
 
         # 8. MAM & PAMM Credentials
         self.mam_master_account = (os.getenv("MAM_MASTER_ACCOUNT") or os.getenv("CLIENT_USERNAME", "10026")).strip()
-        self.mam_master_password = (os.getenv("MAM_MASTER_PASSWORD") or os.getenv("CLIENT_PASSWORD", "Test@1234")).strip()
+        self.mam_master_password = (os.getenv("MAM_MASTER_PASSWORD") or os.getenv("CLIENT_PASSWORD", "")).strip()
         self.mam_follower_1_account = (os.getenv("MAM_FOLLOWER_1_ACCOUNT", "10100")).strip()
-        self.mam_follower_1_password = (os.getenv("MAM_FOLLOWER_1_PASSWORD", "Dhanya@123")).strip()
+        self.mam_follower_1_password = (os.getenv("MAM_FOLLOWER_1_PASSWORD", "")).strip()
         self.mam_follower_2_account = (os.getenv("MAM_FOLLOWER_2_ACCOUNT", "10102")).strip()
-        self.mam_follower_2_password = (os.getenv("MAM_FOLLOWER_2_PASSWORD", "Fake@123")).strip()
+        self.mam_follower_2_password = (os.getenv("MAM_FOLLOWER_2_PASSWORD", "")).strip()
 
         self.pamm_master_account = (os.getenv("PAMM_MASTER_ACCOUNT") or self.mam_master_account).strip()
         self.pamm_master_password = (os.getenv("PAMM_MASTER_PASSWORD") or self.mam_master_password).strip()

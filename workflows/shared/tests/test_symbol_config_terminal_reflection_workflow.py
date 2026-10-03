@@ -36,7 +36,7 @@ from workflows.shared.utils.logger import get_logger
 logger = get_logger("symbol_config_terminal_reflection")
 
 ADMIN_USER = settings.admin_portal.username or "madmin"
-ADMIN_PASS = settings.admin_portal.password or "Test@1234"
+ADMIN_PASS = settings.admin_portal.password
 TARGET_SYMBOL = "USDCAD"
 
 

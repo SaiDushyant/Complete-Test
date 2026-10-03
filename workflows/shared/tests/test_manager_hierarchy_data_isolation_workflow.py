@@ -38,6 +38,7 @@ Covers:
 
 from __future__ import annotations
 
+import os
 import time
 from typing import Any, Dict, Generator
 import pytest
@@ -49,7 +50,7 @@ from workflows.shared.utils.logger import get_logger
 logger = get_logger("manager_hierarchy_isolation")
 
 ADMIN_USER = settings.admin_portal.username or "madmin"
-ADMIN_PASS = settings.admin_portal.password or "Test@1234"
+ADMIN_PASS = settings.admin_portal.password
 
 
 def _dismiss_confirm_dialogs(page: Page, timeout: int = 3000) -> None:
@@ -101,19 +102,19 @@ def manager_workflow_session(browser: Browser) -> Generator[Dict[str, Any], None
     ts = int(time.time())
     mgr_uname = f"mgr_dhanya_{ts}"
     mgr_email = f"mgr_dhanya_{ts}@testcorp.com"
-    mgr_pass = "Test@1234"
+    mgr_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
 
     u1_name = f"cl1_mgr_{ts}"
     u1_email = f"cl1_mgr_{ts}@testcorp.com"
-    u1_pass = "Test@1234"
+    u1_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
 
     u2_name = f"cl2_reg_{ts}"
     u2_email = f"cl2_reg_{ts}@mailinator.com"
-    u2_pass = "Test@1234"
+    u2_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
 
     u3_name = f"cl3_adm_{ts}"
     u3_email = f"cl3_adm_{ts}@testcorp.com"
-    u3_pass = "Test@1234"
+    u3_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
 
     mgr_ctx: BrowserContext | None = None
     mgr_page: Page | None = None

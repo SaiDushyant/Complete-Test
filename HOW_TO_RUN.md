@@ -1,6 +1,6 @@
 # How to Run the Complete Test Framework: CLI & Execution Guide
 
-This comprehensive guide details how to configure, execute, and inspect all test suites in the **Complete Test Framework** across **Element-Level Validation Testing** (434 tests), **Behavioral Workflow Testing** (920 tests), and **UI DOM Structural Regression Testing** (29 tests) — totaling **1,383 test cases**.
+This comprehensive guide details how to configure, execute, and inspect all test suites in the **Complete Test Framework** across **Element-Level Validation Testing** (434 tests), **Behavioral Workflow Testing** (955 tests), **Network Mock Testing** (269 tests), and **UI DOM Structural Regression Testing** (29 tests) — totaling **1,687 test cases**.
 
 ---
 
@@ -38,7 +38,7 @@ The framework unifies all test suites into clean, non-conflicting domains:
                  ┌─────────────────────┼─────────────────────┐
                  │                     │                     │
                  ▼                     ▼                     ▼
-      workflows/ (1,325 tests)   mock/ (269 tests)    ui_regression/ (29 tests)
+      workflows/ (1,389 tests)   mock/ (269 tests)    ui_regression/ (29 tests)
   Behavioral & Validation Testing Network Mocking      DOM Drift & Structural
                  │                     │                     │
    ┌─────────────┼─────────────┐   ┌───┼───┐          ┌──────┴──────┐
@@ -91,22 +91,22 @@ Before running tests, ensure your `.env` file is present in the repository root 
 ```env
 # Client Portal
 BASELINE_URL=https://stage.xtremenext.com/
-BASELINE_TEST_USER_EMAIL=10009
-BASELINE_TEST_USER_PASSWORD=Temp@123
-CLIENT_USERNAME=10009
-CLIENT_PASSWORD=Temp@123
+BASELINE_TEST_USER_EMAIL=your_test_user
+BASELINE_TEST_USER_PASSWORD=your_password
+CLIENT_USERNAME=your_client_username
+CLIENT_PASSWORD=your_password
 
 # Trade Terminal
 TRADE_TERMINAL_URL=https://stage.xtremenext.com/
 TRADE_LOGIN_URL=https://stage.xtremenext.com/login/
-TRADE_USERNAME=10009
-TRADE_PASSWORD=Temp@123
+TRADE_USERNAME=your_trade_username
+TRADE_PASSWORD=your_password
 
 # Admin Portal
 BASELINE_ADMIN_BASE_URL=https://stage.xtremenext.com/admin/Controlbase/Dashboard
 BASELINE_ADMIN_LOGIN_URL=https://stage.xtremenext.com/admin/Login/index
-ADMIN_USERNAME=madmin
-ADMIN_PASSWORD=Test@1234
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD=your_password
 ```
 
 ---

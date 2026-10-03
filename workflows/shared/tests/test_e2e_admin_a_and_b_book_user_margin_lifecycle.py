@@ -3,13 +3,13 @@ A Book & B Book User Margin End-to-End Automated Test Suite.
 
 Covers:
 1. A Book User Margin (/admin/Controlbase/aBookUserMargin):
-   - Authenticates Trade Terminal for A-Book Account 10009 (temp / Test@1234).
+   - Authenticates Trade Terminal for A-Book Account 10009.
    - Verifies open positions & financial summary on Trade Terminal.
    - Navigates to Admin Portal /admin/Controlbase/aBookUserMargin.
    - Verifies 9 table headers (User ID, Customer Name, Account ID, Fund, Balance, Equity, Margin Level, Group Name, Total PNL).
    - Searches Account ID 10009, verifies live row data, and verifies CSV/Excel exports.
 2. B Book User Margin (/admin/Controlbase/bBookUserMargin):
-   - Authenticates Trade Terminal for B-Book Account 10098 (black / 123).
+   - Authenticates Trade Terminal for B-Book Account 10098.
    - Navigates to Admin Portal /admin/Controlbase/bBookUserMargin.
    - Verifies 9 table headers, user margin data rows, and CSV/Excel exports.
 3. Automatically updates reports in reports/workflows/admin_portal/ folder.
@@ -17,6 +17,7 @@ Covers:
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import pytest
 from playwright.sync_api import Browser, expect
@@ -31,11 +32,11 @@ from workflows.trade_terminal.pages.positions_page import PositionsPage
 
 logger = get_logger("e2e_a_and_b_book_user_margin")
 
-ABOOK_USER_ID = "10009"
-ABOOK_PASSWORD = "Temp@123"
+ABOOK_USER_ID = os.getenv("ABOOK_USER_ID", "10009")
+ABOOK_PASSWORD = os.getenv("ABOOK_PASSWORD", "")
 
-BBOOK_USER_ID = "10098"
-BBOOK_PASSWORD = "123"
+BBOOK_USER_ID = os.getenv("BBOOK_USER_ID", "10098")
+BBOOK_PASSWORD = os.getenv("BBOOK_PASSWORD", "123")
 
 ADMIN_PORTAL_REPORTS_DIR = Path(__file__).resolve().parents[3] / "reports" / "workflows" / "admin_portal"
 
@@ -72,7 +73,7 @@ def _write_user_margin_report(test_name: str, meaning: str, status: str = "PASSE
 def test_e2e_a_book_user_margin_account_10009_verification(browser: Browser) -> None:
     """
     Positive Scenario: A Book User Margin Verification for Account 10009:
-    - Authenticates Trade Terminal with A-Book Account 10009 (temp / Test@1234).
+    - Authenticates Trade Terminal with A-Book Account 10009.
     - Verifies open positions & financial summary on Trade Terminal.
     - Navigates to /admin/Controlbase/aBookUserMargin.
     - Verifies 9 table headers (User ID, Customer Name, Account ID, Fund, Balance, Equity, Margin Level, Group Name, Total PNL).

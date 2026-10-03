@@ -29,6 +29,7 @@ Architectural Design & Workflows Verified:
 
 from __future__ import annotations
 
+import os
 import re
 from typing import Any, Dict, List
 import pytest
@@ -51,10 +52,10 @@ from workflows.trade_terminal.pages.login_page import TradeLoginPage
 
 logger = get_logger("e2e_client_admin_transactions")
 
-CLIENT_USER = "10026"
-CLIENT_PASS = "Test@1234"
+CLIENT_USER = os.getenv("CLIENT_PORTAL_TEST_USER", "10026")
+CLIENT_PASS = settings.client_portal.password or os.getenv("CLIENT_PORTAL_TEST_PASSWORD", "")
 ADMIN_USER = settings.admin_portal.username or "madmin"
-ADMIN_PASS = settings.admin_portal.password or "Test@1234"
+ADMIN_PASS = settings.admin_portal.password
 
 
 def _create_authenticated_client_context(browser: Browser) -> tuple[BrowserContext, Page]:

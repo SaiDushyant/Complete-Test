@@ -32,6 +32,7 @@ Architecture:
 
 from __future__ import annotations
 
+import os
 import re
 import time
 from typing import Any, Dict, Generator
@@ -44,7 +45,7 @@ from workflows.shared.utils.logger import get_logger
 logger = get_logger("role_group_user_client_workflow")
 
 ADMIN_USER = settings.admin_portal.username or "madmin"
-ADMIN_PASS = settings.admin_portal.password or "Test@1234"
+ADMIN_PASS = settings.admin_portal.password
 
 
 def _dismiss_confirm_dialogs(page: Page, timeout: int = 4000) -> None:
@@ -91,13 +92,13 @@ def full_workflow_session(browser: Browser) -> Generator[Dict[str, Any], None, N
     ts = int(time.time())
     role_name = f"Role_Dhanya_{ts}"
     admin_uname = f"adm_dhanya_{ts}"
-    admin_pass = "Test@1234"
+    admin_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
     admin_email = f"adm_dhanya_{ts}@testcorp.com"
 
     grp_name = f"GRP_DHANYA_{ts}"
     client_name = f"cl_dhanya_{ts}"
     client_email = f"cl_dhanya_{ts}@testcorp.com"
-    client_pass = "Test@1234"
+    client_pass = os.getenv("TEST_DYNAMIC_USER_PASSWORD", "TestDynUser!123")
     client_inv_pass = "1234"
 
     role_id = None

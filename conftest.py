@@ -194,14 +194,14 @@ def authenticated_state(
 # AUTHENTICATED PAGE
 # ============================================================
 
-from ui_regression.crawler.crawler_config import VIEWPORTS, DEFAULT_VIEWPORT
-
 @pytest.fixture(scope="module")
 def authenticated_page(
     browser,
     authenticated_state,
     base_url,
 ):
+    from ui_regression.crawler.crawler_config import VIEWPORTS, DEFAULT_VIEWPORT
+
     context = browser.new_context(
         storage_state=authenticated_state,
         viewport=VIEWPORTS[DEFAULT_VIEWPORT],

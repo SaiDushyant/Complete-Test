@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from workflows.shared.fixtures.browser_fixtures import (
+    workflow_browser,
     workflow_context,
     workflow_page,
 )
@@ -53,7 +54,6 @@ from workflows.admin_portal.fixtures.admin_fixtures import (
     role_permission_page,
     user_document_page,
     user_management_page,
-    workflow_browser,
 )
 
 

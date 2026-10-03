@@ -11,12 +11,12 @@ To allow three developers to work concurrently in GitHub without stepping on eac
 │ Domain                  │ Primary Directory                 │ Primary Owner │ Total Tests │
 ├─────────────────────────┼───────────────────────────────────┼───────────────┼─────────────┤
 │ Trade Terminal          │ workflows/trade_terminal/         │ Developer 1   │ 491 tests   │
-│ Admin Portal            │ workflows/admin_portal/           │ Developer 2   │ 635 tests   │
+│ Admin Portal            │ workflows/admin_portal/           │ Developer 2   │ 653 tests   │
 │ Client Portal           │ workflows/client_portal/          │ Developer 3   │ 338 tests   │
-│ Shared Infrastructure   │ workflows/shared/                 │ All Devs      │ 130 tests   │
+│ Shared Infrastructure   │ workflows/shared/                 │ All Devs      │ 176 tests   │
 │ Configuration           │ config/                           │ All Devs      │ N/A         │
 │ UI Regression Engine    │ ui_regression/                    │ Automation TL │ 29 tests    │
-│ Total Platform Coverage │ Whole Repository                  │ Core Team     │ 1,623 tests │
+│ Total Platform Coverage │ Whole Repository                  │ Core Team     │ 1,687 tests │
 └─────────────────────────┴───────────────────────────────────┴───────────────┴─────────────┘
 ```
 
@@ -52,11 +52,11 @@ To allow three developers to work concurrently in GitHub without stepping on eac
 ## 3. Developer 2 — Admin Portal Domain
 
 - **Primary Directory**: `workflows/admin_portal/`
-- **Total Tests**: **635 tests** (425 Workflow + 129 Validation + 81 Mock tests)
+- **Total Tests**: **653 tests** (443 Workflow + 129 Validation + 81 Mock tests)
 - **Subdirectories**:
   - `pages/`: Admin Management Page Objects (`admin_login_page.py`, `admin_dashboard_page.py`, `user_management_page.py`, `deposit_withdraw_page.py`)
   - `tests/`:
-    - Workflow Suites: `test_admin_*.py` (administrator authentication, role permissions, user search, deposit approvals, account settings)
+    - Workflow Suites: `test_admin_*.py` (administrator authentication, role permissions, user search, deposit approvals, account settings, plus `test_admin_shared_components.py` with 35 parameterized tests for tables, pagination, search, and export controls)
     - Validation Suites: `test_val_admin_*.py` (9 suites: orders calculation, input boundaries, user management, KYC document status, leads import, date filters)
     - Mock Suites (`tests/mock/`): 81 tests across 22 suites (auth, user CRUD, deposits, withdrawals, KYC review, LP bridge, orders, risk books, cron jobs, PAMM/MAM, roles, settings, symbols, bonus, leads, audit, server errors)
   - `fixtures/`: `admin_fixtures.py` (authenticated admin contexts, admin pages)

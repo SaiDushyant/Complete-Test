@@ -76,7 +76,7 @@ def client_page(browser: Browser) -> Page:
     client_login.navigate(settings.client_portal.login_url or "https://stage.xtremenext.com/login/")
     client_login.login(
         username=settings.client_portal.username or "f76718269@gmail.com",
-        password=settings.client_portal.password or "Fake@123",
+        password=settings.client_portal.password,
         remember_me=False,
     )
     page.wait_for_timeout(3000)

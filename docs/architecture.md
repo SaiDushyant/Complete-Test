@@ -45,7 +45,7 @@ Complete-Test/
 │   ├── element_output_admin/         # Authoritative Admin baseline DOM snapshots (sm-2xl)
 │   └── tests/                        # DOM regression unit & matching accuracy tests
 │
-├── workflows/                        # Core Testing Hierarchy (1,594 tests)
+├── workflows/                        # Core Testing Hierarchy (1,658 tests)
 │   ├── conftest.py                   # Root workflow fixtures (browser lifecycle)
 │   │
 │   ├── trade_terminal/               # Developer 1 Domain: Trade Terminal (491 tests)
@@ -55,7 +55,7 @@ Complete-Test/
 │   │   ├── fixtures/                 # Trade-specific session & page fixtures
 │   │   └── utils/                    # Trade calculation & helper functions
 │   │
-│   ├── admin_portal/                 # Developer 2 Domain: Admin Portal (635 tests)
+│   ├── admin_portal/                 # Developer 2 Domain: Admin Portal (653 tests)
 │   │   ├── conftest.py               # Admin fixtures loader
 │   │   ├── pages/                    # Admin Page Objects (AdminLoginPage, UserManagementPage)
 │   │   ├── tests/                    # Workflow (test_admin_*.py), Validation (test_val_admin_*.py), Mock (tests/mock/ - 81 tests)
@@ -69,7 +69,7 @@ Complete-Test/
 │   │   ├── fixtures/                 # Client session & page fixtures
 │   │   └── utils/                    # Client validation utilities, session recovery
 │   │
-│   └── shared/                       # Reusable infrastructure & shared helpers
+│   └── shared/                       # Reusable infrastructure & shared helpers (176 tests)
 │       ├── mocks/                    # MockRouter, MockScenarios, mock_data datasets
 │       ├── pages/base_page.py        # Abstract BasePage with resilient Playwright helpers
 │       ├── helpers/                  # validation_payloads.py, math_assertions.py

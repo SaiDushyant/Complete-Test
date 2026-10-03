@@ -3,7 +3,7 @@ End-to-End A Book & B Book Cross-Portal Test Suite.
 
 Covers:
 1. A Book Page (/admin/Controlbase/aBook):
-   - Trade Terminal authentication with A Book account 10009 (password: Test@1234).
+   - Trade Terminal authentication with A Book account 10009.
    - Admin A Book page metrics (Balance, Equity, Used Margin, Free Margin, Margin Level, Profit / Loss).
    - Search for Account 10009 ('temp') in A Book table.
    - Show Orders modal (#orderModal) verification for A Book account 10009.
@@ -17,6 +17,7 @@ Covers:
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import pytest
 from playwright.sync_api import Browser, expect
@@ -31,11 +32,11 @@ from workflows.trade_terminal.pages.login_page import TradeLoginPage
 
 logger = get_logger("e2e_admin_a_book_and_b_book_lifecycle")
 
-ABOOK_ACCOUNT_ID = "10009"
-ABOOK_PASSWORD = "Temp@123"
+ABOOK_ACCOUNT_ID = os.getenv("ABOOK_ACCOUNT_ID", "10009")
+ABOOK_PASSWORD = os.getenv("ABOOK_PASSWORD", "")
 
-BBOOK_ACCOUNT_ID = "10098"
-BBOOK_PASSWORD = "123"
+BBOOK_ACCOUNT_ID = os.getenv("BBOOK_ACCOUNT_ID", "10098")
+BBOOK_PASSWORD = os.getenv("BBOOK_PASSWORD", "123")
 
 ADMIN_PORTAL_REPORTS_DIR = Path(__file__).resolve().parents[3] / "reports" / "workflows" / "admin_portal"
 
@@ -69,7 +70,7 @@ def _write_admin_portal_report(test_name: str, meaning: str, status: str = "PASS
 def test_e2e_a_book_account_10009_order_placement_and_admin_verification(browser: Browser) -> None:
     """
     Scenario 1: A Book Account 10009 Verification:
-    - Log into Trade Terminal with A Book account 10009 (password: Test@1234).
+    - Log into Trade Terminal with A Book account 10009.
     - Log into Admin Console & navigate to /admin/Controlbase/aBook.
     - Verify A Book summary cards (Balance, Equity, Used Margin, Free Margin, Margin Level, Profit / Loss).
     - Search for Account 10009 in A Book table and verify row data.

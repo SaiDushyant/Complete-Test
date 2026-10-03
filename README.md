@@ -9,7 +9,7 @@ A unified, production-grade automated testing platform built with Python and Pla
               │                    │                    │
               ▼                    ▼                    ▼
        ui_regression/         workflows/            mock testing/
-       (29 tests)            (1,325 tests)          (269 tests)
+       (29 tests)            (1,389 tests)          (269 tests)
               │                    │                    │
        DOM / Structure      Live Validation       Network Mocking
               │             & User Journeys       & Fault Injection
@@ -36,7 +36,7 @@ A unified, production-grade automated testing platform built with Python and Pla
 
 ---
 
-## 🏛️ Three Comprehensive Testing Layers (1,623 Total Tests)
+## 🏛️ Three Comprehensive Testing Layers (1,687 Total Tests)
 
 ### 1. `ui_regression/` — DOM Structural Regression & Drift Detection (29 Tests)
 > **Answers**: *"Has the UI or DOM structure changed unexpectedly from the approved baseline?"*
@@ -45,13 +45,13 @@ A unified, production-grade automated testing platform built with Python and Pla
 - Employs a 6-tier element matching algorithm with dynamic noise filtering.
 - Preserves version-controlled baselines under `ui_regression/element_output/` and `ui_regression/element_output_admin/`.
 
-### 2. `workflows/` — Behavioral Workflows & Validation Testing (1,325 Tests)
+### 2. `workflows/` — Behavioral Workflows & Validation Testing (1,389 Tests)
 > **Answers**: *"Can a user successfully complete critical application workflows and are all inputs, boundaries, and math calculations strictly validated?"*
-- Co-locates both **End-to-End Workflow Journeys** (`test_<portal>_*.py`) and **Element-Level Validation Suites** (`test_val_<portal>_*.py` — 434 tests):
+- Co-locates both **End-to-End Workflow Journeys** (`test_<portal>_*.py` — 955 tests) and **Element-Level Validation Suites** (`test_val_<portal>_*.py` — 434 tests):
   - **Trade Terminal** (`workflows/trade_terminal/` — 395 tests: 175 workflow + 220 validation tests) — Maintained by Developer 1
-  - **Admin Portal** (`workflows/admin_portal/` — 554 tests: 425 workflow + 129 validation tests) — Maintained by Developer 2
+  - **Admin Portal** (`workflows/admin_portal/` — 572 tests: 443 workflow + 129 validation tests) — Maintained by Developer 2
   - **Client Portal** (`workflows/client_portal/` — 246 tests: 161 workflow + 85 validation tests) — Maintained by Developer 3
-  - **Shared & Integrations** (`workflows/shared/` — 130 tests) — Cross-portal E2E, Manager Hierarchy Isolation, A/B Book Lifecycle, Financial Calculation Verification
+  - **Shared & Integrations** (`workflows/shared/` — 176 tests) — Cross-portal E2E, Manager Hierarchy Isolation, A/B Book Lifecycle, Financial Calculation Verification
 
 ### 3. Mock Testing & Network Interception Layer (269 Tests)
 > **Answers**: *"How does the frontend react under severe API errors, 429 rate limits, network disconnects, and edge-case account states?"*
@@ -117,7 +117,7 @@ Complete-Test/
 │   ├── element_output_admin/         # Version-controlled baseline snapshots (Admin)
 │   └── tests/                        # DOM regression unit & accuracy tests
 │
-├── workflows/                        # Core Testing Hierarchy (1,594 tests)
+├── workflows/                        # Core Testing Hierarchy (1,658 tests)
 │   ├── conftest.py                   # Shared browser fixture export
 │   │
 │   ├── trade_terminal/               # Developer 1 Domain: Trade Terminal (491 tests)
@@ -125,7 +125,7 @@ Complete-Test/
 │   │   ├── fixtures/                 # Trade fixtures & authenticated contexts
 │   │   └── tests/                    # Workflow (test_trade_*.py), Validation (test_val_trade_*.py), Mock (tests/mock/)
 │   │
-│   ├── admin_portal/                 # Developer 2 Domain: Admin Portal (635 tests)
+│   ├── admin_portal/                 # Developer 2 Domain: Admin Portal (653 tests)
 │   │   ├── pages/                    # Admin POMs (AdminLoginPage, UserManagementPage, etc.)
 │   │   ├── fixtures/                 # Admin fixtures & authenticated contexts
 │   │   └── tests/                    # Workflow (test_admin_*.py), Validation (test_val_admin_*.py), Mock (tests/mock/)
@@ -135,7 +135,7 @@ Complete-Test/
 │   │   ├── fixtures/                 # Client fixtures & authenticated contexts
 │   │   └── tests/                    # Workflow (test_client_*.py), Validation (test_val_client_*.py), Mock (tests/mock/)
 │   │
-│   └── shared/                       # Reusable infrastructure & shared helpers
+│   └── shared/                       # Reusable infrastructure & shared helpers (176 tests)
 │       ├── mocks/                    # MockRouter, MockScenarios, mock_data datasets
 │       ├── pages/base_page.py        # Abstract BasePage with resilient Playwright helpers
 │       ├── helpers/                  # validation_payloads.py, math_assertions.py

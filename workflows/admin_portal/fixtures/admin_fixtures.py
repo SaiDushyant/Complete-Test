@@ -56,28 +56,6 @@ from workflows.shared.fixtures.auth_fixtures import ensure_authenticated_context
 from workflows.shared.utils.error_monitor import ErrorMonitor
 
 
-@pytest.fixture(scope="session")
-def workflow_browser(
-    playwright: Playwright,
-    pytestconfig: pytest.Config,
-) -> Generator[Browser, None, None]:
-    """
-    Session-scoped Playwright Browser instance for Admin Portal tests.
-    Respects pytest CLI flags (--headed, --slowmo) as well as settings.
-    """
-    is_headed = bool(getattr(pytestconfig.option, "headed", False))
-    slow_mo_val = getattr(pytestconfig.option, "slowmo", 0) or settings.browser.slow_mo
-
-    headless = False if is_headed else settings.browser.headless
-
-    browser = playwright.chromium.launch(
-        headless=headless,
-        slow_mo=slow_mo_val,
-    )
-    yield browser
-    browser.close()
-
-
 LOGIN_RESULT_FILE = (
     Path(__file__).resolve().parents[1]
     / "reports"

@@ -15,12 +15,22 @@ from workflows.shared.mocks.mock_router import MockRouter
 
 
 @pytest.fixture
-def mock_router(page: Page) -> Generator[MockRouter, None, None]:
+def mock_router(request: pytest.FixtureRequest) -> Generator[MockRouter, None, None]:
     """
-    Function-scoped MockRouter attached to the current Playwright Page.
+    Function-scoped MockRouter attached to the page instance used by the test.
+    Prefers 'workflow_page' if requested in the test, otherwise falls back to 'mock_page' or 'page'.
     Automatically unregisters all active route intercepts upon test teardown.
     """
-    router = MockRouter(page)
+    if "workflow_page" in request.fixturenames:
+        active_page = request.getfixturevalue("workflow_page")
+    elif "mock_page" in request.fixturenames:
+        active_page = request.getfixturevalue("mock_page")
+    elif "page" in request.fixturenames:
+        active_page = request.getfixturevalue("page")
+    else:
+        active_page = request.getfixturevalue("workflow_page")
+
+    router = MockRouter(active_page)
     yield router
     router.clear()
 

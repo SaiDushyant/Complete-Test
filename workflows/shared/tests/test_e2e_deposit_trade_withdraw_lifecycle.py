@@ -41,14 +41,14 @@ def test_e2e_deposit_to_admin_reflection_lifecycle(workflow_browser: Browser):
 
     client_login = ClientLoginPage(client_page)
     client_login.navigate()
-    try:
-        client_login.login(
-            username=settings.client_portal.username or "10009",
-            password=settings.client_portal.password or "Temp@123",
-        )
-        client_page.wait_for_load_state("domcontentloaded", timeout=30000)
-    except Exception:
-        pass
+    if not settings.client_portal.username or not settings.client_portal.password:
+        pytest.skip("Client portal credentials not configured in settings/.env")
+
+    client_login.login(
+        username=settings.client_portal.username,
+        password=settings.client_portal.password,
+    )
+    client_page.wait_for_load_state("domcontentloaded", timeout=30000)
 
     deposit_page = ClientDepositPage(client_page)
     deposit_page.navigate_to_deposit()
@@ -61,16 +61,17 @@ def test_e2e_deposit_to_admin_reflection_lifecycle(workflow_browser: Browser):
     admin_ctx = workflow_browser.new_context(viewport=settings.browser.viewport)
     admin_page = admin_ctx.new_page()
 
+    if not settings.admin_portal.username or not settings.admin_portal.password:
+        admin_ctx.close()
+        pytest.skip("Admin portal credentials not configured in settings/.env")
+
     admin_login = AdminLoginPage(admin_page)
     admin_login.navigate()
-    try:
-        admin_login.login(
-            username=settings.admin_portal.username or "madmin",
-            password=settings.admin_portal.password or "Test@1234",
-        )
-        admin_page.wait_for_load_state("domcontentloaded", timeout=30000)
-    except Exception:
-        pass
+    admin_login.login(
+        username=settings.admin_portal.username,
+        password=settings.admin_portal.password,
+    )
+    admin_page.wait_for_load_state("domcontentloaded", timeout=30000)
 
     admin_deposit = AdminDepositPage(admin_page)
     admin_deposit.navigate_to_deposit()
@@ -88,20 +89,20 @@ def test_e2e_cross_portal_trade_terminal_sync(workflow_browser: Browser):
     """
     Verify that Trade Terminal authenticates and renders account equity metrics.
     """
+    if not settings.trade_terminal.username or not settings.trade_terminal.password:
+        pytest.skip("Trade terminal credentials not configured in settings/.env")
+
     trade_ctx = workflow_browser.new_context(viewport=settings.browser.viewport)
     trade_page = trade_ctx.new_page()
 
     trade_login = TradeLoginPage(trade_page)
     trade_login.navigate()
-    try:
-        trade_login.login(
-            username=settings.trade_terminal.username or "10009",
-            password=settings.trade_terminal.password or "Temp@123",
-        )
-        dashboard = TradingDashboardPage(trade_page)
-        dashboard.wait_for_dashboard_ready(timeout=30000)
-    except Exception:
-        pass
+    trade_login.login(
+        username=settings.trade_terminal.username,
+        password=settings.trade_terminal.password,
+    )
+    dashboard = TradingDashboardPage(trade_page)
+    dashboard.wait_for_dashboard_ready(timeout=30000)
 
     trade_page.wait_for_timeout(1000)
     assert trade_page.is_visible("body"), "Trade Terminal dashboard rendered cleanly."

@@ -42,7 +42,7 @@ logger = get_logger("integration_normal_account_order_lifecycle")
 
 # Use a standard user account that is neither master nor follower
 NORMAL_USER = settings.copy_trading.followers[1].username if len(settings.copy_trading.followers) > 1 else "10006"
-NORMAL_PASS = settings.copy_trading.followers[1].password if len(settings.copy_trading.followers) > 1 else "Test@1234"
+NORMAL_PASS = settings.copy_trading.followers[1].password if len(settings.copy_trading.followers) > 1 else ""
 
 
 def _login_trade_terminal(context: BrowserContext, user: str, pwd: str) -> tuple[Page, PositionsPage, WatchlistPage, OrderEntryPage]:
