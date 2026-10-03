@@ -27,6 +27,7 @@ A unified, production-grade automated testing platform built with Python and Pla
 | :--- | :--- |
 | **[How to Run Guide](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/HOW_TO_RUN.md)** | Complete CLI operational guide, execution recipes, parallel testing, validation suites, and reporting formats. |
 | **[Validation Testing Specification](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/VALIDATION_TESTING_SPECIFICATION.md)** | Definitive specification for 434 validation tests across Admin, Client, and Trade portals, attack vectors, and element catalogs. |
+| **[Mock Testing Specification](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/MOCK_TESTING_SPECIFICATION.md)** | Definitive specification and implementation guide for Playwright network mocking, MockRouter, error injection, and test catalog. |
 | **[Scripts & Test Runners Catalog](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/scripts/README.md)** | Detailed documentation of every script in `scripts/`, flags, and usage recommendations. |
 | **[Architecture Overview](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/architecture.md)** | Explains why UI regression and behavioral workflows are intentionally separated, and details boundary isolation. |
 | **[Developer Onboarding Guide](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/developer-guide.md)** | Complete walkthrough from environment setup to creating Page Objects, writing tests, and opening PRs. |
