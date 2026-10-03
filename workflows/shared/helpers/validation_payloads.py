@@ -1,14 +1,17 @@
 """
-Validation and Security Test Payloads — Extended.
-Reusable datasets for SQL injection, XSS, boundary conditions,
-email/phone/password format validation, and date fuzzing across all portals.
+Validation and Security Test Payloads & Attack Vectors.
+Shared datasets for SQL injection, XSS, boundary numbers, date ranges,
+disallowed file formats, email/phone/password validation across all portals.
 """
+
+from __future__ import annotations
 
 from typing import List, Tuple
 
-# ─────────────────────────────────────────────
-# SQL Injection Payloads
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 1. SQL INJECTION (SQLi) ATTACK VECTORS
+# ==============================================================================
+
 SQLI_PAYLOADS: List[Tuple[str, str]] = [
     ("' OR '1'='1", "SQLi Auth Bypass Single Quote Tautology"),
     ('" OR ""="', "SQLi Auth Bypass Double Quote Tautology"),
@@ -22,12 +25,12 @@ SQLI_PAYLOADS: List[Tuple[str, str]] = [
     ("Rejected: ' OR (SELECT COUNT(*) FROM admin) > 0 --", "SQLi Remarks Field Injection"),
 ]
 
-# Shorter subset for parametrize where full list is too long
 SQLI_PAYLOADS_SHORT: List[Tuple[str, str]] = SQLI_PAYLOADS[:5]
 
-# ─────────────────────────────────────────────
-# XSS Payloads
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 2. CROSS-SITE SCRIPTING (XSS) ATTACK VECTORS
+# ==============================================================================
+
 XSS_PAYLOADS: List[Tuple[str, str]] = [
     ("<script>window.xss_detected=1;</script>", "Reflected/Stored XSS Standard Script Tag"),
     ('"><img src=x onerror=window.xss_detected=1>', "DOM/Attribute Breakout Image OnError XSS"),
@@ -36,12 +39,37 @@ XSS_PAYLOADS: List[Tuple[str, str]] = [
     ('<body onload=window.xss_detected=1>', "Body Tag Onload XSS"),
 ]
 
-# Shorter subset for parametrize
 XSS_PAYLOADS_SHORT: List[Tuple[str, str]] = XSS_PAYLOADS[:3]
 
-# ─────────────────────────────────────────────
-# Lot Size Boundaries
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 3. BOUNDARY NUMBERS & NUMERIC INPUT TEST CASES
+# ==============================================================================
+
+BOUNDARY_AMOUNTS: List[Tuple[str, str]] = [
+    ("0", "Zero amount boundary"),
+    ("-10.00", "Negative decimal amount"),
+    ("-1", "Negative integer amount"),
+    ("0.0001", "Sub-cent micro fractional amount"),
+    ("100000000.00", "Excessive large hundred-million amount"),
+    ("abc", "Alphabetic non-numeric string"),
+    ("!@#$%", "Special characters string"),
+    ("1e10", "Scientific exponential notation string"),
+    ("   ", "Whitespace-only input"),
+]
+
+INVALID_AMOUNTS: List[Tuple[str, str]] = [
+    ("0", "Zero amount"),
+    ("-1", "Negative integer amount"),
+    ("-0.01", "Negative fractional amount"),
+    ("abc", "Alphabetic in amount field"),
+    ("!@#$%", "Special chars in amount field"),
+    ("99999999999", "Overflow amount"),
+]
+
+# ==============================================================================
+# 4. LOT SIZE BOUNDARIES (Trading)
+# ==============================================================================
+
 INVALID_LOT_SIZES: List[Tuple[str, str]] = [
     ("0.00", "Sub-minimum zero lot size"),
     ("-1.00", "Negative lot size integer"),
@@ -60,9 +88,10 @@ VALID_LOT_SIZES: List[Tuple[str, str]] = [
     ("10.00", "Institutional lot size"),
 ]
 
-# ─────────────────────────────────────────────
-# Numeric Price Field Boundaries (SL, TP, Trigger)
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 5. NUMERIC PRICE BOUNDARIES (SL, TP, Trigger)
+# ==============================================================================
+
 INVALID_PRICE_VALUES: List[Tuple[str, str]] = [
     ("0", "Zero price (invalid level)"),
     ("-1.5000", "Negative price"),
@@ -70,9 +99,10 @@ INVALID_PRICE_VALUES: List[Tuple[str, str]] = [
     ("99999999", "Astronomical price overflow"),
 ]
 
-# ─────────────────────────────────────────────
-# Email Format Payloads
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 6. EMAIL FORMAT PAYLOADS
+# ==============================================================================
+
 INVALID_EMAILS: List[Tuple[str, str]] = [
     ("abc", "No @ symbol"),
     ("abc@", "No domain after @"),
@@ -96,9 +126,10 @@ XSS_EMAIL_PAYLOADS: List[Tuple[str, str]] = [
     ("<svg/onload=window.xss_detected=1>", "XSS SVG Onload in Email"),
 ]
 
-# ─────────────────────────────────────────────
-# Password Weakness Payloads
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 7. PASSWORD WEAKNESS PAYLOADS
+# ==============================================================================
+
 WEAK_PASSWORDS: List[Tuple[str, str]] = [
     ("123456", "Numeric sequence"),
     ("password", "Common dictionary word"),
@@ -108,9 +139,10 @@ WEAK_PASSWORDS: List[Tuple[str, str]] = [
     ("        ", "Whitespace only"),
 ]
 
-# ─────────────────────────────────────────────
-# Phone Number Validation Payloads
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 8. PHONE NUMBER VALIDATION PAYLOADS
+# ==============================================================================
+
 INVALID_PHONE_NUMBERS: List[Tuple[str, str]] = [
     ("abcdefgh", "Alphabetic phone number"),
     ("+++--", "Special chars only"),
@@ -125,9 +157,10 @@ VALID_PHONE_NUMBERS: List[Tuple[str, str]] = [
     ("9876543210", "10-digit local format"),
 ]
 
-# ─────────────────────────────────────────────
-# Name / Text Field Fuzzing
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 9. NAME / TEXT FIELD FUZZING
+# ==============================================================================
+
 SQLI_NAME_PAYLOADS: List[Tuple[str, str]] = [
     ("' OR 1=1--", "SQLi in name field"),
     ("'; DROP TABLE users;--", "SQLi Drop Table in name"),
@@ -138,11 +171,18 @@ XSS_NAME_PAYLOADS: List[Tuple[str, str]] = [
     ("<svg/onload=window.xss_detected=1>", "XSS SVG Onload in name"),
 ]
 
-# ─────────────────────────────────────────────
-# Date Field Payloads
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 10. DATE FIELD & BOUNDARY RANGES
+# ==============================================================================
+
+DATE_BOUNDARY_PAYLOADS: List[Tuple[str, str, str]] = [
+    ("2026-12-31", "2026-01-01", "Inverted date range: From > To"),
+    ("2035-01-01", "2035-12-31", "Future date range beyond system epoch"),
+    ("1990-01-01", "1990-12-31", "Past date range before system inception"),
+    ("invalid-date", "invalid-date", "Malformed non-date string format"),
+]
+
 INVALID_DATE_PAYLOADS: List[Tuple[str, str, str]] = [
-    # (from_date, to_date, description)
     ("2026-10-05", "2026-09-01", "Inverted range: From > To"),
     ("2099-01-01", "2099-12-31", "Far future dates"),
     ("2000-01-01", "2000-01-01", "Same day (valid boundary)"),
@@ -166,9 +206,10 @@ DATE_FUZZ_PAYLOADS: List[Tuple[str, str]] = [
     ("2026/12/31", "Slash separated date"),
 ]
 
-# ─────────────────────────────────────────────
-# Search / General Input Fuzzing
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 11. SEARCH / GENERAL INPUT FUZZING
+# ==============================================================================
+
 SEARCH_FUZZ_PAYLOADS: List[Tuple[str, str]] = [
     ("NONEXISTENT_SYMBOL_XYZ_99999", "Non-existent Symbol"),
     ("EUR/USD", "Slash Separator"),
@@ -180,9 +221,10 @@ SEARCH_FUZZ_PAYLOADS: List[Tuple[str, str]] = [
     ("`~!@#$%^&*()_+=[]{}|;:',.<>?/", "Special Character Blast"),
 ]
 
-# ─────────────────────────────────────────────
-# Referral / Optional Text Field Fuzzing
-# ─────────────────────────────────────────────
+# ==============================================================================
+# 12. REFERRAL / OPTIONAL TEXT FIELD FUZZING
+# ==============================================================================
+
 SQLI_REFERRAL_PAYLOADS: List[Tuple[str, str]] = [
     ("'; DROP TABLE users;--", "SQLi Drop Table in referral"),
     ("' OR 1=1--", "SQLi Tautology in referral"),
@@ -193,14 +235,13 @@ XSS_REFERRAL_PAYLOADS: List[Tuple[str, str]] = [
     ("<script>window.xss_detected=1</script>", "XSS Script in referral"),
 ]
 
-# ─────────────────────────────────────────────
-# Numeric Amount Field Payloads (PAMM, deposits)
-# ─────────────────────────────────────────────
-INVALID_AMOUNTS: List[Tuple[str, str]] = [
-    ("0", "Zero amount"),
-    ("-1", "Negative integer amount"),
-    ("-0.01", "Negative fractional amount"),
-    ("abc", "Alphabetic in amount field"),
-    ("!@#$%", "Special chars in amount field"),
-    ("99999999999", "Overflow amount"),
+# ==============================================================================
+# 13. DISALLOWED FILE EXTENSIONS & MIME TYPES
+# ==============================================================================
+
+DISALLOWED_FILE_PAYLOADS: List[Tuple[str, str, str]] = [
+    ("shell.php", "<?php echo 'malicious shell'; ?>", "Server-side executable PHP script"),
+    ("malicious.pdf.exe", "MZ\x90\x00\x03\x00\x00\x00", "Double extension Windows executable"),
+    ("exploit.svg", '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>', "SVG with embedded JavaScript"),
+    ("zero_byte.png", "", "Corrupted 0-byte image file"),
 ]

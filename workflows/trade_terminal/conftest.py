@@ -21,6 +21,7 @@ from workflows.trade_terminal.fixtures.trade_fixtures import (
     order_entry_page,
     positions_page,
     profile_menu_page,
+    trade_error_monitor,
     trade_login_page,
     trade_page,
     trading_chart_page,

@@ -1,0 +1,38 @@
+==========================================================================================
+ADMIN PORTAL - FULL VALIDATION ERRORS & MODAL BEHAVIOR CATALOG
+Target Portal: Admin Management Portal (https://stage.xtremenext.com)
+Specification: docs/VALIDATION_TESTING_SPECIFICATION.md
+
+VALIDATION ERRORS EVALUATED: 14 Form / Modal Actions
+==========================================================================================
+
+## 1. COMPREHENSIVE MODAL & FORM VALIDATION ERRORS CATALOG
+
+| Module | Form / Modal | Triggered Action | Expected Constraint | Validation Error / System Behavior | Mechanism |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Orders** | `dragable_modal (Place Order)` | Submit empty lot | Prevent execution | **Required field validation on symbol, volume, order_type** | Client-side / Modal form constraint |
+| **Manage Users** | `#editPassModal` | Submit blank password | Prevent password update | **Password length check: enforce minimum 6-8 chars** | JS Form validation on submit |
+| **Manage Users** | `#stopoutModal` | Submit negative stopout level | Reject values < 0% | **Non-negative percentage validation required** | Input type='number' / JS threshold check |
+| **Manage Users** | `#userCreditBonus` | Submit 0 or negative credit bonus | Reject $0 bonus grant | **Strict positive decimal enforcement ($0.01 minimum)** | SweetAlert rejection / Backend check |
+| **Manage Users** | `#remarkModal (KYC Reject)` | Submit blank rejection remark | Block rejection without reason | **Mandatory rejection remark required before status changes to 'Rejected'** | Textarea validation constraint |
+| **Deposit/WDL** | `#myAcModal (WDL Details)` | Approve withdrawal with insufficient user equity | Block approval if balance < withdrawal amount | **System financial invariant validation prevents balance overdraft** | Backend Ledger State Check |
+| **Leads** | `#bulkUploadModal` | Upload non-CSV/non-XLSX file (e.g. .php, .exe) | Reject file extension | **File type restricted: Only .csv, .xlsx allowed** | Dropzone MIME type constraint |
+| **Leads** | `#leadTypeModal` | Submit empty lead type title | Reject empty category | **Lead category title is required** | HTML5 / JS form check |
+| **Manager/Group** | `#subgroupModal` | Assign non-existent symbol to group | Prevent orphan mapping | **Symbols must exist in symbolList catalog** | Foreign Key / Lookup constraint |
+| **Manager/Group** | `#groupValueModal` | Set reference share > 100% | Reject share overflow | **Reference share percentage must be between 0% and 100%** | Upper Bound Validation (0-100%) |
+| **Symbol/Bonus** | `#symbolConfigModal` | Enter negative spread or lot step <= 0 | Reject negative spreads | **Spread and minimum lot size must be strictly positive** | Decimal numeric validator |
+| **Settings** | `Settings Form` | Submit malformed color code (e.g. 'blue123') | Reject invalid hex code | **Enforce 6-digit hex format (#RRGGBB)** | Hex regex pattern validation |
+| **Settings** | `Settings Form` | Submit negative registration limit (e.g. -50) | Reject negative limit | **User limit must be positive integer or 0 (unlimited)** | Integer constraint (>= 0) |
+| **Cron Jobs** | `#cronModal` | Submit invalid cron expression (e.g. '*/99 * *') | Reject invalid cron schedule | **Standard 5-field cron syntax enforced** | Cron format validator |
+
+---
+
+## 2. SUMMARY OF VALIDATION DEFENSES & SAFEGUARDS
+
+1. **Input Format Constraints**: HTML5 type restrictions (`number`, `email`, `datetime-local`) prevent malformed date strings, negative lot sizes, and alphabetical strings in numeric columns.
+2. **Financial Invariant Safeguards**: Overdraft prevention blocks withdrawal approvals when user equity < withdrawal amount. Bonus grants require strictly positive values (> $0.00).
+3. **MIME Type Security**: File dropzones on Leads and Deposit Proofs enforce `.csv`, `.xlsx`, `.png`, `.jpg`, `.pdf` extensions; blocking `.exe`, `.php`, and `.sh` file uploads.
+4. **KYC Audit Trails**: Document rejection requires a mandatory remark before the admin can transition document status to 'Rejected'.
+5. **Upper Bound Caps**: Referral share percentages are capped at 100%; MAM/PAMM allocation sums cannot exceed 100% of follower pool.
+
+---

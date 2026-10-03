@@ -11,7 +11,11 @@ from workflows.shared.fixtures.browser_fixtures import (
 
 from workflows.admin_portal.fixtures.admin_fixtures import (
     account_requests_page,
+    admin_a_book_page,
+    admin_a_book_user_margin_page,
     admin_active_users_page,
+    admin_b_book_page,
+    admin_b_book_user_margin_page,
     admin_cron_jobs_page,
     admin_dashboard_page,
     admin_deposit_list_page,

@@ -1,0 +1,31 @@
+==========================================================================================
+ADMIN PORTAL - FUND MANAGER MODULE COMPREHENSIVE VALIDATION REPORT
+Target Module: Fund Managers (Copy Trading, Private Copy Trading, Manage MAM, Manage PAMM)
+Total Scenarios Evaluated: 22
+Positive / Passed: 15 | Negative / Rejected: 7 | Warnings: 0
+==========================================================================================
+
+| Scenario | Input | Result | Details |
+| :--- | :--- | :---: | :--- |
+| Route: Copy Trading Module | `follow` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Private Copy Trading | `managePrivateCopier` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Manage MAM Module | `manageMAM` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Manage PAMM Module | `managePAMM` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Copy Trading: Master Requests Trigger | `#showCopyMasterRequests` | ✅ Accepted | Present in DOM: True |
+| Copy Trading: Requests Modal Container | `#copyRequestsModal` | ✅ Accepted | Container in DOM: True |
+| Strategy Fee: Standard Performance Fee | `'20.0%'` | ✅ Accepted | Standard valid performance fee |
+| Strategy Fee: Zero Performance Fee | `'0.0%'` | ✅ Accepted | Free strategy (0% performance fee) |
+| Strategy Fee: Max 100% Boundary | `'100.0%'` | ✅ Accepted | 100% upper fee ceiling |
+| Strategy Fee: Fee Exceeding 100% (Negative) | `'150.0%'` | ❌ Rejected | Performance fee cannot exceed 100% |
+| Strategy Fee: Negative Fee (Negative) | `'-15.0%'` | ❌ Rejected | Negative performance fees blocked |
+| Strategy Fee: Non-Numeric Characters | `'twenty_pct'` | ❌ Rejected | Non-numeric input blocked in fee field |
+| Strategy Fee: SQLi Payload in Strategy Name | `'Strat' OR 1=1--'` | ❌ Rejected | SQL injection neutralized in strategy name |
+| Lot Multiplier: Standard Ratio 1.0 | `'1.00'` | ✅ Accepted | 1:1 lot mirroring ratio |
+| Lot Multiplier: Fractional Ratio 0.5 | `'0.50'` | ✅ Accepted | Halved lot allocation ratio |
+| Lot Multiplier: Zero Ratio (Negative) | `'0.00'` | ❌ Rejected | Zero lot multiplier blocked |
+| Lot Multiplier: Negative Ratio (Negative) | `'-1.00'` | ❌ Rejected | Negative lot multiplier blocked |
+| MAM: Requests Trigger Presence | `#showMamMasterRequests` | ✅ Accepted | Trigger in DOM: True |
+| MAM Allocation: Lot Proportion | `Proportional Allocation` | ✅ Accepted | Standard mathematical volume splitting |
+| MAM Allocation: Equity Proportion | `Equity Ratio` | ✅ Accepted | Pro-rata allocation by account equity |
+| MAM Allocation: Overflow Guard (Negative) | `Sum % > 100%` | ❌ Rejected | Follower allocation percentages cannot exceed 100% in aggregate |
+| PAMM: Pool Ledger Render | `table#datatable` | ✅ Accepted | PAMM accounts rendered: True |

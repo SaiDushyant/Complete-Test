@@ -1,0 +1,41 @@
+==========================================================================================
+ADMIN PORTAL - DEPOSITS & WITHDRAWALS MODULE COMPREHENSIVE VALIDATION REPORT
+Target Module: Deposit/WDL (Deposit, Withdrawal, Deposit List, Withdraw List)
+Total Scenarios Evaluated: 32
+Positive / Passed: 15 | Negative / Rejected: 16 | Warnings: 1
+==========================================================================================
+
+| Scenario | Input | Result | Details |
+| :--- | :--- | :---: | :--- |
+| Route: Deposit Requests | `deposit` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Withdrawal Requests | `withdraw` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Deposit Transaction List | `payment` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Route: Withdrawal Transaction List | `managewithdraw` | ✅ Accepted | HTTP 200 OK, table rendered |
+| Deposit: Add Action Button | `Add Button locator` | ✅ Accepted | Present in DOM: True |
+| Deposit Amount: Standard Valid Amount | `'250.00'` | ✅ Accepted | Valid positive deposit amount |
+| Deposit Amount: Micro Amount | `'0.01'` | ✅ Accepted | Minimum fractional currency unit |
+| Deposit Amount: Zero Amount (Negative) | `'0.00'` | ❌ Rejected | Zero deposit rejected by min amount validation |
+| Deposit Amount: Negative Amount (Negative) | `'-100.00'` | ❌ Rejected | Negative currency values blocked |
+| Deposit Amount: Alphabetic Input (Negative) | `'abcXYZ'` | ❌ Rejected | Non-numeric characters rejected |
+| Deposit Amount: Extremely Large Amount | `'999999999.00'` | ⚠️ Accepted | Large amount requires compliance review/limit check |
+| Deposit Amount: SQLi Payload in Amount | `'' OR 1=1--'` | ❌ Rejected | SQL injection neutralized in numeric input |
+| Deposit Amount: XSS in Amount Field | `'<script>alert(1)</script>'` | ❌ Rejected | Script tags blocked in amount input |
+| Deposit Account: Valid User Email | `'trader@example.com'` | ✅ Accepted | Standard recipient email |
+| Deposit Account: Empty Email (Negative) | `''` | ❌ Rejected | Required target account identifier |
+| Deposit Account: SQLi in Account Identifier | `'admin' OR '1'='1'` | ❌ Rejected | SQL injection in account lookup blocked |
+| Deposit Dropzone: Allowed Image PNG | `'proof.png'` | ✅ Accepted | Valid image extension accepted |
+| Deposit Dropzone: Allowed Image JPG | `'receipt.jpg'` | ✅ Accepted | Valid image extension accepted |
+| Deposit Dropzone: Allowed Document PDF | `'statement.pdf'` | ✅ Accepted | Valid document format accepted |
+| Deposit Dropzone: Disallowed Executable EXE (Negative) | `'malware.exe'` | ❌ Rejected | Executable extensions blocked |
+| Deposit Dropzone: Disallowed Shell Script SH (Negative) | `'exploit.sh'` | ❌ Rejected | Shell scripts blocked |
+| Deposit Dropzone: Disallowed PHP Script (Negative) | `'shell.php'` | ❌ Rejected | Server-side scripts blocked |
+| Deposit Dropzone: Zero-Byte Empty File (Negative) | `'empty_file.pdf (0 bytes)'` | ❌ Rejected | Empty 0-byte upload blocked |
+| Withdraw Amount: Standard Valid Withdrawal | `'150.00'` | ✅ Accepted | Valid withdrawal amount |
+| Withdraw Amount: Zero Withdrawal (Negative) | `'0.00'` | ❌ Rejected | Zero withdrawal blocked |
+| Withdraw Amount: Negative Withdrawal (Negative) | `'-50.00'` | ❌ Rejected | Negative withdrawal blocked |
+| Withdraw Amount: Withdrawal Exceeding Balance | `'999999999.00'` | ❌ Rejected | Exceeds available account equity/balance |
+| Withdraw Amount: Alphabetic Input in Withdraw | `'invalidText'` | ❌ Rejected | Non-numeric input blocked |
+| Deposit/WDL: Approve Action | `Click Approve` | ✅ Accepted | Approval state transitions request to Approved |
+| Deposit/WDL: Reject without Reason (Negative) | `Empty rejection reason` | ❌ Rejected | Rejecting financial request requires mandatory remark |
+| Deposit List: Ledger Render | `table#datatable` | ✅ Accepted | Transactions rendered: True |
+| Withdraw List: Ledger Render | `table#datatable` | ✅ Accepted | Withdrawals rendered: True |

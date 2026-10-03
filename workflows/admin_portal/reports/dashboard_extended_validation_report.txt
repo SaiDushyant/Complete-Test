@@ -1,0 +1,63 @@
+==========================================================================================
+DASHBOARD EXTENDED INTERACTION & APEXCHARTS VALIDATION REPORT
+Target Portal: Admin Management Portal (https://stage.xtremenext.com)
+Specification: docs/VALIDATION_TESTING_SPECIFICATION.md
+
+VALIDATION METRICS SUMMARY:
+- Total Test Cases / Scenarios : 49
+- Accepted (Passed)            : 45
+- Rejected (Negative / Blocked): 3
+- Warnings / Conditional (⚠️)  : 1
+==========================================================================================
+
+| Scenario | Input | Result | Details |
+| :--- | :--- | :---: | :--- |
+| Console Error Audit | `Page Initialization` | ✅ Accepted | Zero uncaught JavaScript exceptions during page load |
+| Network Asset Loading | `All Page Resources` | ✅ Accepted | All stylesheets, scripts, fonts, and images loaded (HTTP 200/304) |
+| Mobile: Brand Logo Collapse | `Viewport 375x667` | ✅ Accepted | Small logo visible: True, Large logo hidden: True |
+| Mobile: Sidebar Drawer Open | `Click #vertical-menu-btn (375px)` | ✅ Accepted | Drawer opened: True, Backdrop visible: True |
+| Mobile: Sidebar Close Button | `Click .admin-sidebar-close` | ✅ Accepted | Drawer closed: True |
+| Tablet: Topbar Layout Adaptation | `Viewport 768x1024` | ✅ Accepted | Title rendered cleanly: 'Dashboard' |
+| Ultrawide 2K: Zero Horizontal Overflow | `Viewport 2560x1440` | ✅ Accepted | Body scrollWidth (2560px) <= window width (2560px) |
+| Ultra-Narrow Fold Screen Adaptation | `Viewport 280x653` | ✅ Accepted | Topbar rendered without crash, visible: True |
+| Trend Chart: Interactive Hover Tooltip | `Hover Canvas Center` | ✅ Accepted | Tooltip triggered, display/opacity: True |
+| Trend Chart: Legend Toggle 'Deposits' | `Click Legend 'Deposits'` | ✅ Accepted | Series toggled successfully (collapsed flag: true) |
+| Trend Chart: Legend Toggle 'Withdrawals' | `Click Legend 'Withdrawals'` | ✅ Accepted | Inactive series activated and toggled cleanly |
+| Trend Chart: Data Integrity (Negative) | `Verify NaN / undefined` | ❌ Rejected | Zero corrupted NaN, null, or undefined coordinates in SVG |
+| Book Compare Chart: Bar Tooltip | `Hover Bar Coordinate` | ✅ Accepted | Tooltip triggered, visible: True |
+| Book Compare Chart: Data Integrity | `Verify NaN / undefined` | ❌ Rejected | Zero corrupted NaN, null, or undefined values in bar SVG |
+| Accordion: Orders Accordion | `Click 'Orders Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Manage User Accordion | `Click 'Manage User Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Deposit/WDL Accordion | `Click 'Deposit/WDL Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Fund Managers Accordion | `Click 'Fund Managers Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Leads Accordion | `Click 'Leads Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Manager/Group Accordion | `Click 'Manager/Group Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Liquidity Accordion | `Click 'Liquidity Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Reports/Logs Accordion | `Click 'Reports/Logs Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Accordion: Payment Gateway Accordion | `Click 'Payment Gateway Accordion' link` | ✅ Accepted | Submenu expands cleanly: True |
+| Customizer: Layout Width Boxed | `Select #layout-width-boxed` | ✅ Accepted | data-layout-size='boxed' |
+| Customizer: Layout Width Fluid | `Select #layout-width-fuild` | ✅ Accepted | data-layout-size='fluid' |
+| Customizer: Position Scrollable | `Select #layout-position-scrollable` | ✅ Accepted | data-layout-scrollable='true' |
+| Customizer: Position Fixed | `Select #layout-position-fixed` | ✅ Accepted | data-layout-scrollable='false' |
+| Customizer: Topbar Color Dark | `Select #topbar-color-dark` | ✅ Accepted | data-topbar='dark' |
+| Customizer: Topbar Color Light | `Select #topbar-color-light` | ✅ Accepted | data-topbar='light' |
+| Customizer: Sidebar Compact | `Select #sidebar-size-compact` | ✅ Accepted | data-sidebar-size='md' |
+| Customizer: Sidebar Small (Icon) | `Select #sidebar-size-small` | ✅ Accepted | data-sidebar-size='sm' |
+| Customizer: Sidebar Default | `Select #sidebar-size-default` | ✅ Accepted | data-sidebar-size='lg' |
+| Customizer: Sidebar Color Dark | `Select #sidebar-color-dark` | ✅ Accepted | data-sidebar='dark' |
+| Customizer: Sidebar Color Brand | `Select #sidebar-color-brand` | ✅ Accepted | data-sidebar='brand' |
+| Customizer: Sidebar Color Light | `Select #sidebar-color-light` | ✅ Accepted | data-sidebar='light' |
+| Persistence: Dark Theme on Reload | `localStorage.adminLayoutMode='dark'` | ✅ Accepted | Persisted on initial load: 'dark' |
+| Persistence: Light Theme on Reload | `localStorage.adminLayoutMode='light'` | ✅ Accepted | Persisted on initial load: 'light' |
+| Persistence: Sidebar Size 'sm' on Reload | `localStorage.sidebarSize='sm'` | ✅ Accepted | Persisted on load: data-sidebar-size='sm' |
+| Audio Element Configuration | `audio#notification-sound` | ✅ Accepted | src='https://stage.xtremenext.com/admin/../assets/notify.mp3', muted='' |
+| Sound Trigger: playSound() Execution | `window.playSound()` | ⚠️ Accepted | playSound function not in window scope |
+| Bug Check: myFunction() Orphan Function | `Check #myInput presence` | ❌ Rejected | Expected #myInput is absent; calling myFunction() causes: 'Cannot read properties of null (reading 'select')' |
+| AJAX JWT Token Structure | `Authenticate Header` | ✅ Accepted | Valid 3-part signed JWT structure (length: 246 chars) |
+| AJAX UserToken Header | `UserToken Header` | ✅ Accepted | Encrypted session token present (length: 56 chars) |
+| Notifications: Mark All Read | `Click #markAllRead` | ✅ Accepted | Anchor click handled cleanly without page reload or broken href jump |
+| A11y: Icon Button Labels | `Aria-label & Title check` | ✅ Accepted | Menu aria: 'Open menu', Theme title: 'Switch theme', Noti popup: 'true' |
+| A11y: Keyboard Focus Traversal | `Tab from #vertical-menu-btn` | ✅ Accepted | Next focusable element focused: 'admin-theme-toggle' |
+| Financial Invariant: A-Book Net Inflow | `98766.03 - 37173.38` | ✅ Accepted | A-Book net balance is positive: $61,592.65 |
+| Financial Invariant: B-Book Net Inflow | `51007948.24 - 55937.43` | ✅ Accepted | B-Book net balance is positive: $50,952,010.81 |
+| Financial Solvency Check (Negative Inversion) | `51174185.27 > 100781.81` | ✅ Accepted | System remains fully solvent: Total deposits exceed withdrawals by $51,073,403.46 |

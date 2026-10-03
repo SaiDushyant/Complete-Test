@@ -1,0 +1,108 @@
+==========================================================================================
+ADMIN PORTAL DASHBOARD - COMPREHENSIVE POSITIVE & NEGATIVE VALIDATION REPORT
+Target URL: https://stage.xtremenext.com/admin/Controlbase/dashboard
+Specification Reference: docs/VALIDATION_TESTING_SPECIFICATION.md
+Total Scenarios Evaluated: 94
+Positive / Passed: 88 | Negative / Rejected: 6 | Warnings: 0
+==========================================================================================
+
+| Scenario | Input | Result | Details |
+| :--- | :--- | :---: | :--- |
+| Positive: Authenticated Admin Session | `Valid Session Storage State` | ✅ Accepted | Dashboard renders with full administrative privileges |
+| Negative: Unauthenticated Access | `No Session Cookie (Guest)` | ❌ Rejected | Access blocked, redirected to Login: 'https://stage.xtremenext.com/admin/Login/index' |
+| Negative: Tampered Session Token | `ci_session='tampered_xyz'` | ❌ Rejected | Invalid token rejected, safely redirected to login page |
+| Positive: Canonical URL Request | `https://.../dashboard` | ✅ Accepted | Page loads cleanly with zero URL query params |
+| Negative: SQL Injection in URL Query | `?id=' OR '1'='1'--` | ❌ Rejected | Query neutralized, zero database syntax dump or SQL error exposed |
+| Negative: XSS in URL Query Param | `?q=<script>alert(1)</script>` | ❌ Rejected | Script injection blocked, window.pwned remains undefined |
+| Negative: Path Traversal in URL | `/dashboard/../../etc/passwd` | ❌ Rejected | Blocked with HTTP 404, zero system file access |
+| Negative: Invalid Sub-Route | `/dashboard/invalidActionMethod123` | ❌ Rejected | Handled with HTTP 200 or graceful fallback |
+| Positive: Sidebar Menu Toggle Click | `Click #vertical-menu-btn` | ✅ Accepted | Layout class toggled: 'pace-done ' -> 'pace-done sidebar-enable' |
+| Negative: Rapid Double-Click on Toggle | `Double-Click #vertical-menu-btn` | ✅ Accepted | Rapid toggle handled smoothly, zero layout freezing or broken alignment |
+| Positive: Theme Mode Switching | `Click #admin-theme-toggle` | ✅ Accepted | Theme transitioned: light -> dark -> light |
+| Negative: Corrupt Theme Attribute Recovery | `data-layout-mode='CORRUPT_INVALID'` | ✅ Accepted | Safely recovered to valid theme state: 'dark' |
+| Positive: Open Notifications Dropdown | `Click #page-header-notifications-dropdown` | ✅ Accepted | Dropdown opened, visible: True |
+| Positive: Outside Click Closes Dropdown | `Click outside (.topbar-page-title)` | ✅ Accepted | Dropdown menu safely dismissed on outside click |
+| Positive: Profile Menu & Logout Link | `Click #page-header-user-dropdown` | ✅ Accepted | Displays admin profile, Logout target: 'https://stage.xtremenext.com/admin/Controlbase/Logout' |
+| Positive: Background Audio Alert Trigger | `#soundBtn element` | ✅ Accepted | Present in DOM with onclick='playSound();', style='display:none;' |
+| Positive: Total Deposit Format | `'$51174185.27'` | ✅ Accepted | Valid currency format: $51,174,185.27 |
+| Negative Check: Total Deposit Non-Negative | `51174185.27 >= 0` | ✅ Accepted | Total deposits are positive / non-negative |
+| Positive: Total Withdrawal Format | `'$100781.81'` | ✅ Accepted | Valid currency format: $100,781.81 |
+| Negative Check: Total Withdrawal Non-Negative | `100781.81 >= 0` | ✅ Accepted | Total withdrawals are positive / non-negative |
+| Positive: Pending Withdrawal Format | `'$1357.42'` | ✅ Accepted | Valid currency format: $1,357.42 |
+| Negative Check: Pending Withdrawal Non-Negative | `1357.42 >= 0` | ✅ Accepted | Pending withdrawal is valid positive/zero value |
+| Positive: Active User Count Format | `'430'` | ✅ Accepted | Valid integer count: 430 |
+| Negative Check: Active Users Non-Negative | `430 >= 0` | ✅ Accepted | Active users count is non-negative |
+| Positive: Verified User Count Format | `'480'` | ✅ Accepted | Valid integer count: 480 |
+| Negative Check: Verified Users Non-Negative | `480 >= 0` | ✅ Accepted | Verified users count is non-negative |
+| Positive: Total Users Count Format | `'647'` | ✅ Accepted | Valid integer count: 647 |
+| Negative Check: Total Users Positive Non-Zero | `647 > 0` | ✅ Accepted | Total user pool is non-empty |
+| Positive: Active Users <= Total Users | `430 <= 647` | ✅ Accepted | Logical constraint met: 430 active of 647 total |
+| Negative Check: Total Users < Active Users | `Assert not (647 < 430)` | ✅ Accepted | Zero logical anomaly: Total users is never less than active users |
+| Positive: Verified Users <= Total Users | `480 <= 647` | ✅ Accepted | Logical constraint met: 480 verified of 647 total |
+| Negative Check: Total Users < Verified Users | `Assert not (647 < 480)` | ✅ Accepted | Zero logical anomaly: Total users is never less than verified users |
+| Positive: Financial Metric 'A Book Profit' | `'-17316.64'` | ✅ Accepted | Profit can be negative (loss) or positive: -17316.64 |
+| Positive: Financial Metric 'A Book Commission' | `'598.26'` | ✅ Accepted | Commission is earned revenue: 598.26 |
+| Positive: Financial Metric 'A Book Deposit' | `'98766.03'` | ✅ Accepted | Deposits into A-Book accounts: 98766.03 |
+| Positive: Financial Metric 'A Book Withdrawal' | `'37173.38'` | ✅ Accepted | Withdrawals from A-Book accounts: 37173.38 |
+| Positive: Financial Metric 'B Book Profit' | `'-89478.19'` | ✅ Accepted | Broker B-Book PnL figure: -89478.19 |
+| Positive: Financial Metric 'B Book Commission' | `'14716.56'` | ✅ Accepted | Broker B-Book commission pool: 14716.56 |
+| Positive: Financial Metric 'B Book Deposit' | `'51007948.24'` | ✅ Accepted | Deposits into B-Book accounts: 51007948.24 |
+| Positive: Financial Metric 'B Book Withdrawal' | `'55937.43'` | ✅ Accepted | Withdrawals from B-Book accounts: 55937.43 |
+| Negative Check: Metric 'A Book Profit' is NaN/Null | `'-17316.64'` | ✅ Accepted | A Book Profit has valid data (-17316.64), not NaN/null |
+| Negative Check: Metric 'A Book Commission' is NaN/Null | `'598.26'` | ✅ Accepted | A Book Commission has valid data (598.26), not NaN/null |
+| Negative Check: Metric 'A Book Deposit' is NaN/Null | `'98766.03'` | ✅ Accepted | A Book Deposit has valid data (98766.03), not NaN/null |
+| Negative Check: Metric 'A Book Withdrawal' is NaN/Null | `'37173.38'` | ✅ Accepted | A Book Withdrawal has valid data (37173.38), not NaN/null |
+| Negative Check: Metric 'B Book Profit' is NaN/Null | `'-89478.19'` | ✅ Accepted | B Book Profit has valid data (-89478.19), not NaN/null |
+| Negative Check: Metric 'B Book Commission' is NaN/Null | `'14716.56'` | ✅ Accepted | B Book Commission has valid data (14716.56), not NaN/null |
+| Negative Check: Metric 'B Book Deposit' is NaN/Null | `'51007948.24'` | ✅ Accepted | B Book Deposit has valid data (51007948.24), not NaN/null |
+| Negative Check: Metric 'B Book Withdrawal' is NaN/Null | `'55937.43'` | ✅ Accepted | B Book Withdrawal has valid data (55937.43), not NaN/null |
+| Positive: Deposits vs Withdrawals Chart | `929x260px` | ✅ Accepted | ApexCharts SVG canvas rendered with valid responsive dimensions |
+| Positive: A-Book vs B-Book Chart | `647x260px` | ✅ Accepted | ApexCharts SVG canvas rendered with valid responsive dimensions |
+| Negative Check: Empty / Broken Chart Canvases | `Empty charts count: 0` | ✅ Accepted | Zero crashed or empty chart containers detected |
+| Positive: Radio Group 'Layout Style' | `Active: 'layout-vertical'` | ✅ Accepted | Valid single active selection out of 2 options |
+| Negative Check: Group 'Layout Style' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Layout Mode' | `Active: 'layout-mode-dark'` | ✅ Accepted | Valid single active selection out of 2 options |
+| Negative Check: Group 'Layout Mode' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Layout Width' | `Active: 'layout-width-fuild'` | ✅ Accepted | Valid single active selection out of 2 options |
+| Negative Check: Group 'Layout Width' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Layout Position' | `Active: 'layout-position-fixed'` | ✅ Accepted | Valid single active selection out of 2 options |
+| Negative Check: Group 'Layout Position' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Topbar Color' | `Active: 'topbar-color-dark'` | ✅ Accepted | Valid single active selection out of 2 options |
+| Negative Check: Group 'Topbar Color' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Sidebar Size' | `Active: 'sidebar-size-small'` | ✅ Accepted | Valid single active selection out of 3 options |
+| Negative Check: Group 'Sidebar Size' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Sidebar Color' | `Active: 'sidebar-color-dark'` | ✅ Accepted | Valid single active selection out of 3 options |
+| Negative Check: Group 'Sidebar Color' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Radio Group 'Layout Direction' | `Active: 'layout-direction-ltr'` | ✅ Accepted | Valid single active selection out of 2 options |
+| Negative Check: Group 'Layout Direction' Multi-Check | `Count: 1` | ✅ Accepted | Mutual exclusivity enforced (cannot select multiple options) |
+| Positive: Sidebar Link 'Dashboard' | `https://stage.xtremenext.com/admin/Controlbase/dashboard` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/dashboard |
+| Negative Check: Link 'Dashboard' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/dashboard` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Order Report' | `https://stage.xtremenext.com/admin/Controlbase/OrderReport` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/OrderReport |
+| Negative Check: Link 'Order Report' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/OrderReport` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'A-Book Ledger' | `https://stage.xtremenext.com/admin/Controlbase/aBook` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/aBook |
+| Negative Check: Link 'A-Book Ledger' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/aBook` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'B-Book Ledger' | `https://stage.xtremenext.com/admin/Controlbase/bBook` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/bBook |
+| Negative Check: Link 'B-Book Ledger' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/bBook` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'User Management' | `https://stage.xtremenext.com/admin/Controlbase/user` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/user |
+| Negative Check: Link 'User Management' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/user` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'User Document' | `https://stage.xtremenext.com/admin/Controlbase/userDocument` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/userDocument |
+| Negative Check: Link 'User Document' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/userDocument` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Account Requests' | `https://stage.xtremenext.com/admin/Controlbase/clientAccountRequests` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/clientAccountRequests |
+| Negative Check: Link 'Account Requests' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/clientAccountRequests` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Deposit Module' | `https://stage.xtremenext.com/admin/Controlbase/deposit` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/deposit |
+| Negative Check: Link 'Deposit Module' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/deposit` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Withdrawal Module' | `https://stage.xtremenext.com/admin/Controlbase/withdraw` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/withdraw |
+| Negative Check: Link 'Withdrawal Module' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/withdraw` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Role Permission' | `https://stage.xtremenext.com/admin/Controlbase/rolePermission` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/rolePermission |
+| Negative Check: Link 'Role Permission' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/rolePermission` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Settings' | `https://stage.xtremenext.com/admin/Controlbase/Settings` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/Settings |
+| Negative Check: Link 'Settings' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/Settings` | ✅ Accepted | Non-dead valid target URL |
+| Positive: Sidebar Link 'Cron Jobs' | `https://stage.xtremenext.com/admin/Controlbase/cronJobs` | ✅ Accepted | Configured to navigate to valid route: /admin/Controlbase/cronJobs |
+| Negative Check: Link 'Cron Jobs' Dead Link | `https://stage.xtremenext.com/admin/Controlbase/cronJobs` | ✅ Accepted | Non-dead valid target URL |
+| Positive: DOM Credential Masking | `Full Page HTML` | ✅ Accepted | Zero cleartext passwords or secrets exposed in client DOM |
+| Negative Check: Secret Key Leaks in DOM | `Regex Key Scan` | ✅ Accepted | Zero sensitive private keys or database passwords leaked in DOM |
+| Positive: Runtime Console Health | `Console Error Listener` | ✅ Accepted | Zero unhandled fatal Javascript errors during render and interactions |
+
+==========================================================================================
+END OF DASHBOARD COMPREHENSIVE VALIDATION REPORT
+==========================================================================================
