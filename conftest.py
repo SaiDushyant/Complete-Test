@@ -237,8 +237,11 @@ def pytest_sessionstart(session):
         try:
             from config.settings import settings
             from workflows.shared.utils.test_logger import GlobalTestLogger
+            import sys
             target_hint = None
-            is_val = False
+            markexpr = getattr(getattr(session.config, "option", None), "markexpr", "") or ""
+            cmd_str = " ".join(sys.argv)
+            is_val = "validation" in markexpr or "validation" in cmd_str or "test_val_" in cmd_str
             if hasattr(session.config, "args"):
                 for arg in session.config.args:
                     if "test_val_" in arg or "validation" in arg:
