@@ -73,6 +73,7 @@ reports/*.xml
 playwright-report/
 test-results/
 comparison_report*.json
+workflows/**/reports/
 
 # ==============================================================================
 # ARCHIVES & BACKUPS
