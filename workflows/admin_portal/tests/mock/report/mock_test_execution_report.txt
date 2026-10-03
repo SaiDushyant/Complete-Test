@@ -1,0 +1,591 @@
+====================================================================================================
+                 ADMIN PORTAL MOCK TEST REAL-TIME EXECUTION AUDIT REPORT
+====================================================================================================
+Execution Started : 2026-10-03 17:04:42
+Target Suite      : workflows/admin_portal/tests/mock/
+Total Scenarios   : 81 Mock Test Scenarios across 22 Modules
+Execution Mode    : 100% Offline (Network Intercepted via Playwright MockRouter)
+Live Server I/O   : ZERO (0 requests sent to external server or live DB)
+Database Safety   : ZERO database mutations / ZERO SQL writes
+Crawl Alignment   : 100% Parity with ui_regression/element_output_admin (42 Routes + Login)
+====================================================================================================
+
+[01/81] test_mock_admin_account_requests_queue_render
+  - Suite File : test_mock_admin_account_requests.py
+  - Objective  : Verify pending account opening requests list with requested leverage and currency.
+  - Status     : [PASSED] in 7ms
+  - Timestamp  : 2026-10-03 17:04:43
+  - Progress   : Executed: 1/81 | Passed: 1 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[02/81] test_mock_admin_account_request_approve
+  - Suite File : test_mock_admin_account_requests.py
+  - Objective  : Verify approving an account request creates trading account and notifies user.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:43
+  - Progress   : Executed: 2/81 | Passed: 2 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[03/81] test_mock_admin_account_request_reject
+  - Suite File : test_mock_admin_account_requests.py
+  - Objective  : Verify rejection of account opening with reason modal.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:44
+  - Progress   : Executed: 3/81 | Passed: 3 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[04/81] test_mock_admin_transaction_audit_log_render
+  - Suite File : test_mock_admin_audit_logs.py
+  - Objective  : Verify comprehensive transaction audit log (/userTransactionLog) with IP and timestamp.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:44
+  - Progress   : Executed: 4/81 | Passed: 4 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[05/81] test_mock_admin_referral_ib_commission_report
+  - Suite File : test_mock_admin_audit_logs.py
+  - Objective  : Verify Introducing Broker commission calculations (/referReport).
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:44
+  - Progress   : Executed: 5/81 | Passed: 5 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[06/81] test_mock_admin_login_success
+  - Suite File : test_mock_admin_auth.py
+  - Objective  : Validate admin successful login, JWT session injection, and redirect to dashboard.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:44
+  - Progress   : Executed: 6/81 | Passed: 6 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[07/81] test_mock_admin_login_invalid_credentials
+  - Suite File : test_mock_admin_auth.py
+  - Objective  : Verify error toast when invalid admin credentials are provided.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:44
+  - Progress   : Executed: 7/81 | Passed: 7 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[08/81] test_mock_admin_login_account_locked
+  - Suite File : test_mock_admin_auth.py
+  - Objective  : Verify locked admin account behavior (exceeded maximum failed attempts).
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:44
+  - Progress   : Executed: 8/81 | Passed: 8 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[09/81] test_mock_admin_login_2fa_prompt
+  - Suite File : test_mock_admin_auth.py
+  - Objective  : Verify multi-factor authentication (2FA) challenge flow.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:45
+  - Progress   : Executed: 9/81 | Passed: 9 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[10/81] test_mock_admin_session_expiry_auto_logout
+  - Suite File : test_mock_admin_auth.py
+  - Objective  : Verify that 401 on background polling auto-redirects to admin login page.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:45
+  - Progress   : Executed: 10/81 | Passed: 10 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[11/81] test_mock_admin_copy_trading_providers_render
+  - Suite File : test_mock_admin_copy_trading.py
+  - Objective  : Verify master strategy provider list (/follow) with ROI, copiers, and total managed equity.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:45
+  - Progress   : Executed: 11/81 | Passed: 11 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[12/81] test_mock_admin_private_copy_trading_render
+  - Suite File : test_mock_admin_copy_trading.py
+  - Objective  : Verify Private Copy Trading management (/managePrivateCopier) whitelist rules.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:45
+  - Progress   : Executed: 12/81 | Passed: 12 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[13/81] test_mock_admin_cron_jobs_table_render
+  - Suite File : test_mock_admin_cron_jobs.py
+  - Objective  : Verify cron job schedule listing (/cronJobs) (Daily Swap, Rollover, Cleanup).
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:45
+  - Progress   : Executed: 13/81 | Passed: 13 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[14/81] test_mock_admin_trigger_manual_cron_execution
+  - Suite File : test_mock_admin_cron_jobs.py
+  - Objective  : Verify manually triggering a cron job immediately sets state to RUNNING.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:46
+  - Progress   : Executed: 14/81 | Passed: 14 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[15/81] test_mock_admin_dashboard_kpis_rendering
+  - Suite File : test_mock_admin_dashboard.py
+  - Objective  : Verify KPI cards display total traders, deposits, active orders, and PnL.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:46
+  - Progress   : Executed: 15/81 | Passed: 15 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[16/81] test_mock_admin_dashboard_zero_metrics_state
+  - Suite File : test_mock_admin_dashboard.py
+  - Objective  : Verify empty/new platform state where all counters are zero (prevent NaN errors).
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:46
+  - Progress   : Executed: 16/81 | Passed: 16 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[17/81] test_mock_admin_dashboard_widgets_500_fallback
+  - Suite File : test_mock_admin_dashboard.py
+  - Objective  : Verify fallback widget placeholder when metrics service fails.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:46
+  - Progress   : Executed: 17/81 | Passed: 17 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[18/81] test_mock_admin_deposit_queue_render
+  - Suite File : test_mock_admin_deposits.py
+  - Objective  : Verify pending deposit transactions table with proof of payment links.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:46
+  - Progress   : Executed: 18/81 | Passed: 18 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[19/81] test_mock_admin_deposit_instant_approval
+  - Suite File : test_mock_admin_deposits.py
+  - Objective  : Verify approving deposit immediately credits balance and sets status APPROVED.
+  - Status     : [PASSED] in 7ms
+  - Timestamp  : 2026-10-03 17:04:47
+  - Progress   : Executed: 19/81 | Passed: 19 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[20/81] test_mock_admin_deposit_rejection_with_reason
+  - Suite File : test_mock_admin_deposits.py
+  - Objective  : Verify rejecting invalid deposit with reason note (e.g. 'Unverified TX Hash').
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:47
+  - Progress   : Executed: 20/81 | Passed: 20 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[21/81] test_mock_admin_manual_deposit_credit
+  - Suite File : test_mock_admin_deposits.py
+  - Objective  : Verify admin manual balance deposit credit form for offline wire transfers.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:47
+  - Progress   : Executed: 21/81 | Passed: 21 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[22/81] test_mock_admin_payment_list_render
+  - Suite File : test_mock_admin_deposits.py
+  - Objective  : Verify completed payments history table (/payment) rendering with method badges.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:47
+  - Progress   : Executed: 22/81 | Passed: 22 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[23/81] test_mock_admin_oxapay_payment_track_render
+  - Suite File : test_mock_admin_deposits.py
+  - Objective  : Verify OxaPay crypto blockchain transaction tracker table (/oxapayPaymentTrack).
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:47
+  - Progress   : Executed: 23/81 | Passed: 23 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[24/81] test_mock_admin_kyc_approval_action
+  - Suite File : test_mock_admin_kyc_documents.py
+  - Objective  : Verify that approving a KYC request triggers the correct action API and updates UI state.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:48
+  - Progress   : Executed: 24/81 | Passed: 24 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[25/81] test_mock_admin_kyc_queue_empty_state
+  - Suite File : test_mock_admin_kyc_documents.py
+  - Objective  : Verify placeholder when there are no pending KYC documents in queue.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:48
+  - Progress   : Executed: 25/81 | Passed: 25 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[26/81] test_mock_admin_kyc_reject_with_remarks
+  - Suite File : test_mock_admin_kyc_documents.py
+  - Objective  : Verify rejecting KYC requires mandatory reason and updates record.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:48
+  - Progress   : Executed: 26/81 | Passed: 26 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[27/81] test_mock_admin_kyc_document_preview_modal
+  - Suite File : test_mock_admin_kyc_documents.py
+  - Objective  : Verify clicking document preview renders image modal without errors.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:48
+  - Progress   : Executed: 27/81 | Passed: 27 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[28/81] test_mock_admin_leads_import_csv_success
+  - Suite File : test_mock_admin_leads.py
+  - Objective  : Verify uploading batch CSV of leads (/leads) creates CRM pipeline cards.
+  - Status     : [PASSED] in 7ms
+  - Timestamp  : 2026-10-03 17:04:48
+  - Progress   : Executed: 28/81 | Passed: 28 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[29/81] test_mock_admin_lead_status_pipeline_update
+  - Suite File : test_mock_admin_leads.py
+  - Objective  : Verify updating lead status from 'NEW' to 'CONTACTED'.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:49
+  - Progress   : Executed: 29/81 | Passed: 29 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[30/81] test_mock_admin_leads_report_analytics_render
+  - Suite File : test_mock_admin_leads.py
+  - Objective  : Verify Leads Report page (/report) conversion funnel charts and metrics.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:49
+  - Progress   : Executed: 30/81 | Passed: 30 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[31/81] test_mock_admin_lp_execution_config_render
+  - Suite File : test_mock_admin_liquidity_providers.py
+  - Objective  : Verify LP execution routing rules configuration table (/lpExecutionConfig).
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:49
+  - Progress   : Executed: 31/81 | Passed: 31 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[32/81] test_mock_admin_lp_balance_transaction_log
+  - Suite File : test_mock_admin_liquidity_providers.py
+  - Objective  : Verify LP Balance Transactions (/aBookBalanceTransaction) credit/debit audit table.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:49
+  - Progress   : Executed: 32/81 | Passed: 32 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[33/81] test_mock_admin_lp_brokerage_commission_log
+  - Suite File : test_mock_admin_liquidity_providers.py
+  - Objective  : Verify LP Brokerage Commission Log (/aBookLpBrokerageLog) turnover fees table.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:49
+  - Progress   : Executed: 33/81 | Passed: 33 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[34/81] test_mock_admin_manager_directory_render
+  - Suite File : test_mock_admin_managers.py
+  - Objective  : Verify list of account managers (/admin) and their assigned departments.
+  - Status     : [PASSED] in 7ms
+  - Timestamp  : 2026-10-03 17:04:50
+  - Progress   : Executed: 34/81 | Passed: 34 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[35/81] test_mock_admin_manager_user_management_render
+  - Suite File : test_mock_admin_managers.py
+  - Objective  : Verify Manager User Management table (/manager) showing client-manager assignments.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:50
+  - Progress   : Executed: 35/81 | Passed: 35 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[36/81] test_mock_admin_open_orders_grid_render
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify live open positions grid (/order/open) across all platform traders.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:50
+  - Progress   : Executed: 36/81 | Passed: 36 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[37/81] test_mock_admin_closed_orders_grid_render
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify closed trade history grid (/order/closed) with realized profit and close reason.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:50
+  - Progress   : Executed: 37/81 | Passed: 37 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[38/81] test_mock_admin_filter_orders_by_symbol_and_user
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify instant filtering of open orders by symbol (BTCUSD) and Account ID.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:50
+  - Progress   : Executed: 38/81 | Passed: 38 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[39/81] test_mock_admin_force_close_order
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify admin emergency force-close of a runaway position at market price.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:51
+  - Progress   : Executed: 39/81 | Passed: 39 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[40/81] test_mock_admin_order_report_date_filter
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify Master Order Report (/OrderReport) with date picker and symbol breakdown.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:51
+  - Progress   : Executed: 40/81 | Passed: 40 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[41/81] test_mock_admin_user_order_report_filter
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify User Order Report (/userOrderReport) for single trader account audit.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:51
+  - Progress   : Executed: 41/81 | Passed: 41 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[42/81] test_mock_admin_order_edit_log_table_render
+  - Suite File : test_mock_admin_orders.py
+  - Objective  : Verify Order Edit Log (/orderEditLog) audit records showing price/SL/TP modifications.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:51
+  - Progress   : Executed: 42/81 | Passed: 42 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[43/81] test_mock_admin_pamm_pools_render
+  - Suite File : test_mock_admin_pamm_mam.py
+  - Objective  : Verify PAMM investment pools table (/managePAMM) and equity allocation breakdown.
+  - Status     : [PASSED] in 7ms
+  - Timestamp  : 2026-10-03 17:04:51
+  - Progress   : Executed: 43/81 | Passed: 43 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[44/81] test_mock_admin_mam_allocation_method_config
+  - Suite File : test_mock_admin_pamm_mam.py
+  - Objective  : Verify configuring MAM allocation formula (/manageMAM) (Lot vs Equity ratio).
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:51
+  - Progress   : Executed: 44/81 | Passed: 44 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[45/81] test_mock_admin_a_book_routed_orders_render
+  - Suite File : test_mock_admin_risk_books.py
+  - Objective  : Verify A-Book orders table (/aBook) showing LP execution bridge and fill prices.
+  - Status     : [PASSED] in 10ms
+  - Timestamp  : 2026-10-03 17:04:52
+  - Progress   : Executed: 45/81 | Passed: 45 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[46/81] test_mock_admin_b_book_exposure_summary
+  - Suite File : test_mock_admin_risk_books.py
+  - Objective  : Verify B-Book net aggregate risk exposure (/bBook) across all symbols.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:52
+  - Progress   : Executed: 46/81 | Passed: 46 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[47/81] test_mock_admin_route_trader_to_a_book
+  - Suite File : test_mock_admin_risk_books.py
+  - Objective  : Verify changing trader execution mode from B-Book to A-Book STP bridge.
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:52
+  - Progress   : Executed: 47/81 | Passed: 47 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[48/81] test_mock_admin_a_book_user_margin_render
+  - Suite File : test_mock_admin_risk_books.py
+  - Objective  : Verify A-Book User Margin page (/aBookUserMargin) margin utilization table.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:52
+  - Progress   : Executed: 48/81 | Passed: 48 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[49/81] test_mock_admin_b_book_user_margin_render
+  - Suite File : test_mock_admin_risk_books.py
+  - Objective  : Verify B-Book User Margin page (/bBookUserMargin) warehouse risk metrics.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:52
+  - Progress   : Executed: 49/81 | Passed: 49 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[50/81] test_mock_admin_book_report_render
+  - Suite File : test_mock_admin_risk_books.py
+  - Objective  : Verify Book Report (/bookReport) daily trading exposure breakdown between A and B book.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:53
+  - Progress   : Executed: 50/81 | Passed: 50 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[51/81] test_mock_admin_permission_denied_forbidden
+  - Suite File : test_mock_admin_role_permissions.py
+  - Objective  : Verify read-only admin attempting deletion receives 403 Forbidden alert.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:53
+  - Progress   : Executed: 51/81 | Passed: 51 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[52/81] test_mock_admin_create_custom_role
+  - Suite File : test_mock_admin_role_permissions.py
+  - Objective  : Verify creating a custom role (/rolePermission) with granular checkboxes.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:53
+  - Progress   : Executed: 52/81 | Passed: 52 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[53/81] test_mock_admin_super_admin_role_protection
+  - Suite File : test_mock_admin_role_permissions.py
+  - Objective  : Verify deleting Super Admin role is permanently disabled in the UI.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:53
+  - Progress   : Executed: 53/81 | Passed: 53 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[54/81] test_mock_admin_server_500_error_handling
+  - Suite File : test_mock_admin_server_failures.py
+  - Objective  : Verify admin UI handles unexpected backend 500 exceptions with clear user notification.
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:53
+  - Progress   : Executed: 54/81 | Passed: 54 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[55/81] test_mock_admin_rate_limiting_429
+  - Suite File : test_mock_admin_server_failures.py
+  - Objective  : Verify admin API rate limiting error handling.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:54
+  - Progress   : Executed: 55/81 | Passed: 55 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[56/81] test_mock_admin_gateway_timeout_504
+  - Suite File : test_mock_admin_server_failures.py
+  - Objective  : Verify 504 Gateway Timeout handling when exporting large financial reports.
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:54
+  - Progress   : Executed: 56/81 | Passed: 56 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[57/81] test_mock_admin_network_latency_spinner
+  - Suite File : test_mock_admin_server_failures.py
+  - Objective  : Verify UI loading state and skeleton spinners during simulated network latency.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:54
+  - Progress   : Executed: 57/81 | Passed: 57 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[58/81] test_mock_admin_update_global_settings
+  - Suite File : test_mock_admin_settings.py
+  - Objective  : Verify updating platform leverage limits and broker email notification settings.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:54
+  - Progress   : Executed: 58/81 | Passed: 58 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[59/81] test_mock_admin_toggle_platform_maintenance_mode
+  - Suite File : test_mock_admin_settings.py
+  - Objective  : Verify activating global maintenance mode warning overlay.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:54
+  - Progress   : Executed: 59/81 | Passed: 59 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[60/81] test_mock_admin_symbols_list_render
+  - Suite File : test_mock_admin_symbols.py
+  - Objective  : Verify symbol catalog table (/symbolList) with spread types, digits, and trading status.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:55
+  - Progress   : Executed: 60/81 | Passed: 60 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[61/81] test_mock_admin_create_symbol_success
+  - Suite File : test_mock_admin_symbols.py
+  - Objective  : Verify adding a new tradable symbol with pip value and leverage configuration.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:55
+  - Progress   : Executed: 61/81 | Passed: 61 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[62/81] test_mock_admin_symbol_configuration_render
+  - Suite File : test_mock_admin_symbols.py
+  - Objective  : Verify Symbol Configuration editor (/symbolConfiguration) trading hours and swaps.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:55
+  - Progress   : Executed: 62/81 | Passed: 62 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[63/81] test_mock_admin_user_bonus_list_render
+  - Suite File : test_mock_admin_user_bonus.py
+  - Objective  : Verify active trader bonus awards table rendering (Credit List).
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:55
+  - Progress   : Executed: 63/81 | Passed: 63 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[64/81] test_mock_admin_grant_deposit_bonus
+  - Suite File : test_mock_admin_user_bonus.py
+  - Objective  : Verify granting 50% deposit bonus to a specific trader account.
+  - Status     : [PASSED] in 9ms
+  - Timestamp  : 2026-10-03 17:04:55
+  - Progress   : Executed: 64/81 | Passed: 64 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[65/81] test_mock_admin_revoke_bonus
+  - Suite File : test_mock_admin_user_bonus.py
+  - Objective  : Verify manual revocation of unearned bonus on withdrawal request.
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:56
+  - Progress   : Executed: 65/81 | Passed: 65 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[66/81] test_mock_admin_user_list_render
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify that mocked user records populate correctly in the user management table.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:56
+  - Progress   : Executed: 66/81 | Passed: 66 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[67/81] test_mock_admin_user_table_pagination
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify table pagination controls with 100+ mocked user records.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:56
+  - Progress   : Executed: 67/81 | Passed: 67 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[68/81] test_mock_admin_user_filter_by_group_and_status
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify filtering users by group (VIP_USD) and status (active/blocked).
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:56
+  - Progress   : Executed: 68/81 | Passed: 68 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[69/81] test_mock_admin_create_user_success
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify successful creation of a new trader account from admin portal.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:56
+  - Progress   : Executed: 69/81 | Passed: 69 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[70/81] test_mock_admin_create_user_duplicate_email
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify 422 duplicate email validation error display on user creation form.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:57
+  - Progress   : Executed: 70/81 | Passed: 70 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[71/81] test_mock_admin_user_status_toggle_suspend
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify suspending an active user updates status badge immediately.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:57
+  - Progress   : Executed: 71/81 | Passed: 71 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[72/81] test_mock_admin_user_balance_adjustment
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify manual balance credit/debit by admin with audit note.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:57
+  - Progress   : Executed: 72/81 | Passed: 72 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[73/81] test_mock_admin_active_users_session_kill
+  - Suite File : test_mock_admin_user_crud.py
+  - Objective  : Verify admin ability to force-terminate an online user's active session.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:57
+  - Progress   : Executed: 73/81 | Passed: 73 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[74/81] test_mock_admin_user_groups_list_render
+  - Suite File : test_mock_admin_user_groups.py
+  - Objective  : Verify user group profiles (Standard, VIP, Raw Spread) table rendering.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:57
+  - Progress   : Executed: 74/81 | Passed: 74 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[75/81] test_mock_admin_create_user_group_success
+  - Suite File : test_mock_admin_user_groups.py
+  - Objective  : Verify creating a new group profile with custom spread markup.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:58
+  - Progress   : Executed: 75/81 | Passed: 75 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[76/81] test_mock_admin_delete_group_with_assigned_users_blocked
+  - Suite File : test_mock_admin_user_groups.py
+  - Objective  : Verify deleting a group that has active users fails with 400 error.
+  - Status     : [PASSED] in 4ms
+  - Timestamp  : 2026-10-03 17:04:58
+  - Progress   : Executed: 76/81 | Passed: 76 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[77/81] test_mock_admin_withdraw_queue_render
+  - Suite File : test_mock_admin_withdrawals.py
+  - Objective  : Verify pending withdrawal requests table with destination wallet/bank details.
+  - Status     : [PASSED] in 5ms
+  - Timestamp  : 2026-10-03 17:04:58
+  - Progress   : Executed: 77/81 | Passed: 77 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[78/81] test_mock_admin_withdraw_approval_success
+  - Suite File : test_mock_admin_withdrawals.py
+  - Objective  : Verify approving withdrawal sets state to PROCESSED and logs payout hash.
+  - Status     : [PASSED] in 3ms
+  - Timestamp  : 2026-10-03 17:04:58
+  - Progress   : Executed: 78/81 | Passed: 78 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[79/81] test_mock_admin_withdraw_rejection_auto_refund
+  - Suite File : test_mock_admin_withdrawals.py
+  - Objective  : Verify rejecting withdrawal immediately refunds deducted balance to trader.
+  - Status     : [PASSED] in 6ms
+  - Timestamp  : 2026-10-03 17:04:58
+  - Progress   : Executed: 79/81 | Passed: 79 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[80/81] test_mock_admin_withdraw_export_csv
+  - Suite File : test_mock_admin_withdrawals.py
+  - Objective  : Verify export of withdrawal records to CSV data stream.
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:59
+  - Progress   : Executed: 80/81 | Passed: 80 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+[81/81] test_mock_admin_manage_withdraw_view
+  - Suite File : test_mock_admin_withdrawals.py
+  - Objective  : Verify Manage Withdraw table (/managewithdraw) with status filtering.
+  - Status     : [PASSED] in 2ms
+  - Timestamp  : 2026-10-03 17:04:59
+  - Progress   : Executed: 81/81 | Passed: 81 | Failed: 0 | Pass Rate: 100.0%
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+                               FINAL SUITE EXECUTION SUMMARY
+====================================================================================================
+Total Identified Test Scenarios : 81
+Total Executed Scenarios        : 81
+Total Passed Scenarios          : 81 (100.0% Pass Rate)
+Total Failed Scenarios          : 0 (0.0%)
+Total Skipped Scenarios         : 0 (0.0%)
+Master Suite Execution Time     : 16.70s
+Verdict                         : ALL 81 ADMIN PORTAL MOCK TESTS PASSED SUCCESSFULLY
+====================================================================================================

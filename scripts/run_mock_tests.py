@@ -130,9 +130,7 @@ def main() -> int:
     if args.workers:
         cmd.extend(["-n", str(args.workers), "--dist", args.dist])
 
-    print("=" * 80)
-    print("🚀 LAUNCHING MOCK TESTING SUITE")
-    print("=" * 80)
+    print("=== LAUNCHING MOCK TESTING SUITE ===")
     print(f"  Portal Scope    : {args.portal.upper()}")
     print(f"  Execution Mode  : {'HEADED' if args.headed else 'HEADLESS'}")
     print(f"  Marker Filter   : {args.marker}")
