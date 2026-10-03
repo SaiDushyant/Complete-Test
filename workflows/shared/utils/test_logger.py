@@ -313,10 +313,10 @@ class GlobalTestLogger:
             self.logs_dir / "test_results.json",
         ]
         has_logs = any(f.exists() and f.stat().st_size > 0 for f in active_log_files)
-        has_individual_logs = self.individual_dir.exists() and any(self.individual_dir.glob("*/*.json"))
-        has_screenshots = self.screenshots_dir.exists() and any(self.screenshots_dir.glob("*.png"))
-        has_diagnostics = self.diagnostics_dir.exists() and any(self.diagnostics_dir.glob("*.json"))
-        has_traces = self.traces_dir.exists() and any(self.traces_dir.glob("*.zip"))
+        has_individual_logs = self.individual_dir.exists() and any(f for f in self.individual_dir.glob("*/*.json") if f.name != ".gitkeep")
+        has_screenshots = self.screenshots_dir.exists() and any(f for f in self.screenshots_dir.iterdir() if f.is_file() and f.name != ".gitkeep")
+        has_diagnostics = self.diagnostics_dir.exists() and any(f for f in self.diagnostics_dir.iterdir() if f.is_file() and f.name != ".gitkeep")
+        has_traces = self.traces_dir.exists() and any(f for f in self.traces_dir.iterdir() if f.is_file() and f.name != ".gitkeep")
 
         archived_dir: Optional[Path] = None
 
@@ -337,7 +337,7 @@ class GlobalTestLogger:
                     except Exception as e:
                         logger.debug(f"Could not move {f.name} to history: {e}")
 
-            if self.individual_dir.exists() and any(self.individual_dir.iterdir()):
+            if self.individual_dir.exists() and any(f for f in self.individual_dir.iterdir() if f.name != ".gitkeep"):
                 try:
                     shutil.move(str(self.individual_dir), str(target_logs / "individual"))
                 except Exception as e:
@@ -357,31 +357,34 @@ class GlobalTestLogger:
             if has_screenshots:
                 target_screens = archived_dir / "screenshots"
                 target_screens.mkdir(parents=True, exist_ok=True)
-                for f in self.screenshots_dir.glob("*.png"):
-                    try:
-                        shutil.move(str(f), str(target_screens / f.name))
-                    except Exception as e:
-                        logger.debug(f"Could not move screenshot {f.name}: {e}")
+                for f in self.screenshots_dir.iterdir():
+                    if f.is_file() and f.name != ".gitkeep":
+                        try:
+                            shutil.move(str(f), str(target_screens / f.name))
+                        except Exception as e:
+                            logger.debug(f"Could not move screenshot {f.name}: {e}")
 
             # 3. Archive diagnostics
             if has_diagnostics:
                 target_diag = archived_dir / "diagnostics"
                 target_diag.mkdir(parents=True, exist_ok=True)
-                for f in self.diagnostics_dir.glob("*.*"):
-                    try:
-                        shutil.move(str(f), str(target_diag / f.name))
-                    except Exception as e:
-                        logger.debug(f"Could not move diagnostic {f.name}: {e}")
+                for f in self.diagnostics_dir.iterdir():
+                    if f.is_file() and f.name != ".gitkeep":
+                        try:
+                            shutil.move(str(f), str(target_diag / f.name))
+                        except Exception as e:
+                            logger.debug(f"Could not move diagnostic {f.name}: {e}")
 
             # 4. Archive traces
             if has_traces:
                 target_traces = archived_dir / "traces"
                 target_traces.mkdir(parents=True, exist_ok=True)
-                for f in self.traces_dir.glob("*.zip"):
-                    try:
-                        shutil.move(str(f), str(target_traces / f.name))
-                    except Exception as e:
-                        logger.debug(f"Could not move trace {f.name}: {e}")
+                for f in self.traces_dir.iterdir():
+                    if f.is_file() and f.name != ".gitkeep":
+                        try:
+                            shutil.move(str(f), str(target_traces / f.name))
+                        except Exception as e:
+                            logger.debug(f"Could not move trace {f.name}: {e}")
 
             logger.info(f"Archived previous suite session to: {archived_dir}")
 
