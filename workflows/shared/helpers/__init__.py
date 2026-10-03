@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """Shared Validation & Security Helpers Module."""
 
 from __future__ import annotations
@@ -58,4 +59,25 @@ __all__ = [
     "XSS_PAYLOADS",
     "XSS_PAYLOADS_SHORT",
     "XSS_REFERRAL_PAYLOADS",
+=======
+"""Shared validation testing helpers."""
+from workflows.shared.helpers.validation_payloads import (
+    SQLI_AUTH_PAYLOADS,
+    SQLI_NUMERIC_PAYLOADS,
+    XSS_REFLECTED_PAYLOADS,
+    WEAK_PASSWORDS,
+    INVALID_EMAILS,
+    DISALLOWED_FILE_EXTENSIONS,
+    ALLOWED_DOCUMENT_EXTENSIONS,
+)
+
+__all__ = [
+    "SQLI_AUTH_PAYLOADS",
+    "SQLI_NUMERIC_PAYLOADS",
+    "XSS_REFLECTED_PAYLOADS",
+    "WEAK_PASSWORDS",
+    "INVALID_EMAILS",
+    "DISALLOWED_FILE_EXTENSIONS",
+    "ALLOWED_DOCUMENT_EXTENSIONS",
+>>>>>>> origin/feature/client-portal-validation-dhanya
 ]

@@ -41,16 +41,16 @@ class ClientSettingsPage(BasePage):
         # 1. Personal Information Form
         # =====================================================================
         self.personal_info_heading = page.locator("main h2").filter(has_text="Personal Information")
-        self.full_name_input = page.locator("main div").filter(has=page.locator("label:has-text('FULL NAME')")).locator("input")
-        self.email_input = page.locator("main input[type='email']")
-        self.phone_input = page.locator("main input[type='tel']")
-        self.address_input = page.locator("main div").filter(has=page.locator("label:has-text('ADDRESS')")).locator("input").first
-        self.city_input = page.locator("main div").filter(has=page.locator("label:has-text('CITY')")).locator("input")
-        self.state_input = page.locator("main div").filter(has=page.locator("label:has-text('STATE')")).locator("input")
-        self.zip_input = page.locator("main div").filter(has=page.locator("label:has-text('ZIP')")).locator("input")
-        self.country_input = page.locator("main div").filter(has=page.locator("label:has-text('COUNTRY')")).locator("input")
-        self.save_button = page.locator("main button:has-text('SAVE CHANGES')")
-        self.cancel_button = page.locator("main button:has-text('Cancel')")
+        self.full_name_input = page.locator("main input").first
+        self.email_input = page.locator("main input[type='email']").first
+        self.phone_input = page.locator("main input[type='tel'], main input").nth(2)
+        self.address_input = page.locator("main input[placeholder*='Address' i]").first
+        self.city_input = page.locator("main input[placeholder*='City' i]").first
+        self.state_input = page.locator("main input[placeholder*='State' i]").first
+        self.zip_input = page.locator("main input[placeholder*='Zip' i]").first
+        self.country_input = page.locator("main input[placeholder*='Country' i]").first
+        self.save_button = page.locator("main button:has-text('Save Changes'), main button:has-text('SAVE CHANGES')").first
+        self.cancel_button = page.locator("main button:has-text('Cancel')").first
 
         # =====================================================================
         # 2. Trading Account Settings

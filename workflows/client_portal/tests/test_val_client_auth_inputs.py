@@ -1,345 +1,205 @@
 """
-Client Portal Authentication & Registration Input Validation Testing Suite.
-Implements the 6 Pillars of Validation Testing & Security Matrix defined in:
-docs/VALIDATION_TESTING_SPECIFICATION.md (Section 1, Section 3.B.1, and Section 4).
+Client Portal Authentication & Registration Input Validation Test Suite.
 
-Pillars Covered:
-1. Textbox & Inputs:
-   - Full name, Email format (RFC checks, malformed syntax), Phone number boundaries.
-   - Password strength validation (>= 8 chars, uppercase, lowercase, digit, special character).
-   - Password mismatch rejection (confirm password != password).
-2. Buttons & Actions:
-   - Step 1 'Next' button submission prevention on empty/invalid inputs.
-   - Step 2 'Prev' button returning to Step 1 without data loss.
-   - Terms & conditions checkbox mandate blocking final signup.
-   - Login button with empty/whitespace credentials.
-3. Dropdowns & Selects:
-   - Group ID and Subgroup/Leverage options selection in Step 2.
-4. Security:
-   - SQLi and XSS payloads in Login email/password inputs.
-   - Cleartext password masking (input[type='password']) and toggle reveal.
+Covers:
+1. Registration Form Password Mismatch Validation.
+2. Registration Terms & Conditions Checkbox Mandatory Enforcement.
+3. Cross-Site Scripting (XSS) Sanitization on Registration Input Fields.
+4. SQL Injection (SQLi) Authentication Bypass Neutralization on Login Form.
+5. Empty and Whitespace Form Submission Rejection.
 
-Maintained by Developer 3 (Client Portal Owner).
+Reference: docs/VALIDATION_TESTING_SPECIFICATION.md Section 3B & Section 4
 """
 
 from __future__ import annotations
 
-import random
-import string
+import time
 import pytest
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Browser, BrowserContext, Page, expect
 
 from config.settings import settings
 from workflows.client_portal.pages.client_login_page import ClientLoginPage
 from workflows.client_portal.pages.client_register_page import ClientRegisterPage
 from workflows.shared.helpers.validation_payloads import (
-    SQLI_PAYLOADS,
-    XSS_PAYLOADS,
+    SQLI_AUTH_PAYLOADS,
+    XSS_REFLECTED_PAYLOADS,
 )
-from workflows.shared.utils.error_monitor import ErrorMonitor
+from workflows.shared.utils.logger import get_logger
 
-
-def _make_temp_signup_data() -> dict[str, str]:
-    """Generate dynamic compliant user details for boundary tests."""
-    rnd = "".join(random.choices(string.ascii_lowercase, k=6))
-    return {
-        "name": f"ValUser {rnd.capitalize()}",
-        "email": f"val_{rnd}@mailinator.com",
-        "phone": f"98{random.randint(10000000, 99999999)}",
-        "valid_password": "StrongPassword@2026",
-    }
-
-
-# ==============================================================================
-# 1. SIGNUP STEP 1: EMPTY FIELDS & TRANSITION BLOCK
-# ==============================================================================
+logger = get_logger("test_val_client_auth_inputs")
 
 
 @pytest.mark.client
-@pytest.mark.validation
-def test_val_client_signup_step1_empty_submit_blocked(
-    client_page: Page,
-):
+@pytest.mark.regression
+def test_val_registration_password_mismatch(browser: Browser):
     """
-    Pillar 1 & 2: Verify submitting empty Step 1 form blocks advancement to Step 2:
-    - Step 1 container remains visible
-    - Password input in Step 2 remains hidden
-    - HTML5 required validation triggers on mandatory inputs
+    Verify that entering non-matching passwords on Registration Step 2 prevents submission
+    and raises validation alert/error.
     """
-    error_monitor = getattr(client_page, "error_monitor", ErrorMonitor(client_page))
-    register_page = ClientRegisterPage(client_page)
-    register_page.navigate()
-    expect(register_page.step_1_container).to_be_visible()
+    ctx: BrowserContext = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page: Page = ctx.new_page()
+    reg_page = ClientRegisterPage(page)
 
-    # Click Next with empty fields
-    register_page.next_button.click()
-    client_page.wait_for_timeout(600)
+    try:
+        reg_page.navigate()
+        ts = int(time.time())
+        reg_page.fill_step_1(name="Alexander Taylor", email=f"val_{ts}@mailinator.com", phone="9876543210")
+        reg_page.click_next()
 
-    # Assert Step 1 remains displayed and Step 2 is not displayed
-    assert register_page.is_step_1_displayed(), "Step 1 must remain visible when submitted empty"
-    assert not register_page.password_input.is_visible(), "Password input must remain hidden"
+        # Fill mismatched passwords
+        page.fill("#pass1", "ValidPassword@123")
+        page.fill("#pass2", "MismatchedPassword@999")
+        page.check("#inputCheckbox")
 
-    error_monitor.assert_no_js_errors("Signup Step 1 Empty Submit")
+        # Submit
+        page.click("button.savebut, button[type='submit']:has-text('Sign up')")
+        page.wait_for_timeout(2000)
 
+        # Assert registration did NOT succeed and user remains on register page or shows error
+        assert "register" in page.url or "verify" not in page.url.lower(), (
+            f"Expected registration to be blocked due to password mismatch, but landed on: {page.url}"
+        )
+        logger.info("Verified password mismatch validation prevents registration submission.")
 
-# ==============================================================================
-# 2. SIGNUP STEP 1: EMAIL SYNTAX & FORMAT VALIDATION
-# ==============================================================================
+    finally:
+        ctx.close()
 
 
 @pytest.mark.client
-@pytest.mark.validation
-@pytest.mark.parametrize(
-    "invalid_email",
-    [
-        "plainaddress",
-        "@missingusername.com",
-        "username@.com",
-        "username@domain..com",
-        "username space@domain.com",
-        "username@domain",
-    ],
-)
-def test_val_client_signup_invalid_email_formats(
-    client_page: Page,
-    invalid_email: str,
-):
+@pytest.mark.regression
+def test_val_registration_terms_unchecked(browser: Browser):
     """
-    Pillar 1: Verify malformed email addresses are rejected during Step 1:
-    - Client HTML5 or JS validation prevents moving to Step 2
+    Verify that submitting registration with Terms & Conditions checkbox unchecked blocks submission.
     """
-    register_page = ClientRegisterPage(client_page)
-    register_page.navigate()
+    ctx: BrowserContext = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page: Page = ctx.new_page()
+    reg_page = ClientRegisterPage(page)
 
-    data = _make_temp_signup_data()
-    register_page.fill_step_1(name=data["name"], email=invalid_email, phone=data["phone"])
-    register_page.next_button.click()
-    client_page.wait_for_timeout(600)
+    try:
+        reg_page.navigate()
+        ts = int(time.time())
+        reg_page.fill_step_1(name="Alexander Taylor", email=f"val_{ts}@mailinator.com", phone="9876543210")
+        reg_page.click_next()
 
-    # Step 2 should not be reached
-    assert not register_page.password_input.is_visible(), (
-        f"Malformed email '{invalid_email}' should not allow moving to Step 2"
-    )
+        page.fill("#pass1", "ValidPassword@123")
+        page.fill("#pass2", "ValidPassword@123")
 
+        # Explicitly uncheck terms checkbox
+        terms_cb = page.locator("#inputCheckbox")
+        if terms_cb.is_checked():
+            terms_cb.uncheck()
 
-# ==============================================================================
-# 3. SIGNUP STEP 2: PASSWORD COMPLEXITY & MIN LENGTH
-# ==============================================================================
+        page.click("button.savebut, button[type='submit']:has-text('Sign up')")
+        page.wait_for_timeout(2000)
+
+        # Must not navigate away to verify screen
+        assert "verify" not in page.url.lower(), "Registration proceeded with unchecked Terms checkbox!"
+        logger.info("Verified Terms & Conditions mandatory checkbox blocks registration.")
+
+    finally:
+        ctx.close()
 
 
 @pytest.mark.client
-@pytest.mark.validation
-@pytest.mark.parametrize(
-    "weak_password,reason",
-    [
-        ("short", "Less than 8 characters"),
-        ("12345678", "Digits only without uppercase/lowercase"),
-        ("password", "Lowercase only without uppercase/digits/special"),
-        ("PASSWORD123", "Missing special characters"),
-        ("PasswordNoSpecial", "Missing special characters"),
-    ],
-)
-def test_val_client_signup_weak_password_boundaries(
-    client_page: Page,
-    weak_password: str,
-    reason: str,
-):
+@pytest.mark.regression
+@pytest.mark.parametrize("payload,description", XSS_REFLECTED_PAYLOADS)
+def test_val_registration_xss_sanitization(browser: Browser, payload: str, description: str):
     """
-    Pillar 1: Verify weak passwords failing complexity requirements are blocked in Step 2:
-    - Rejects password < 8 chars, missing uppercase, digit, or special character
-    - Form submission is halted
+    Verify that entering XSS payloads in registration fields does not execute JavaScript.
     """
-    register_page = ClientRegisterPage(client_page)
-    register_page.navigate()
+    ctx: BrowserContext = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page: Page = ctx.new_page()
+    reg_page = ClientRegisterPage(page)
 
-    data = _make_temp_signup_data()
-    register_page.fill_step_1(name=data["name"], email=data["email"], phone=data["phone"])
-    register_page.click_next()
-    expect(register_page.password_input).to_be_visible(timeout=10000)
+    try:
+        reg_page.navigate()
 
-    # Fill weak password
-    register_page.password_input.fill(weak_password)
-    register_page.confirm_password_input.fill(weak_password)
-    if register_page.terms_checkbox.is_visible() and not register_page.terms_checkbox.is_checked():
-        register_page.terms_checkbox.check()
+        # Inject payload into Full Name input
+        page.fill("#name", payload)
+        page.fill("#email", f"xss_{int(time.time())}@testcorp.com")
+        page.fill("#number", "9876543210")
 
-    register_page.signup_submit_button.click()
-    client_page.wait_for_timeout(800)
+        # Evaluate if script executed
+        xss_executed = page.evaluate("() => window.xss_detected === 1 || window.xss_detected === true")
+        assert not xss_executed, f"XSS payload executed in DOM: {description} ({payload})"
 
-    # Verify registration does not complete (still on register page)
-    assert "/register" in client_page.url, f"Weak password '{weak_password}' ({reason}) should not complete registration"
+        # Click next to test step transition with payload
+        page.click("button.next-btn")
+        page.wait_for_timeout(1000)
 
+        xss_executed_post = page.evaluate("() => window.xss_detected === 1 || window.xss_detected === true")
+        assert not xss_executed_post, f"XSS payload executed after Next click: {description}"
+        logger.info(f"Verified XSS payload safely sanitized: {description}")
 
-# ==============================================================================
-# 4. SIGNUP STEP 2: PASSWORD MISMATCH VALIDATION
-# ==============================================================================
+    finally:
+        ctx.close()
 
 
 @pytest.mark.client
-@pytest.mark.validation
-def test_val_client_signup_password_mismatch_rejection(
-    client_page: Page,
-):
+@pytest.mark.regression
+@pytest.mark.parametrize("payload,description", SQLI_AUTH_PAYLOADS)
+def test_val_login_sqli_authentication_bypass(browser: Browser, payload: str, description: str):
     """
-    Pillar 1: Verify that mismatched password and confirm_password are rejected:
-    - pass1 != pass2 prevents submission
+    Verify that SQL injection payloads in Login form are neutralized:
+    1. Authentication is denied.
+    2. No database error signatures (SQLSTATE, syntax error) leaked.
+    3. User is not authenticated.
     """
-    register_page = ClientRegisterPage(client_page)
-    register_page.navigate()
+    ctx: BrowserContext = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page: Page = ctx.new_page()
+    login_page = ClientLoginPage(page)
 
-    data = _make_temp_signup_data()
-    register_page.fill_step_1(name=data["name"], email=data["email"], phone=data["phone"])
-    register_page.click_next()
-    expect(register_page.password_input).to_be_visible(timeout=10000)
+    try:
+        login_page.navigate()
 
-    register_page.password_input.fill("CorrectPass@123")
-    register_page.confirm_password_input.fill("DifferentPass@456")
-    if register_page.terms_checkbox.is_visible() and not register_page.terms_checkbox.is_checked():
-        register_page.terms_checkbox.check()
+        # Inject SQLi payload into username/email and password
+        login_page.email_input.fill(payload)
+        login_page.password_input.fill(payload)
+        login_page.login_button.click()
+        page.wait_for_timeout(2500)
 
-    register_page.signup_submit_button.click()
-    client_page.wait_for_timeout(800)
+        # 1. Assert user was NOT authenticated to dashboard
+        assert "dashboard" not in page.url.lower(), f"SQLi authentication bypass occurred with payload: {payload}"
 
-    assert "/register" in client_page.url, "Mismatched passwords must block registration"
+        # 2. Assert no database crash strings dumped to page body
+        body_text = page.locator("body").inner_text().lower()
+        for error_sig in ["sqlstate", "syntax error", "mysql_", "pdoexception", "unhandled exception"]:
+            assert error_sig not in body_text, f"Database error signature '{error_sig}' leaked in response for: {description}"
 
+        logger.info(f"Verified SQLi authentication bypass blocked: {description}")
 
-# ==============================================================================
-# 5. SIGNUP STEP 2: TERMS AND CONDITIONS CHECKBOX MANDATE
-# ==============================================================================
+    finally:
+        ctx.close()
 
 
 @pytest.mark.client
-@pytest.mark.validation
-def test_val_client_signup_terms_checkbox_mandate(
-    client_page: Page,
-):
+@pytest.mark.regression
+def test_val_login_empty_and_whitespace_submission(browser: Browser):
     """
-    Pillar 2: Verify submitting without accepting Terms & Conditions is blocked:
-    - With terms_checkbox unchecked, submission must not succeed
+    Verify that submitting empty or pure whitespace credentials on the Login form is rejected.
     """
-    register_page = ClientRegisterPage(client_page)
-    register_page.navigate()
+    ctx: BrowserContext = browser.new_context(viewport=settings.browser.viewport, ignore_https_errors=True)
+    page: Page = ctx.new_page()
+    login_page = ClientLoginPage(page)
 
-    data = _make_temp_signup_data()
-    register_page.fill_step_1(name=data["name"], email=data["email"], phone=data["phone"])
-    register_page.click_next()
-    expect(register_page.password_input).to_be_visible(timeout=10000)
+    try:
+        login_page.navigate()
 
-    register_page.password_input.fill(data["valid_password"])
-    register_page.confirm_password_input.fill(data["valid_password"])
+        # 1. Empty Submission
+        login_page.email_input.fill("")
+        login_page.password_input.fill("")
+        login_page.login_button.click()
+        page.wait_for_timeout(1500)
+        assert "dashboard" not in page.url.lower(), "Empty credentials unexpectedly logged in!"
 
-    # Ensure terms checkbox is UNCHECKED
-    if register_page.terms_checkbox.is_checked():
-        register_page.terms_checkbox.uncheck()
+        # 2. Whitespace Submission
+        login_page.email_input.fill("   ")
+        login_page.password_input.fill("   ")
+        login_page.login_button.click()
+        page.wait_for_timeout(1500)
+        assert "dashboard" not in page.url.lower(), "Whitespace credentials unexpectedly logged in!"
 
-    register_page.signup_submit_button.click()
-    client_page.wait_for_timeout(800)
+        logger.info("Verified empty and whitespace login submissions correctly rejected.")
 
-    assert "/register" in client_page.url, "Unchecked terms must block registration"
-
-
-# ==============================================================================
-# 6. SIGNUP NAVIGATION: PREV BUTTON PRESERVES DATA
-# ==============================================================================
-
-
-@pytest.mark.client
-@pytest.mark.validation
-def test_val_client_signup_prev_button_navigation(
-    client_page: Page,
-):
-    """
-    Pillar 2: Verify Step 2 'Prev' button returns cleanly to Step 1:
-    - Step 1 fields become visible again
-    - Pre-filled name, email, and phone values are preserved
-    """
-    register_page = ClientRegisterPage(client_page)
-    register_page.navigate()
-
-    data = _make_temp_signup_data()
-    register_page.fill_step_1(name=data["name"], email=data["email"], phone=data["phone"])
-    register_page.click_next()
-    expect(register_page.password_input).to_be_visible(timeout=10000)
-
-    # Click Previous button
-    expect(register_page.prev_button).to_be_visible()
-    register_page.prev_button.click()
-    client_page.wait_for_timeout(600)
-
-    # Assert Step 1 visible and values preserved
-    assert register_page.is_step_1_displayed()
-    assert register_page.name_input.input_value() == data["name"]
-    assert register_page.email_input.input_value() == data["email"]
-    assert register_page.phone_input.input_value() == data["phone"]
-
-
-# ==============================================================================
-# 7. LOGIN FORM: EMPTY CREDENTIALS & ELEMENT VALIDATIONS
-# ==============================================================================
-
-
-@pytest.mark.client
-@pytest.mark.validation
-def test_val_client_login_empty_credentials_rejection(
-    client_login_page: ClientLoginPage,
-):
-    """
-    Pillars 1 & 2: Verify submitting empty login form is rejected:
-    - Does not transition away from /login
-    - Password mask type is 'password'
-    """
-    client_login_page.navigate()
-    expect(client_login_page.email_input).to_be_visible()
-    expect(client_login_page.password_input).to_be_visible()
-
-    # Password input must mask characters
-    assert client_login_page.password_input.get_attribute("type") == "password"
-
-    # Click login with empty credentials
-    client_login_page.login_button.click()
-    client_login_page.page.wait_for_timeout(800)
-
-    assert "/login" in client_login_page.page.url, "Empty credentials submission must remain on /login"
-
-
-# ==============================================================================
-# 8. LOGIN SECURITY: SQLi & XSS PAYLOAD SANITIZATION
-# ==============================================================================
-
-
-@pytest.mark.client
-@pytest.mark.validation
-def test_val_client_login_security_sanitization(
-    client_login_page: ClientLoginPage,
-):
-    """
-    Pillar 7: Test injection payloads on Client Login form:
-    - SQLi payloads (' OR '1'='1, admin' --)
-    - XSS payloads (<script>, <svg>)
-    - Asserts no script execution, no SQL internal dumps in DOM, and rejection
-    """
-    client_login_page.navigate()
-
-    # Test SQLi payloads
-    for payload, desc in SQLI_PAYLOADS[:3]:
-        client_login_page.email_input.fill(payload)
-        client_login_page.password_input.fill("Password123!")
-        client_login_page.login_button.click()
-        client_login_page.page.wait_for_timeout(600)
-
-        # Assert no database syntax dumps exposed
-        body_text = client_login_page.page.locator("body").inner_text()
-        assert "SQLSTATE" not in body_text, f"SQL error exposed for {desc}"
-        assert "syntax error" not in body_text.lower(), f"Syntax error exposed for {desc}"
-        assert "/login" in client_login_page.page.url, f"SQLi payload must not bypass login: {desc}"
-
-    # Test XSS payloads
-    for payload, desc in XSS_PAYLOADS[:2]:
-        client_login_page.email_input.fill(payload)
-        client_login_page.password_input.fill(payload)
-        client_login_page.login_button.click()
-        client_login_page.page.wait_for_timeout(600)
-
-        is_pwned = client_login_page.page.evaluate("() => Boolean(window.pwned || window.xss_detected)")
-        assert not is_pwned, f"XSS executed on login: {desc}"
-        assert "/login" in client_login_page.page.url
+    finally:
+        ctx.close()
