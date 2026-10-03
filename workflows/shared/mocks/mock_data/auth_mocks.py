@@ -63,3 +63,58 @@ MOCK_2FA_REQUIRED: Dict[str, Any] = {
     "session_ticket": "2fa_session_temp_ticket_12345",
     "message": "Please provide your two-factor authentication code.",
 }
+
+# =====================================================================
+# Registration & Password Reset Mocks
+# =====================================================================
+MOCK_REGISTER_SUCCESS: Dict[str, Any] = {
+    "status": 200,
+    "success": True,
+    "message": "Registration successful. Please check your email to verify your account.",
+    "user_id": "10099",
+    "email": "newtrader@xtremenext.com",
+    "requires_verification": True,
+}
+
+MOCK_REGISTER_DUPLICATE_EMAIL: Dict[str, Any] = {
+    "status": 422,
+    "success": False,
+    "error": "Duplicate Email",
+    "message": "An account with this email address already exists. Please sign in instead.",
+    "code": "EMAIL_ALREADY_EXISTS",
+}
+
+MOCK_FORGOT_PASSWORD_SUCCESS: Dict[str, Any] = {
+    "status": 200,
+    "success": True,
+    "message": "Password reset link has been dispatched to your registered email address.",
+}
+
+MOCK_FORGOT_PASSWORD_NOT_FOUND: Dict[str, Any] = {
+    "status": 404,
+    "success": False,
+    "error": "User Not Found",
+    "message": "No account found matching the provided email address.",
+    "code": "USER_NOT_FOUND",
+}
+
+MOCK_CREATE_TRADING_ACCOUNT_SUCCESS: Dict[str, Any] = {
+    "status": 200,
+    "success": True,
+    "account_number": "30098",
+    "type": "Live Standard",
+    "server": "XtremeNext-Live",
+    "balance": 0.00,
+    "currency": "USD",
+    "leverage": 500,
+    "message": "New trading account 30098 provisioned successfully.",
+}
+
+MOCK_CREATE_TRADING_ACCOUNT_LIMIT_EXCEEDED: Dict[str, Any] = {
+    "status": 422,
+    "success": False,
+    "error": "Account Limit Reached",
+    "message": "Maximum active trading accounts limit (5) reached for standard tier.",
+    "code": "MAX_ACCOUNTS_LIMIT",
+}
+
