@@ -264,22 +264,107 @@ Here is the implementation roadmap of mock tests across all three portals. Any t
   - `test_mock_admin_audit_log_capture`: Verify user ID and timestamp captured.
 
 ### Client Portal Mock Suites (`workflows/client_portal/tests/mock/`)
-- [ ] **Authentication & Security**:
-  - `test_mock_client_login_success`: Mock JWT session injection.
-  - `test_mock_client_login_invalid_password`: 401 Invalid credentials banner.
-  - `test_mock_client_login_account_suspended`: 403 Account locked alert.
-  - `test_mock_client_2fa_otp_screen`: 2FA prompt navigation.
-  - `test_mock_client_session_expiration_401`: Auto-redirect to login on 401.
-- [ ] **Deposits & Gateways**:
-  - `test_mock_client_dynamic_gateways_render`: Dynamic payment method cards.
-  - `test_mock_client_deposit_minimum_boundary`: < $10 client validation.
+- [x] **Authentication & Security** (`test_mock_client_auth_security.py`):
+  - `test_mock_client_login_success`: Mock JWT session injection and profile retrieval.
+  - `test_mock_client_login_invalid_password`: HTTP 401 Invalid credentials banner.
+  - `test_mock_client_login_account_suspended`: HTTP 403 Account locked alert.
+  - `test_mock_client_2fa_otp_screen`: 2FA prompt navigation and verification challenge.
+  - `test_mock_client_session_expiration_401`: Auto-redirect to login on expired token.
+  - `test_mock_client_user_signup_success`: User registration submit 200 OK.
+  - `test_mock_client_user_signup_duplicate_email`: HTTP 409 duplicate email conflict error.
+  - `test_mock_client_password_reset_dispatch`: Password reset email trigger 200 OK.
+  - `test_mock_client_password_reset_user_not_found`: HTTP 404 unrecognized user email.
+- [x] **Dashboard Workspace & Metrics** (`test_mock_client_dashboard.py`):
+  - `test_mock_client_dashboard_metrics_render`: 4 primary summary metric cards (Total Funds, Balance, Buffer, Referrals).
+  - `test_mock_client_dashboard_zero_metrics`: $0.00 zero-balance state for brand-new users.
+  - `test_mock_client_dashboard_high_net_worth_formatting`: High Net Worth figure formatting ($15,000,000.00+).
+  - `test_mock_client_dashboard_cash_flow_period_filter`: Account Cash Flow period filtering (Day, Week, Month).
+  - `test_mock_client_dashboard_loading_delay_skeleton`: Skeleton loader resilience with 500ms network latency.
+  - `test_mock_client_dashboard_cashflow_500_resilience`: Cash flow 500 failure resilience without crashing dashboard cards.
+- [x] **Deposits, Gateways & Funding Boundaries** (`test_mock_client_deposit_withdraw.py`):
+  - `test_mock_client_dynamic_gateways_render`: Dynamic payment method cards rendering.
+  - `test_mock_client_deposit_minimum_boundary`: HTTP 422 minimum threshold error (< $10).
+  - `test_mock_client_deposit_maximum_boundary_error`: HTTP 422 upper threshold limit (> $100,000).
+  - `test_mock_client_deposit_crypto_address_generation`: Dynamic TRC20/BEP20 crypto address & QR generator.
+  - `test_mock_client_deposit_proof_upload_failure`: HTTP 500 payment proof upload error.
   - `test_mock_client_deposit_gateway_500`: Payment provider offline notification.
-- [ ] **Withdrawals & Transfers**:
-  - `test_mock_client_withdraw_insufficient_funds`: 400 Insufficient balance alert.
-  - `test_mock_client_internal_transfer_success`: Immediate balance update.
-- [ ] **PAMM / MAM / Copy Trading**:
+  - `test_mock_client_deposit_history_populated_ledger`: Populated deposit transaction history ledger & badges.
+  - `test_mock_client_deposit_history_empty_state`: Empty state placeholder when user has 0 deposit records.
+  - `test_mock_client_deposit_history_pagination`: 50+ records pagination traversal and rows per page filter.
+  - `test_mock_client_deposit_proof_invalid_file_format`: HTTP 415 unsupported file format validation.
+  - `test_mock_client_deposit_proof_file_too_large`: HTTP 413 file size limit (>5MB) exceeded.
+  - `test_mock_client_deposit_bank_wire_instructions`: Dynamic bank wire IBAN, SWIFT & reference notes.
+  - `test_mock_client_deposit_gateway_maintenance_mode`: Single gateway HTTP 503 maintenance mode handling.
+- [x] **Withdrawals & Payout Processing** (`test_mock_client_deposit_withdraw.py`):
+  - `test_mock_client_withdraw_insufficient_funds`: HTTP 400 Insufficient balance alert.
+  - `test_mock_client_withdraw_invalid_otp`: HTTP 400 Incorrect or expired OTP passcode.
+  - `test_mock_client_withdraw_kyc_unverified_block`: HTTP 403 Unverified KYC restriction.
+  - `test_mock_client_withdraw_daily_limit_exceeded`: HTTP 422 Daily payout limit reached ($50,000).
+  - `test_mock_client_withdrawal_submission`: HTTP 200 OK withdrawal request submitted.
+  - `test_mock_client_withdraw_fee_calculation`: Dynamic withdrawal fee percentage & net payout calculation.
+  - `test_mock_client_withdraw_history_empty_state`: Empty state placeholder for withdrawal history.
+  - `test_mock_client_withdraw_history_pagination`: 50+ withdrawal records pagination traversal.
+  - `test_mock_client_withdraw_save_details_invalid_iban_swift`: HTTP 422 invalid SWIFT/IFSC format validation.
+- [x] **Internal Wallet & Account Transfers** (`test_mock_client_deposit_withdraw.py`):
+  - `test_mock_client_internal_transfer_success`: HTTP 200 OK immediate balance deduction.
+  - `test_mock_client_transfer_same_account_error`: HTTP 422 Identical source and destination account validation.
+  - `test_mock_client_transfer_zero_amount`: HTTP 422 $0.00 transfer rejection.
+  - `test_mock_client_transfer_concurrency_lock`: HTTP 409 Concurrent transfer protection.
+  - `test_mock_client_transfer_history_empty_state`: Empty recent transfers ledger.
+  - `test_mock_client_transfer_history_pagination`: 50+ internal transfer records pagination.
+  - `test_mock_client_transfer_insufficient_source_balance`: HTTP 400 Insufficient source account balance.
+- [x] **KYC & Multi-Account Wallet Management** (`test_mock_client_kyc_wallet.py`):
+  - `test_mock_client_kyc_pending_banner`: KYC in review compliance banner.
+  - `test_mock_client_kyc_rejected_alert`: KYC rejection with reviewer reason & resubmit action.
+  - `test_mock_client_kyc_upload_file_size_exceeded`: HTTP 413 File size limit (>10MB) exceeded.
+  - `test_mock_client_wallet_zero_balance`: $0.00 zero balance rendering.
+  - `test_mock_client_wallet_multi_currency`: USD, EUR, and USDT multi-currency ledger.
+  - `test_mock_client_wallet_consolidated_funds_breakdown`: Consolidated funds summary (Client Wallet + IB Wallet + Trading Accounts).
+  - `test_mock_client_wallet_transfer_history_populated`: Populated wallet transfer history with movement directions.
+  - `test_mock_client_wallet_transfer_history_empty`: Empty wallet transfer history ledger.
+  - `test_mock_client_wallet_export_report_csv`: CSV statement export trigger.
+  - `test_mock_client_create_trading_account_success`: Multi-account creation 200 OK.
+  - `test_mock_client_create_trading_account_limit_reached`: HTTP 403 quota exceeded error.
+- [x] **Copy Trading, PAMM & MAM** (`test_mock_client_copy_pamm_mam.py`):
   - `test_mock_client_copy_leaderboard_render`: Leaderboard table sorting by ROI.
-  - `test_mock_client_subscribe_strategy_success`: Subscription active badge.
+  - `test_mock_client_copy_leaderboard_empty_state`: Empty state when no managers match search.
+  - `test_mock_client_subscribe_strategy_success`: Subscription active badge and strategy follow.
+  - `test_mock_client_unfollow_manager_success`: Unfollow confirmation and state reset.
+  - `test_mock_client_copy_insufficient_investment_margin`: Minimum equity requirement rejection.
+  - `test_mock_client_copy_my_subscriptions_populated`: Active subscriptions tab with allocated capital and follow date.
+  - `test_mock_client_copy_statistics_modal_metrics`: Strategy statistics modal (Net profit, win rate, closed trades, drawdown).
+  - `test_mock_client_copy_filter_by_range_and_risk`: Dropdown filters by time range and risk level.
+  - `test_mock_client_mam_strategy_allocation`: MAM multiplier allocation configuration.
+  - `test_mock_client_mam_followers_table_render`: MAM My Followers table with Follower Name, Profit Share %, and User ID.
+  - `test_mock_client_mam_statistics_modal_render`: MAM statistics modal with net profit and managed capital.
+  - `test_mock_client_mam_unfollow_confirmation`: Unfollow MAM manager workflow.
+  - `test_mock_client_mam_empty_followers_state`: Empty state when MAM manager has 0 followers.
+  - `test_mock_client_pamm_pool_investment`: PAMM pool allocation and equity share calculation.
+  - `test_mock_client_pamm_investors_table_render`: PAMM pool investors list with equity shares.
+  - `test_mock_client_pamm_statistics_modal_render`: PAMM pool statistics modal.
+  - `test_mock_client_pamm_uninvest_withdrawal`: Uninvest capital from PAMM pool back into wallet.
+  - `test_mock_client_pamm_empty_investors_state`: Empty state when PAMM pool has 0 investors.
+- [x] **Settings, Security & Refer & Earn** (`test_mock_client_settings_referral.py`):
+  - `test_mock_client_referral_stats_render`: IB partner referral count, commissions & affiliate link.
+  - `test_mock_client_referral_history_empty_state`: Empty commission payouts ledger.
+  - `test_mock_client_password_change_mismatch`: HTTP 400 Incorrect current password alert.
+  - `test_mock_client_2fa_toggle_enable_qr`: 2FA TOTP QR code generator.
+  - `test_mock_client_bank_details_update_success`: Bank payout instructions save confirmation.
+  - `test_mock_client_referral_tree_hierarchy_render`: Multi-tier referral tree hierarchy with direct vs sub-affiliates.
+  - `test_mock_client_referred_clients_table_populated`: Referred clients table with accounts, balance, and IB earned.
+  - `test_mock_client_referred_clients_table_pagination`: 50+ referred clients pagination traversal.
+  - `test_mock_client_personal_info_update_success`: Personal contact and address details update.
+  - `test_mock_client_personal_info_invalid_phone_email`: HTTP 422 malformed phone/email validation.
+  - `test_mock_client_trading_settings_update`: Trading account leverage and type settings.
+  - `test_mock_client_security_password_update_success`: Password change with OTP verification.
+- [x] **Network Resilience & Latency Simulation** (`test_mock_client_network_failures.py`):
+  - `test_mock_client_deposit_500_server_error`: Payment provider 500 error interception.
+  - `test_mock_client_session_expired_401`: HTTP 401 session expiration handling.
+  - `test_mock_client_gateway_timeout_504`: Upstream liquidity timeout warning.
+  - `test_mock_client_rate_limit_429_toast`: HTTP 429 rate limit with Retry-After header.
+  - `test_mock_client_slow_network_latency_spinner`: Simulated 500ms network delay with spinner rendering.
+  - `test_mock_client_corrupted_json_payload`: Malformed / 502 Bad Gateway HTML resilience.
+  - `test_mock_client_network_offline_abort`: Playwright offline network disconnect simulation (`internetdisconnected`).
 
 ---
 
