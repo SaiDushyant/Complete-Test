@@ -18,6 +18,8 @@ from workflows.shared.utils.logger import get_logger
 
 logger = get_logger("test_val_client_copy_trading")
 
+pytestmark = [pytest.mark.client, pytest.mark.validation]
+
 
 @pytest.fixture(scope="function")
 def client_copy_trading_page(authenticated_client_page: Page) -> ClientCopyTradingPage:

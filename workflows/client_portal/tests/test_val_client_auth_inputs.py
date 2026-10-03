@@ -28,6 +28,8 @@ from workflows.shared.utils.logger import get_logger
 
 logger = get_logger("test_val_client_auth_inputs")
 
+pytestmark = [pytest.mark.client, pytest.mark.validation]
+
 
 @pytest.mark.client
 @pytest.mark.regression

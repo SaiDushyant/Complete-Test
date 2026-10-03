@@ -710,7 +710,10 @@ class GlobalTestLogger:
     def finalize(self) -> None:
         """Called at pytest session finish to ensure all logs are flushed."""
         self._update_global_logs()
-        logger.info(
-            f"Global test logs finalized at: {self.logs_dir} "
-            f"({len(self.records)} total records)"
-        )
+        try:
+            logger.info(
+                f"Global test logs finalized at: {self.logs_dir} "
+                f"({len(self.records)} total records)"
+            )
+        except Exception:
+            pass

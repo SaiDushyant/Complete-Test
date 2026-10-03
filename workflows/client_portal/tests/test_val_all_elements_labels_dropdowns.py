@@ -27,6 +27,8 @@ from workflows.shared.utils.logger import get_logger
 
 logger = get_logger("test_val_all_elements_labels_dropdowns")
 
+pytestmark = [pytest.mark.client, pytest.mark.validation]
+
 
 # =============================================================================
 # 1. LOGIN & SIGNUP PAGES (Labels, Placeholders, Checkboxes, Dropdowns)
