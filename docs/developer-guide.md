@@ -75,10 +75,10 @@ Review the dual-layer architecture:
 - Read **[Architecture Overview](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/architecture.md)** and **[Ownership Matrix](file:///Users/xtremenext_viji/Code/Playwrite/Complete-Test/docs/ownership.md)** to identify your primary working directory.
 
 ### Step 8: Create Feature Branch
-Always create a feature branch off an up-to-date `main`:
+Always create a feature branch off an up-to-date `develop` (or `main` for release hotfixes):
 ```bash
-git checkout main
-git pull origin main
+git checkout develop
+git pull origin develop
 git checkout -b feature/<portal>-<short-description>
 ```
 *Branch naming examples:*

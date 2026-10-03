@@ -263,12 +263,16 @@ The test framework features dual-format reporting with intelligent session isola
 
 | Report Path | Format | Description |
 | :--- | :--- | :--- |
-| `reports/workflows/logs/global_test_summary.txt` | **TXT** | Human-readable summary of total runs, pass rate, and portal-by-portal breakdown. |
-| `reports/workflows/logs/global_passed_tests.txt` | **TXT** | Detailed block log of all passed tests with test ID, humanized meaning, and status. |
-| `reports/workflows/logs/global_failed_tests.txt` | **TXT** | Detailed failure logs with error reason, line numbers, and traceback. |
-| `reports/workflows/logs/global_skipped_tests.txt` | **TXT** | Detailed log of skipped tests and reasoning. |
-| `reports/workflows/logs/global_test_results.json` | **JSON** | Full structured JSON dataset of all test outcomes, durations, and metadata. |
+| `reports/workflows/logs/global_test_summary.txt` | **TXT** | Human-readable summary of total runs, pass rate, and portal-by-portal breakdown for behavioral workflows. |
+| `reports/workflows/logs/global_passed_tests.txt` | **TXT** | Detailed block log of all passed workflow tests with test ID, humanized meaning, and status. |
+| `reports/workflows/logs/global_failed_tests.txt` | **TXT** | Detailed workflow failure logs with error reason, line numbers, and traceback. |
+| `reports/workflows/logs/global_skipped_tests.txt` | **TXT** | Detailed log of skipped workflow tests and reasoning. |
+| `reports/workflows/logs/global_test_results.json` | **JSON** | Full structured JSON dataset of all workflow test outcomes, durations, and metadata. |
 | `reports/workflows/logs/summary_report.json` | **JSON** | Standard summary JSON with overall metrics and breakdown by portal. |
+| `reports/validations/logs/global_test_summary.txt` | **TXT** | Human-readable summary for all 434 validation tests across Admin, Client, and Trade portals. |
+| `reports/validations/logs/global_passed_tests.txt` | **TXT** | Detailed block log of all passed validation tests. |
+| `reports/validations/logs/global_test_results.json` | **JSON** | Full structured JSON telemetry dataset for validation tests. |
+| `reports/validations/history/<RunType> - <Date>_<Time>/` | **Archive** | Full archived session snapshot of logs, screenshots, traces, and diagnostics on each fresh session. |
 | `reports/workflows/logs/individual/<portal>/<test>.txt`| **TXT** | Isolated diagnostic log with captured stdout/stderr, timestamps, and stack traces. |
 | `reports/ui_regression/comparison_report_admin.json` | **JSON** | Detailed DOM element drift and runtime telemetry error log for Admin Portal. |
 | `reports/ui_regression/comparison_report.json` | **JSON** | Detailed DOM element drift and runtime telemetry error log for Client Portal. |

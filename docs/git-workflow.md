@@ -6,19 +6,16 @@ This document defines the team Git standards, branching strategy, daily developm
 
 ## 1. Branching Strategy
 
-The repository follows a trunk-based feature-branch workflow centered on `main`:
+The repository follows a Git-flow feature-branch workflow centered on `develop` (daily integration) and `main` (production):
 
 ```text
-main (Protected — No direct commits)
+main (Protected — Production Releases)
  │
- ├── feature/trade-login-workflow       (Developer 1)
- ├── feature/trade-order-placement      (Developer 1)
- │
- ├── feature/admin-user-management      (Developer 2)
- ├── feature/admin-role-permissions     (Developer 2)
- │
- ├── feature/client-profile-update      (Developer 3)
- └── feature/client-watchlist-toggle    (Developer 3)
+ └── develop (Protected — Daily Integration & PR Merge Target)
+      │
+      ├── feature/trade-order-placement      (Developer 1)
+      ├── feature/admin-user-management      (Developer 2)
+      └── feature/client-watchlist-toggle    (Developer 3)
 ```
 
 ### Branch Naming Conventions
@@ -29,7 +26,7 @@ Always prefix your branch name with `feature/` followed by your portal identifie
 - `chore/shared-<feature-name>` (Shared framework updates)
 - `fix/<portal>-<bug-description>` (Targeted bug fixes)
 
-> ⛔ **STRICT RULE**: Never commit or push directly to `main`. All changes must arrive in `main` through reviewed Pull Requests.
+> ⛔ **STRICT RULE**: Never commit or push directly to `main` or `develop`. All changes must arrive through reviewed Pull Requests into `develop`.
 
 ---
 
@@ -85,11 +82,11 @@ Fill in the credentials for your portal in `.env`.
 
 ## 3. Daily Workflow: Starting New Work
 
-### Step 1: Sync Your Local `main`
+### Step 1: Sync Your Local `develop`
 Always pull the latest changes before branching:
 ```bash
-git checkout main
-git pull origin main
+git checkout develop
+git pull origin develop
 ```
 
 ### Step 2: Create a Dedicated Feature Branch
@@ -134,10 +131,10 @@ git push -u origin feature/trade-order-placement
 
 ## 4. Keeping Your Branch Updated from `main`
 
-While you work, teammates may merge PRs into `main`. Keep your feature branch up to date using a safe Git rebase.
+While you work, teammates may merge PRs into `develop`. Keep your feature branch up to date using a safe Git rebase.
 
 ### Why Rebase?
-Rebase replays your branch's commits on top of the latest `main`, producing a clean, linear project history without messy merge commits.
+Rebase replays your branch's commits on top of the latest `develop`, producing a clean, linear project history without messy merge commits.
 
 ### Safe Rebase Procedure
 
@@ -155,9 +152,9 @@ git stash save "WIP: my in-progress work"
 git fetch origin
 ```
 
-#### 3. Rebase Your Branch onto `origin/main`
+#### 3. Rebase Your Branch onto `origin/develop`
 ```bash
-git rebase origin/main
+git rebase origin/develop
 ```
 
 #### 4. Restore Stashed Changes (if you stashed earlier)
@@ -166,10 +163,10 @@ git stash pop
 ```
 
 #### Alternative: Standard Merge Approach
-If you are uncomfortable with rebase, you can merge `main` into your feature branch:
+If you are uncomfortable with rebase, you can merge `develop` into your feature branch:
 ```bash
 git fetch origin
-git merge origin/main
+git merge origin/develop
 ```
 Both approaches are valid, but rebase is preferred for a cleaner Git history.
 
